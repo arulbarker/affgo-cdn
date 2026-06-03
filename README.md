@@ -13,9 +13,11 @@ Files:
 
 Served via jsDelivr at:
 ```
-https://cdn.jsdelivr.net/gh/arulbarker/affgo-cdn@<commit-sha>/<file>
+https://cdn.jsdelivr.net/gh/arulbarker/affgo-cdn@main/<file>
 ```
 
-Pin to a commit SHA (not a branch) in production so cache is immutable.
+Canvas shell references the `@main` branch URL and stays stable across
+releases — paste once. Build pipeline purges jsDelivr cache after each push
+so updates propagate within seconds.
 
-Last build: 2026-06-03T12:08:13.941Z
+Last build: 2026-06-03T13:20:27.692Z
