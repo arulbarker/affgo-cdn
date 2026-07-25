@@ -205,6 +205,9 @@
                 'login.secure': '\uD83D\uDD12 Akses Terenkripsi & Aman',
                 'login.no-access-cta': '\uD83D\uDED2 Belum punya akses? Beli di sini \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v40-badge': 'Update v40',
+                'modal.fix-v40-title-composite': 'Fitur Baru: Foto Composite Anak (4-in-1)',
+                'modal.fix-v40-body-composite': 'Mode baru di tab Foto Profesi Anak: satu foto studio seamless berisi 4 pose anak yang sama sekaligus — bukan grid atau kolase. Pilih dari 12 tema (Pilot, Astronot, Dokter, Bomba, dll) atau tulis tema sendiri, lengkap dengan nama & tagline custom, pilihan rasio, jumlah generate 1-10, dan preview per foto.',
                 'modal.fix-v39-badge': 'Update v39',
                 'modal.fix-v39-title-melayu': 'Dukungan Penuh Bahasa Melayu',
                 'modal.fix-v39-body-melayu': 'Seluruh aplikasi sekarang bisa diganti ke Bahasa Melayu. Lebih dari 88 tab beserta nama menu navigasi (sidebar & mobile) sudah diterjemahkan penuh. Tekan tombol pemilih bahasa di atas untuk berpindah antara Indonesia, English, dan Melayu — pilihanmu otomatis tersimpan untuk kunjungan berikutnya.',
@@ -256,7 +259,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Tab Ruang Saku sekarang punya halaman penjelasan singkat fitur Rindu (AI keuangan) + tombol langsung ke RuangSaku.com. Lebih nyaman dipakai di HP — tinggal klik dan terbuka di tab browser.',
                 'modal.fix-v31-title-telegram': 'Tombol Telegram di Pojok Layar',
                 'modal.fix-v31-body-telegram': 'Tombol bundar Telegram sekarang ada di pojok kanan bawah aplikasi. Sekali klik langsung join grup Telegram Affiliate Go — tempat update fitur, tips, dan tanya jawab dengan komunitas.',
-                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 39',
+                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 40',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Selamat Datang di Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Asisten AI Anda untuk menjelajahi 79++ fitur photo & video generation',
@@ -2616,6 +2619,9 @@
                 'login.secure': '\uD83D\uDD12 Encrypted & Secure Access',
                 'login.no-access-cta': '\uD83D\uDED2 No access yet? Buy here \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v40-badge': 'Update v40',
+                'modal.fix-v40-title-composite': 'New Feature: Kids Composite Photo (4-in-1)',
+                'modal.fix-v40-body-composite': 'New mode in the Kids Profession Photo tab: one seamless studio photo featuring 4 poses of the same child at once — not a grid or collage. Choose from 12 themes (Pilot, Astronaut, Doctor, Firefighter, etc.) or write your own, complete with a custom name & tagline, aspect ratio options, 1-10 generations, and per-photo preview.',
                 'modal.fix-v39-badge': 'Update v39',
                 'modal.fix-v39-title-melayu': 'Full Malay Language Support',
                 'modal.fix-v39-body-melayu': 'The entire app can now be switched to Malay. Over 88 tabs along with the navigation menu names (sidebar & mobile) are fully translated. Tap the language switcher above to toggle between Indonesian, English, and Malay — your choice is saved automatically for your next visit.',
@@ -2667,7 +2673,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Ruang Saku tab now has a brief intro page for Rindu (AI finance buddy) + direct button to RuangSaku.com. Smoother mobile experience — one click and it opens in a browser tab.',
                 'modal.fix-v31-title-telegram': 'Telegram Button at Screen Corner',
                 'modal.fix-v31-body-telegram': 'Round Telegram button is now at the bottom-right corner of the app. One click jumps directly to the Affiliate Go Telegram group — for feature updates, tips, and Q&A with the community.',
-                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 39',
+                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 40',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Welcome to Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Your AI Assistant to explore 79++ photo & video generation features',
@@ -6804,6 +6810,8 @@
             __attachAdGateToTab("new-born", null, "new-born-generate-button"); // New Born (generate pakai -button bukan -btn)
             __attachAdGateToTab("maternity");                        // Foto Maternity (standard convention)
             __attachAdGateToTab("profesi");                          // Foto Profesi Anak (standard convention)
+            __attachAdGate(document.getElementById("profesi-comp-download-btn"));            // Profesi Anak composite — Unduh Semua
+            __attachAdGateToTab("profesi-comp", "profesi-comp-grid");                        // Profesi Anak composite — per-card download (data-action="comp-download" match $="-download")
             __attachAdGateToTab("wedding");                          // Wedding (standard convention)
             __attachAdGateToTab("wedding-design");                   // Desain Pernikahan (standard convention)
             __attachAdGateToTab("umrah");                            // Foto Umrah/Haji (standard convention)
