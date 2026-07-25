@@ -669,6 +669,14 @@
             border: 3px solid #fbbf24;
             box-shadow: 0 8px 20px rgba(251, 146, 60, 0.2);
         }
+        /* Mode toggle */
+        .profesi-mode-btn { flex: 1; padding: 0.6rem; font-size: 0.82rem; font-weight: 700; transition: all 0.2s; cursor: pointer; }
+        .profesi-mode-btn.active { color: white; background: linear-gradient(135deg, #16a34a 0%, #ec4899 100%); }
+        .profesi-mode-btn:not(.active) { color: #6b7280; background: #f9fafb; }
+        /* Composite theme buttons */
+        .profesi-comp-theme-btn { border: 2px solid #e5e7eb; border-radius: 0.75rem; padding: 0.5rem 0.4rem; font-size: 0.75rem; cursor: pointer; transition: all 0.2s; background: white; color: #374151; display: flex; flex-direction: column; align-items: center; gap: 0.2rem; font-weight: 600; }
+        .profesi-comp-theme-btn:hover { border-color: #16a34a; background: #f0fdf4; }
+        .profesi-comp-theme-btn.selected { border-color: #16a34a; background: #dcfce7; color: #15803d; }
 
         /* --- STYLES FOR DESAIN KAMAR (ROOM DESIGN) --- */
         #content-desain-kamar {
@@ -9196,7 +9204,6 @@
         .pose-quick-btn { border: 1.5px solid #d1d5db; border-radius: 9999px; padding: 0.3rem 0.8rem; font-size: 0.75rem; cursor: pointer; transition: all 0.2s; background: white; color: #374151; }
         .pose-quick-btn:hover { border-color: #06b6d4; color: #0e7490; background: #ecfeff; }
         .pose-quick-btn.selected { border-color: #06b6d4; color: #0e7490; background: #cffafe; font-weight: 600; }
-
         /* ===== BRAND COLOR OVERHAUL — Nature Bold Palette ===== */
         /* PRIMARY: #16a34a | DARK: #15803d | LIGHT BG: #f0fdf4  */
         /* BORDER: #dcfce7  | CTA: #ea580c  | CTA DARK: #c2410c  */

@@ -6416,6 +6416,437 @@ PENTING: Adaptasi elemen dari referensi agar cocok dengan struktur ruangan asli 
                 });
             }
 
+        // ── COMPOSITE MODE ─────────────────────────────────────────────
+        let compositeMode = false;
+
+        const regularControls  = document.getElementById('profesi-regular-controls');
+        const compositeControls = document.getElementById('profesi-composite-controls');
+        const modeRegularBtn   = document.getElementById('profesi-mode-regular');
+        const modeCompositeBtn = document.getElementById('profesi-mode-composite');
+        const compResult       = document.getElementById('profesi-composite-result');
+        const compLoading      = document.getElementById('profesi-comp-loading');
+        const compGrid         = document.getElementById('profesi-comp-grid');
+        const compProgressBar  = document.getElementById('profesi-comp-progress-bar');
+        const compProgressText = document.getElementById('profesi-comp-progress-text');
+        const compDownloadBtn  = document.getElementById('profesi-comp-download-btn');
+        const compThemeGrid    = document.getElementById('profesi-comp-theme-grid');
+        const compNameInput    = document.getElementById('profesi-comp-name');
+        const compPhrase1      = document.getElementById('profesi-comp-phrase1');
+        const compPhrase2      = document.getElementById('profesi-comp-phrase2');
+        const compGenderGrid   = document.getElementById('profesi-comp-gender');
+        const compAgeSelect    = document.getElementById('profesi-comp-age');
+        const compCustomTheme  = document.getElementById('profesi-comp-custom-theme');
+        const compRatioOptions = document.getElementById('profesi-comp-ratio-options');
+        const compCountGrid    = document.getElementById('profesi-comp-count-grid');
+
+        let selectedCompTheme  = 'pilot';
+        let selectedCompGender = 'male';
+        let selectedCompRatio  = '4:5';
+        let selectedCompCount  = 1;
+        let compImages         = [];
+
+        // Theme config → fed into one master seamless-canvas template (mirrors the reference prompt)
+        const COMPOSITE_THEMES = {
+            pilot: {
+                label: 'Little Pilot', tagline: 'fly high', backdropName: 'pastel sky-blue', backdropHex: '#8ED3ED', textColor: 'brown',
+                costume: 'a brown distressed leather bomber jacket with a thick cream shearling collar, a long flowing cream-white knit scarf, brown corduroy trousers, and a brown leather aviator cap with brass-rimmed flight goggles pushed up onto the forehead',
+                props: 'fluffy white three-dimensional cloud props floating at varying depths, an antique globe on a wooden stand, a brass pocket compass, several white folded paper airplanes scattered across the floor, and one extra wooden toy biplane',
+                fg: 'leans very close to the lens so the head and shoulders fill this third of the frame naturally through perspective, calm confident half smile, direct eye contact, slightly soft focus at the very edge',
+                mgLeft: 'standing full body, feet on the floor, holding a small wooden toy biplane with both hands, wide joyful open-mouth smile, in sharp focus',
+                mgCenter: 'sitting on a stack of two vintage brown leather suitcases, three-quarter view, unfolding a paper world map across the lap, head tilted down, focused expression, slightly smaller due to distance',
+                bg: 'smallest, captured mid-jump with both arms stretched wide like airplane wings, scarf flying behind, laughing, feet off the ground',
+                doodles: 'cloud outlines, four-point stars, long dashed curved flight paths that travel from one figure to another, wind swirl lines, and small paper airplane sketches'
+            },
+            astronaut: {
+                label: 'Little Astronaut', tagline: 'to the moon', backdropName: 'deep space navy', backdropHex: '#1B2A5B', textColor: 'white',
+                costume: 'a white astronaut suit with an Indonesian flag patch and mission badges, silver zippers and hoses, chunky white gloves and moon boots, with a bubble helmet carried under one arm',
+                props: 'fluffy white cloud props, a toy rocket resting on the floor, a small planet Earth globe, scattered white paper star props, and a toy moon rover at varying depths',
+                fg: 'leans very close to the lens so the helmet and shoulders fill this third of the frame through perspective, calm confident smile, direct eye contact',
+                mgLeft: 'standing full body holding a small planet Earth globe with both hands, gazing at it with wonder, in sharp focus',
+                mgCenter: 'sitting on a small toy rocket, three-quarter view, one hand raised as if counting down, focused expression, slightly smaller due to distance',
+                bg: 'smallest, floating in a weightless jumping pose with arms stretched wide, laughing, feet off the ground',
+                doodles: 'rocket outlines, planets with rings, four-point stars, long dashed orbit paths that travel from one figure to another, and small comet sketches'
+            },
+            princess: {
+                label: 'Little Princess', tagline: 'once upon a time', backdropName: 'soft pastel pink', backdropHex: '#F7C9DE', textColor: 'plum purple',
+                costume: 'a layered pastel tulle princess gown, a sparkling tiara, pearl jewelry and short white gloves',
+                props: 'fluffy pastel cloud props, a small ornate throne, an open storybook, scattered paper stars and hearts, and a toy castle turret at varying depths',
+                fg: 'leans very close to the lens so the head and shoulders fill this third of the frame through perspective, gentle royal smile, direct eye contact',
+                mgLeft: 'standing gracefully holding a sparkling magic wand raised in one hand, in sharp focus',
+                mgCenter: 'seated on a small ornate throne, three-quarter view, holding an open storybook on the lap, focused gentle expression, slightly smaller due to distance',
+                bg: 'smallest, twirling with the dress flowing outward, arms wide, joyful spin, feet light off the ground',
+                doodles: 'crown outlines, hearts, four-point stars, long dashed sparkling trails that travel from one figure to another, and small butterfly sketches'
+            },
+            superhero: {
+                label: 'Little Hero', tagline: 'save the day', backdropName: 'bold cobalt blue', backdropHex: '#2453C7', textColor: 'bright yellow',
+                costume: 'a bright primary-color superhero suit with a chest emblem, a matching flowing cape and a domino mask',
+                props: 'fluffy white cloud props, a cardboard city-skyline prop, scattered paper star props, and a toy shield at varying depths',
+                fg: 'leans very close to the lens so the head and shoulders fill this third of the frame through perspective, determined heroic expression, chin slightly up',
+                mgLeft: 'standing in a strong hero pose with fists on hips, cape billowing, in sharp focus',
+                mgCenter: 'crouched in a ready-to-launch power pose with one fist on the floor, three-quarter view, focused expression, slightly smaller due to distance',
+                bg: 'smallest, captured mid-jump in a flying pose with one arm punched forward and cape streaming behind, laughing',
+                doodles: 'lightning bolts, four-point stars, speed lines, long dashed flight trails that travel from one figure to another, and small pow-burst sketches'
+            },
+            chef: {
+                label: 'Little Chef', tagline: 'cooking with love', backdropName: 'warm cream', backdropHex: '#F3E6CF', textColor: 'chocolate brown',
+                costume: 'a white double-breasted chef jacket, a tall toque blanche hat, a small apron and a red neckerchief',
+                props: 'fluffy white cloud-like flour-puff props, a wooden prep table with mini vegetables, a mixing bowl and whisk, and scattered paper recipe cards at varying depths',
+                fg: 'leans very close to the lens so the head and shoulders fill this third of the frame through perspective, big delighted smile, cheeks lifted',
+                mgLeft: 'standing holding a rolling pin and a small mixing bowl, focused happy expression, in sharp focus',
+                mgCenter: 'sitting at a mini prep table with tiny vegetables and utensils, three-quarter view, focused expression, slightly smaller due to distance',
+                bg: 'smallest, playfully tossing a small ball of dough into the air, arms up, laughing, feet off the ground',
+                doodles: 'whisk and spoon outlines, four-point stars, steam swirl lines, long dashed trails that travel from one figure to another, and small heart sketches'
+            },
+            explorer: {
+                label: 'Little Explorer', tagline: 'adventure awaits', backdropName: 'warm khaki-tan', backdropHex: '#D8C29A', textColor: 'deep forest green',
+                costume: 'a khaki explorer shirt with rolled sleeves, cargo shorts, a wide-brim safari hat, a pair of binoculars on a strap and a small backpack',
+                props: 'fluffy white cloud props, a wooden crate, a rolled treasure map, a brass compass, a toy tent, and scattered paper leaves at varying depths',
+                fg: 'leans very close to the lens so the head and shoulders fill this third of the frame through perspective, adventurous confident smile, binoculars around the neck',
+                mgLeft: 'standing holding an unfolded treasure map with both hands, looking off toward the horizon, in sharp focus',
+                mgCenter: 'crouching to examine a brass compass on the floor, three-quarter view, curious focused expression, slightly smaller due to distance',
+                bg: 'smallest, mid-stride pointing forward with one arm as if discovering something, feet off the ground',
+                doodles: 'compass-rose outlines, four-point stars, dashed footprint trails that travel from one figure to another, mountain silhouettes, and small leaf sketches'
+            },
+            doctor: {
+                label: 'Little Doctor', tagline: 'here to help', backdropName: 'soft mint', backdropHex: '#CDEBDD', textColor: 'teal',
+                costume: 'a clean white doctor coat over a light blue scrub top, a stethoscope around the neck, and a reflector headband',
+                props: 'fluffy white cloud props, a friendly plush-toy patient, a toy medical kit, a clipboard, and scattered paper heart-cross doodles at varying depths',
+                fg: 'leans very close to the lens so the head and shoulders fill this third of the frame through perspective, warm reassuring smile, direct eye contact',
+                mgLeft: 'standing holding a stethoscope out with both hands as if listening, kind expression, in sharp focus',
+                mgCenter: 'sitting on a small stool beside a plush-toy patient, three-quarter view, gently examining it, focused caring expression, slightly smaller due to distance',
+                bg: 'smallest, mid-jump with arms raised cheerfully, laughing, feet off the ground',
+                doodles: 'plus-cross outlines, hearts, four-point stars, long dashed trails that travel from one figure to another, and small heartbeat-line sketches'
+            },
+            firefighter: {
+                label: 'Little Firefighter', tagline: 'brave and strong', backdropName: 'warm cream-peach', backdropHex: '#F2D6C4', textColor: 'fire red',
+                costume: 'a yellow-and-navy firefighter turnout coat with reflective stripes, a red fire helmet, and sturdy boots',
+                props: 'fluffy white cloud props, a coiled toy fire hose, a small red fire hydrant prop, a toy fire truck, and scattered paper flame doodles at varying depths',
+                fg: 'leans very close to the lens so the head and shoulders fill this third of the frame through perspective, brave confident smile under the helmet',
+                mgLeft: 'standing holding a toy fire hose nozzle with both hands in a ready stance, in sharp focus',
+                mgCenter: 'sitting on a small toy fire truck, three-quarter view, gripping a toy steering wheel, focused expression, slightly smaller due to distance',
+                bg: 'smallest, mid-jump with one arm raised heroically, laughing, feet off the ground',
+                doodles: 'flame outlines, four-point stars, water-spray swirl lines, long dashed trails that travel from one figure to another, and small ladder sketches'
+            },
+            police: {
+                label: 'Little Officer', tagline: 'keeping us safe', backdropName: 'soft sky blue', backdropHex: '#CFE3F5', textColor: 'navy blue',
+                costume: 'a navy-blue police uniform with a shiny badge, a peaked cap, a utility belt and a friendly whistle',
+                props: 'fluffy white cloud props, a toy police car, a small traffic-cone prop, a toy walkie-talkie, and scattered paper star-badge doodles at varying depths',
+                fg: 'leans very close to the lens so the head and shoulders fill this third of the frame through perspective, friendly confident smile',
+                mgLeft: 'standing giving a cheerful salute with one hand and the other hand on the belt, in sharp focus',
+                mgCenter: 'sitting on a toy police car, three-quarter view, holding a toy walkie-talkie, focused expression, slightly smaller due to distance',
+                bg: 'smallest, mid-jump with arms wide, laughing, feet off the ground',
+                doodles: 'star-badge outlines, four-point stars, long dashed patrol paths that travel from one figure to another, and small siren sketches'
+            },
+            ballerina: {
+                label: 'Little Ballerina', tagline: 'dance your dream', backdropName: 'soft blush lavender', backdropHex: '#EAD9F2', textColor: 'rose pink',
+                costume: 'a pastel ballet leotard with a layered tutu skirt, satin ballet slippers with ribbons, and a neat bun with a small flower',
+                props: 'fluffy pastel cloud props, a small practice barre, scattered paper flower petals, a music box, and a pair of pointe shoes hanging at varying depths',
+                fg: 'leans very close to the lens so the head and shoulders fill this third of the frame through perspective, graceful gentle smile',
+                mgLeft: 'standing in a ballet arabesque pose with arms extended, poised, in sharp focus',
+                mgCenter: 'seated on the floor in a graceful stretch beside a small music box, three-quarter view, serene expression, slightly smaller due to distance',
+                bg: 'smallest, captured mid-leap in a joyful grand jeté, arms wide, feet off the ground',
+                doodles: 'musical notes, flower outlines, four-point stars, long dashed swirling ribbons that travel from one figure to another, and small butterfly sketches'
+            },
+            footballer: {
+                label: 'Little Striker', tagline: 'play to win', backdropName: 'fresh grass green', backdropHex: '#CDE9C4', textColor: 'deep green',
+                costume: 'a bright team football jersey with matching shorts, tall striped socks, cleats, and a captain armband',
+                props: 'fluffy white cloud props, several footballs at varying depths, a mini goal net, a water bottle, and scattered paper star doodles',
+                fg: 'leans very close to the lens so the head and shoulders fill this third of the frame through perspective, confident happy smile',
+                mgLeft: 'standing with one foot resting on a football, arms crossed proudly, in sharp focus',
+                mgCenter: 'crouched tying a cleat next to a football, three-quarter view, focused expression, slightly smaller due to distance',
+                bg: 'smallest, captured mid-air in a dynamic kicking pose, arms out for balance, feet off the ground',
+                doodles: 'football-pentagon outlines, four-point stars, long dashed ball trajectories that travel from one figure to another, and small trophy sketches'
+            },
+            musician: {
+                label: 'Little Star', tagline: 'follow the music', backdropName: 'warm peach', backdropHex: '#F6D9C4', textColor: 'maroon',
+                costume: 'a stylish little stage outfit — a shimmering jacket over a shirt, with a small bow tie',
+                props: 'fluffy white cloud props, a small guitar, a toy piano keyboard, a microphone stand, and scattered paper musical-note doodles at varying depths',
+                fg: 'leans very close to the lens so the head and shoulders fill this third of the frame through perspective, joyful bright smile',
+                mgLeft: 'standing playing a small guitar with both hands mid-strum, in sharp focus',
+                mgCenter: 'sitting at a toy piano keyboard, three-quarter view, hands on the keys, focused happy expression, slightly smaller due to distance',
+                bg: 'smallest, captured mid-jump singing into a handheld microphone with one arm raised, feet off the ground',
+                doodles: 'musical notes, treble-clef outlines, four-point stars, long dashed melody lines that travel from one figure to another, and small star-burst sketches'
+            }
+        };
+
+        function compGenderNoun(g) { return g === 'female' ? 'girl' : 'boy'; }
+
+        function buildCompositePrompt(themeKey, o) {
+            const t = COMPOSITE_THEMES[themeKey] || COMPOSITE_THEMES.pilot;
+            const noun = compGenderNoun(o.gender);
+            const p1 = o.phrase1 || o.name || t.label;
+            const p2 = o.phrase2 || t.tagline;
+            return `Buat gambar A single seamless studio photograph on one continuous canvas — NOT a grid, NOT a collage, NOT split panels, no dividing lines, no borders, one unbroken scene.
+
+IMPORTANT — the attached photo is ONLY a facial identity reference: copy the child's face, hair and skin tone from it, but do NOT reuse its pose, outfit, crop or background. Build a completely new scene from scratch. The final single image MUST show FOUR separate full-body appearances of the SAME child at the same time within one frame — four distinct figures, never just one.
+
+The SAME ${o.age}-year-old Indonesian ${noun} appears four times within this one continuous space, each at a different distance from the camera, all four with the IDENTICAL face, hair and features from the reference photo. Identical wardrobe in every instance: ${t.costume}. Same face, same hair, same costume, perfectly consistent.
+
+Placement within the single space:
+— FOREGROUND, right edge: ${t.fg}.
+— MID-GROUND, left: ${t.mgLeft}.
+— MID-GROUND, center-back: ${t.mgCenter}.
+— BACKGROUND, upper left: ${t.bg}.
+
+Environment: one seamless ${t.backdropName} studio cyclorama, solid color ${t.backdropHex}, no gradient, no horizon line, floor and wall blend into each other continuously. Shared props resting on the same continuous floor: ${t.props}.
+
+Lighting: one single consistent large softbox from the front, bright and even across the whole scene, all four instances share the exact same light direction, soft diffused contact shadows on the floor that anchor every figure to the same ground plane.
+
+Overlay across the entire canvas, flowing continuously and never interrupted: hand-drawn thin white doodle line art — ${t.doodles}.
+Text overlay integrated into the open background space: "${p1}" in ${t.textColor} handwritten script at the upper left, "${p2}" in ${t.textColor} handwritten script at the lower center, both placed in empty background areas without covering any face.
+
+Style: clean commercial children's photography, bright, cheerful, airy, high resolution, natural warm skin tone, consistent perspective and a single vanishing point throughout.
+Aspect ratio ${o.ratio}.`;
+        }
+
+        function buildCustomCompositePrompt(themeText, o) {
+            const noun = compGenderNoun(o.gender);
+            const p1 = o.phrase1 || o.name || 'Little Star';
+            const p2 = o.phrase2 || 'dream big';
+            return `Buat gambar A single seamless studio photograph on one continuous canvas — NOT a grid, NOT a collage, NOT split panels, no dividing lines, no borders, one unbroken scene.
+
+IMPORTANT — the attached photo is ONLY a facial identity reference: copy the child's face, hair and skin tone from it, but do NOT reuse its pose, outfit, crop or background. Build a completely new scene from scratch. The final single image MUST show FOUR separate full-body appearances of the SAME child at the same time within one frame — four distinct figures, never just one.
+
+The SAME ${o.age}-year-old Indonesian ${noun} appears four times within this one continuous space, each at a different distance from the camera, all four with the IDENTICAL face, hair and features from the reference photo. Identical wardrobe in every instance: a fully detailed themed costume for "${themeText}", the exact same outfit on all four appearances.
+
+Placement within the single space:
+— FOREGROUND, right edge: leans very close to the lens so the head and shoulders fill this third of the frame naturally through perspective, calm confident half smile, direct eye contact, slightly soft focus at the very edge.
+— MID-GROUND, left: standing full body, feet on the floor, holding a signature prop related to "${themeText}" with both hands, wide joyful smile, in sharp focus.
+— MID-GROUND, center-back: sitting on stacked themed props related to "${themeText}", three-quarter view, doing a themed activity, focused expression, slightly smaller due to distance.
+— BACKGROUND, upper left: smallest, captured mid-jump with both arms stretched wide, laughing, feet off the ground.
+
+Environment: one seamless soft pastel studio cyclorama in a flat solid color that complements "${themeText}", no gradient, no horizon line, floor and wall blend into each other continuously. Shared props resting on the same continuous floor: several three-dimensional props related to "${themeText}" arranged at varying depths.
+
+Lighting: one single consistent large softbox from the front, bright and even across the whole scene, all four instances share the exact same light direction, soft diffused contact shadows on the floor that anchor every figure to the same ground plane.
+
+Overlay across the entire canvas, flowing continuously and never interrupted: hand-drawn thin white doodle line art — outlines, four-point stars, long dashed curved paths that travel from one figure to another, and small sketches related to "${themeText}".
+Text overlay integrated into the open background space: "${p1}" in a warm handwritten script at the upper left, "${p2}" in a warm handwritten script at the lower center, both placed in empty background areas without covering any face.
+
+Style: clean commercial children's photography, bright, cheerful, airy, high resolution, natural warm skin tone, consistent perspective and a single vanishing point throughout.
+Aspect ratio ${o.ratio}.`;
+        }
+
+        // Mode toggle
+        if (modeRegularBtn) {
+            modeRegularBtn.addEventListener('click', () => {
+                compositeMode = false;
+                modeRegularBtn.classList.add('active');
+                modeCompositeBtn.classList.remove('active');
+                regularControls.classList.remove('hidden');
+                compositeControls.classList.add('hidden');
+                if (compResult) compResult.classList.add('hidden');
+                if (resultsGrid) resultsGrid.classList.remove('hidden');
+                if (emptyState && !resultsGrid.innerHTML.trim()) emptyState.classList.remove('hidden');
+                generateBtn.querySelector('span[data-i18n]').setAttribute('data-i18n', 'pa.generate-btn');
+                generateBtn.querySelector('span[data-i18n]').textContent = window.tr3('Generate Foto Profesi', 'Generate Profession Photo', null);
+            });
+        }
+
+        if (modeCompositeBtn) {
+            modeCompositeBtn.addEventListener('click', () => {
+                compositeMode = true;
+                modeCompositeBtn.classList.add('active');
+                modeRegularBtn.classList.remove('active');
+                regularControls.classList.add('hidden');
+                compositeControls.classList.remove('hidden');
+                if (resultsGrid) resultsGrid.classList.add('hidden');
+                if (resultsHeader) resultsHeader.classList.add('hidden');
+                if (compResult) compResult.classList.remove('hidden');
+                if (emptyState && !(compGrid && compGrid.children.length)) emptyState.classList.add('hidden');
+                generateBtn.querySelector('span[data-i18n]').setAttribute('data-i18n', 'pa.comp-generate-btn');
+                generateBtn.querySelector('span[data-i18n]').textContent = window.tr3('Generate Composite', 'Generate Composite', null);
+            });
+        }
+
+        // Composite theme selection
+        if (compThemeGrid) {
+            compThemeGrid.addEventListener('click', (e) => {
+                const btn = e.target.closest('.profesi-comp-theme-btn');
+                if (!btn) return;
+                compThemeGrid.querySelectorAll('.profesi-comp-theme-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedCompTheme = btn.dataset.theme;
+            });
+        }
+
+        // Composite gender selection
+        if (compGenderGrid) {
+            compGenderGrid.addEventListener('click', (e) => {
+                const btn = e.target.closest('[data-gender]');
+                if (!btn) return;
+                compGenderGrid.querySelectorAll('.option-btn-profesi').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedCompGender = btn.dataset.gender;
+            });
+        }
+
+        // Composite ratio selection
+        if (compRatioOptions) {
+            compRatioOptions.addEventListener('click', (e) => {
+                const btn = e.target.closest('[data-value]');
+                if (!btn) return;
+                compRatioOptions.querySelectorAll('.option-btn-profesi').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedCompRatio = btn.dataset.value;
+            });
+        }
+
+        // Composite count selection
+        if (compCountGrid) {
+            compCountGrid.addEventListener('click', (e) => {
+                const btn = e.target.closest('button[data-count]');
+                if (!btn) return;
+                compCountGrid.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedCompCount = parseInt(btn.dataset.count, 10);
+            });
+        }
+
+        function compUpdateProgress(done, total) {
+            if (compProgressText) compProgressText.textContent = `${done}/${total}`;
+            if (compProgressBar) compProgressBar.style.width = `${Math.round((done / total) * 100)}%`;
+        }
+
+        function compActiveThemeSlug() {
+            const custom = compCustomTheme ? compCustomTheme.value.trim() : '';
+            if (custom) return custom.replace(/\s+/g, '-').toLowerCase().slice(0, 24) || 'custom';
+            return selectedCompTheme;
+        }
+
+        function renderCompCard(dataUrl, idx) {
+            const card = document.createElement('div');
+            card.className = 'relative group rounded-2xl overflow-hidden shadow-xl bg-white';
+            const img = document.createElement('img');
+            img.src = dataUrl;
+            img.alt = 'Foto Composite Anak';
+            img.className = 'w-full block cursor-pointer';
+            img.onclick = () => window.showPreviewModal && window.showPreviewModal(dataUrl);
+            const dl = document.createElement('button');
+            dl.type = 'button';
+            dl.className = 'absolute bottom-3 right-3 bg-white/90 hover:bg-white text-green-700 rounded-full w-11 h-11 flex items-center justify-center shadow-lg opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition';
+            dl.innerHTML = '<i class="fas fa-download"></i>';
+            dl.onclick = async (ev) => {
+                ev.stopPropagation();
+                const fn = `composite-${compActiveThemeSlug()}-${idx + 1}.png`;
+                if (window.downloadDataURINew) await window.downloadDataURINew(dataUrl, fn);
+                else if (window.downloadImage) await window.downloadImage(dataUrl, fn);
+            };
+            card.appendChild(img);
+            card.appendChild(dl);
+            return card;
+        }
+
+        async function compFetchOne(prompt, ratio) {
+            const base64 = childImageData.split(',')[1];
+            const payload = {
+                contents: [{
+                    parts: [
+                        { text: prompt },
+                        { inlineData: { mimeType: 'image/jpeg', data: base64 } }
+                    ]
+                }],
+                generationConfig: {
+                    responseModalities: ['TEXT', 'IMAGE'],
+                    imageConfig: { aspectRatio: ratio }
+                },
+                safetySettings: [
+                    { category: 'HARM_CATEGORY_HARASSMENT',        threshold: 'BLOCK_NONE' },
+                    { category: 'HARM_CATEGORY_HATE_SPEECH',        threshold: 'BLOCK_NONE' },
+                    { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',  threshold: 'BLOCK_NONE' },
+                    { category: 'HARM_CATEGORY_DANGEROUS_CONTENT',  threshold: 'BLOCK_NONE' }
+                ]
+            };
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${apiKey}`;
+            const resp = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const result = await resp.json();
+            const imgData = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
+            if (!imgData) throw new Error('No image data received');
+            return `data:image/png;base64,${imgData}`;
+        }
+
+        // Override generate button for composite mode
+        if (generateBtn && !generateBtn._compositeSetup) {
+            generateBtn._compositeSetup = true;
+            generateBtn.addEventListener('click', async (e) => {
+                if (!compositeMode) return; // let existing listener handle regular mode
+                e.stopImmediatePropagation();
+
+                if (!childImageData) {
+                    alert(window.tr3('Silakan upload foto anak terlebih dahulu', 'Please upload a child photo first', null));
+                    return;
+                }
+
+                const originalHTML = generateBtn.innerHTML;
+                generateBtn.disabled = true;
+                generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Generating...';
+
+                if (emptyState) emptyState.classList.add('hidden');
+                if (compGrid) compGrid.innerHTML = '';
+                compImages = [];
+                if (compDownloadBtn) compDownloadBtn.classList.add('hidden');
+                if (compLoading) compLoading.classList.remove('hidden');
+
+                const count = selectedCompCount || 1;
+                compUpdateProgress(0, count);
+
+                try {
+                    const opts = {
+                        name:    compNameInput ? compNameInput.value.trim() : '',
+                        phrase1: compPhrase1 ? compPhrase1.value.trim() : '',
+                        phrase2: compPhrase2 ? compPhrase2.value.trim() : '',
+                        age:     compAgeSelect ? compAgeSelect.value : '6',
+                        gender:  selectedCompGender,
+                        ratio:   selectedCompRatio
+                    };
+                    const custom = compCustomTheme ? compCustomTheme.value.trim() : '';
+                    const prompt = custom
+                        ? buildCustomCompositePrompt(custom, opts)
+                        : buildCompositePrompt(selectedCompTheme, opts);
+
+                    let done = 0;
+                    const tasks = Array.from({ length: count }, () =>
+                        compFetchOne(prompt, opts.ratio)
+                            .then(url => { done++; compUpdateProgress(done, count); return url; })
+                            .catch(err => { console.error('Composite item error:', err); done++; compUpdateProgress(done, count); return null; })
+                    );
+                    const urls = (await Promise.all(tasks)).filter(Boolean);
+
+                    if (!urls.length) throw new Error('No composite images generated');
+
+                    urls.forEach((url, i) => {
+                        compImages.push(url);
+                        if (compGrid) compGrid.appendChild(renderCompCard(url, i));
+                    });
+                    if (compDownloadBtn && compImages.length) compDownloadBtn.classList.remove('hidden');
+
+                } catch (err) {
+                    console.error('Composite error:', err);
+                    alert(window.tr3('Gagal membuat foto composite. Coba lagi.', 'Failed to create composite photo. Try again.', null));
+                } finally {
+                    if (compLoading) compLoading.classList.add('hidden');
+                    generateBtn.disabled = false;
+                    generateBtn.innerHTML = originalHTML;
+                }
+            }, true); // capture=true runs before existing bubble-phase listener
+        }
+
+        // Composite download-all button
+        if (compDownloadBtn) {
+            compDownloadBtn.addEventListener('click', async () => {
+                if (!compImages.length) return;
+                for (let i = 0; i < compImages.length; i++) {
+                    const fn = `composite-${compActiveThemeSlug()}-${i + 1}.png`;
+                    if (window.downloadDataURINew) await window.downloadDataURINew(compImages[i], fn);
+                    else if (window.downloadImage) await window.downloadImage(compImages[i], fn);
+                }
+            });
+        }
+        // ── END COMPOSITE MODE ──────────────────────────────────────────
+
         })();
 
     // --- STORY UPDATE GENERATOR LOGIC ---
@@ -8910,6 +9341,7 @@ Generate a professionally restored photograph that clearly demonstrates signific
             }, 5000);
         }
     })();
+
 
     // ==================== WEDDING & PRE-WEDDING - PROFESSIONAL VERSION ====================
     (function() {
