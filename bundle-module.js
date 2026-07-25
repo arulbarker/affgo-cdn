@@ -889,6 +889,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
         const UPDATE_VERSION = '40';
+        // Badge versi di halaman login — auto-sync, tidak perlu bump manual
+        (function() {
+            var lvb = document.getElementById('login-version-badge');
+            if (lvb) lvb.textContent = 'V' + UPDATE_VERSION;
+        })();
         const STORAGE_KEY = 'affiliatego_update_seen';
         const btn = document.getElementById('update-info-btn');
         if (!btn) return;

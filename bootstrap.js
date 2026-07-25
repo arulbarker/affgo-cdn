@@ -18,13 +18,20 @@
     return _origAdd.call(this, type, listener, opts);
   };
 
-  function loadScript(url, isModule) {
+  // Anti-stale: fetch dengan cache:'no-cache' → browser revalidate ETag ke CDN.
+  // Setelah purge jsDelivr, user langsung dapat bundle baru tanpa hard-refresh.
+  // Kalau tidak ada perubahan, server balas 304 (tidak re-download penuh).
+  async function loadScript(url, isModule) {
+    var res = await fetch(url, { cache: 'no-cache' });
+    if (!res.ok) throw new Error('Fetch ' + url + ' → HTTP ' + res.status);
+    var code = await res.text();
+    var blobUrl = URL.createObjectURL(new Blob([code], { type: 'text/javascript' }));
     return new Promise(function (resolve, reject) {
       var s = document.createElement('script');
-      s.src = url;
+      s.src = blobUrl;
       if (isModule) s.type = 'module';
       s.onload = function () { resolve(); };
-      s.onerror = function () { reject(new Error('Failed to load ' + url)); };
+      s.onerror = function () { reject(new Error('Failed to execute ' + url)); };
       document.body.appendChild(s);
     });
   }
@@ -41,7 +48,8 @@
   (async function boot() {
     try {
       // 1. Fetch body HTML (the actual app structure: 86 tab panels, login, modals)
-      var bodyRes = await fetch(CDN + '/body.html');
+      //    cache:'no-cache' = revalidate ETag → anti-stale setelah purge
+      var bodyRes = await fetch(CDN + '/body.html', { cache: 'no-cache' });
       if (!bodyRes.ok) throw new Error('Fetch body.html → HTTP ' + bodyRes.status);
       var bodyHtml = await bodyRes.text();
 
@@ -49,6 +57,18 @@
       var loader = document.getElementById('__loader');
       if (loader) loader.remove();
       document.body.insertAdjacentHTML('afterbegin', bodyHtml);
+
+      // 2b. Refresh styles anti-stale — shell <link> bisa serve CSS lama dari
+      //     browser cache; inject ulang versi fresh (no-cache) menimpa yang stale.
+      //     Non-fatal: gagal fetch = lanjut boot dengan CSS dari shell.
+      try {
+        var cssRes = await fetch(CDN + '/styles.css', { cache: 'no-cache' });
+        if (cssRes.ok) {
+          var st = document.createElement('style');
+          st.textContent = await cssRes.text();
+          document.head.appendChild(st);
+        }
+      } catch (cssErr) { console.warn('Style refresh skipped:', cssErr); }
 
       // 3. Load bundles in original document order: classic first (was inline blocking),
       //    then module (was deferred). Awaiting load preserves execution order.
