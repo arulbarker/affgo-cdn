@@ -120,10 +120,10 @@
                     <div id="favorites-container"></div>
                 </div>
 
-                <!-- RUANGSAKU (sponsored partner — info + redirect ke ruangsaku.com) -->
+                <!-- ADS (promo produk digital sendiri — id tetap "ruangsaku" demi kompatibilitas favorit) -->
                 <button data-tab="ruangsaku" class="main-tab-btn" style="margin-bottom: 1rem;">
-                    <i class="fas fa-globe"></i>
-                    <span class="btn-text">Ruang Saku</span>
+                    <i class="fas fa-bullhorn"></i>
+                    <span class="btn-text">Ads</span>
                     <span class="ads-badge">ADS</span>
                 </button>
 
@@ -139,11 +139,28 @@
                     <span class="btn-text">Membuat Model</span>
                 </button>
 
-                <!-- PHOTO STUDIO Category -->
+                <!-- FOTO PRODUK & UGC Category -->
                 <div class="menu-category">
-                    <div class="menu-category-title" data-i18n-cat="photo-studio">
-                        <i class="fas fa-camera mr-1"></i> Photo Studio
+                    <div class="menu-category-title" data-i18n-cat="ugc">
+                        <i class="fas fa-fire mr-1"></i> Foto Produk & UGC
                     </div>
+                    <button data-tab="affiliate" class="main-tab-btn">
+                        <i class="fas fa-rocket"></i>
+                        <span class="btn-text">Foto Produk Affiliate</span>
+                    </button>
+                    <button data-tab="affiliate-islami" class="main-tab-btn hidden">
+                        <i class="fas fa-globe"></i>
+                        <span class="btn-text">Affiliate Agama</span>
+                    </button>
+                    <button data-tab="affiliate-harga" class="main-tab-btn hidden">
+                        <i class="fas fa-tags"></i>
+                        <span class="btn-text">Affiliate Harga</span>
+                    </button>
+                    <button data-tab="virtual-tryon" class="main-tab-btn">
+                        <i class="fas fa-tshirt"></i>
+                        <span class="btn-text">Virtual Try-On</span>
+                        <span class="new-badge">NEW</span>
+                    </button>
                     <button data-tab="mockup-studio" class="main-tab-btn">
                         <i class="fas fa-palette"></i>
                         <span class="btn-text">Mockup Studio</span>
@@ -152,10 +169,6 @@
                         <i class="fas fa-hand-holding"></i>
                         <span class="btn-text">POV Tangan</span>
                     </button>
-                    <button data-tab="touring" class="main-tab-btn">
-                        <i class="fas fa-motorcycle"></i>
-                        <span class="btn-text">Foto Touring</span>
-                    </button>
                     <button data-tab="mirror-selfie" class="main-tab-btn">
                         <i class="fas fa-mobile-alt"></i>
                         <span class="btn-text">POV Mirror Selfie</span>
@@ -163,26 +176,6 @@
                     <button data-tab="walking-pad" class="main-tab-btn">
                         <i class="fas fa-walking"></i>
                         <span class="btn-text">Walking Pad</span>
-                    </button>
-                </div>
-
-                <!-- UGC CONTENT Category -->
-                <div class="menu-category">
-                    <div class="menu-category-title" data-i18n-cat="ugc">
-                        <i class="fas fa-fire mr-1"></i> UGC Content Affiliate GO
-                    </div>
-                    <button data-tab="affiliate" class="main-tab-btn">
-                        <i class="fas fa-rocket"></i>
-                        <span class="btn-text">Foto Produk Affiliate</span>
-                    </button>
-                    <button data-tab="affiliate-islami" class="main-tab-btn">
-                        <i class="fas fa-globe"></i>
-                        <span class="btn-text">Affiliate Agama</span>
-                    </button>
-                    <button data-tab="virtual-tryon" class="main-tab-btn">
-                        <i class="fas fa-tshirt"></i>
-                        <span class="btn-text">Virtual Try-On</span>
-                        <span class="new-badge">NEW</span>
                     </button>
                     <button data-tab="pose-fashion" class="main-tab-btn">
                         <i class="fas fa-user-tie"></i>
@@ -194,23 +187,19 @@
                     </button>
                     <button data-tab="product-review" class="main-tab-btn">
                         <i class="fas fa-star-half-alt"></i>
-                        <span class="btn-text">Product Review</span>
+                        <span class="btn-text">Review Generator</span>
                     </button>
-                    <button data-tab="skincare-review" class="main-tab-btn">
+                    <button data-tab="skincare-review" class="main-tab-btn hidden">
                         <i class="fas fa-pump-soap"></i>
                         <span class="btn-text">Skincare Review</span>
                     </button>
-                    <button data-tab="food-review" class="main-tab-btn">
+                    <button data-tab="food-review" class="main-tab-btn hidden">
                         <i class="fas fa-hamburger"></i>
                         <span class="btn-text">Food Review</span>
                     </button>
                     <button data-tab="product-ads" class="main-tab-btn">
                         <i class="fas fa-bullhorn"></i>
                         <span class="btn-text">Iklan Produk</span>
-                    </button>
-                    <button data-tab="professional-headshot" class="main-tab-btn">
-                        <i class="fas fa-user-tie"></i>
-                        <span class="btn-text">Professional Headshot</span>
                     </button>
                     <button data-tab="unboxing-scene" class="main-tab-btn">
                         <i class="fas fa-box-open"></i>
@@ -220,23 +209,21 @@
                         <i class="fas fa-arrows-left-right"></i>
                         <span class="btn-text">Before/After</span>
                     </button>
-                    <button data-tab="watch-together" class="main-tab-btn">
-                        <i class="fas fa-tv"></i>
-                        <span class="btn-text" data-i18n="nav.watch-together">Nonton Bareng</span>
-                    </button>
                     <button data-tab="product-premium" class="main-tab-btn">
                         <i class="fas fa-wand-magic-sparkles"></i>
                         <span class="btn-text" data-i18n="nav.product-premium">Foto Produk Premium</span>
                     </button>
-                    <button data-tab="podcast" class="main-tab-btn">
-                        <i class="fas fa-microphone-lines"></i>
-                        <span class="btn-text" data-i18n="nav.podcast">Studio Podcast</span>
-                        <span class="new-badge">NEW</span>
+                    <button data-tab="size-guide" class="main-tab-btn">
+                        <i class="fas fa-ruler-combined"></i>
+                        <span class="btn-text">Size Guide</span>
                     </button>
-                    <button data-tab="worldcup" class="main-tab-btn">
-                        <i class="fas fa-trophy"></i>
-                        <span class="btn-text" data-i18n="nav.worldcup">Foto World Cup</span>
-                        <span class="new-badge">NEW</span>
+                    <button data-tab="vehicle-modifier" class="main-tab-btn">
+                        <i class="fas fa-car"></i>
+                        <span class="btn-text">Vehicle Modifier</span>
+                    </button>
+                    <button data-tab="sketch-catalog" class="main-tab-btn">
+                        <i class="fas fa-pen-nib"></i>
+                        <span class="btn-text">Sketsa ke Katalog</span>
                     </button>
                     <button data-tab="product-mockup" class="main-tab-btn hidden">
                         <i class="fas fa-cube"></i>
@@ -246,70 +233,12 @@
                         <i class="fas fa-quote-left"></i>
                         <span class="btn-text">Testimonial Card</span>
                     </button>
-                    <button data-tab="size-guide" class="main-tab-btn">
-                        <i class="fas fa-ruler-combined"></i>
-                        <span class="btn-text">Size Guide</span>
-                    </button>
-                    <button data-tab="video-frames" class="main-tab-btn">
-                        <i class="fas fa-film"></i>
-                        <span class="btn-text">Video Frames</span>
-                    </button>
-                    <button data-tab="vehicle-modifier" class="main-tab-btn">
-                        <i class="fas fa-car"></i>
-                        <span class="btn-text">Vehicle Modifier</span>
-                    </button>
                 </div>
 
-                <!-- AFFILIATE & E-COMMERCE Category -->
-                <div class="menu-category">
-                    <div class="menu-category-title" data-i18n-cat="affiliate-ecommerce">
-                        <i class="fas fa-shopping-cart mr-1"></i> Affiliate & E-Commerce
-                    </div>
-                    <button data-tab="deskripsi-produk" class="main-tab-btn">
-                        <i class="fas fa-tags"></i>
-                        <span class="btn-text">Deskripsi Produk SEO</span>
-                    </button>
-                    <button data-tab="ide-konten-tiktok" class="main-tab-btn">
-                        <i class="fab fa-tiktok"></i>
-                        <span class="btn-text">Ide Konten TikTok</span>
-                    </button>
-                    <button data-tab="script-story-iklan" class="main-tab-btn">
-                        <i class="fas fa-book-open"></i>
-                        <span class="btn-text">Script Story Iklan</span>
-                    </button>
-                </div>
-
-                <!-- ALAT BISNIS Category -->
-                <div class="menu-category">
-                    <div class="menu-category-title" data-i18n-cat="business-tools">
-                        <i class="fas fa-briefcase mr-1"></i> Alat Bisnis
-                    </div>
-                    <button data-tab="rencana-bisnis" class="main-tab-btn">
-                        <i class="fas fa-chart-line"></i>
-                        <span class="btn-text">Rencana Bisnis & SWOT</span>
-                    </button>
-                    <button data-tab="hr-assistant" class="main-tab-btn">
-                        <i class="fas fa-users"></i>
-                        <span class="btn-text">HR Assistant</span>
-                    </button>
-                    <button data-tab="konten-marketing" class="main-tab-btn">
-                        <i class="fas fa-bullhorn"></i>
-                        <span class="btn-text">Konten Marketing</span>
-                    </button>
-                    <button data-tab="riset-pasar" class="main-tab-btn">
-                        <i class="fas fa-search-dollar"></i>
-                        <span class="btn-text">Riset Pasar & Ide</span>
-                    </button>
-                    <button data-tab="financial-forecast" class="main-tab-btn">
-                        <i class="fas fa-calculator"></i>
-                        <span class="btn-text">Simulasi Anggaran</span>
-                    </button>
-                </div>
-
-                <!-- FAMILY & LIFESTYLE Category -->
+                <!-- KELUARGA & MOMEN Category -->
                 <div class="menu-category">
                     <div class="menu-category-title" data-i18n-cat="family-lifestyle">
-                        <i class="fas fa-home mr-1"></i> Family & Lifestyle
+                        <i class="fas fa-users mr-1"></i> Keluarga & Momen
                     </div>
                     <button data-tab="family" class="main-tab-btn">
                         <i class="fas fa-users"></i>
@@ -330,19 +259,15 @@
                     </button>
                     <button data-tab="wedding" class="main-tab-btn">
                         <i class="fas fa-ring"></i>
-                        <span class="btn-text">Wedding</span>
+                        <span class="btn-text">Wedding Studio</span>
                     </button>
-                    <button data-tab="wedding-design" class="main-tab-btn">
+                    <button data-tab="wedding-design" class="main-tab-btn hidden">
                         <i class="fas fa-mosque"></i>
                         <span class="btn-text">Desain Pernikahan</span>
                     </button>
                     <button data-tab="umrah-haji" class="main-tab-btn">
                         <i class="fas fa-kaaba"></i>
                         <span class="btn-text">Foto Umrah/Haji</span>
-                    </button>
-                    <button data-tab="passport-photo" class="main-tab-btn">
-                        <i class="fas fa-id-card"></i>
-                        <span class="btn-text">Pas Foto Warna</span>
                     </button>
                     <button data-tab="graduation-photo" class="main-tab-btn">
                         <i class="fas fa-user-graduate"></i>
@@ -360,64 +285,33 @@
                         <i class="fas fa-envelope-open-text"></i>
                         <span class="btn-text">Kartu Lebaran</span>
                     </button>
-                    <button data-tab="desain-rumah" class="main-tab-btn">
-                        <i class="fas fa-home"></i>
-                        <span class="btn-text">Desain Rumah</span>
-                    </button>
-                    <button data-tab="desain-kamar" class="main-tab-btn">
-                        <i class="fas fa-door-open"></i>
-                        <span class="btn-text">Desain Kamar</span>
-                    </button>
-                    <button data-tab="sketsa-gambar" class="main-tab-btn">
-                        <i class="fas fa-pencil-ruler"></i>
-                        <span class="btn-text">Sketsa Gambar</span>
-                    </button>
-                    <button data-tab="bikin-carousel" class="main-tab-btn">
-                        <i class="fas fa-images"></i>
-                        <span class="btn-text">Bikin Carousel</span>
+                    <button data-tab="worldcup" class="main-tab-btn">
+                        <i class="fas fa-trophy"></i>
+                        <span class="btn-text" data-i18n="nav.worldcup">Foto World Cup</span>
+                        <span class="new-badge">NEW</span>
                     </button>
                 </div>
 
-                <!-- CREATIVE TOOLS Category -->
+                <!-- FOTO DIRI & GAYA Category -->
                 <div class="menu-category">
-                    <div class="menu-category-title" data-i18n-cat="creative-tools">
-                        <i class="fas fa-magic mr-1"></i> Creative Tools
+                    <div class="menu-category-title" data-i18n-cat="personal-style">
+                        <i class="fas fa-user-ninja mr-1"></i> Foto Diri & Gaya
                     </div>
-                    <button data-tab="miniature" class="main-tab-btn">
-                        <i class="fas fa-user-astronaut"></i>
-                        <span class="btn-text">Miniature Me</span>
-                    </button>
-                    <button data-tab="karikatur" class="main-tab-btn">
-                        <i class="fas fa-palette"></i>
-                        <span class="btn-text">Karikatur Generator</span>
-                    </button>
-                    <button data-tab="photo-editor" class="main-tab-btn">
-                        <i class="fas fa-sliders-h"></i>
-                        <span class="btn-text">Photo Editor Pro</span>
-                    </button>
-                    <button data-tab="ai-beauty" class="main-tab-btn">
-                        <i class="fas fa-wand-magic-sparkles"></i>
-                        <span class="btn-text">AI Beauty Editor</span>
-                    </button>
-                    <button data-tab="tattoo-editor" class="main-tab-btn">
-                        <i class="fas fa-dragon"></i>
-                        <span class="btn-text">Tattoo Editor</span>
-                    </button>
-                    <button data-tab="halu" class="main-tab-btn">
-                        <i class="fas fa-heart"></i>
-                        <span class="btn-text">Halu Idol</span>
+                    <button data-tab="professional-headshot" class="main-tab-btn">
+                        <i class="fas fa-user-tie"></i>
+                        <span class="btn-text">Professional Headshot</span>
                     </button>
                     <button data-tab="studio-profil" class="main-tab-btn">
                         <i class="fas fa-user-ninja"></i>
                         <span class="btn-text" data-i18n="nav.studio-profil">Studio Profil</span>
                     </button>
-                    <button data-tab="sticker" class="main-tab-btn">
-                        <i class="fas fa-star"></i>
-                        <span class="btn-text">Sticker Tempel</span>
-                    </button>
                     <button data-tab="studio-aesthetic" class="main-tab-btn">
                         <i class="fas fa-wand-magic-sparkles"></i>
                         <span class="btn-text" data-i18n="nav.studio-aesthetic">Studio Aesthetic</span>
+                    </button>
+                    <button data-tab="fotogenic" class="main-tab-btn">
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                        <span class="btn-text">Fotogenic</span>
                     </button>
                     <button data-tab="hair-generator" class="main-tab-btn">
                         <i class="fas fa-cut"></i>
@@ -427,9 +321,69 @@
                         <i class="fas fa-face-laugh-beam"></i>
                         <span class="btn-text">Expression Changer</span>
                     </button>
-                    <button data-tab="sticker-pack-studio" class="main-tab-btn">
+                    <button data-tab="miniature" class="main-tab-btn">
+                        <i class="fas fa-user-astronaut"></i>
+                        <span class="btn-text">Miniature Me</span>
+                    </button>
+                    <button data-tab="karikatur" class="main-tab-btn">
+                        <i class="fas fa-palette"></i>
+                        <span class="btn-text">Karikatur Generator</span>
+                    </button>
+                    <button data-tab="halu" class="main-tab-btn">
+                        <i class="fas fa-heart"></i>
+                        <span class="btn-text">Halu Idol</span>
+                    </button>
+                    <button data-tab="tattoo-editor" class="main-tab-btn">
+                        <i class="fas fa-dragon"></i>
+                        <span class="btn-text">Tattoo Editor</span>
+                    </button>
+                    <button data-tab="sticker" class="main-tab-btn">
+                        <i class="fas fa-star"></i>
+                        <span class="btn-text">Sticker Studio</span>
+                    </button>
+                    <button data-tab="sticker-pack-studio" class="main-tab-btn hidden">
                         <i class="fas fa-icons"></i>
                         <span class="btn-text" data-i18n="nav.sticker-pack-studio">Sticker Pack Studio</span>
+                    </button>
+                    <button data-tab="story-update" class="main-tab-btn">
+                        <i class="fas fa-camera-retro"></i>
+                        <span class="btn-text">Story Update</span>
+                    </button>
+                    <button data-tab="touring" class="main-tab-btn">
+                        <i class="fas fa-motorcycle"></i>
+                        <span class="btn-text">Foto Touring</span>
+                    </button>
+                    <button data-tab="podcast" class="main-tab-btn">
+                        <i class="fas fa-microphone-lines"></i>
+                        <span class="btn-text" data-i18n="nav.podcast">Studio Podcast</span>
+                        <span class="new-badge">NEW</span>
+                    </button>
+                    <button data-tab="watch-together" class="main-tab-btn">
+                        <i class="fas fa-tv"></i>
+                        <span class="btn-text" data-i18n="nav.watch-together">Nonton Bareng</span>
+                    </button>
+                </div>
+
+                <!-- EDIT & UTILITAS FOTO Category -->
+                <div class="menu-category">
+                    <div class="menu-category-title" data-i18n-cat="photo-editing">
+                        <i class="fas fa-sliders-h mr-1"></i> Edit & Utilitas Foto
+                    </div>
+                    <button data-tab="photo-editor" class="main-tab-btn">
+                        <i class="fas fa-sliders-h"></i>
+                        <span class="btn-text">Photo Editor Pro</span>
+                    </button>
+                    <button data-tab="ai-beauty" class="main-tab-btn">
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                        <span class="btn-text">AI Beauty Editor</span>
+                    </button>
+                    <button data-tab="photo-restoration" class="main-tab-btn">
+                        <i class="fas fa-clock-rotate-left"></i>
+                        <span class="btn-text">Restorasi Foto</span>
+                    </button>
+                    <button data-tab="object-remover" class="main-tab-btn">
+                        <i class="fas fa-eraser"></i>
+                        <span class="btn-text">Hapus Object</span>
                     </button>
                     <button data-tab="face-swap" class="main-tab-btn">
                         <i class="fas fa-face-grin-stars"></i>
@@ -449,25 +403,9 @@
                         <i class="fas fa-expand-arrows-alt"></i>
                         <span class="btn-text">Perluas Foto</span>
                     </button>
-                    <button data-tab="story-board" class="main-tab-btn">
-                        <i class="fas fa-film"></i>
-                        <span class="btn-text">Story Board</span>
-                    </button>
-                    <button data-tab="twibon" class="main-tab-btn">
-                        <i class="fas fa-image"></i>
-                        <span class="btn-text">Twibon Frame</span>
-                    </button>
-                    <button data-tab="story-update" class="main-tab-btn">
-                        <i class="fas fa-camera-retro"></i>
-                        <span class="btn-text">Story Update</span>
-                    </button>
-                    <button data-tab="image-analyzer" class="main-tab-btn">
-                        <i class="fas fa-brain"></i>
-                        <span class="btn-text">Image to Prompt</span>
-                    </button>
-                    <button data-tab="packaging-design" class="main-tab-btn">
-                        <i class="fas fa-box"></i>
-                        <span class="btn-text">Packaging Design</span>
+                    <button data-tab="passport-photo" class="main-tab-btn">
+                        <i class="fas fa-id-card"></i>
+                        <span class="btn-text">Pas Foto Warna</span>
                     </button>
                     <button data-tab="photo-angle" class="main-tab-btn">
                         <i class="fas fa-cube"></i>
@@ -477,22 +415,17 @@
                         <i class="fas fa-magic"></i>
                         <span class="btn-text">Style Matcher</span>
                     </button>
-                    <button data-tab="thumbnail-generator" class="main-tab-btn">
-                        <i class="fas fa-rectangle-ad"></i>
-                        <span class="btn-text">Thumbnail Pro</span>
+                    <button data-tab="image-analyzer" class="main-tab-btn">
+                        <i class="fas fa-brain"></i>
+                        <span class="btn-text">Image to Prompt</span>
                     </button>
-                    <button data-tab="cover-photo-generator" class="main-tab-btn">
-                        <i class="fas fa-image-portrait"></i>
-                        <span class="btn-text">Foto sampul IG & Tiktok</span>
-                    </button>
-                    <button data-tab="photo-restoration" class="main-tab-btn">
-                        <i class="fas fa-clock-rotate-left"></i>
-                        <span class="btn-text">Restorasi Foto</span>
-                    </button>
-                    <button data-tab="object-remover" class="main-tab-btn">
-                        <i class="fas fa-eraser"></i>
-                        <span class="btn-text">Hapus Object</span>
-                    </button>
+                </div>
+
+                <!-- BRANDING & DESAIN Category -->
+                <div class="menu-category">
+                    <div class="menu-category-title" data-i18n-cat="branding-design">
+                        <i class="fas fa-palette mr-1"></i> Branding & Desain
+                    </div>
                     <button data-tab="logo-generator" class="main-tab-btn">
                         <i class="fas fa-palette"></i>
                         <span class="btn-text">Logo Generator</span>
@@ -501,29 +434,13 @@
                         <i class="fas fa-briefcase"></i>
                         <span class="btn-text">AI Brand Kit Generator</span>
                     </button>
-                    <button data-tab="content-calendar" class="main-tab-btn">
-                        <i class="fas fa-calendar-alt"></i>
-                        <span class="btn-text">Content Calendar Planner</span>
-                    </button>
-                    <button data-tab="ab-testing" class="main-tab-btn">
-                        <i class="fas fa-chart-line"></i>
-                        <span class="btn-text">A/B Testing AI</span>
-                    </button>
-                    <button data-tab="roi-calculator" class="main-tab-btn">
-                        <i class="fas fa-sack-dollar"></i>
-                        <span class="btn-text">ROI Calculator AI</span>
-                    </button>
-                    <button data-tab="caption-generator" class="main-tab-btn">
-                        <i class="fas fa-pen-to-square"></i>
-                        <span class="btn-text">AI Caption Generator</span>
-                    </button>
-                    <button data-tab="product-comparison" class="main-tab-btn">
-                        <i class="fas fa-scale-balanced"></i>
-                        <span class="btn-text">Product Comparison</span>
-                    </button>
                     <button data-tab="mascot-generator" class="main-tab-btn">
                         <i class="fas fa-dragon"></i>
                         <span class="btn-text">Mascot Generator</span>
+                    </button>
+                    <button data-tab="packaging-design" class="main-tab-btn">
+                        <i class="fas fa-box"></i>
+                        <span class="btn-text">Packaging Design</span>
                     </button>
                     <button data-tab="poster-generator" class="main-tab-btn">
                         <i class="fas fa-image"></i>
@@ -533,17 +450,103 @@
                         <i class="fas fa-rectangle-ad"></i>
                         <span class="btn-text">Banner Generator</span>
                     </button>
-                    <button data-tab="sketch-catalog" class="main-tab-btn">
-                        <i class="fas fa-pen-nib"></i>
-                        <span class="btn-text">Sketsa ke Katalog</span>
+                    <button data-tab="thumbnail-generator" class="main-tab-btn">
+                        <i class="fas fa-rectangle-ad"></i>
+                        <span class="btn-text">Thumbnail Pro</span>
                     </button>
-                    <button data-tab="fotogenic" class="main-tab-btn">
-                        <i class="fas fa-wand-magic-sparkles"></i>
-                        <span class="btn-text">Fotogenic</span>
+                    <button data-tab="cover-photo-generator" class="main-tab-btn">
+                        <i class="fas fa-image-portrait"></i>
+                        <span class="btn-text">Foto sampul IG & Tiktok</span>
                     </button>
-                    <button data-tab="timelapse-renovasi" class="main-tab-btn">
+                    <button data-tab="twibon" class="main-tab-btn">
+                        <i class="fas fa-image"></i>
+                        <span class="btn-text">Twibon Frame</span>
+                    </button>
+                    <button data-tab="bikin-carousel" class="main-tab-btn">
+                        <i class="fas fa-images"></i>
+                        <span class="btn-text">Bikin Carousel</span>
+                    </button>
+                    <button data-tab="sketsa-gambar" class="main-tab-btn">
+                        <i class="fas fa-pencil-ruler"></i>
+                        <span class="btn-text">Sketsa Gambar</span>
+                    </button>
+                </div>
+
+                <!-- RUMAH & INTERIOR Category -->
+                <div class="menu-category">
+                    <div class="menu-category-title" data-i18n-cat="home-interior">
+                        <i class="fas fa-house-chimney mr-1"></i> Rumah & Interior
+                    </div>
+                    <button data-tab="desain-rumah" class="main-tab-btn">
+                        <i class="fas fa-home"></i>
+                        <span class="btn-text">Desain Rumah & Interior</span>
+                    </button>
+                    <button data-tab="desain-kamar" class="main-tab-btn hidden">
+                        <i class="fas fa-door-open"></i>
+                        <span class="btn-text">Desain Kamar</span>
+                    </button>
+                    <button data-tab="timelapse-renovasi" class="main-tab-btn hidden">
                         <i class="fas fa-house-chimney"></i>
                         <span class="btn-text">Timelapse Renovasi</span>
+                    </button>
+                </div>
+
+                <!-- BISNIS & COPYWRITING Category -->
+                <div class="menu-category">
+                    <div class="menu-category-title" data-i18n-cat="business-tools">
+                        <i class="fas fa-briefcase mr-1"></i> Bisnis & Copywriting
+                    </div>
+                    <button data-tab="deskripsi-produk" class="main-tab-btn">
+                        <i class="fas fa-tags"></i>
+                        <span class="btn-text">Deskripsi Produk SEO</span>
+                    </button>
+                    <button data-tab="ide-konten-tiktok" class="main-tab-btn">
+                        <i class="fab fa-tiktok"></i>
+                        <span class="btn-text">Ide Konten TikTok</span>
+                    </button>
+                    <button data-tab="script-story-iklan" class="main-tab-btn">
+                        <i class="fas fa-book-open"></i>
+                        <span class="btn-text">Script Story Iklan</span>
+                    </button>
+                    <button data-tab="caption-generator" class="main-tab-btn">
+                        <i class="fas fa-pen-to-square"></i>
+                        <span class="btn-text">AI Caption Generator</span>
+                    </button>
+                    <button data-tab="konten-marketing" class="main-tab-btn">
+                        <i class="fas fa-bullhorn"></i>
+                        <span class="btn-text">Konten Marketing</span>
+                    </button>
+                    <button data-tab="content-calendar" class="main-tab-btn">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span class="btn-text">Content Calendar Planner</span>
+                    </button>
+                    <button data-tab="ab-testing" class="main-tab-btn">
+                        <i class="fas fa-chart-line"></i>
+                        <span class="btn-text">A/B Testing AI</span>
+                    </button>
+                    <button data-tab="product-comparison" class="main-tab-btn">
+                        <i class="fas fa-scale-balanced"></i>
+                        <span class="btn-text">Product Comparison</span>
+                    </button>
+                    <button data-tab="roi-calculator" class="main-tab-btn">
+                        <i class="fas fa-sack-dollar"></i>
+                        <span class="btn-text">ROI Calculator AI</span>
+                    </button>
+                    <button data-tab="riset-pasar" class="main-tab-btn">
+                        <i class="fas fa-search-dollar"></i>
+                        <span class="btn-text">Riset Pasar & Ide</span>
+                    </button>
+                    <button data-tab="rencana-bisnis" class="main-tab-btn">
+                        <i class="fas fa-chart-line"></i>
+                        <span class="btn-text">Rencana Bisnis & SWOT</span>
+                    </button>
+                    <button data-tab="hr-assistant" class="main-tab-btn">
+                        <i class="fas fa-users"></i>
+                        <span class="btn-text">HR Assistant</span>
+                    </button>
+                    <button data-tab="financial-forecast" class="main-tab-btn">
+                        <i class="fas fa-calculator"></i>
+                        <span class="btn-text">Simulasi Anggaran</span>
                     </button>
                 </div>
 
@@ -563,6 +566,14 @@
                     <button data-tab="video-analyzer" class="main-tab-btn">
                         <i class="fas fa-film"></i>
                         <span class="btn-text">Video Analyzer</span>
+                    </button>
+                    <button data-tab="video-frames" class="main-tab-btn">
+                        <i class="fas fa-film"></i>
+                        <span class="btn-text">Video Frames</span>
+                    </button>
+                    <button data-tab="story-board" class="main-tab-btn">
+                        <i class="fas fa-film"></i>
+                        <span class="btn-text">Story Board</span>
                     </button>
                 </div>
             </nav>
@@ -2352,6 +2363,11 @@
         <!-- TAB 3: AFFILIATE GO -->
         <!-- TAB: FOTO PRODUK (AffiliateGo) -->
         <div id="content-affiliate" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill active" data-goto="affiliate" data-i18n="hub.aff-umum">Tema Umum</button>
+                <button type="button" class="hub-pill" data-goto="affiliate-islami" data-i18n="hub.aff-agama">Tema Agama</button>
+                <button type="button" class="hub-pill" data-goto="affiliate-harga" data-i18n="hub.aff-harga">Tema Harga</button>
+            </div>
                 <main class="flex flex-col lg:flex-row gap-8">
                     <!-- Kolom Input -->
                     <div class="card p-6 w-full lg:w-1/3 lg:max-w-sm flex-shrink-0 self-start">
@@ -2547,7 +2563,7 @@
 
                             <div class="mt-6">
                                 <h2 class="text-xl font-semibold mb-3 text-gray-800" data-i18n="aff.step6">6. Rasio Aspek</h2>
-                                <div id="broll-ratio-selection" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                <div id="broll-ratio-selection" class="grid grid-cols-2 sm:grid-cols-5 gap-3">
                                     <button type="button" data-ratio="1:1" class="ratio-btn-broll">
                                         <i class="fas fa-square mr-2"></i>1:1
                                     </button>
@@ -2556,6 +2572,9 @@
                                     </button>
                                     <button type="button" data-ratio="3:4" class="ratio-btn-broll">
                                         <i class="fas fa-rectangle-portrait mr-2"></i>3:4
+                                    </button>
+                                    <button type="button" data-ratio="4:5" class="ratio-btn-broll">
+                                        <i class="fas fa-rectangle-portrait mr-2"></i>4:5
                                     </button>
                                     <button type="button" data-ratio="9:16" class="ratio-btn-broll">
                                         <i class="fas fa-mobile-alt mr-2"></i>9:16
@@ -2600,6 +2619,132 @@
                             </button>
                         </div>
                         <div id="broll-b-roll-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4"></div>
+                    </div>
+                </main>
+        </div>
+
+        <!-- TAB: FOTO PRODUK AFFILIATE + HARGA (Tema Harga) -->
+        <div id="content-affiliate-harga" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill" data-goto="affiliate" data-i18n="hub.aff-umum">Tema Umum</button>
+                <button type="button" class="hub-pill" data-goto="affiliate-islami" data-i18n="hub.aff-agama">Tema Agama</button>
+                <button type="button" class="hub-pill active" data-goto="affiliate-harga" data-i18n="hub.aff-harga">Tema Harga</button>
+            </div>
+                <main class="flex flex-col lg:flex-row gap-8">
+                    <!-- Kolom Input -->
+                    <div class="card p-6 w-full lg:w-1/3 lg:max-w-sm flex-shrink-0 self-start">
+                        <div class="flex flex-col gap-6">
+                            <div>
+                                <h2 class="text-xl font-semibold mb-3 text-gray-800" data-i18n="aff.step1">1. Unggah Gambar Produk</h2>
+                                <div id="hrg-image-upload-area">
+                                    <label for="hrg-image-input" class="file-input-label rounded-lg text-center text-gray-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        <span data-i18n="aff.step1-cta">Pilih Gambar Produk (Bisa lebih dari 1)</span>
+                                    </label>
+                                    <input type="file" id="hrg-image-input" class="hidden" accept="image/png, image/jpeg, image/webp" multiple>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-2" data-i18n="hrg.price-hint">Isi harga di tiap foto produk yang diunggah.</p>
+                                <div id="hrg-image-preview-container" class="hidden mt-4 grid grid-cols-3 gap-2">
+                                    <!-- Product images will be added here dynamically -->
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between items-center mb-3">
+                                    <h2 class="text-xl font-semibold text-gray-800" data-i18n="aff.step2">2. Deskripsi Produk</h2>
+                                    <button id="hrg-generate-desc-btn" class="btn-secondary text-sm font-semibold py-1 px-3 rounded-md flex items-center" disabled> <span data-i18n="aff.generate-desc-btn">✨ Buat Deskripsi</span> </button>
+                                </div>
+                                <textarea id="hrg-product-desc-input" rows="4" class="w-full p-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" data-i18n-placeholder="aff.desc-placeholder" placeholder="Contoh: Smartwatch X200 tahan air dengan GPS..."></textarea>
+                            </div>
+
+                            <div>
+                                <h2 class="text-xl font-semibold mb-3 text-gray-800"><span data-i18n="aff.step3">3. Unggah Foto Model</span> <span class="text-sm text-gray-500" data-i18n="bm.optional">(Opsional)</span></h2>
+                                <div id="hrg-model-image-upload-area">
+                                    <label for="hrg-model-image-input" class="file-input-label rounded-lg text-center text-gray-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                                        <span data-i18n="aff.model-cta">Pilih Foto Model</span>
+                                    </label>
+                                    <input type="file" id="hrg-model-image-input" class="hidden" accept="image/png, image/jpeg, image/webp">
+                                </div>
+                                <div id="hrg-model-image-preview-container" class="hidden mt-4 relative">
+                                    <img id="hrg-model-image-preview" src="#" alt="Pratinjau Model" class="rounded-lg w-full h-auto object-contain">
+                                    <button id="hrg-remove-model-image-btn" class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1.5 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h2 class="text-xl font-semibold mb-3 text-gray-800"><span data-i18n="hrg.step4-bg">4. Unggah Background</span> <span class="text-sm text-gray-500" data-i18n="bm.optional">(Opsional)</span></h2>
+                                <div id="hrg-background-image-upload-area">
+                                    <label for="hrg-background-image-input" class="file-input-label rounded-lg text-center text-gray-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        <span data-i18n="aff.bg-cta">Pilih Background Custom</span>
+                                    </label>
+                                    <input type="file" id="hrg-background-image-input" class="hidden" accept="image/png, image/jpeg, image/webp">
+                                </div>
+                                <div id="hrg-background-image-preview-container" class="hidden mt-4 relative">
+                                    <img id="hrg-background-image-preview" src="#" alt="Pratinjau Background" class="rounded-lg w-full h-auto object-contain">
+                                    <button id="hrg-remove-background-image-btn" class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1.5 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                                </div>
+                            </div>
+
+                            <div class="mt-6">
+                                <h2 class="text-xl font-semibold mb-3 text-gray-800" data-i18n="hrg.step5-ratio">5. Rasio Aspek</h2>
+                                <div id="hrg-ratio-selection" class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                                    <button type="button" data-ratio="1:1" class="ratio-btn-broll">
+                                        <i class="fas fa-square mr-2"></i>1:1
+                                    </button>
+                                    <button type="button" data-ratio="16:9" class="ratio-btn-broll selected">
+                                        <i class="fas fa-rectangle-landscape mr-2"></i>16:9
+                                    </button>
+                                    <button type="button" data-ratio="3:4" class="ratio-btn-broll">
+                                        <i class="fas fa-rectangle-portrait mr-2"></i>3:4
+                                    </button>
+                                    <button type="button" data-ratio="4:5" class="ratio-btn-broll">
+                                        <i class="fas fa-rectangle-portrait mr-2"></i>4:5
+                                    </button>
+                                    <button type="button" data-ratio="9:16" class="ratio-btn-broll">
+                                        <i class="fas fa-mobile-alt mr-2"></i>9:16
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Jumlah Generate -->
+                            <div>
+                                <h3 class="text-base sm:text-lg font-bold mb-3 text-gray-800">
+                                    <i class="fas fa-layer-group mr-2 text-green-600"></i>
+                                    <span data-i18n="aff.count-label">Jumlah Generate</span>
+                                </h3>
+                                <div id="hrg-count-selection-grid" class="count-btn-grid theme-emerald">
+                                    <button type="button" data-count="1">1</button>
+                                    <button type="button" data-count="2">2</button>
+                                    <button type="button" data-count="3">3</button>
+                                    <button type="button" data-count="4" class="selected">4</button>
+                                    <button type="button" data-count="5">5</button>
+                                    <button type="button" data-count="6">6</button>
+                                    <button type="button" data-count="7">7</button>
+                                    <button type="button" data-count="8">8</button>
+                                    <button type="button" data-count="9">9</button>
+                                    <button type="button" data-count="10">10</button>
+                                </div>
+                            </div>
+
+                            <button type="button" id="hrg-generate-btn" class="w-full btn-primary font-bold py-3 px-4 rounded-lg flex items-center justify-center text-lg mt-6" disabled>
+                                <span data-i18n="aff.generate-btn">Buat Pose Produk</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex-grow">
+                        <!-- Results Header with Download All -->
+                        <div id="hrg-results-header" class="hidden mb-4 flex items-center justify-between">
+                            <h3 class="text-xl font-bold text-gray-800">
+                                <span id="hrg-result-count">0</span> Foto Berhasil Di-generate
+                            </h3>
+                            <button id="hrg-download-all-btn" class="btn-primary px-6 py-2 rounded-lg flex items-center gap-2">
+                                <i class="fas fa-download"></i>
+                                Download Semua
+                            </button>
+                        </div>
+                        <div id="hrg-b-roll-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4"></div>
                     </div>
                 </main>
         </div>
@@ -2948,6 +3093,11 @@
 
         <!-- TAB: AFFILIATE ISLAMI -->
         <div id="content-affiliate-islami" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill" data-goto="affiliate" data-i18n="hub.aff-umum">Tema Umum</button>
+                <button type="button" class="hub-pill active" data-goto="affiliate-islami" data-i18n="hub.aff-agama">Tema Agama</button>
+                <button type="button" class="hub-pill" data-goto="affiliate-harga" data-i18n="hub.aff-harga">Tema Harga</button>
+            </div>
             <div class="container mx-auto max-w-7xl">
                 <header class="text-center mb-8">
                     <h1 class="text-4xl md:text-5xl font-bold mb-3" style="background: linear-gradient(135deg, #16a34a 0%, #16a34a 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
@@ -4235,6 +4385,11 @@
 
         <!-- TAB: PRODUCT REVIEW GENERATOR -->
         <div id="content-product-review" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill active" data-goto="product-review" data-i18n="hub.review-product">Review Produk</button>
+                <button type="button" class="hub-pill" data-goto="skincare-review" data-i18n="hub.review-skincare">Review Skincare</button>
+                <button type="button" class="hub-pill" data-goto="food-review" data-i18n="hub.review-food">Review Makanan</button>
+            </div>
             <div class="container mx-auto p-4 md:p-8 max-w-7xl">
                 <header class="text-center mb-8">
                     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 via-purple-500 to-pink-500" data-i18n="pr.h1">
@@ -4375,6 +4530,11 @@
 
         <!-- TAB: SKINCARE PRODUCT REVIEW -->
         <div id="content-skincare-review" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill" data-goto="product-review" data-i18n="hub.review-product">Review Produk</button>
+                <button type="button" class="hub-pill active" data-goto="skincare-review" data-i18n="hub.review-skincare">Review Skincare</button>
+                <button type="button" class="hub-pill" data-goto="food-review" data-i18n="hub.review-food">Review Makanan</button>
+            </div>
             <div class="container mx-auto p-4 md:p-8 max-w-7xl">
                 <header class="text-center mb-8">
                     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-rose-500 to-fuchsia-500" data-i18n="sr.h1">
@@ -4568,6 +4728,11 @@
 
         <!-- TAB: FOOD REVIEW -->
         <div id="content-food-review" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill" data-goto="product-review" data-i18n="hub.review-product">Review Produk</button>
+                <button type="button" class="hub-pill" data-goto="skincare-review" data-i18n="hub.review-skincare">Review Skincare</button>
+                <button type="button" class="hub-pill active" data-goto="food-review" data-i18n="hub.review-food">Review Makanan</button>
+            </div>
             <div class="container mx-auto p-4 md:p-8 max-w-7xl">
                 <header class="text-center mb-8">
                     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500" data-i18n="fr.h1">
@@ -9558,6 +9723,10 @@
 
         <!-- TAB 9: WEDDING & PRE-WEDDING - PROFESSIONAL VERSION -->
         <div id="content-wedding" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill active" data-goto="wedding" data-i18n="hub.wedding-photo">Foto Wedding</button>
+                <button type="button" class="hub-pill" data-goto="wedding-design" data-i18n="hub.wedding-decor">Desain Dekorasi</button>
+            </div>
             <div class="hearts-container" id="wedding-hearts-container"></div>
             <div class="container mx-auto max-w-7xl">
                 <header class="text-center mb-10">
@@ -9762,6 +9931,10 @@
 
         <!-- TAB: DESAIN PERNIKAHAN INDONESIA -->
         <div id="content-wedding-design" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill" data-goto="wedding" data-i18n="hub.wedding-photo">Foto Wedding</button>
+                <button type="button" class="hub-pill active" data-goto="wedding-design" data-i18n="hub.wedding-decor">Desain Dekorasi</button>
+            </div>
             <div class="container mx-auto max-w-7xl">
                 <header class="text-center mb-10">
                     <div class="inline-flex items-center gap-3 mb-4">
@@ -11195,6 +11368,10 @@
 
         <!-- TAB: STICKER PACK STUDIO -->
         <div id="content-sticker-pack-studio" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill" data-goto="sticker" data-i18n="hub.sticker-single">Sticker Tempel</button>
+                <button type="button" class="hub-pill active" data-goto="sticker-pack-studio" data-i18n="hub.sticker-pack">Sticker Pack</button>
+            </div>
             <div class="container mx-auto max-w-7xl">
                 <header class="text-center mb-10">
                     <div class="inline-flex items-center gap-3 mb-4">
@@ -11351,85 +11528,205 @@
             <iframe src="https://pixlr.com/id/remove-background/" class="w-full h-[85vh] border-0 rounded-lg shadow-lg" title="Hapus Background" allow="camera; microphone"></iframe>
         </div>
 
-        <!-- TAB: RUANG SAKU (info + CTA ke ruangsaku.com) -->
+        <!-- TAB: ADS (promo produk digital sendiri — eCourse Vibe Coding + KILATVIDEO. id "ruangsaku" dipertahankan demi kompatibilitas favorit) -->
         <div id="content-ruangsaku" class="main-content-panel hidden">
             <div class="max-w-5xl mx-auto p-4 sm:p-6">
 
                 <!-- Hero -->
-                <div class="text-center mb-8 sm:mb-12">
-                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-700 rounded-full text-xs sm:text-sm font-semibold mb-4 border border-blue-200">
-                        <i class="fas fa-comments"></i>
-                        <span data-i18n="rs.badge">Teman AI keuanganmu</span>
+                <div class="text-center mb-8 sm:mb-10">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-100 to-emerald-100 text-green-700 rounded-full text-xs sm:text-sm font-semibold mb-4 border border-green-200">
+                        <i class="fas fa-bullhorn"></i>
+                        <span data-i18n="ads.badge">Produk digital dari developer AffiliateGo</span>
                     </div>
-                    <h1 class="text-3xl sm:text-5xl font-bold text-gray-900 mb-4 leading-tight" data-i18n="rs.hero-title">
-                        Ngobrol soal uang, sesantai curhat ke teman.
+                    <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-3 leading-tight" data-i18n="ads.hero-title">
+                        Level up skill &amp; kontenmu
                     </h1>
-                    <p class="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto mb-6" data-i18n="rs.hero-desc">
-                        Kenalan sama Rindu &#8212; teman AI yang bantu catat pengeluaran, pantau tabungan, sampai ingetin hutang. Tinggal chat aja, kayak ngobrol biasa.
-                    </p>
-                    <a href="https://ruangsaku.com" target="_blank" rel="noopener noreferrer"
-                       class="inline-flex items-center gap-3 w-full sm:w-auto justify-center px-6 sm:px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white text-base sm:text-lg font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 active:scale-95">
-                        <i class="fas fa-external-link-alt"></i>
-                        <span data-i18n="rs.hero-cta">Buka di RuangSaku.com</span>
-                    </a>
-                    <p class="text-xs text-gray-500 mt-3" data-i18n="rs.hero-cta-hint">
-                        Untuk pengalaman terbaik di HP, buka langsung di browser
+                    <p class="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto" data-i18n="ads.hero-desc">
+                        Dua produk andalan untuk bantu kamu menghasilkan dari AI &#8212; dibuat oleh developer yang sama dengan aplikasi ini.
                     </p>
                 </div>
 
-                <!-- Features Grid -->
-                <div class="mb-8 sm:mb-12">
-                    <h2 class="text-xl sm:text-2xl font-bold text-center text-gray-900 mb-6" data-i18n="rs.features-title">
-                        Satu teman, semua urusan uang
-                    </h2>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div class="p-5 bg-white rounded-2xl shadow-md hover:shadow-lg transition-all border border-gray-100">
-                            <div class="text-3xl mb-3">&#128221;</div>
-                            <h3 class="font-bold text-gray-900 mb-2" data-i18n="rs.feat1-title">Catat Pengeluaran</h3>
-                            <p class="text-sm text-gray-600" data-i18n="rs.feat1-desc">"Beli kopi 25rb" &#8212; Rindu langsung tahu kategorinya dan catat ke dompet yang benar.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+
+                    <!-- Card 1: eCourse Vibe Coding & Monetisasi -->
+                    <div class="flex flex-col p-6 bg-white rounded-2xl shadow-lg border-2 border-green-200 hover:shadow-xl transition-all">
+                        <div class="inline-flex self-start items-center gap-2 px-3 py-1.5 bg-orange-100 text-orange-700 rounded-full text-xs font-bold mb-4">
+                            <i class="fas fa-fire"></i>
+                            <span data-i18n="ads.course-badge">HARGA FOUNDING MEMBER TERBATAS</span>
                         </div>
-                        <div class="p-5 bg-white rounded-2xl shadow-md hover:shadow-lg transition-all border border-gray-100">
-                            <div class="text-3xl mb-3">&#127919;</div>
-                            <h3 class="font-bold text-gray-900 mb-2" data-i18n="rs.feat2-title">Pantau Tabungan</h3>
-                            <p class="text-sm text-gray-600" data-i18n="rs.feat2-desc">"Nabung 500rb buat umroh" &#8212; Rindu pantau progress dan kasih semangat tiap milestone.</p>
+                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2" data-i18n="ads.course-title">eCourse Vibe Coding &amp; Monetisasi</h2>
+                        <p class="text-sm sm:text-base text-gray-600 mb-4" data-i18n="ads.course-desc">
+                            Bongkar rahasia Rp 1 juta/minggu dari AI: bikin aplikasi Google Apps Script pakai AI, lalu jual. Nggak perlu bisa coding, nggak perlu modal.
+                        </p>
+                        <ul class="space-y-2 text-sm text-gray-700 mb-5">
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.course-f1">6 modul video dari nol sampai punya produk &#8212; akses selamanya</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.course-f2">Template prompt Claude + magic prompt + CLAUDE.md siap pakai</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.course-f3">Panduan monetisasi &amp; jualan app di Lynk.id</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.course-f4">Grup support WhatsApp + update gratis selamanya</span></li>
+                        </ul>
+                        <div class="mt-auto">
+                            <a href="https://wahanainovasipintar.myscalev.com/vibecoding-gas" target="_blank" rel="noopener noreferrer"
+                               class="inline-flex items-center gap-2 w-full justify-center px-6 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-base font-bold rounded-2xl shadow-lg transition-all transform hover:scale-105 active:scale-95">
+                                <i class="fas fa-rocket"></i>
+                                <span data-i18n="ads.course-cta">Ambil eCourse Sekarang</span>
+                            </a>
                         </div>
-                        <div class="p-5 bg-white rounded-2xl shadow-md hover:shadow-lg transition-all border border-gray-100">
-                            <div class="text-3xl mb-3">&#128184;</div>
-                            <h3 class="font-bold text-gray-900 mb-2" data-i18n="rs.feat3-title">Kelola Hutang</h3>
-                            <p class="text-sm text-gray-600" data-i18n="rs.feat3-desc">"Budi hutang 200rb" &#8212; Rindu yang ingatkan, siapa hutang berapa dan kapan deadline-nya.</p>
+                    </div>
+
+                    <!-- Card 2: KILATVIDEO -->
+                    <div class="flex flex-col p-6 bg-white rounded-2xl shadow-lg border-2 border-green-200 hover:shadow-xl transition-all">
+                        <div class="inline-flex self-start items-center gap-2 px-3 py-1.5 bg-yellow-100 text-yellow-700 rounded-full text-xs font-bold mb-4">
+                            <i class="fas fa-bolt"></i>
+                            <span data-i18n="ads.kilat-badge">HARGA LAUNCHING</span>
                         </div>
-                        <div class="p-5 bg-white rounded-2xl shadow-md hover:shadow-lg transition-all border border-gray-100">
-                            <div class="text-3xl mb-3">&#128202;</div>
-                            <h3 class="font-bold text-gray-900 mb-2" data-i18n="rs.feat4-title">Dashboard Pintar</h3>
-                            <p class="text-sm text-gray-600" data-i18n="rs.feat4-desc">Saldo dompet, tren pengeluaran, budget &#8212; semua update sendiri tanpa input manual.</p>
+                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2" data-i18n="ads.kilat-title">KILATVIDEO &#8212; AI Auto Content Creator</h2>
+                        <p class="text-sm sm:text-base text-gray-600 mb-4" data-i18n="ads.kilat-desc">
+                            Ubah video random di HP jadi konten viral otomatis. AI yang pilih, edit, kasih caption &amp; musik, lalu auto-upload ke sosmed.
+                        </p>
+                        <ul class="space-y-2 text-sm text-gray-700 mb-5">
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.kilat-f1">AI auto-edit &#8212; tanpa skill editing sama sekali</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.kilat-f2">Caption sesuai niche: 4 preset + 20 slot template custom</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.kilat-f3">Auto schedule upload ke sosmed &#8212; bangun tidur konten tayang</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.kilat-f4">Lifetime + update selamanya + bonus versi Telegram saat rilis</span></li>
+                        </ul>
+                        <div class="mt-auto">
+                            <a href="https://lynk.id/arullagi/d25knw5wm1d3" target="_blank" rel="noopener noreferrer"
+                               class="inline-flex items-center gap-2 w-full justify-center px-6 py-4 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white text-base font-bold rounded-2xl shadow-lg transition-all transform hover:scale-105 active:scale-95">
+                                <i class="fas fa-bolt"></i>
+                                <span data-i18n="ads.kilat-cta">Ambil KILATVIDEO</span>
+                            </a>
                         </div>
-                        <div class="p-5 bg-white rounded-2xl shadow-md hover:shadow-lg transition-all border border-gray-100">
-                            <div class="text-3xl mb-3">&#128276;</div>
-                            <h3 class="font-bold text-gray-900 mb-2" data-i18n="rs.feat5-title">Reminder Otomatis</h3>
-                            <p class="text-sm text-gray-600" data-i18n="rs.feat5-desc">Pagi kasih sisa budget, malam recap pengeluaran. Tagihan? Diingatkan 3 hari sebelumnya.</p>
+                    </div>
+
+                    <!-- Card 3: YT24 -->
+                    <div class="flex flex-col p-6 bg-white rounded-2xl shadow-lg border-2 border-green-200 hover:shadow-xl transition-all">
+                        <div class="inline-flex self-start items-center gap-2 px-3 py-1.5 bg-red-100 text-red-700 rounded-full text-xs font-bold mb-4">
+                            <i class="fas fa-video"></i>
+                            <span data-i18n="ads.yt24-badge">LIFETIME &#8212; SEKALI BAYAR</span>
                         </div>
-                        <div class="p-5 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl shadow-md border border-blue-100 flex flex-col items-center justify-center text-center">
-                            <div class="text-3xl mb-2">&#10024;</div>
-                            <p class="text-sm font-semibold text-blue-900" data-i18n="rs.feat-free">Gratis selamanya</p>
-                            <p class="text-xs text-blue-700 mt-1" data-i18n="rs.feat-free-desc">Pro tersedia untuk yang butuh fitur lanjutan</p>
+                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2" data-i18n="ads.yt24-title">YT24 &#8212; YouTube Live 24 Jam</h2>
+                        <p class="text-sm sm:text-base text-gray-600 mb-4" data-i18n="ads.yt24-desc">
+                            Bikin channel YouTube live 24 jam nonstop &#8212; cocok untuk musik lofi, murotal, suara hujan, ASMR. Multi-stream 10+ channel sekaligus.
+                        </p>
+                        <ul class="space-y-2 text-sm text-gray-700 mb-5">
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.yt24-f1">Multi-channel: 10+ YouTube Live sekaligus dari 1 software</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.yt24-f2">Dual format &#8212; horizontal (Live) &amp; vertikal (Shorts)</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.yt24-f3">RDP/VPS friendly &#8212; live 24 jam tanpa laptop nyala</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.yt24-f4">Lifetime + update selamanya + grup support</span></li>
+                        </ul>
+                        <div class="mt-auto">
+                            <a href="https://lynk.id/arullagi/gBe6qO8" target="_blank" rel="noopener noreferrer"
+                               class="inline-flex items-center gap-2 w-full justify-center px-6 py-4 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white text-base font-bold rounded-2xl shadow-lg transition-all transform hover:scale-105 active:scale-95">
+                                <i class="fas fa-video"></i>
+                                <span data-i18n="ads.yt24-cta">Ambil YT24</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Vocalive AI -->
+                    <div class="flex flex-col p-6 bg-white rounded-2xl shadow-lg border-2 border-green-200 hover:shadow-xl transition-all">
+                        <div class="inline-flex self-start items-center gap-2 px-3 py-1.5 bg-purple-100 text-purple-700 rounded-full text-xs font-bold mb-4">
+                            <i class="fas fa-robot"></i>
+                            <span data-i18n="ads.vocalive-badge">AI SELLER LIVE 24 JAM</span>
+                        </div>
+                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2" data-i18n="ads.vocalive-title">Vocalive AI &#8212; AI Live Jualan</h2>
+                        <p class="text-sm sm:text-base text-gray-600 mb-4" data-i18n="ads.vocalive-desc">
+                            AI seller yang balas komentar penonton TikTok Live pakai suara natural &amp; jualan otomatis 24 jam &#8212; tanpa gaji host bulanan.
+                        </p>
+                        <ul class="space-y-2 text-sm text-gray-700 mb-5">
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.vocalive-f1">Balas komentar real-time dengan suara manusia natural</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.vocalive-f2">AI paham database produkmu &#8212; jawab pembeli akurat</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.vocalive-f3">Cukup 1 Gemini API Key &#8212; tanpa OBS/software tambahan</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.vocalive-f4">TikTok aktif sekarang &#8212; Shopee &amp; platform lain menyusul</span></li>
+                        </ul>
+                        <div class="mt-auto">
+                            <a href="https://lynk.id/arullagi/6k6z5p6oglxr" target="_blank" rel="noopener noreferrer"
+                               class="inline-flex items-center gap-2 w-full justify-center px-6 py-4 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-base font-bold rounded-2xl shadow-lg transition-all transform hover:scale-105 active:scale-95">
+                                <i class="fas fa-robot"></i>
+                                <span data-i18n="ads.vocalive-cta">Ambil Vocalive AI</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card 5: PK Simulator -->
+                    <div class="flex flex-col p-6 bg-white rounded-2xl shadow-lg border-2 border-green-200 hover:shadow-xl transition-all">
+                        <div class="inline-flex self-start items-center gap-2 px-3 py-1.5 bg-cyan-100 text-cyan-700 rounded-full text-xs font-bold mb-4">
+                            <i class="fas fa-circle-nodes"></i>
+                            <span data-i18n="ads.pk-badge">PK SIMULATOR 24 JAM</span>
+                        </div>
+                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2" data-i18n="ads.pk-title">TikTok Live PK Simulator</h2>
+                        <p class="text-sm sm:text-base text-gray-600 mb-4" data-i18n="ads.pk-desc">
+                            Live TikTok otomatis tanpa perlu bicara &#8212; visual bubble memukau &amp; simulasi PK yang memancing penonton kirim gift 24 jam.
+                        </p>
+                        <ul class="space-y-2 text-sm text-gray-700 mb-5">
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.pk-f1">Visual bubble bikin penonton betah &amp; ketagihan kirim gift</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.pk-f2">Sistem PK &amp; skor otomatis Tim A vs Tim B</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.pk-f3">Ringan &amp; anti-lag &#8212; jalan di laptop biasa</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.pk-f4">Set &amp; forget &#8212; live via PC atau HP shoot ke monitor</span></li>
+                        </ul>
+                        <div class="mt-auto">
+                            <a href="https://lynk.id/arullagi/4dpp52g519kr" target="_blank" rel="noopener noreferrer"
+                               class="inline-flex items-center gap-2 w-full justify-center px-6 py-4 bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white text-base font-bold rounded-2xl shadow-lg transition-all transform hover:scale-105 active:scale-95">
+                                <i class="fas fa-circle-nodes"></i>
+                                <span data-i18n="ads.pk-cta">Ambil PK Simulator</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card 6: TikDance AI -->
+                    <div class="flex flex-col p-6 bg-white rounded-2xl shadow-lg border-2 border-green-200 hover:shadow-xl transition-all">
+                        <div class="inline-flex self-start items-center gap-2 px-3 py-1.5 bg-pink-100 text-pink-700 rounded-full text-xs font-bold mb-4">
+                            <i class="fas fa-music"></i>
+                            <span data-i18n="ads.tikdance-badge">AI JOGET AUTO-GIFT 24 JAM</span>
+                        </div>
+                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2" data-i18n="ads.tikdance-title">TikDance AI &#8212; AI Joget TikTok</h2>
+                        <p class="text-sm sm:text-base text-gray-600 mb-4" data-i18n="ads.tikdance-desc">
+                            Karakter AI otomatis berjoget tiap kali penonton kirim gift &#8212; live TikTok 24 jam nonstop tanpa tampil di depan kamera.
+                        </p>
+                        <ul class="space-y-2 text-sm text-gray-700 mb-5">
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.tikdance-f1">AI menari otomatis saat gift masuk &#8212; reaksi di bawah 1 detik</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.tikdance-f2">Karakter bisa dikustom &#8212; anime, robot, hewan lucu</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.tikdance-f3">Jalan 24/7 di background &#8212; hemat gaji host jutaan/bulan</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.tikdance-f4">Live via PC atau HP shoot ke monitor</span></li>
+                        </ul>
+                        <div class="mt-auto">
+                            <a href="https://lynk.id/arullagi/g4w8k4zmr0zg" target="_blank" rel="noopener noreferrer"
+                               class="inline-flex items-center gap-2 w-full justify-center px-6 py-4 bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white text-base font-bold rounded-2xl shadow-lg transition-all transform hover:scale-105 active:scale-95">
+                                <i class="fas fa-music"></i>
+                                <span data-i18n="ads.tikdance-cta">Ambil TikDance AI</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card 7: GPT Storyboard UGC -->
+                    <div class="flex flex-col p-6 bg-white rounded-2xl shadow-lg border-2 border-green-200 hover:shadow-xl transition-all">
+                        <div class="inline-flex self-start items-center gap-2 px-3 py-1.5 bg-indigo-100 text-indigo-700 rounded-full text-xs font-bold mb-4">
+                            <i class="fas fa-clapperboard"></i>
+                            <span data-i18n="ads.storyboard-badge">GPT STORYBOARD UGC</span>
+                        </div>
+                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2" data-i18n="ads.storyboard-title">AI Pembuat Storyboard UGC</h2>
+                        <p class="text-sm sm:text-base text-gray-600 mb-4" data-i18n="ads.storyboard-desc">
+                            GPT khusus yang bikin storyboard video UGC affiliate dari 1 produk &#8212; tanpa rekam muka, tanpa skill edit. Cocok TikTok Shop, Shopee, Tokopedia.
+                        </p>
+                        <ul class="space-y-2 text-sm text-gray-700 mb-5">
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.storyboard-f1">Input produk &#8594; storyboard 6-8 scene siap jadi video</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.storyboard-f2">Framework UGC konversi tinggi: hook, problem, solusi, CTA</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.storyboard-f3">Bonus tutorial image-to-video (Kling, Runway, CapCut AI)</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.storyboard-f4">Lifetime &#8212; buat konten unlimited semua produk</span></li>
+                        </ul>
+                        <div class="mt-auto">
+                            <a href="https://lynk.id/arullagi/3jmylqw9o8pm" target="_blank" rel="noopener noreferrer"
+                               class="inline-flex items-center gap-2 w-full justify-center px-6 py-4 bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white text-base font-bold rounded-2xl shadow-lg transition-all transform hover:scale-105 active:scale-95">
+                                <i class="fas fa-clapperboard"></i>
+                                <span data-i18n="ads.storyboard-cta">Ambil GPT Storyboard</span>
+                            </a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Final CTA -->
-                <div class="text-center p-6 sm:p-8 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-2xl shadow-xl">
-                    <h2 class="text-xl sm:text-2xl font-bold text-white mb-2" data-i18n="rs.final-cta-title">
-                        Mulai dalam 2 menit
-                    </h2>
-                    <p class="text-blue-100 text-sm sm:text-base mb-5" data-i18n="rs.final-cta-desc">
-                        Daftar gratis, kenalan sama Rindu, langsung mulai ngobrol soal uang.
-                    </p>
-                    <a href="https://ruangsaku.com" target="_blank" rel="noopener noreferrer"
-                       class="inline-flex items-center gap-3 w-full sm:w-auto justify-center px-6 sm:px-8 py-4 bg-white hover:bg-gray-50 text-blue-600 text-base sm:text-lg font-bold rounded-2xl shadow-lg transition-all transform hover:scale-105 active:scale-95">
-                        <i class="fas fa-rocket"></i>
-                        <span data-i18n="rs.final-cta-btn">Coba Gratis di RuangSaku.com</span>
-                    </a>
-                </div>
+                <p class="text-center text-xs text-gray-500" data-i18n="ads.disclaimer">
+                    Cek detail &amp; harga terbaru langsung di halaman produk. Angka penghasilan pada materi adalah simulasi hitungan, bukan janji hasil.
+                </p>
             </div>
         </div>
 
@@ -14455,6 +14752,11 @@
 
         <!-- TAB: DESAIN RUMAH -->
         <div id="content-desain-rumah" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill active" data-goto="desain-rumah" data-i18n="hub.rumah-eksterior">Rumah / Eksterior</button>
+                <button type="button" class="hub-pill" data-goto="desain-kamar" data-i18n="hub.rumah-kamar">Desain Kamar</button>
+                <button type="button" class="hub-pill" data-goto="timelapse-renovasi" data-i18n="hub.rumah-timelapse">Timelapse Renovasi</button>
+            </div>
             <div class="container mx-auto max-w-7xl">
                 <header class="text-center mb-8">
                     <h1 class="text-4xl md:text-5xl font-bold mb-3">
@@ -14649,6 +14951,11 @@
 
         <!-- TAB: DESAIN KAMAR - PROFESSIONAL VERSION -->
         <div id="content-desain-kamar" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill" data-goto="desain-rumah" data-i18n="hub.rumah-eksterior">Rumah / Eksterior</button>
+                <button type="button" class="hub-pill active" data-goto="desain-kamar" data-i18n="hub.rumah-kamar">Desain Kamar</button>
+                <button type="button" class="hub-pill" data-goto="timelapse-renovasi" data-i18n="hub.rumah-timelapse">Timelapse Renovasi</button>
+            </div>
             <div class="container mx-auto max-w-7xl">
                 <header class="text-center mb-10">
                     <div class="inline-flex items-center gap-4 mb-4">
@@ -15727,6 +16034,10 @@
 
         <!-- TAB 12: STICKER TEMPEL -->
         <div id="content-sticker" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill active" data-goto="sticker" data-i18n="hub.sticker-single">Sticker Tempel</button>
+                <button type="button" class="hub-pill" data-goto="sticker-pack-studio" data-i18n="hub.sticker-pack">Sticker Pack</button>
+            </div>
             <!-- Decorative background elements -->
             <div class="decorative-shape shape-1"></div>
             <div class="decorative-shape shape-2"></div>
@@ -18097,6 +18408,11 @@
 
         <!-- TAB: TIMELAPSE RENOVASI -->
         <div id="content-timelapse-renovasi" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill" data-goto="desain-rumah" data-i18n="hub.rumah-eksterior">Rumah / Eksterior</button>
+                <button type="button" class="hub-pill" data-goto="desain-kamar" data-i18n="hub.rumah-kamar">Desain Kamar</button>
+                <button type="button" class="hub-pill active" data-goto="timelapse-renovasi" data-i18n="hub.rumah-timelapse">Timelapse Renovasi</button>
+            </div>
             <div class="container mx-auto max-w-7xl">
                 <header class="text-center mb-8">
                     <h1 class="text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-amber-500 to-teal-600 bg-clip-text text-transparent">
@@ -21582,10 +21898,10 @@
             <span>Beranda</span>
         </button>
 
-        <!-- RUANGSAKU (sponsored partner) -->
+        <!-- ADS (promo produk digital sendiri) -->
         <button data-tab="ruangsaku" class="mobile-tab-btn">
-            <i class="fas fa-globe"></i>
-            <span>Ruang Saku</span>
+            <i class="fas fa-bullhorn"></i>
+            <span>Ads</span>
             <span class="ads-badge">ADS</span>
         </button>
         <!-- UPSCALE Tab (paid feature) -->
@@ -21600,7 +21916,24 @@
             <span>Model</span>
         </button>
 
-        <!-- PHOTO STUDIO -->
+        <!-- FOTO PRODUK & UGC -->
+        <button data-tab="affiliate" class="mobile-tab-btn">
+            <i class="fas fa-rocket"></i>
+            <span>Produk</span>
+        </button>
+        <button data-tab="affiliate-islami" class="mobile-tab-btn hidden">
+            <i class="fas fa-globe"></i>
+            <span>Agama</span>
+        </button>
+        <button data-tab="affiliate-harga" class="mobile-tab-btn hidden">
+            <i class="fas fa-tags"></i>
+            <span>Harga</span>
+        </button>
+        <button data-tab="virtual-tryon" class="mobile-tab-btn">
+            <i class="fas fa-tshirt"></i>
+            <span>Try-On</span>
+            <span class="new-badge">NEW</span>
+        </button>
         <button data-tab="mockup-studio" class="mobile-tab-btn">
             <i class="fas fa-palette"></i>
             <span>Mockup</span>
@@ -21609,10 +21942,6 @@
             <i class="fas fa-hand-holding"></i>
             <span>POV</span>
         </button>
-        <button data-tab="touring" class="mobile-tab-btn">
-            <i class="fas fa-motorcycle"></i>
-            <span>Touring</span>
-        </button>
         <button data-tab="mirror-selfie" class="mobile-tab-btn">
             <i class="fas fa-mobile-alt"></i>
             <span>Mirror</span>
@@ -21620,21 +21949,6 @@
         <button data-tab="walking-pad" class="mobile-tab-btn">
             <i class="fas fa-walking"></i>
             <span>Walking Pad</span>
-        </button>
-
-        <!-- UGC CONTENT -->
-        <button data-tab="affiliate" class="mobile-tab-btn">
-            <i class="fas fa-rocket"></i>
-            <span>Produk</span>
-        </button>
-        <button data-tab="affiliate-islami" class="mobile-tab-btn">
-            <i class="fas fa-globe"></i>
-            <span>Agama</span>
-        </button>
-        <button data-tab="virtual-tryon" class="mobile-tab-btn">
-            <i class="fas fa-tshirt"></i>
-            <span>Try-On</span>
-            <span class="new-badge">NEW</span>
         </button>
         <button data-tab="pose-fashion" class="mobile-tab-btn">
             <i class="fas fa-user-tie"></i>
@@ -21648,11 +21962,11 @@
             <i class="fas fa-star"></i>
             <span>Review</span>
         </button>
-        <button data-tab="skincare-review" class="mobile-tab-btn">
+        <button data-tab="skincare-review" class="mobile-tab-btn hidden">
             <i class="fas fa-pump-soap"></i>
             <span>Skincare</span>
         </button>
-        <button data-tab="food-review" class="mobile-tab-btn">
+        <button data-tab="food-review" class="mobile-tab-btn hidden">
             <i class="fas fa-hamburger"></i>
             <span>Food</span>
         </button>
@@ -21660,48 +21974,40 @@
             <i class="fas fa-bullhorn"></i>
             <span>Ads</span>
         </button>
-        <button data-tab="professional-headshot" class="mobile-tab-btn">
-            <i class="fas fa-user-tie"></i>
-            <span>Headshot</span>
+        <button data-tab="unboxing-scene" class="mobile-tab-btn">
+            <i class="fas fa-box-open"></i>
+            <span>Unboxing</span>
+        </button>
+        <button data-tab="before-after" class="mobile-tab-btn">
+            <i class="fas fa-arrows-left-right"></i>
+            <span>B/A</span>
+        </button>
+        <button data-tab="product-premium" class="mobile-tab-btn">
+            <i class="fas fa-wand-magic-sparkles"></i>
+            <span data-i18n="nav.product-premium">Foto Produk Premium</span>
+        </button>
+        <button data-tab="size-guide" class="mobile-tab-btn">
+            <i class="fas fa-ruler-combined"></i>
+            <span>Size</span>
+        </button>
+        <button data-tab="vehicle-modifier" class="mobile-tab-btn">
+            <i class="fas fa-car"></i>
+            <span>Vehicle</span>
+        </button>
+        <button data-tab="sketch-catalog" class="mobile-tab-btn">
+            <i class="fas fa-pen-nib"></i>
+            <span>Sketsa</span>
+        </button>
+        <button data-tab="product-mockup" class="mobile-tab-btn hidden">
+            <i class="fas fa-cube"></i>
+            <span>Mockup</span>
+        </button>
+        <button data-tab="testimonial-generator" class="mobile-tab-btn hidden">
+            <i class="fas fa-quote-left"></i>
+            <span>Review</span>
         </button>
 
-        <!-- AFFILIATE & E-COMMERCE -->
-        <button data-tab="deskripsi-produk" class="mobile-tab-btn">
-            <i class="fas fa-tags"></i>
-            <span>Deskripsi</span>
-        </button>
-        <button data-tab="ide-konten-tiktok" class="mobile-tab-btn">
-            <i class="fab fa-tiktok"></i>
-            <span>TikTok</span>
-        </button>
-        <button data-tab="script-story-iklan" class="mobile-tab-btn">
-            <i class="fas fa-book-open"></i>
-            <span>Script</span>
-        </button>
-
-        <!-- ALAT BISNIS -->
-        <button data-tab="rencana-bisnis" class="mobile-tab-btn">
-            <i class="fas fa-chart-line"></i>
-            <span>Bisnis</span>
-        </button>
-        <button data-tab="hr-assistant" class="mobile-tab-btn">
-            <i class="fas fa-users"></i>
-            <span>HR</span>
-        </button>
-        <button data-tab="konten-marketing" class="mobile-tab-btn">
-            <i class="fas fa-bullhorn"></i>
-            <span>Marketing</span>
-        </button>
-        <button data-tab="riset-pasar" class="mobile-tab-btn">
-            <i class="fas fa-search-dollar"></i>
-            <span>Riset</span>
-        </button>
-        <button data-tab="financial-forecast" class="mobile-tab-btn">
-            <i class="fas fa-calculator"></i>
-            <span>Anggaran</span>
-        </button>
-
-        <!-- FAMILY & LIFESTYLE -->
+        <!-- KELUARGA & MOMEN -->
         <button data-tab="family" class="mobile-tab-btn">
             <i class="fas fa-users"></i>
             <span>Keluarga</span>
@@ -21723,17 +22029,13 @@
             <i class="fas fa-ring"></i>
             <span>Wedding</span>
         </button>
-        <button data-tab="wedding-design" class="mobile-tab-btn">
+        <button data-tab="wedding-design" class="mobile-tab-btn hidden">
             <i class="fas fa-mosque"></i>
             <span>Desain</span>
         </button>
         <button data-tab="umrah-haji" class="mobile-tab-btn">
             <i class="fas fa-kaaba"></i>
             <span>Umrah</span>
-        </button>
-        <button data-tab="passport-photo" class="mobile-tab-btn">
-            <i class="fas fa-id-card"></i>
-            <span>Pas Foto</span>
         </button>
         <button data-tab="graduation-photo" class="mobile-tab-btn">
             <i class="fas fa-user-graduate"></i>
@@ -21751,59 +22053,28 @@
             <i class="fas fa-envelope-open-text"></i>
             <span>Kartu Lebaran</span>
         </button>
-        <button data-tab="desain-rumah" class="mobile-tab-btn">
-            <i class="fas fa-home"></i>
-            <span>Rumah</span>
-        </button>
-        <button data-tab="desain-kamar" class="mobile-tab-btn">
-            <i class="fas fa-door-open"></i>
-            <span>Kamar</span>
-        </button>
-        <button data-tab="sketsa-gambar" class="mobile-tab-btn">
-            <i class="fas fa-pencil-ruler"></i>
-            <span>Sketsa</span>
-        </button>
-        <button data-tab="bikin-carousel" class="mobile-tab-btn">
-            <i class="fas fa-images"></i>
-            <span>Carousel</span>
+        <button data-tab="worldcup" class="mobile-tab-btn">
+            <i class="fas fa-trophy"></i>
+            <span data-i18n="nav.worldcup">Foto World Cup</span>
+            <span class="new-badge">NEW</span>
         </button>
 
-        <!-- CREATIVE TOOLS -->
-        <button data-tab="miniature" class="mobile-tab-btn">
-            <i class="fas fa-user-astronaut"></i>
-            <span>Miniatur</span>
-        </button>
-        <button data-tab="karikatur" class="mobile-tab-btn">
-            <i class="fas fa-palette"></i>
-            <span>Karikatur</span>
-        </button>
-        <button data-tab="photo-editor" class="mobile-tab-btn">
-            <i class="fas fa-sliders-h"></i>
-            <span>Editor</span>
-        </button>
-        <button data-tab="ai-beauty" class="mobile-tab-btn">
-            <i class="fas fa-wand-magic-sparkles"></i>
-            <span>Beauty</span>
-        </button>
-        <button data-tab="tattoo-editor" class="mobile-tab-btn">
-            <i class="fas fa-dragon"></i>
-            <span>Tattoo</span>
-        </button>
-        <button data-tab="halu" class="mobile-tab-btn">
-            <i class="fas fa-brain"></i>
-            <span>Halu</span>
+        <!-- FOTO DIRI & GAYA -->
+        <button data-tab="professional-headshot" class="mobile-tab-btn">
+            <i class="fas fa-user-tie"></i>
+            <span>Headshot</span>
         </button>
         <button data-tab="studio-profil" class="mobile-tab-btn">
             <i class="fas fa-user-ninja"></i>
             <span data-i18n="nm.studio-profil">Studio Profil</span>
         </button>
-        <button data-tab="sticker" class="mobile-tab-btn">
-            <i class="fas fa-smile"></i>
-            <span>Sticker</span>
-        </button>
         <button data-tab="studio-aesthetic" class="mobile-tab-btn">
             <i class="fas fa-wand-magic-sparkles"></i>
             <span data-i18n="nm.studio-aesthetic">Aesthetic</span>
+        </button>
+        <button data-tab="fotogenic" class="mobile-tab-btn">
+            <i class="fas fa-wand-magic-sparkles"></i>
+            <span>Fotogenic</span>
         </button>
         <button data-tab="hair-generator" class="mobile-tab-btn">
             <i class="fas fa-cut"></i>
@@ -21813,9 +22084,64 @@
             <i class="fas fa-face-laugh-beam"></i>
             <span>Ekspresi</span>
         </button>
-        <button data-tab="sticker-pack-studio" class="mobile-tab-btn">
+        <button data-tab="miniature" class="mobile-tab-btn">
+            <i class="fas fa-user-astronaut"></i>
+            <span>Miniatur</span>
+        </button>
+        <button data-tab="karikatur" class="mobile-tab-btn">
+            <i class="fas fa-palette"></i>
+            <span>Karikatur</span>
+        </button>
+        <button data-tab="halu" class="mobile-tab-btn">
+            <i class="fas fa-brain"></i>
+            <span>Halu</span>
+        </button>
+        <button data-tab="tattoo-editor" class="mobile-tab-btn">
+            <i class="fas fa-dragon"></i>
+            <span>Tattoo</span>
+        </button>
+        <button data-tab="sticker" class="mobile-tab-btn">
+            <i class="fas fa-smile"></i>
+            <span>Sticker</span>
+        </button>
+        <button data-tab="sticker-pack-studio" class="mobile-tab-btn hidden">
             <i class="fas fa-icons"></i>
             <span data-i18n="nm.sticker-pack-studio">Pack Studio</span>
+        </button>
+        <button data-tab="story-update" class="mobile-tab-btn">
+            <i class="fas fa-instagram"></i>
+            <span>Story</span>
+        </button>
+        <button data-tab="touring" class="mobile-tab-btn">
+            <i class="fas fa-motorcycle"></i>
+            <span>Touring</span>
+        </button>
+        <button data-tab="podcast" class="mobile-tab-btn">
+            <i class="fas fa-microphone-lines"></i>
+            <span data-i18n="nav.podcast">Studio Podcast</span>
+            <span class="new-badge">NEW</span>
+        </button>
+        <button data-tab="watch-together" class="mobile-tab-btn">
+            <i class="fas fa-tv"></i>
+            <span data-i18n="nav.watch-together">Nonton Bareng</span>
+        </button>
+
+        <!-- EDIT & UTILITAS FOTO -->
+        <button data-tab="photo-editor" class="mobile-tab-btn">
+            <i class="fas fa-sliders-h"></i>
+            <span>Editor</span>
+        </button>
+        <button data-tab="ai-beauty" class="mobile-tab-btn">
+            <i class="fas fa-wand-magic-sparkles"></i>
+            <span>Beauty</span>
+        </button>
+        <button data-tab="photo-restoration" class="mobile-tab-btn">
+            <i class="fas fa-clock-rotate-left"></i>
+            <span>Restore</span>
+        </button>
+        <button data-tab="object-remover" class="mobile-tab-btn">
+            <i class="fas fa-eraser"></i>
+            <span>Hapus</span>
         </button>
         <button data-tab="face-swap" class="mobile-tab-btn">
             <i class="fas fa-face-grin-stars"></i>
@@ -21835,25 +22161,9 @@
             <i class="fas fa-expand-arrows-alt"></i>
             <span>Perluas</span>
         </button>
-        <button data-tab="story-board" class="mobile-tab-btn">
-            <i class="fas fa-film"></i>
-            <span>Storyboard</span>
-        </button>
-        <button data-tab="twibon" class="mobile-tab-btn">
-            <i class="fas fa-image"></i>
-            <span>Twibon</span>
-        </button>
-        <button data-tab="story-update" class="mobile-tab-btn">
-            <i class="fas fa-instagram"></i>
-            <span>Story</span>
-        </button>
-        <button data-tab="image-analyzer" class="mobile-tab-btn">
-            <i class="fas fa-brain"></i>
-            <span>Analyzer</span>
-        </button>
-        <button data-tab="packaging-design" class="mobile-tab-btn">
-            <i class="fas fa-box"></i>
-            <span>Packaging</span>
+        <button data-tab="passport-photo" class="mobile-tab-btn">
+            <i class="fas fa-id-card"></i>
+            <span>Pas Foto</span>
         </button>
         <button data-tab="photo-angle" class="mobile-tab-btn">
             <i class="fas fa-cube"></i>
@@ -21863,22 +22173,12 @@
             <i class="fas fa-magic"></i>
             <span>Style</span>
         </button>
-        <button data-tab="thumbnail-generator" class="mobile-tab-btn">
-            <i class="fas fa-rectangle-ad"></i>
-            <span>Thumbnail</span>
+        <button data-tab="image-analyzer" class="mobile-tab-btn">
+            <i class="fas fa-brain"></i>
+            <span>Analyzer</span>
         </button>
-        <button data-tab="cover-photo-generator" class="mobile-tab-btn">
-            <i class="fas fa-image-portrait"></i>
-            <span>Cover</span>
-        </button>
-        <button data-tab="photo-restoration" class="mobile-tab-btn">
-            <i class="fas fa-clock-rotate-left"></i>
-            <span>Restore</span>
-        </button>
-        <button data-tab="object-remover" class="mobile-tab-btn">
-            <i class="fas fa-eraser"></i>
-            <span>Hapus</span>
-        </button>
+
+        <!-- BRANDING & DESAIN -->
         <button data-tab="logo-generator" class="mobile-tab-btn">
             <i class="fas fa-palette"></i>
             <span>Logo</span>
@@ -21887,21 +22187,13 @@
             <i class="fas fa-briefcase"></i>
             <span>Brand Kit</span>
         </button>
-        <button data-tab="content-calendar" class="mobile-tab-btn">
-            <i class="fas fa-calendar-alt"></i>
-            <span>Calendar</span>
-        </button>
-        <button data-tab="ab-testing" class="mobile-tab-btn">
-            <i class="fas fa-chart-line"></i>
-            <span>A/B Test</span>
-        </button>
-        <button data-tab="roi-calculator" class="mobile-tab-btn">
-            <i class="fas fa-sack-dollar"></i>
-            <span>ROI Calc</span>
-        </button>
         <button data-tab="mascot-generator" class="mobile-tab-btn">
             <i class="fas fa-dragon"></i>
             <span>Mascot</span>
+        </button>
+        <button data-tab="packaging-design" class="mobile-tab-btn">
+            <i class="fas fa-box"></i>
+            <span>Packaging</span>
         </button>
         <button data-tab="poster-generator" class="mobile-tab-btn">
             <i class="fas fa-image"></i>
@@ -21911,71 +22203,93 @@
             <i class="fas fa-rectangle-ad"></i>
             <span>Banner</span>
         </button>
+        <button data-tab="thumbnail-generator" class="mobile-tab-btn">
+            <i class="fas fa-rectangle-ad"></i>
+            <span>Thumbnail</span>
+        </button>
+        <button data-tab="cover-photo-generator" class="mobile-tab-btn">
+            <i class="fas fa-image-portrait"></i>
+            <span>Cover</span>
+        </button>
+        <button data-tab="twibon" class="mobile-tab-btn">
+            <i class="fas fa-image"></i>
+            <span>Twibon</span>
+        </button>
+        <button data-tab="bikin-carousel" class="mobile-tab-btn">
+            <i class="fas fa-images"></i>
+            <span>Carousel</span>
+        </button>
+        <button data-tab="sketsa-gambar" class="mobile-tab-btn">
+            <i class="fas fa-pencil-ruler"></i>
+            <span>Sketsa</span>
+        </button>
+
+        <!-- RUMAH & INTERIOR -->
+        <button data-tab="desain-rumah" class="mobile-tab-btn">
+            <i class="fas fa-home"></i>
+            <span>Rumah</span>
+        </button>
+        <button data-tab="desain-kamar" class="mobile-tab-btn hidden">
+            <i class="fas fa-door-open"></i>
+            <span>Kamar</span>
+        </button>
+        <button data-tab="timelapse-renovasi" class="mobile-tab-btn hidden">
+            <i class="fas fa-house-chimney"></i>
+            <span>Timelapse</span>
+        </button>
+
+        <!-- BISNIS & COPYWRITING -->
+        <button data-tab="deskripsi-produk" class="mobile-tab-btn">
+            <i class="fas fa-tags"></i>
+            <span>Deskripsi</span>
+        </button>
+        <button data-tab="ide-konten-tiktok" class="mobile-tab-btn">
+            <i class="fab fa-tiktok"></i>
+            <span>TikTok</span>
+        </button>
+        <button data-tab="script-story-iklan" class="mobile-tab-btn">
+            <i class="fas fa-book-open"></i>
+            <span>Script</span>
+        </button>
         <button data-tab="caption-generator" class="mobile-tab-btn">
             <i class="fas fa-pen-to-square"></i>
             <span>Caption</span>
+        </button>
+        <button data-tab="konten-marketing" class="mobile-tab-btn">
+            <i class="fas fa-bullhorn"></i>
+            <span>Marketing</span>
+        </button>
+        <button data-tab="content-calendar" class="mobile-tab-btn">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Calendar</span>
+        </button>
+        <button data-tab="ab-testing" class="mobile-tab-btn">
+            <i class="fas fa-chart-line"></i>
+            <span>A/B Test</span>
         </button>
         <button data-tab="product-comparison" class="mobile-tab-btn">
             <i class="fas fa-scale-balanced"></i>
             <span>Compare</span>
         </button>
-        <button data-tab="unboxing-scene" class="mobile-tab-btn">
-            <i class="fas fa-box-open"></i>
-            <span>Unboxing</span>
+        <button data-tab="roi-calculator" class="mobile-tab-btn">
+            <i class="fas fa-sack-dollar"></i>
+            <span>ROI Calc</span>
         </button>
-        <button data-tab="before-after" class="mobile-tab-btn">
-            <i class="fas fa-arrows-left-right"></i>
-            <span>B/A</span>
+        <button data-tab="riset-pasar" class="mobile-tab-btn">
+            <i class="fas fa-search-dollar"></i>
+            <span>Riset</span>
         </button>
-        <button data-tab="watch-together" class="mobile-tab-btn">
-            <i class="fas fa-tv"></i>
-            <span data-i18n="nav.watch-together">Nonton Bareng</span>
+        <button data-tab="rencana-bisnis" class="mobile-tab-btn">
+            <i class="fas fa-chart-line"></i>
+            <span>Bisnis</span>
         </button>
-        <button data-tab="product-premium" class="mobile-tab-btn">
-            <i class="fas fa-wand-magic-sparkles"></i>
-            <span data-i18n="nav.product-premium">Foto Produk Premium</span>
+        <button data-tab="hr-assistant" class="mobile-tab-btn">
+            <i class="fas fa-users"></i>
+            <span>HR</span>
         </button>
-        <button data-tab="podcast" class="mobile-tab-btn">
-            <i class="fas fa-microphone-lines"></i>
-            <span data-i18n="nav.podcast">Studio Podcast</span>
-            <span class="new-badge">NEW</span>
-        </button>
-        <button data-tab="worldcup" class="mobile-tab-btn">
-            <i class="fas fa-trophy"></i>
-            <span data-i18n="nav.worldcup">Foto World Cup</span>
-            <span class="new-badge">NEW</span>
-        </button>
-        <button data-tab="product-mockup" class="mobile-tab-btn hidden">
-            <i class="fas fa-cube"></i>
-            <span>Mockup</span>
-        </button>
-        <button data-tab="testimonial-generator" class="mobile-tab-btn hidden">
-            <i class="fas fa-quote-left"></i>
-            <span>Review</span>
-        </button>
-        <button data-tab="size-guide" class="mobile-tab-btn">
-            <i class="fas fa-ruler-combined"></i>
-            <span>Size</span>
-        </button>
-        <button data-tab="video-frames" class="mobile-tab-btn">
-            <i class="fas fa-film"></i>
-            <span>Frames</span>
-        </button>
-        <button data-tab="vehicle-modifier" class="mobile-tab-btn">
-            <i class="fas fa-car"></i>
-            <span>Vehicle</span>
-        </button>
-        <button data-tab="sketch-catalog" class="mobile-tab-btn">
-            <i class="fas fa-pen-nib"></i>
-            <span>Sketsa</span>
-        </button>
-        <button data-tab="fotogenic" class="mobile-tab-btn">
-            <i class="fas fa-wand-magic-sparkles"></i>
-            <span>Fotogenic</span>
-        </button>
-        <button data-tab="timelapse-renovasi" class="mobile-tab-btn">
-            <i class="fas fa-house-chimney"></i>
-            <span>Timelapse</span>
+        <button data-tab="financial-forecast" class="mobile-tab-btn">
+            <i class="fas fa-calculator"></i>
+            <span>Anggaran</span>
         </button>
 
         <!-- VIDEO & AUDIO -->
@@ -21990,6 +22304,14 @@
         <button data-tab="video-analyzer" class="mobile-tab-btn">
             <i class="fas fa-chart-line"></i>
             <span>Analyzer</span>
+        </button>
+        <button data-tab="video-frames" class="mobile-tab-btn">
+            <i class="fas fa-film"></i>
+            <span>Frames</span>
+        </button>
+        <button data-tab="story-board" class="mobile-tab-btn">
+            <i class="fas fa-film"></i>
+            <span>Storyboard</span>
         </button>
     </div>
 </nav>

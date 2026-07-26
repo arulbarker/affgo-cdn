@@ -120,6 +120,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // --- HUB PILL NAVIGATION (data-goto) — pindah antar tab yang di-merge di level nav ---
+    document.addEventListener('click', function(e) {
+        const pill = e.target.closest('[data-goto]');
+        if (!pill) return;
+        const target = document.querySelector('.main-tab-btn[data-tab="' + pill.dataset.goto + '"]');
+        if (target) target.click();
+    });
+
     // --- FAVORITES LOGIC (saran Dims Bagsi) ---
     // [v33+] Berbayar lewat Lynk.id "fitur favorit tab affgo" (lifetime).
     // Gate ada di toggleFavorite() — kalau window.favoritFeatureActive false →
@@ -430,6 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!original) return;
 
                     const clone = original.cloneNode(true);
+                    clone.classList.remove('hidden');
                     const oldStar = clone.querySelector('.fav-star-btn');
                     if (oldStar) oldStar.remove();
                     clone.appendChild(createStar(tabId, true));
@@ -2771,6 +2780,935 @@ Output ONLY the video prompt, nothing else.`;
                         }
 
                         outputContainer.innerHTML = `<div class="relative w-full h-full group"><img src="${imageUrl}" class="w-full h-full object-cover rounded-md" alt="${params.title}"><div class="absolute bottom-2 right-2 flex flex-wrap gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"><button data-action="broll-preview" data-image-url="${imageUrl}" class="action-btn bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600" title="Preview"><i class="fas fa-search-plus"></i></button><button data-action="broll-edit" data-index="${index}" data-prompt="${safePrompt}" class="action-btn bg-purple-500 text-white p-2 rounded-full hover:bg-purple-600" title="Edit Prompt"><i class="fas fa-edit"></i></button><button data-action="broll-regenerate" data-index="${index}" class="action-btn bg-green-500 text-white p-2 rounded-full hover:bg-green-600" title="Regenerate"><i class="fas fa-sync-alt"></i></button><button data-action="broll-video" data-image-url="${imageUrl}" data-title="${params.title.replace(/"/g, '&quot;')}" class="action-btn bg-fuchsia-500 text-white p-2 rounded-full hover:bg-fuchsia-600" title="Buat Prompt Video"><i class="fas fa-film"></i></button><button data-action="broll-caption" data-image-url="${imageUrl}" data-title="${params.title.replace(/"/g, '&quot;')}" class="action-btn bg-rose-500 text-white p-2 rounded-full hover:bg-rose-600" title="Buat Caption"><i class="fas fa-pencil-alt"></i></button><button data-action="broll-download" data-image-url="${imageUrl}" data-filename="affiliatego_${index + 1}_${safeTitle}.png" class="action-btn bg-cyan-600 text-white p-2 rounded-full hover:bg-cyan-700" title="Unduh"><i class="fas fa-download"></i></button></div></div>`;
+                    } else {
+                        throw new Error('Failed to generate image');
+                    }
+                } catch (error) {
+                    console.error('Regenerate error:', error);
+                    outputContainer.innerHTML = `
+                        <div class="flex flex-col items-center justify-center h-full min-h-[200px] text-red-600">
+                            <i class="fas fa-exclamation-triangle text-3xl mb-2"></i>
+                            <p class="text-sm">Gagal regenerate</p>
+                            <button onclick="location.reload()" class="mt-2 text-xs bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600">
+                                Refresh
+                            </button>
+                        </div>
+                    `;
+                }
+            }
+
+        }
+    })();
+
+    // --- FOTO PRODUK AFFILIATE + HARGA (TEMA HARGA) LOGIC ---
+    (function() {
+        // --- Tema Harga (Foto Produk + Harga) Logic ---
+        const hrgImageInput = document.getElementById('hrg-image-input');
+        const hrgImageUploadArea = document.getElementById('hrg-image-upload-area');
+        const hrgImagePreviewContainer = document.getElementById('hrg-image-preview-container');
+        const hrgImagePreview = document.getElementById('hrg-image-preview');
+        const hrgRemoveImageBtn = document.getElementById('hrg-remove-image-btn');
+        const hrgModelImageInput = document.getElementById('hrg-model-image-input');
+        const hrgModelImageUploadArea = document.getElementById('hrg-model-image-upload-area');
+        const hrgModelImagePreviewContainer = document.getElementById('hrg-model-image-preview-container');
+        const hrgModelImagePreview = document.getElementById('hrg-model-image-preview');
+        const hrgRemoveModelImageBtn = document.getElementById('hrg-remove-model-image-btn');
+        const hrgBackgroundImageInput = document.getElementById('hrg-background-image-input');
+        const hrgBackgroundImageUploadArea = document.getElementById('hrg-background-image-upload-area');
+        const hrgBackgroundImagePreviewContainer = document.getElementById('hrg-background-image-preview-container');
+        const hrgBackgroundImagePreview = document.getElementById('hrg-background-image-preview');
+        const hrgRemoveBackgroundImageBtn = document.getElementById('hrg-remove-background-image-btn');
+        const hrgProductDescInput = document.getElementById('hrg-product-desc-input');
+        const hrgGenerateBtn = document.getElementById('hrg-generate-btn');
+        const hrgGrid = document.getElementById('hrg-b-roll-grid');
+        const hrgGenerateDescBtn = document.getElementById('hrg-generate-desc-btn');
+        const hrgResultsHeader = document.getElementById('hrg-results-header');
+        const hrgResultCount = document.getElementById('hrg-result-count');
+        const hrgDownloadAllBtn = document.getElementById('hrg-download-all-btn');
+        let hrgProductImages = [];
+        let hrgModelImageBase64 = null, hrgModelImageMimeType = null;
+        let hrgBackgroundImageBase64 = null, hrgBackgroundImageMimeType = null;
+        const hrgRatioSelection = document.getElementById('hrg-ratio-selection');
+        let selectedHrgRatio = '16:9';
+        let selectedCount = 4; // 1-10, default 4 (count selector)
+        let generatedHrgImages = [];
+
+        // Bangun instruksi anotasi panah + harga untuk AI (Tema Harga)
+        function buildHrgPriceInstruction(images) {
+            const lines = images.map((img, i) => `Product ${i + 1} price: "${img.price ? img.price : '(no price)'}"`).join('; ');
+            return `IMPORTANT PRICE ANNOTATION (aesthetic): The product images are given in order. For each product, add an elegant modern price tag connected to the product by a thin, gently curved pointer line that ends with a small dot on the product. Style the price tag as a clean rounded-corner pill/label with a soft semi-transparent background, subtle drop shadow, and crisp high-contrast sans-serif typography so the price is perfectly legible; keep a cohesive premium e-commerce look with one consistent color accent and identical label style for all products. Prices in order: ${lines}. Position each tag in nearby empty/negative space so it never overlaps or covers the product, keep tags small and balanced in the composition. Any product marked "(no price)" gets NO tag and NO arrow.`;
+        }
+
+        // Count selection (1-10), default 4
+        const hrgCountSel = document.getElementById('hrg-count-selection-grid');
+        if (hrgCountSel) {
+            hrgCountSel.addEventListener('click', (e) => {
+                const btn = e.target.closest('button[data-count]');
+                if (!btn) return;
+                hrgCountSel.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedCount = parseInt(btn.dataset.count, 10);
+            });
+        }
+        
+        function updateHrgButtonState() {
+            if(hrgGenerateBtn) hrgGenerateBtn.disabled = hrgProductImages.length === 0 || !hrgProductDescInput.value.trim();
+            if(hrgGenerateDescBtn) hrgGenerateDescBtn.disabled = hrgProductImages.length === 0;
+        }
+
+        // Handle multiple product images
+        function handleHrgProductFiles(files) {
+            if (!files || files.length === 0) return;
+
+            hrgImageUploadArea.classList.add('hidden');
+            hrgImagePreviewContainer.classList.remove('hidden');
+
+            let filesToProcess = files.length;
+
+            Array.from(files).forEach((file) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const [header, base64] = e.target.result.split(',');
+                    const mimeType = header.match(/:(.*?);/)[1];
+                    const imageData = {
+                        id: Date.now() + Math.random(),
+                        base64: base64,
+                        mimeType: mimeType,
+                        price: ''
+                    };
+
+                    hrgProductImages.push(imageData);
+
+                    const previewWrapper = document.createElement('div');
+                    previewWrapper.className = 'relative group';
+                    previewWrapper.innerHTML = `
+                        <img src="${e.target.result}" alt="Pratinjau Produk" class="rounded-lg w-full h-24 object-cover">
+                        <button data-id="${imageData.id}" class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity focus:opacity-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                        <input type="text" class="hrg-price-input mt-1 w-full text-xs p-1.5 border border-gray-300 rounded focus:ring-2 focus:ring-green-500 focus:border-green-500" data-i18n-placeholder="hrg.price-placeholder" placeholder="Harga (mis. Rp50.000)">
+                    `;
+
+                    hrgImagePreviewContainer.appendChild(previewWrapper);
+
+                    const priceInput = previewWrapper.querySelector('.hrg-price-input');
+                    if (priceInput) {
+                        priceInput.addEventListener('input', (ev) => {
+                            const target = hrgProductImages.find(im => im.id === imageData.id);
+                            if (target) target.price = ev.target.value.trim();
+                        });
+                    }
+
+                    previewWrapper.querySelector('button').addEventListener('click', (btnEvent) => {
+                        const idToRemove = parseFloat(btnEvent.currentTarget.getAttribute('data-id'));
+                        hrgProductImages = hrgProductImages.filter(img => img.id !== idToRemove);
+                        previewWrapper.remove();
+                        if (hrgProductImages.length === 0) {
+                            hrgImageUploadArea.classList.remove('hidden');
+                            hrgImagePreviewContainer.classList.add('hidden');
+                            const addButton = document.getElementById('hrg-add-more-button');
+                            if (addButton) addButton.remove();
+                        }
+                        updateHrgButtonState();
+                    });
+
+                    updateHrgButtonState();
+
+                    filesToProcess--;
+                    if (filesToProcess === 0) {
+                        manageAddMoreButton();
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function manageAddMoreButton() {
+            const existingButton = document.getElementById('hrg-add-more-button');
+            if (existingButton) {
+                existingButton.remove();
+            }
+
+            const addButtonWrapper = document.createElement('div');
+            addButtonWrapper.id = 'hrg-add-more-button';
+            addButtonWrapper.className = 'relative group cursor-pointer';
+            addButtonWrapper.innerHTML = `
+                <div class="rounded-lg w-full h-24 border-2 border-dashed border-gray-400 hover:border-cyan-500 bg-gray-50 hover:bg-cyan-50 transition-colors flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400 group-hover:text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                </div>
+            `;
+
+            addButtonWrapper.addEventListener('click', () => {
+                hrgImageInput.click();
+            });
+
+            hrgImagePreviewContainer.appendChild(addButtonWrapper);
+        }
+
+        if (hrgImageInput) {
+            hrgImageInput.addEventListener('change', (event) => {
+                handleHrgProductFiles(event.target.files);
+                event.target.value = null;
+            });
+        }
+
+        // Setup model image upload (single image)
+        function setupHrgModelImageUpload(input, uploadArea, previewContainer, previewImg, removeBtn) {
+            if (!input) return;
+            input.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    previewImg.src = e.target.result;
+                    const [header, base64] = e.target.result.split(',');
+                    const mimeType = header.match(/:(.*?);/)[1];
+                    hrgModelImageBase64 = base64;
+                    hrgModelImageMimeType = mimeType;
+                    uploadArea.classList.add('hidden');
+                    previewContainer.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            });
+            removeBtn.addEventListener('click', () => {
+                hrgModelImageBase64 = null;
+                hrgModelImageMimeType = null;
+                input.value = '';
+                uploadArea.classList.remove('hidden');
+                previewContainer.classList.add('hidden');
+            });
+        }
+        setupHrgModelImageUpload(hrgModelImageInput, hrgModelImageUploadArea, hrgModelImagePreviewContainer, hrgModelImagePreview, hrgRemoveModelImageBtn);
+
+        // Setup background image upload (single image)
+        function setupHrgBackgroundImageUpload(input, uploadArea, previewContainer, previewImg, removeBtn) {
+            if (!input) return;
+            input.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    previewImg.src = e.target.result;
+                    const [header, base64] = e.target.result.split(',');
+                    const mimeType = header.match(/:(.*?);/)[1];
+                    hrgBackgroundImageBase64 = base64;
+                    hrgBackgroundImageMimeType = mimeType;
+                    uploadArea.classList.add('hidden');
+                    previewContainer.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            });
+            removeBtn.addEventListener('click', () => {
+                hrgBackgroundImageBase64 = null;
+                hrgBackgroundImageMimeType = null;
+                input.value = '';
+                uploadArea.classList.remove('hidden');
+                previewContainer.classList.add('hidden');
+            });
+        }
+        setupHrgBackgroundImageUpload(hrgBackgroundImageInput, hrgBackgroundImageUploadArea, hrgBackgroundImagePreviewContainer, hrgBackgroundImagePreview, hrgRemoveBackgroundImageBtn);
+
+        if(hrgProductDescInput) hrgProductDescInput.addEventListener('input', updateHrgButtonState);
+
+        if(hrgRatioSelection) {
+            hrgRatioSelection.addEventListener('click', (e) => {
+                const button = e.target.closest('.ratio-btn-broll');
+                if (button) {
+                    document.querySelectorAll('#hrg-ratio-selection .ratio-btn-broll').forEach(btn => btn.classList.remove('selected'));
+                    button.classList.add('selected');
+                    selectedHrgRatio = button.dataset.ratio;
+                }
+            });
+        }
+
+        const createInitialHrgPlaceholders = () => {
+            if(!hrgGrid) return;
+            hrgGrid.innerHTML = Array.from({length: 20}, () => `
+                <div class="result-card card p-4 flex flex-col justify-between animate-pulse">
+                    <div><div class="h-6 bg-gray-200 rounded w-3/4 mb-4"></div></div>
+                    <div class="mt-4 aspect-video bg-gray-300 rounded-md"></div>
+                </div>`).join('');
+        };
+        createInitialHrgPlaceholders();
+
+        if(hrgGenerateBtn) hrgGenerateBtn.addEventListener('click', async () => {
+            if (hrgGenerateBtn.disabled) return;
+            hrgGenerateBtn.disabled = true;
+            hrgGenerateBtn.innerHTML = `<div class="loader"></div><span class="ml-2">Menganalisa...</span>`;
+            if (hrgResultsHeader) hrgResultsHeader.classList.add('hidden');
+
+            let successCount = 0;
+            let attempts = 0;
+            const MAX_ATTEMPTS = 3;
+
+            while (attempts < MAX_ATTEMPTS && successCount === 0) {
+                generatedHrgImages = [];
+                try {
+                    const ideas = await analyzeAndGetPrompts();
+                    hrgGenerateBtn.innerHTML = `<div class="loader"></div><span class="ml-2">Membuat Visual...</span>`;
+                    createHrgDynamicCards(ideas);
+                    await Promise.allSettled(ideas.map((idea, i) => generateSingleHrg(i + 1, idea.title, idea.prompt)));
+                    successCount = generatedHrgImages.length;
+                } catch (error) {
+                    console.error("Error:", error);
+                    if (hrgGrid) hrgGrid.innerHTML = '';
+                }
+                attempts++;
+            }
+
+            hrgGenerateBtn.disabled = false;
+            hrgGenerateBtn.innerHTML = `<span>Buat Pose Produk</span>`;
+            updateHrgButtonState();
+
+            if (successCount === 0) {
+                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                return;
+            }
+
+            // Remove failed cards (empty innerHTML after fail-silent catch)
+            if (hrgGrid) {
+                hrgGrid.querySelectorAll('.result-card').forEach(card => {
+                    if (!card.querySelector('img')) card.remove();
+                });
+            }
+
+            if (hrgResultsHeader) hrgResultsHeader.classList.remove('hidden');
+            if (hrgResultCount) hrgResultCount.textContent = successCount;
+        });
+
+        // Download all button event listener
+        if (hrgDownloadAllBtn) {
+            hrgDownloadAllBtn.addEventListener('click', async () => {
+                if (generatedHrgImages.length === 0) return;
+
+                hrgDownloadAllBtn.disabled = true;
+                hrgDownloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+
+                for (let i = 0; i < generatedHrgImages.length; i++) {
+                    const img = generatedHrgImages[i];
+                    if (window.downloadDataURINew) {
+                        await window.downloadDataURINew(img.url, img.filename);
+                        await new Promise(resolve => setTimeout(resolve, 500));
+                    }
+                }
+
+                hrgDownloadAllBtn.disabled = false;
+                hrgDownloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download Semua';
+            });
+        }
+
+        async function analyzeAndGetPrompts() {
+             const apiKey = ""; const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+             let systemPrompt;
+             if (hrgModelImageBase64) {
+                 systemPrompt = `You are a professional product photographer's AI assistant. Analyze product image(s), description, and a model's photo. Generate ${selectedCount} distinct, creative, professional shots. If multiple product images are provided (e.g., a shirt and pants), generate prompts that show the model wearing or using ALL products together in a complete outfit/setup. The model MUST naturally interact with or wear ALL the products. ${hrgBackgroundImageBase64 ? 'A custom background image is provided - use it as the setting/backdrop for the photos.' : ''} For each, provide a short, descriptive title (in Indonesian) and a detailed prompt (in English) for an AI image generator, emphasizing a high-end commercial aesthetic. Respond ONLY with a valid JSON array of ${selectedCount} objects.`;
+             } else {
+                 systemPrompt = `You are a professional product photographer's AI assistant. Analyze product image(s) and description. Generate ${selectedCount} distinct, creative, professional product-only shots with NO human models. If multiple products are provided, show them together in creative compositions. ${hrgBackgroundImageBase64 ? 'A custom background image is provided - use it as the setting/backdrop for the product photos.' : ''} Focus on creative backgrounds, lighting, and product arrangements. For each, provide a short, descriptive title (in Indonesian) and a detailed prompt (in English) for an AI image generator, emphasizing a high-end commercial aesthetic. Respond ONLY with a valid JSON array of ${selectedCount} objects.`;
+             }
+
+             let userQuery = `Product Description: "${hrgProductDescInput.value.trim()}" ${hrgBackgroundImageBase64 ? '\nNote: A custom background image is provided for the product photos.' : ''} \nAspect Ratio: "${selectedHrgRatio}"`;
+             userQuery += `\n${buildHrgPriceInstruction(hrgProductImages)}`;
+
+             const parts = [{ text: userQuery }];
+             hrgProductImages.forEach(img => {
+                 parts.push({ inlineData: { mimeType: img.mimeType, data: img.base64 } });
+             });
+             if (hrgModelImageBase64) {
+                 parts.push({ inlineData: { mimeType: hrgModelImageMimeType, data: hrgModelImageBase64 } });
+             }
+             if (hrgBackgroundImageBase64) {
+                 parts.push({ inlineData: { mimeType: hrgBackgroundImageMimeType, data: hrgBackgroundImageBase64 } });
+             }
+
+             const payload = { contents: [{ parts }], systemInstruction: { parts: [{ text: systemPrompt }] }, generationConfig: { responseMimeType: "application/json", responseSchema: { type: "ARRAY", items: { type: "OBJECT", properties: { "title": { "type": "STRING" }, "prompt": { "type": "STRING" } }, required: ["title", "prompt"] } } } };
+             const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+             if (!response.ok) { const err = await response.json(); throw new Error(err.error?.message || response.statusText); }
+             const result = await response.json();
+             return JSON.parse(result.candidates[0].content.parts[0].text);
+        }
+
+        async function generateSingleHrg(id, title, prompt) {
+            const card = document.getElementById(`hrg-card-${id}`);
+            const outputContainer = card.querySelector('.aspect-video');
+            try {
+                const apiKey = ""; const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${apiKey}`;
+                const finalPrompt = `${prompt}, elegant, cinematic, professional product photography, dramatic lighting, 8k, photorealistic, aspect ratio ${selectedHrgRatio}. ${buildHrgPriceInstruction(hrgProductImages)}`;
+                const parts = [{ text: finalPrompt }];
+
+                // Add all product images
+                hrgProductImages.forEach(img => {
+                    parts.push({ inlineData: { mimeType: img.mimeType, data: img.base64 } });
+                });
+
+                // Add model image if available
+                if (hrgModelImageBase64) {
+                    parts.push({ inlineData: { mimeType: hrgModelImageMimeType, data: hrgModelImageBase64 } });
+                }
+
+                // Add background image if available
+                if (hrgBackgroundImageBase64) {
+                    parts.push({ inlineData: { mimeType: hrgBackgroundImageMimeType, data: hrgBackgroundImageBase64 } });
+                }
+
+                // Use selected aspect ratio directly
+                const payload = { contents: [{ parts }], generationConfig: { responseModalities: ['TEXT', 'IMAGE'], imageConfig: { aspectRatio: selectedHrgRatio } } };
+                const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                const result = await response.json();
+                const base64Data = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
+                if (!base64Data) throw new Error("No image data from API.");
+                const imageUrl = `data:image/png;base64,${base64Data}`;
+                const safeTitle = title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+
+                // Add to generated images array for download all functionality
+                generatedHrgImages.push({
+                    url: imageUrl,
+                    filename: `affiliatego_${id}_${safeTitle}.png`
+                });
+
+                // Store generation parameters for regeneration
+                if (!window.hrgGenerationParams) window.hrgGenerationParams = [];
+                window.hrgGenerationParams[id - 1] = {
+                    prompt: prompt,
+                    title: title,
+                    productImages: hrgProductImages,
+                    modelImage: hrgModelImageBase64 ? { base64: hrgModelImageBase64, mimeType: hrgModelImageMimeType } : null,
+                    ratio: selectedHrgRatio
+                };
+
+                outputContainer.innerHTML = `<div class="relative w-full h-full group"><img src="${imageUrl}" class="w-full h-full object-cover rounded-md" alt="${title}"><div class="absolute bottom-2 right-2 flex flex-wrap gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"><button data-action="hrg-preview" data-image-url="${imageUrl}" class="action-btn bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600" title="Preview"><i class="fas fa-search-plus"></i></button><button data-action="hrg-edit" data-index="${id - 1}" data-prompt="${prompt.replace(/"/g, '&quot;')}" class="action-btn bg-purple-500 text-white p-2 rounded-full hover:bg-purple-600" title="Edit Prompt"><i class="fas fa-edit"></i></button><button data-action="hrg-regenerate" data-index="${id - 1}" class="action-btn bg-green-500 text-white p-2 rounded-full hover:bg-green-600" title="Regenerate"><i class="fas fa-sync-alt"></i></button><button data-action="hrg-video" data-image-url="${imageUrl}" data-title="${title.replace(/"/g, '&quot;')}" class="action-btn bg-fuchsia-500 text-white p-2 rounded-full hover:bg-fuchsia-600" title="Buat Prompt Video"><i class="fas fa-film"></i></button><button data-action="hrg-caption" data-image-url="${imageUrl}" data-title="${title.replace(/"/g, '&quot;')}" class="action-btn bg-rose-500 text-white p-2 rounded-full hover:bg-rose-600" title="Buat Caption"><i class="fas fa-pencil-alt"></i></button><button data-action="hrg-download" data-image-url="${imageUrl}" data-filename="affiliatego_${id}_${safeTitle}.png" class="action-btn bg-cyan-600 text-white p-2 rounded-full hover:bg-cyan-700" title="Unduh"><i class="fas fa-download"></i></button></div></div>`;
+            } catch (error) {
+                console.error(`Error generating hrg ${id}:`, error);
+                if (card) card.innerHTML = '';
+            }
+        }
+
+        const createHrgDynamicCards = (prompts) => {
+            hrgGrid.innerHTML = prompts.map((p, i) => `
+                <div id="hrg-card-${i + 1}" class="result-card card p-4 flex flex-col justify-between">
+                    <div><h3 class="text-lg font-semibold text-gray-800 mb-4">${p.title}</h3></div>
+                    <div class="aspect-video bg-gray-100 rounded-md flex items-center justify-center"><div class="loader"></div></div>
+                </div>`).join('');
+        };
+        
+        if(hrgGenerateDescBtn) hrgGenerateDescBtn.addEventListener('click', async () => {
+            const originalButtonText = hrgGenerateDescBtn.innerHTML;
+            hrgGenerateDescBtn.innerHTML = `<div class="loader !w-4 !h-4 !border-2"></div>`;
+            hrgGenerateDescBtn.disabled = true;
+            try {
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                const systemPrompt = `You are a professional copywriter. Analyze the product(s) in the image(s) and write a concise, compelling, and SEO-friendly product description in Indonesian. Highlight key features and potential benefits for customers. Keep it under 500 characters.`;
+                const parts = [ { text: "Buatkan deskripsi produk untuk gambar ini." }];
+                if (hrgProductImages.length > 0) {
+                     parts.push({ inlineData: { mimeType: hrgProductImages[0].mimeType, data: hrgProductImages[0].base64 } });
+                }
+                const payload = {
+                    contents: [{ parts: parts }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] }
+                };
+                const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                if (!response.ok) { const errorData = await response.json(); throw new Error(errorData.error?.message || `HTTP error! status: ${response.status}`); }
+                const result = await response.json();
+                const description = result.candidates[0].content.parts[0].text;
+                hrgProductDescInput.value = description.trim();
+                updateHrgButtonState();
+            } catch(error) {
+                console.error("Error generating description:", error);
+                hrgProductDescInput.value = "Gagal membuat deskripsi. Coba lagi.";
+            } finally {
+                hrgGenerateDescBtn.innerHTML = originalButtonText;
+                hrgGenerateDescBtn.disabled = false;
+            }
+        });
+        window.handleAffiliateCaption = async (imageUrl, title) => {
+            try {
+                // Tampilkan loading modal
+                const modal = document.createElement('div');
+                modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto';
+                modal.style.WebkitOverflowScrolling = 'touch'; // Enable smooth scrolling on iOS
+                modal.innerHTML = `
+                    <div class="bg-white rounded-xl p-6 max-w-2xl w-full my-8" onclick="event.stopPropagation()">
+                        <h3 class="text-xl font-bold mb-4 text-gray-800">
+                            <i class="fas fa-pencil-alt text-rose-500 mr-2"></i>Membuat Caption...
+                        </h3>
+                        <div class="flex items-center justify-center py-8">
+                            <div class="loader !border-l-rose-500"></div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+
+                // Close modal on backdrop click
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.remove();
+                    }
+                });
+
+                // Konversi imageUrl ke base64
+                const response = await fetch(imageUrl);
+                const blob = await response.blob();
+                const reader = new FileReader();
+                const base64Promise = new Promise((resolve) => {
+                    reader.onloadend = () => {
+                        const base64 = reader.result.split(',')[1];
+                        resolve(base64);
+                    };
+                    reader.readAsDataURL(blob);
+                });
+                const base64Data = await base64Promise;
+
+                // Call Gemini API untuk generate caption
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const systemPrompt = `You are an expert social media copywriter and content strategist. Analyze this product image and create 3 engaging, conversion-focused Instagram captions in Indonesian.
+
+Each caption should:
+1. Hook attention in the first line
+2. Highlight product benefits or create desire
+3. Include relevant emojis naturally
+4. End with a clear call-to-action (CTA)
+5. Be optimized for engagement and sales
+6. Have different tones: Professional, Casual/Fun, and Inspirational
+
+Format your response as JSON with this structure:
+{
+  "professional": "caption text",
+  "casual": "caption text",
+  "inspirational": "caption text"
+}`;
+
+                const payload = {
+                    contents: [{
+                        parts: [
+                            { text: `Analyze this product image titled "${title}" and create 3 engaging Instagram captions in Indonesian for different audiences.` },
+                            { inlineData: { mimeType: 'image/png', data: base64Data } }
+                        ]
+                    }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                    generationConfig: {
+                        responseMimeType: "application/json"
+                    }
+                };
+
+                const apiResponse = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!apiResponse.ok) {
+                    const errorData = await apiResponse.json();
+                    throw new Error(errorData.error?.message || 'API request failed');
+                }
+
+                const result = await apiResponse.json();
+                const captionText = result.candidates[0].content.parts[0].text;
+                const captions = JSON.parse(captionText);
+
+                // Unicode escape sequences untuk obfuscation safety
+                const targetEmoji = '\uD83C\uDFAF'; // 🎯
+                const smileEmoji = '\uD83D\uDE0A'; // 😊
+                const sparkleEmoji = '\u2728'; // ✨
+
+                // Update modal dengan hasil caption
+                const modalContent = modal.querySelector('.bg-white');
+                modalContent.innerHTML = `
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-bold text-gray-800">
+                            <i class="fas fa-pencil-alt text-rose-500 mr-2"></i>Caption Instagram
+                        </h3>
+                        <button data-action="close-modal" class="text-gray-500 hover:text-gray-700 text-2xl leading-none" title="Tutup">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                    <div class="space-y-4 mb-6 max-h-[60vh] overflow-y-auto" style="-webkit-overflow-scrolling: touch;">
+                        ${Object.entries(captions).map(([tone, caption]) => `
+                            <div class="border border-gray-200 rounded-lg p-4 bg-gray-50">
+                                <div class="flex items-center justify-between mb-2">
+                                    <label class="text-sm font-bold text-gray-700 uppercase">${tone === 'professional' ? targetEmoji + ' Profesional' : tone === 'casual' ? smileEmoji + ' Casual & Fun' : sparkleEmoji + ' Inspiratif'}</label>
+                                    <button data-action="copy-caption" data-caption="${caption.replace(/"/g, '&quot;')}"
+                                        class="caption-copy-btn text-xs bg-rose-500 hover:bg-rose-600 text-white px-3 py-1 rounded-full transition-colors flex-shrink-0">
+                                        <i class="fas fa-copy mr-1"></i>Salin
+                                    </button>
+                                </div>
+                                <p class="text-sm text-gray-800 whitespace-pre-wrap leading-relaxed">${caption}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+                        <p class="text-xs text-blue-800">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            <strong>Tips:</strong> Pilih caption yang sesuai dengan brand voice Anda!
+                        </p>
+                    </div>
+
+                    <button data-action="close-modal"
+                        class="w-full bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-lg transition-colors">
+                        Tutup
+                    </button>
+                `;
+
+                // Add event delegation for copy and close buttons (works on desktop & mobile)
+                modalContent.addEventListener('click', async (e) => {
+                    e.stopPropagation();
+
+                    const copyBtn = e.target.closest('[data-action="copy-caption"]');
+                    const closeBtn = e.target.closest('[data-action="close-modal"]');
+
+                    if (copyBtn) {
+                        const captionText = copyBtn.dataset.caption;
+                        try {
+                            await navigator.clipboard.writeText(captionText);
+                            const originalHTML = copyBtn.innerHTML;
+                            copyBtn.innerHTML = '<i class="fas fa-check mr-1"></i>Tersalin!';
+                            copyBtn.classList.remove('bg-rose-500');
+                            copyBtn.classList.add('bg-green-500');
+                            setTimeout(() => {
+                                copyBtn.innerHTML = originalHTML;
+                                copyBtn.classList.remove('bg-green-500');
+                                copyBtn.classList.add('bg-rose-500');
+                            }, 2000);
+                        } catch (err) {
+                            console.error('Failed to copy:', err);
+                            // Fallback for older browsers
+                            alert('Caption berhasil dipilih. Salin dengan Ctrl+C atau Command+C');
+                        }
+                    } else if (closeBtn) {
+                        modal.remove();
+                    }
+                });
+
+            } catch (error) {
+                console.error('Error generating caption:', error);
+
+                // Tampilkan error modal
+                const errorModal = document.createElement('div');
+                errorModal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+                errorModal.innerHTML = `
+                    <div class="bg-white rounded-xl p-6 max-w-md w-full">
+                        <h3 class="text-xl font-bold mb-4 text-red-600">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>Error
+                        </h3>
+                        <p class="text-gray-700 mb-4">${error.message}</p>
+                        <button onclick="this.closest('.fixed').remove()"
+                            class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                            Tutup
+                        </button>
+                    </div>
+                `;
+                document.body.appendChild(errorModal);
+
+                // Remove loading modal if it exists
+                const existingModal = document.querySelector('.fixed.inset-0');
+                if (existingModal && existingModal !== errorModal) {
+                    existingModal.remove();
+                }
+            }
+        };
+
+        window.handleAffiliateVideoPrompt = async (imageUrl, title) => {
+            try {
+                // Tampilkan loading
+                const modal = document.createElement('div');
+                modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+                modal.innerHTML = `
+                    <div class="bg-white rounded-xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+                        <h3 class="text-xl font-bold mb-4 text-gray-800">
+                            <i class="fas fa-film text-fuchsia-500 mr-2"></i>Membuat Prompt Video...
+                        </h3>
+                        <div class="flex items-center justify-center py-8">
+                            <div class="loader !border-l-fuchsia-500"></div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+
+                // Konversi imageUrl ke base64
+                const response = await fetch(imageUrl);
+                const blob = await response.blob();
+                const reader = new FileReader();
+                const base64Promise = new Promise((resolve) => {
+                    reader.onloadend = () => {
+                        const base64 = reader.result.split(',')[1];
+                        resolve(base64);
+                    };
+                    reader.readAsDataURL(blob);
+                });
+                const base64Data = await base64Promise;
+
+                // Call Gemini API untuk generate prompt
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const systemPrompt = `You are an expert video prompt engineer. Analyze this product image and create a detailed, cinematic prompt for an AI image-to-video generator (like Runway, Pika, or Stable Video Diffusion).
+
+The prompt should:
+1. Describe the product's visual appearance and key features
+2. Suggest natural, engaging camera movements (zoom in, pan, rotation, etc.)
+3. Include dynamic elements (floating particles, light effects, product rotation)
+4. Specify lighting and atmosphere
+5. Be optimized for text-to-video AI models
+6. Be in English for maximum compatibility
+7. Keep it under 200 words but highly detailed
+
+Output ONLY the video prompt, nothing else.`;
+
+                const payload = {
+                    contents: [{
+                        parts: [
+                            { text: `Create a cinematic video prompt for this product image titled "${title}". Make it dynamic and engaging for image-to-video AI.` },
+                            { inlineData: { mimeType: 'image/png', data: base64Data } }
+                        ]
+                    }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] }
+                };
+
+                const apiResponse = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!apiResponse.ok) {
+                    const errorData = await apiResponse.json();
+                    throw new Error(errorData.error?.message || 'Failed to generate prompt');
+                }
+
+                const result = await apiResponse.json();
+                const videoPrompt = result.candidates[0].content.parts[0].text.trim();
+
+                // Tampilkan hasil
+                modal.innerHTML = `
+                    <div class="bg-white rounded-xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">
+                                <i class="fas fa-film text-fuchsia-500 mr-2"></i>Prompt Video untuk: ${title}
+                            </h3>
+                            <button onclick="this.closest('.fixed').remove()" class="text-gray-500 hover:text-gray-700">
+                                <i class="fas fa-times text-xl"></i>
+                            </button>
+                        </div>
+
+                        <div class="mb-4">
+                            <img src="${imageUrl}" alt="${title}" class="w-full rounded-lg mb-3 max-h-64 object-contain bg-gray-100">
+                        </div>
+
+                        <div class="bg-gray-50 border-2 border-gray-200 rounded-lg p-4 mb-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <label class="text-sm font-semibold text-gray-700">Video Prompt:</label>
+                                <button id="copyPromptBtn" class="text-xs bg-fuchsia-500 hover:bg-fuchsia-600 text-white px-3 py-1 rounded-full transition-colors">
+                                    <i class="fas fa-copy mr-1"></i>Copy
+                                </button>
+                            </div>
+                            <textarea id="videoPromptText" rows="8" readonly class="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-800 text-sm font-mono resize-none focus:outline-none focus:ring-2 focus:ring-fuchsia-500">${videoPrompt}</textarea>
+                        </div>
+
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+                            <p class="text-xs text-blue-800">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                <strong>Cara Pakai:</strong> Copy prompt ini dan gunakan di platform Image-to-Video seperti Runway, Pika Labs, Stable Video Diffusion, atau yang lainnya. Upload gambar produk Anda dan paste prompt ini untuk hasil terbaik.
+                            </p>
+                        </div>
+
+                        <div class="flex gap-2">
+                            <button onclick="this.closest('.fixed').remove()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                                Tutup
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                // Add copy to clipboard functionality
+                const copyBtn = modal.querySelector('#copyPromptBtn');
+                const promptTextarea = modal.querySelector('#videoPromptText');
+
+                copyBtn.addEventListener('click', () => {
+                    promptTextarea.select();
+                    document.execCommand('copy');
+                    copyBtn.innerHTML = '<i class="fas fa-check mr-1"></i>Copied!';
+                    copyBtn.classList.remove('bg-fuchsia-500', 'hover:bg-fuchsia-600');
+                    copyBtn.classList.add('bg-green-500');
+                    setTimeout(() => {
+                        copyBtn.innerHTML = '<i class="fas fa-copy mr-1"></i>Copy';
+                        copyBtn.classList.remove('bg-green-500');
+                        copyBtn.classList.add('bg-fuchsia-500', 'hover:bg-fuchsia-600');
+                    }, 2000);
+                });
+
+            } catch (error) {
+                console.error('Error generating video prompt:', error);
+                // Tampilkan error
+                const errorModal = document.createElement('div');
+                errorModal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+                errorModal.innerHTML = `
+                    <div class="bg-white rounded-xl p-6 max-w-md w-full">
+                        <h3 class="text-xl font-bold mb-4 text-red-600">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>Error
+                        </h3>
+                        <p class="text-gray-700 mb-4">${error.message}</p>
+                        <button onclick="this.closest('.fixed').remove()" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg">
+                            Tutup
+                        </button>
+                    </div>
+                `;
+                document.body.appendChild(errorModal);
+
+                // Remove existing loading modal if exists
+                const existingModal = document.querySelector('.fixed.inset-0');
+                if (existingModal && existingModal !== errorModal) {
+                    existingModal.remove();
+                }
+            }
+        };
+
+        // Event delegation for hrg grid action buttons (works on desktop & mobile)
+        if (hrgGrid) {
+            hrgGrid.addEventListener('click', async (e) => {
+                e.stopPropagation();
+
+                const actionBtn = e.target.closest('.action-btn[data-action]');
+                if (!actionBtn) return;
+
+                const action = actionBtn.dataset.action;
+                const imageUrl = actionBtn.dataset.imageUrl;
+                const title = actionBtn.dataset.title;
+                const filename = actionBtn.dataset.filename;
+                const index = actionBtn.dataset.index;
+
+                if (action === 'hrg-preview' && imageUrl) {
+                    showPreviewModal(imageUrl);
+                } else if (action === 'hrg-edit' && index !== undefined) {
+                    handleEditHrg(parseInt(index), actionBtn.dataset.prompt);
+                } else if (action === 'hrg-regenerate' && index !== undefined) {
+                    await handleRegenerateHrg(parseInt(index));
+                } else if (action === 'hrg-video' && imageUrl && title) {
+                    window.handleAffiliateVideoPrompt(imageUrl, title);
+                } else if (action === 'hrg-caption' && imageUrl && title) {
+                    window.handleAffiliateCaption(imageUrl, title);
+                } else if (action === 'hrg-download' && imageUrl && filename) {
+                    if (window.downloadDataURINew) {
+                        await window.downloadDataURINew(imageUrl, filename);
+                    }
+                }
+            });
+
+            // Handler functions for edit and regenerate
+            function handleEditHrg(index, currentPrompt) {
+                const modal = document.createElement('div');
+                modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+                modal.innerHTML = `
+                    <div class="bg-white rounded-xl p-6 max-w-2xl w-full">
+                        <h3 class="text-xl font-bold mb-4 text-gray-800">
+                            <i class="fas fa-edit text-purple-500 mr-2"></i>Edit Scene Prompt
+                        </h3>
+                        <div class="mb-4">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Scene Description:</label>
+                            <textarea id="edit-hrg-input" rows="4" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none resize-none" placeholder="Contoh: A serene mountain landscape with a river flowing through, vibrant flowers in foreground, golden hour lighting...">${currentPrompt}</textarea>
+                            <p class="text-xs text-gray-500 mt-2">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                Edit deskripsi scene/style untuk hasil yang berbeda
+                            </p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="this.closest('.fixed').remove()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                                Batal
+                            </button>
+                            <button id="confirm-edit-hrg-btn" class="flex-1 bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                                <i class="fas fa-check mr-2"></i>Generate Ulang
+                            </button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+
+                const confirmBtn = modal.querySelector('#confirm-edit-hrg-btn');
+                const promptInput = modal.querySelector('#edit-hrg-input');
+
+                confirmBtn.addEventListener('click', async () => {
+                    const newPrompt = promptInput.value.trim();
+                    if (!newPrompt) return;
+
+                    modal.remove();
+
+                    // Update the prompt for this image
+                    if (window.hrgGenerationParams && window.hrgGenerationParams[index]) {
+                        window.hrgGenerationParams[index].prompt = newPrompt;
+                    }
+
+                    await handleRegenerateHrg(index);
+                });
+            }
+
+            async function handleRegenerateHrg(index) {
+                const targetCard = document.getElementById(`hrg-card-${index + 1}`);
+                if (!targetCard) return;
+
+                const params = window.hrgGenerationParams ? window.hrgGenerationParams[index] : null;
+                if (!params) return;
+
+                // Show loading state
+                const outputContainer = targetCard.querySelector('.aspect-video, .relative');
+                if (!outputContainer) return;
+
+                outputContainer.innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-full min-h-[200px]">
+                        <div class="loader !border-l-purple-500"></div>
+                        <p class="mt-4 text-sm text-gray-600">Regenerating...</p>
+                    </div>
+                `;
+
+                try {
+                    const apiKey = "";
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${apiKey}`;
+
+                    // Add variation to ensure different results
+                    const variations = [
+                        ', slightly different angle',
+                        ', alternative perspective',
+                        ', different composition',
+                        ', varied lighting mood',
+                        ', alternative styling',
+                        ', different camera angle'
+                    ];
+                    const randomVariation = variations[Math.floor(Math.random() * variations.length)];
+                    const variedPrompt = params.prompt + randomVariation + '. ' + buildHrgPriceInstruction(params.productImages);
+
+                    const parts = [{ text: variedPrompt }];
+
+                    // Add all product images
+                    params.productImages.forEach(img => {
+                        parts.push({ inlineData: { mimeType: img.mimeType, data: img.base64 } });
+                    });
+
+                    // Add model image if available
+                    if (params.modelImage) {
+                        parts.push({ inlineData: { mimeType: params.modelImage.mimeType, data: params.modelImage.base64 } });
+                    }
+
+                    const payload = { contents: [{ parts }], generationConfig: { responseModalities: ['IMAGE'], imageConfig: { aspectRatio: params.ratio } } };
+                    const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+
+                    if (!response.ok) throw new Error(`API error: ${response.statusText}`);
+
+                    const result = await response.json();
+                    const base64Data = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
+
+                    if (base64Data) {
+                        const imageUrl = `data:image/png;base64,${base64Data}`;
+                        const safeTitle = params.title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+                        const safePrompt = params.prompt.replace(/"/g, '&quot;');
+
+                        // Update stored image in generatedHrgImages
+                        if (generatedHrgImages[index]) {
+                            generatedHrgImages[index].url = imageUrl;
+                        }
+
+                        outputContainer.innerHTML = `<div class="relative w-full h-full group"><img src="${imageUrl}" class="w-full h-full object-cover rounded-md" alt="${params.title}"><div class="absolute bottom-2 right-2 flex flex-wrap gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"><button data-action="hrg-preview" data-image-url="${imageUrl}" class="action-btn bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600" title="Preview"><i class="fas fa-search-plus"></i></button><button data-action="hrg-edit" data-index="${index}" data-prompt="${safePrompt}" class="action-btn bg-purple-500 text-white p-2 rounded-full hover:bg-purple-600" title="Edit Prompt"><i class="fas fa-edit"></i></button><button data-action="hrg-regenerate" data-index="${index}" class="action-btn bg-green-500 text-white p-2 rounded-full hover:bg-green-600" title="Regenerate"><i class="fas fa-sync-alt"></i></button><button data-action="hrg-video" data-image-url="${imageUrl}" data-title="${params.title.replace(/"/g, '&quot;')}" class="action-btn bg-fuchsia-500 text-white p-2 rounded-full hover:bg-fuchsia-600" title="Buat Prompt Video"><i class="fas fa-film"></i></button><button data-action="hrg-caption" data-image-url="${imageUrl}" data-title="${params.title.replace(/"/g, '&quot;')}" class="action-btn bg-rose-500 text-white p-2 rounded-full hover:bg-rose-600" title="Buat Caption"><i class="fas fa-pencil-alt"></i></button><button data-action="hrg-download" data-image-url="${imageUrl}" data-filename="affiliatego_${index + 1}_${safeTitle}.png" class="action-btn bg-cyan-600 text-white p-2 rounded-full hover:bg-cyan-700" title="Unduh"><i class="fas fa-download"></i></button></div></div>`;
                     } else {
                         throw new Error('Failed to generate image');
                     }
