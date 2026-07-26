@@ -1,9 +1,10 @@
 // Auto-generated runtime loader for thin Canvas shell.
-// Fetches body.html + bundle-classic.js + bundle-module.js from jsDelivr,
-// patches DOMContentLoaded semantics so dynamically-loaded scripts see the
-// event fire even though it already passed during initial shell parse.
+// Self-resolving: ambil commit sha terbaru via GitHub API → fetch artifact
+// dari URL commit-pinned jsDelivr (immutable, kebal stale-cache @main).
+// Fallback: @main (cdn → fastly) kalau GitHub API tidak bisa diakses.
 (function () {
-  var CDN = "https://fastly.jsdelivr.net/gh/arulbarker/affgo-cdn@main";
+  var REPO = "arulbarker/affgo-cdn";
+  var MAIN_BASES = ["https://cdn.jsdelivr.net/gh/arulbarker/affgo-cdn@main","https://fastly.jsdelivr.net/gh/arulbarker/affgo-cdn@main"];
 
   // Patch addEventListener once: when a script registers a DOMContentLoaded
   // handler AFTER the event has already fired (which is always the case here
@@ -18,9 +19,34 @@
     return _origAdd.call(this, type, listener, opts);
   };
 
-  // Anti-stale: fetch dengan cache:'no-cache' → browser revalidate ETag ke CDN.
-  // Setelah purge jsDelivr, user langsung dapat bundle baru tanpa hard-refresh.
-  // Kalau tidak ada perubahan, server balas 304 (tidak re-download penuh).
+  // Kandidat base URL, urutan prioritas:
+  // 1. Commit-pinned (immutable, selalu benar) — resolved via GitHub API
+  // 2. @main cdn.jsdelivr.net  3. @main fastly.jsdelivr.net
+  async function resolveBases() {
+    var bases = [];
+    try {
+      var r = await fetch('https://api.github.com/repos/' + REPO + '/commits/main', { cache: 'no-store' });
+      if (r.ok) {
+        var j = await r.json();
+        if (j && j.sha) bases.push('https://cdn.jsdelivr.net/gh/' + REPO + '@' + j.sha);
+      }
+    } catch (e) { console.warn('SHA resolve skipped:', e); }
+    return bases.concat(MAIN_BASES);
+  }
+
+  // Coba tiap base sampai fetch sukses; base pemenang dipakai untuk semua file.
+  async function fetchFirst(bases, path) {
+    var lastErr;
+    for (var i = 0; i < bases.length; i++) {
+      try {
+        var res = await fetch(bases[i] + path, { cache: 'no-cache' });
+        if (res.ok) return { res: res, base: bases[i] };
+        lastErr = new Error('HTTP ' + res.status + ' @ ' + bases[i] + path);
+      } catch (e) { lastErr = e; }
+    }
+    throw lastErr || new Error('All CDN bases failed for ' + path);
+  }
+
   async function loadScript(url, isModule) {
     var res = await fetch(url, { cache: 'no-cache' });
     if (!res.ok) throw new Error('Fetch ' + url + ' → HTTP ' + res.status);
@@ -47,19 +73,19 @@
 
   (async function boot() {
     try {
-      // 1. Fetch body HTML (the actual app structure: 86 tab panels, login, modals)
-      //    cache:'no-cache' = revalidate ETag → anti-stale setelah purge
-      var bodyRes = await fetch(CDN + '/body.html', { cache: 'no-cache' });
-      if (!bodyRes.ok) throw new Error('Fetch body.html → HTTP ' + bodyRes.status);
-      var bodyHtml = await bodyRes.text();
+      // 1. Resolve base terbaik + fetch body HTML (86+ tab panels, login, modals)
+      var bases = await resolveBases();
+      var first = await fetchFirst(bases, '/body.html');
+      var CDN = first.base;
+      console.log('[bootstrap] CDN base:', CDN);
+      var bodyHtml = await first.res.text();
 
       // 2. Swap placeholder loader with real body
       var loader = document.getElementById('__loader');
       if (loader) loader.remove();
       document.body.insertAdjacentHTML('afterbegin', bodyHtml);
 
-      // 2b. Refresh styles anti-stale — shell <link> bisa serve CSS lama dari
-      //     browser cache; inject ulang versi fresh (no-cache) menimpa yang stale.
+      // 2b. Inject styles dari base yang sama (menimpa CSS stale dari shell <link>).
       //     Non-fatal: gagal fetch = lanjut boot dengan CSS dari shell.
       try {
         var cssRes = await fetch(CDN + '/styles.css', { cache: 'no-cache' });
