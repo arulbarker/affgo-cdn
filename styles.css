@@ -286,6 +286,16 @@
         #content-affiliate .result-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
         #content-affiliate .upload-box { border: 2px dashed #94a3b8; transition: all 0.3s ease; }
         #content-affiliate .upload-box.dragging { border-color: #16a34a; background-color: #f1f5f9; }
+        #content-feedbranding { font-family: 'Inter', sans-serif; background-color: #f0fdf4; color: #374151; padding: 2rem; border-radius: 1rem; }
+        #content-feedbranding .card { background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 0.75rem; }
+        #content-feedbranding .btn-primary { background-color: #16a34a; color: white; transition: background-color 0.3s; }
+        #content-feedbranding .btn-primary:hover { background-color: #15803d; }
+        #content-feedbranding .btn-primary:disabled { background-color: #e2e8f0; color: #94a3b8; cursor: not-allowed; }
+        #content-feedbranding .loader { border: 3px solid rgba(22, 163, 74, 0.5); border-left-color: #e5e7eb; width: 24px; height: 24px; border-radius: 50%; animation: spin 1s linear infinite; }
+        #content-feedbranding .upload-box { border: 2px dashed #94a3b8; transition: all 0.3s ease; }
+        #content-feedbranding .upload-box.dragging { border-color: #16a34a; background-color: #f1f5f9; }
+        #content-feedbranding .fb-input { width: 100%; border: 1px solid #d1d5db; border-radius: 0.5rem; padding: 0.625rem 0.75rem; font-size: 14px; }
+        #content-feedbranding .fb-input:focus { outline: none; border-color: #16a34a; box-shadow: 0 0 0 2px rgba(22,163,74,0.2); }
         #content-affiliate .orientation-btn { background-color: white; border: 2px solid #e2e8f0; }
         #content-affiliate .orientation-btn.selected { background-color: #16a34a; color: white; border-color: #15803d; }
         #content-affiliate .ratio-btn-broll { background-color: white; border: 2px solid #e2e8f0; padding: 0.75rem; border-radius: 0.5rem; font-weight: 500; transition: all 0.3s; cursor: pointer; display: flex; align-items: center; justify-content: center; }

@@ -156,6 +156,11 @@
                         <i class="fas fa-tags"></i>
                         <span class="btn-text">Affiliate Harga</span>
                     </button>
+                    <button data-tab="feedbranding" class="main-tab-btn">
+                        <i class="fas fa-layer-group"></i>
+                        <span class="btn-text" data-i18n="nav.feedbranding">Feed Branding</span>
+                        <span class="new-badge">NEW</span>
+                    </button>
                     <button data-tab="virtual-tryon" class="main-tab-btn">
                         <i class="fas fa-tshirt"></i>
                         <span class="btn-text">Virtual Try-On</span>
@@ -2747,6 +2752,59 @@
                         <div id="hrg-b-roll-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4"></div>
                     </div>
                 </main>
+        </div>
+
+        <!-- TAB: FEED BRANDING -->
+        <div id="content-feedbranding" class="main-content-panel hidden">
+                <div class="max-w-5xl mx-auto">
+                    <h1 class="text-2xl sm:text-3xl font-bold text-gray-800" data-i18n="feedbranding.title">Feed Branding</h1>
+                    <p class="text-gray-500 mt-1 mb-6 text-sm sm:text-base" data-i18n="feedbranding.subtitle">Upload 1 foto produk, isi nama brand, dan dapatkan 6 desain feed yang seragam untuk brandingmu.</p>
+
+                    <div class="card p-4 sm:p-6 space-y-5">
+                        <div>
+                            <label class="block text-sm font-semibold mb-2" data-i18n="feedbranding.upload">Foto Produk</label>
+                            <label for="fb-image-input" class="upload-box rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer text-center">
+                                <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                <span class="text-sm text-gray-500" data-i18n="feedbranding.upload-hint">Klik untuk unggah foto produk</span>
+                                <img id="fb-image-preview" class="hidden mt-3 max-h-40 rounded-lg object-contain" alt="preview">
+                            </label>
+                            <input id="fb-image-input" type="file" accept="image/*,.heic" class="hidden">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold mb-2" data-i18n="feedbranding.brandname">Nama Brand <span class="text-red-500">*</span></label>
+                            <input id="fb-brand-name" type="text" class="fb-input" data-i18n-ph="feedbranding.brandname-ph" placeholder="Nama brand (mis. Crystalin)">
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold mb-2" data-i18n="feedbranding.slogan">Slogan / Tagline</label>
+                                <input id="fb-slogan" type="text" class="fb-input" data-i18n-ph="feedbranding.slogan-ph" placeholder="Slogan (opsional)">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2" data-i18n="feedbranding.price">Harga</label>
+                                <input id="fb-price" type="text" class="fb-input" data-i18n-ph="feedbranding.price-ph" placeholder="Harga (mis. Rp5.000)">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold mb-2" data-i18n="feedbranding.accent">Warna Aksen (opsional)</label>
+                            <input id="fb-accent-color" type="color" value="#16a34a" class="h-10 w-16 rounded border border-gray-300 cursor-pointer">
+                        </div>
+
+                        <button id="fb-generate-btn" class="btn-primary w-full sm:w-auto px-6 py-3 rounded-lg font-semibold" disabled>
+                            <span data-i18n="feedbranding.generate">Buat Feed Branding</span>
+                        </button>
+                    </div>
+
+                    <div id="fb-results-header" class="hidden flex items-center justify-between mt-8 mb-4">
+                        <h2 class="text-lg font-bold text-gray-800" data-i18n="feedbranding.results">Hasil Feed (6 Post)</h2>
+                        <button id="fb-download-all-btn" class="btn-primary px-4 py-2 rounded-lg text-sm" data-action="download">
+                            <i class="fas fa-download mr-1"></i><span data-i18n="feedbranding.downloadall">Download Semua</span>
+                        </button>
+                    </div>
+                    <div id="fb-results-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-4"></div>
+                </div>
         </div>
 
         <!-- TAB: VIRTUAL TRY-ON -->
@@ -21928,6 +21986,11 @@
         <button data-tab="affiliate-harga" class="mobile-tab-btn hidden">
             <i class="fas fa-tags"></i>
             <span>Harga</span>
+        </button>
+        <button data-tab="feedbranding" class="mobile-tab-btn">
+            <i class="fas fa-layer-group"></i>
+            <span data-i18n="nav.feedbranding">Feed Branding</span>
+            <span class="new-badge">NEW</span>
         </button>
         <button data-tab="virtual-tryon" class="mobile-tab-btn">
             <i class="fas fa-tshirt"></i>

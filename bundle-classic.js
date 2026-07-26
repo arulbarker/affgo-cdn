@@ -79,6 +79,27 @@
                 'nav.mirror-selfie': 'POV Mirror Selfie',
                 'nav.walking-pad': 'Walking Pad',
                 'nav.affiliate': 'Foto Produk Affiliate',
+                'nav.feedbranding': 'Feed Branding',
+                'feedbranding.title': 'Feed Branding',
+                'feedbranding.subtitle': 'Upload 1 foto produk, isi nama brand, dan dapatkan 6 desain feed yang seragam untuk brandingmu.',
+                'feedbranding.upload': 'Foto Produk',
+                'feedbranding.upload-hint': 'Klik untuk unggah foto produk',
+                'feedbranding.brandname': 'Nama Brand',
+                'feedbranding.brandname-ph': 'Nama brand (mis. Crystalin)',
+                'feedbranding.slogan': 'Slogan / Tagline',
+                'feedbranding.slogan-ph': 'Slogan (opsional)',
+                'feedbranding.price': 'Harga',
+                'feedbranding.price-ph': 'Harga (mis. Rp5.000)',
+                'feedbranding.accent': 'Warna Aksen (opsional)',
+                'feedbranding.generate': 'Buat Feed Branding',
+                'feedbranding.results': 'Hasil Feed (6 Post)',
+                'feedbranding.downloadall': 'Download Semua',
+                'feedbranding.role.cover': 'Cover',
+                'feedbranding.role.benefit': 'Benefit',
+                'feedbranding.role.testimoni': 'Testimoni',
+                'feedbranding.role.carapakai': 'Cara Pakai',
+                'feedbranding.role.harga': 'Harga',
+                'feedbranding.role.cta': 'CTA',
                 'nav.affiliate-islami': 'Affiliate Agama',
                 'nav.affiliate-harga': 'Affiliate Harga',
                 'nav.virtual-tryon': 'Virtual Try-On',
@@ -2568,6 +2589,27 @@
                 'nav.mirror-selfie': 'Mirror Selfie POV',
                 'nav.walking-pad': 'Walking Pad',
                 'nav.affiliate': 'Affiliate Product Photo',
+                'nav.feedbranding': 'Feed Branding',
+                'feedbranding.title': 'Feed Branding',
+                'feedbranding.subtitle': 'Upload 1 product photo, enter your brand name, and get 6 consistent feed designs for your branding.',
+                'feedbranding.upload': 'Product Photo',
+                'feedbranding.upload-hint': 'Click to upload product photo',
+                'feedbranding.brandname': 'Brand Name',
+                'feedbranding.brandname-ph': 'Brand name (e.g. Crystalin)',
+                'feedbranding.slogan': 'Slogan / Tagline',
+                'feedbranding.slogan-ph': 'Slogan (optional)',
+                'feedbranding.price': 'Price',
+                'feedbranding.price-ph': 'Price (e.g. $2)',
+                'feedbranding.accent': 'Accent Color (optional)',
+                'feedbranding.generate': 'Create Branding Feed',
+                'feedbranding.results': 'Feed Results (6 Posts)',
+                'feedbranding.downloadall': 'Download All',
+                'feedbranding.role.cover': 'Cover',
+                'feedbranding.role.benefit': 'Benefit',
+                'feedbranding.role.testimoni': 'Testimonial',
+                'feedbranding.role.carapakai': 'How to Use',
+                'feedbranding.role.harga': 'Price',
+                'feedbranding.role.cta': 'CTA',
                 'nav.affiliate-islami': 'Religious Affiliate',
                 'nav.affiliate-harga': 'Price Affiliate',
                 'nav.virtual-tryon': 'Virtual Try-On',
@@ -4980,6 +5022,18 @@
                 'wp.count-label': 'Number of Generations',
             }
             ,ms: {
+                'feedbranding.subtitle': 'Muat naik 1 foto produk, isi nama jenama, dan dapatkan 6 reka bentuk feed yang seragam untuk penjenamaan anda.',
+                'feedbranding.upload-hint': 'Klik untuk memuat naik foto produk',
+                'feedbranding.brandname': 'Nama Jenama',
+                'feedbranding.brandname-ph': 'Nama jenama (cth. Crystalin)',
+                'feedbranding.slogan-ph': 'Slogan (pilihan)',
+                'feedbranding.price-ph': 'Harga (cth. RM5)',
+                'feedbranding.accent': 'Warna Aksen (pilihan)',
+                'feedbranding.generate': 'Cipta Feed Penjenamaan',
+                'feedbranding.results': 'Hasil Feed (6 Pos)',
+                'feedbranding.downloadall': 'Muat Turun Semua',
+                'feedbranding.role.benefit': 'Manfaat',
+                'feedbranding.role.carapakai': 'Cara Guna',
                 'beranda.title': 'Selamat Datang ke Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Asisten AI Anda untuk meneroka 79++ ciri photo & video generation',
                 'beranda.hint': 'Tanya apa sahaja tentang ciri aplikasi ini! by Arul CG',
@@ -6932,6 +6986,7 @@
             __attachAdGateToTab("walkpad");                          // Walking Pad
             __attachAdGateToTab("broll", "broll-b-roll-grid");       // Foto Produk Affiliate (grid non-standard)
             __attachAdGateToTab("hrg", "hrg-b-roll-grid");           // Foto Produk Affiliate + Harga (grid non-standard)
+            __attachAdGateToTab("fb");                               // Feed Branding
             __attachAdGateToTab("islami");                           // Affiliate Agama (Islami)
             __attachAdGateToTab("tryon");                            // Virtual Try-On
             __attachAdGateToTab("pose");                             // Pose Fashion
@@ -7069,6 +7124,186 @@
             __attachAdGatesAllTabs();
         }
         // ==================== END BEBAS IKLAN ====================
+
+        // ===== FEED BRANDING =====
+        (function initFeedBranding() {
+            function boot() {
+                const apiKey = "";
+                const panel = document.getElementById('content-feedbranding');
+                if (!panel) return;
+
+                const imgInput = document.getElementById('fb-image-input');
+                const imgPreview = document.getElementById('fb-image-preview');
+                const brandNameEl = document.getElementById('fb-brand-name');
+                const sloganEl = document.getElementById('fb-slogan');
+                const priceEl = document.getElementById('fb-price');
+                const colorEl = document.getElementById('fb-accent-color');
+                const generateBtn = document.getElementById('fb-generate-btn');
+                const resultsGrid = document.getElementById('fb-results-grid');
+                const resultsHeader = document.getElementById('fb-results-header');
+                const downloadAllBtn = document.getElementById('fb-download-all-btn');
+
+                let fbProductImage = null;   // { base64, mimeType }
+                let fbGenerated = [];        // sparse, index = slot peran
+
+                const FB_ROLES = [
+                    { key: 'cover',     role: "POST 1 - COVER/HERO: A striking hero feed post. Show the product large and premium as the focal point. Display the brand name prominently as the main headline. This is the cover of the feed." },
+                    { key: 'benefit',   role: "POST 2 - BENEFIT: A clean benefits post. Present 3 key product advantages as short points with simple minimal icons. Keep the product visible." },
+                    { key: 'testimoni', role: "POST 3 - TESTIMONIAL: A review card. Show a 5-star rating, one short happy-customer quote, and a small product shot. Trustworthy social-proof feel." },
+                    { key: 'carapakai', role: "POST 4 - HOW TO USE: A simple 3-step how-to-use post, numbered steps 1-2-3 with the product as the focus. Clear and instructional." },
+                    { key: 'harga',     role: "POST 5 - PRICE/PROMO: A promo post with a bold prominent price badge. Sense of a great deal." },
+                    { key: 'cta',       role: "POST 6 - CALL TO ACTION: A closing call-to-action post inviting the audience to order now. Show the brand name and product with a clear action-button style." }
+                ];
+
+                function fbLangWord() {
+                    const l = (localStorage.getItem('app_language') || 'id');
+                    if (l === 'en') return 'English';
+                    if (l === 'ms') return 'Malay';
+                    return 'Indonesian';
+                }
+
+                function updateGenerateState() {
+                    const ready = !!fbProductImage && brandNameEl.value.trim().length > 0;
+                    generateBtn.disabled = !ready;
+                }
+
+                async function fbFileToBase64(file) {
+                    let processed = file;
+                    if (file.type === 'image/heic' || file.name.toLowerCase().endsWith('.heic')) {
+                        const blob = await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.9 });
+                        processed = new File([blob], file.name.replace(/\.heic$/i, '.jpg'), { type: 'image/jpeg' });
+                    }
+                    return new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = () => {
+                            const base64 = String(reader.result).split(',')[1];
+                            resolve({ base64, mimeType: processed.type || 'image/jpeg' });
+                        };
+                        reader.onerror = reject;
+                        reader.readAsDataURL(processed);
+                    });
+                }
+
+                imgInput.addEventListener('change', async (e) => {
+                    const file = e.target.files && e.target.files[0];
+                    if (!file) return;
+                    try {
+                        fbProductImage = await fbFileToBase64(file);
+                        imgPreview.src = `data:${fbProductImage.mimeType};base64,${fbProductImage.base64}`;
+                        imgPreview.classList.remove('hidden');
+                    } catch (err) {
+                        console.error('FB upload error:', err);
+                    }
+                    updateGenerateState();
+                });
+
+                brandNameEl.addEventListener('input', updateGenerateState);
+
+                function fbBuildBrief() {
+                    const brand = brandNameEl.value.trim();
+                    const slogan = sloganEl.value.trim();
+                    const color = colorEl.value;
+                    const lang = fbLangWord();
+                    const taglineLine = slogan ? `- Tagline: "${slogan}"` : `- Tagline: (none)`;
+                    return `BRAND BRIEF (keep an IDENTICAL visual system across all posts):
+- Brand name: "${brand}"
+${taglineLine}
+- Accent color: ${color}
+- Style: modern, clean, cohesive Instagram feed; one consistent layout system, typography, and color palette across every post; portrait 4:5.
+- All text in the design must be written in ${lang}, correctly spelled.
+A reference product photo is provided; keep the product identity consistent.`;
+                }
+
+                function fbRolePrompt(roleObj) {
+                    const price = priceEl.value.trim();
+                    let role = roleObj.role;
+                    if (roleObj.key === 'harga') {
+                        role = price
+                            ? `POST 5 - PRICE/PROMO: A promo post highlighting the price "${price}" in a bold prominent badge. Sense of a great deal.`
+                            : `POST 5 - PRICE/PROMO: A promo post with a bold "Best Price" / "Special Offer" badge (no specific number). Sense of a great deal.`;
+                    }
+                    return `${fbBuildBrief()}
+
+${role}
+
+Professional social media branding design, high quality, portrait 4:5 aspect ratio.`;
+                }
+
+                async function generateSingleFb(index) {
+                    const card = document.getElementById(`fb-card-${index}`);
+                    const roleObj = FB_ROLES[index - 1];
+                    try {
+                        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${apiKey}`;
+                        const parts = [
+                            { text: fbRolePrompt(roleObj) },
+                            { inlineData: { mimeType: fbProductImage.mimeType, data: fbProductImage.base64 } }
+                        ];
+                        const payload = { contents: [{ parts }], generationConfig: { responseModalities: ['TEXT', 'IMAGE'], imageConfig: { aspectRatio: '4:5' } } };
+                        const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                        const result = await response.json();
+                        const base64Data = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
+                        if (!base64Data) throw new Error('No image data received');
+                        const imageUrl = `data:image/png;base64,${base64Data}`;
+                        const filename = `feedbranding_${index}_${roleObj.key}.png`;
+                        fbGenerated[index - 1] = { url: imageUrl, filename };
+                        if (card) {
+                            card.querySelector('.fb-card-body').innerHTML =
+                                `<div class="relative w-full h-full group">
+                                    <img src="${imageUrl}" class="w-full h-full object-cover rounded-md" alt="${roleObj.key}">
+                                    <button data-action="download" data-image-url="${imageUrl}" data-filename="${filename}" class="absolute bottom-2 right-2 bg-green-600 text-white p-2 rounded-full hover:bg-green-700 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity" title="Unduh"><i class="fas fa-download"></i></button>
+                                 </div>`;
+                        }
+                    } catch (error) {
+                        console.error(`FB error ${index}:`, error);
+                        if (card) {
+                            const body = card.querySelector('.fb-card-body');
+                            if (body) body.innerHTML = '<div class="text-xs text-red-400 flex items-center justify-center h-full">gagal</div>';
+                        }
+                    }
+                }
+
+                function fbRoleLabel(key) {
+                    const idMap = { cover: 'Cover', benefit: 'Benefit', testimoni: 'Testimoni', carapakai: 'Cara Pakai', harga: 'Harga', cta: 'CTA' };
+                    const enMap = { cover: 'Cover', benefit: 'Benefit', testimoni: 'Testimonial', carapakai: 'How to Use', harga: 'Price', cta: 'CTA' };
+                    const msMap = { cover: 'Cover', benefit: 'Manfaat', testimoni: 'Testimoni', carapakai: 'Cara Guna', harga: 'Harga', cta: 'CTA' };
+                    return window.tr3 ? window.tr3(idMap[key], enMap[key], msMap[key]) : (idMap[key] || key);
+                }
+
+                generateBtn.addEventListener('click', async () => {
+                    if (!fbProductImage || !brandNameEl.value.trim()) return;
+                    generateBtn.disabled = true;
+                    fbGenerated = [];
+                    resultsHeader.classList.remove('hidden');
+
+                    resultsGrid.innerHTML = FB_ROLES.map((r, i) => `
+                        <div id="fb-card-${i + 1}" class="card p-3 flex flex-col">
+                            <div class="text-xs font-semibold text-green-700 mb-2" data-fb-role="feedbranding.role.${r.key}">${fbRoleLabel(r.key)}</div>
+                            <div class="fb-card-body aspect-[4/5] bg-gray-100 rounded-md flex items-center justify-center"><div class="loader"></div></div>
+                        </div>`).join('');
+
+                    await Promise.allSettled(FB_ROLES.map((_, i) => generateSingleFb(i + 1)));
+
+                    const successCount = fbGenerated.filter(Boolean).length;
+                    if (successCount === 0) {
+                        alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    }
+                    generateBtn.disabled = false;
+                });
+
+                downloadAllBtn.addEventListener('click', async () => {
+                    const valid = fbGenerated.filter(Boolean);
+                    for (let i = 0; i < valid.length; i++) {
+                        if (window.downloadDataURINew) await window.downloadDataURINew(valid[i].url, valid[i].filename);
+                        else if (window.downloadImage) await window.downloadImage(valid[i].url, valid[i].filename);
+                    }
+                });
+
+                updateGenerateState();
+            }
+
+            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+            else boot();
+        })();
 
         // ==================== HILANGKAN IKLAN BUTTON (CTA) ====================
         // Tombol global di sidebar (desktop) + mobile header → buka modal pembelian.
