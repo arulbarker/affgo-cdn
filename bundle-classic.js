@@ -105,7 +105,12 @@
                 'feedbranding.step1': 'Foto Produk',
                 'feedbranding.step2': 'Nama Brand',
                 'feedbranding.step3': 'Info Tambahan',
-                'feedbranding.step4': 'Warna Aksen',
+                'feedbranding.step4': 'Warna Brand',
+                'feedbranding.step5': 'Rasio Foto',
+                'feedbranding.color-main': 'Warna Utama',
+                'feedbranding.color-second': 'Warna Sekunder',
+                'feedbranding.color-second-ph': 'Kosongkan jika tidak perlu',
+                'feedbranding.color-hint': 'Warna jadi background utama semua post. Pilih yang cocok dengan produkmu.',
                 'feedbranding.optional': '(Opsional)',
                 'feedbranding.upload-formats': 'PNG, JPG, WEBP, HEIC',
                 'feedbranding.empty-title': 'Hasil feed akan muncul di sini',
@@ -2629,7 +2634,12 @@
                 'feedbranding.step1': 'Product Photo',
                 'feedbranding.step2': 'Brand Name',
                 'feedbranding.step3': 'Extra Info',
-                'feedbranding.step4': 'Accent Color',
+                'feedbranding.step4': 'Brand Colors',
+                'feedbranding.step5': 'Aspect Ratio',
+                'feedbranding.color-main': 'Main Color',
+                'feedbranding.color-second': 'Secondary Color',
+                'feedbranding.color-second-ph': 'Leave empty if not needed',
+                'feedbranding.color-hint': 'These colors become the main background of every post. Pick ones that match your product.',
                 'feedbranding.optional': '(Optional)',
                 'feedbranding.upload-formats': 'PNG, JPG, WEBP, HEIC',
                 'feedbranding.empty-title': 'Your feed results will appear here',
@@ -5062,6 +5072,8 @@
                 'feedbranding.downloadall': 'Muat Turun Semua',
                 'feedbranding.role.benefit': 'Manfaat',
                 'feedbranding.role.carapakai': 'Cara Guna',
+                'feedbranding.step5': 'Nisbah Foto',
+                'feedbranding.color-hint': 'Warna jadi latar utama semua pos. Pilih yang sesuai dengan produk anda.',
                 'beranda.title': 'Selamat Datang ke Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Asisten AI Anda untuk meneroka 79++ ciri photo & video generation',
                 'beranda.hint': 'Tanya apa sahaja tentang ciri aplikasi ini! by Arul CG',
@@ -7169,12 +7181,64 @@
                 const sloganEl = document.getElementById('fb-slogan');
                 const priceEl = document.getElementById('fb-price');
                 const colorEl = document.getElementById('fb-accent-color');
+                const hexEl = document.getElementById('fb-accent-hex');
+                const color2El = document.getElementById('fb-accent2-color');
+                const hex2El = document.getElementById('fb-accent2-hex');
+                const clear2Btn = document.getElementById('fb-accent2-clear');
+                const ratioSel = document.getElementById('fb-ratio-selection');
                 const generateBtn = document.getElementById('fb-generate-btn');
                 const resultsGrid = document.getElementById('fb-results-grid');
                 const downloadAllBtn = document.getElementById('fb-download-all-btn');
 
                 let fbProductImage = null;   // { base64, mimeType }
                 let fbGenerated = [];        // sparse, index = slot peran
+                let fbColor2 = '';           // '' = warna sekunder tidak dipakai
+                let selectedFbRatio = '4:5';
+
+                // Sinkronisasi picker <-> kolom hex (dua arah)
+                function normHex(v) {
+                    v = (v || '').trim();
+                    if (/^[0-9a-fA-F]{6}$/.test(v)) v = '#' + v;
+                    if (/^#[0-9a-fA-F]{3}$/.test(v)) v = '#' + v[1] + v[1] + v[2] + v[2] + v[3] + v[3];
+                    return /^#[0-9a-fA-F]{6}$/.test(v) ? v.toLowerCase() : null;
+                }
+                if (colorEl && hexEl) {
+                    colorEl.addEventListener('input', () => { hexEl.value = colorEl.value; });
+                    hexEl.addEventListener('input', () => {
+                        const h = normHex(hexEl.value);
+                        if (h) colorEl.value = h;
+                    });
+                }
+                if (color2El && hex2El) {
+                    color2El.addEventListener('input', () => {
+                        fbColor2 = color2El.value;
+                        hex2El.value = color2El.value;
+                        color2El.classList.remove('opacity-40');
+                    });
+                    hex2El.addEventListener('input', () => {
+                        const h = normHex(hex2El.value);
+                        if (h) { fbColor2 = h; color2El.value = h; color2El.classList.remove('opacity-40'); }
+                        else if (!hex2El.value.trim()) { fbColor2 = ''; color2El.classList.add('opacity-40'); }
+                    });
+                }
+                if (clear2Btn) clear2Btn.addEventListener('click', () => {
+                    fbColor2 = '';
+                    if (hex2El) hex2El.value = '';
+                    if (color2El) color2El.classList.add('opacity-40');
+                });
+
+                // Pilihan rasio (4:5 / 1:1 / 9:16)
+                if (ratioSel) ratioSel.addEventListener('click', (e) => {
+                    const btn = e.target.closest('button[data-ratio]');
+                    if (!btn) return;
+                    ratioSel.querySelectorAll('button').forEach(b => {
+                        b.classList.remove('selected', 'border-green-600', 'bg-green-600', 'text-white');
+                        b.classList.add('border-gray-200', 'text-gray-700');
+                    });
+                    btn.classList.add('selected', 'border-green-600', 'bg-green-600', 'text-white');
+                    btn.classList.remove('border-gray-200', 'text-gray-700');
+                    selectedFbRatio = btn.dataset.ratio;
+                });
 
                 const FB_ROLES = [
                     { key: 'cover',     role: "POST ROLE - HERO COVER: The scroll-stopping campaign cover. Render the product GIGANTIC in the center as the absolute hero, floating with dramatic spotlight and deep soft shadow. The brand name appears as a MASSIVE bold display headline layered creatively behind or above the product. Decorative elements themed to the product burst outward around it (splashes, particles, ingredients, light streaks). Maximum visual impact." },
@@ -7214,8 +7278,7 @@
                     });
                 }
 
-                imgInput.addEventListener('change', async (e) => {
-                    const file = e.target.files && e.target.files[0];
+                async function fbHandleFile(file) {
                     if (!file) return;
                     try {
                         fbProductImage = await fbFileToBase64(file);
@@ -7224,9 +7287,19 @@
                         if (uploadLabel) uploadLabel.classList.add('hidden');
                     } catch (err) {
                         console.error('FB upload error:', err);
+                        alert(window.tr3 ? window.tr3('Gagal membaca foto. Coba file lain (JPG/PNG).', 'Failed to read photo. Try another file (JPG/PNG).', 'Gagal membaca foto. Cuba fail lain (JPG/PNG).') : 'Gagal membaca foto. Coba file lain (JPG/PNG).');
                     }
                     updateGenerateState();
-                });
+                }
+
+                imgInput.addEventListener('change', (e) => fbHandleFile(e.target.files && e.target.files[0]));
+
+                // Drag & drop ke kotak upload
+                if (uploadLabel) {
+                    ['dragover', 'dragenter'].forEach(ev => uploadLabel.addEventListener(ev, (e) => { e.preventDefault(); uploadLabel.classList.add('opacity-70'); }));
+                    ['dragleave', 'drop'].forEach(ev => uploadLabel.addEventListener(ev, (e) => { e.preventDefault(); uploadLabel.classList.remove('opacity-70'); }));
+                    uploadLabel.addEventListener('drop', (e) => fbHandleFile(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]));
+                }
 
                 if (removeBtn) removeBtn.addEventListener('click', () => {
                     fbProductImage = null;
@@ -7241,10 +7314,18 @@
 
                 let fbStyleAnchor = '';
 
+                function fbRatioWord() {
+                    if (selectedFbRatio === '1:1') return 'square 1:1';
+                    if (selectedFbRatio === '9:16') return 'vertical story 9:16';
+                    return 'portrait 4:5';
+                }
+
                 function fbBuildBrief() {
                     const brand = brandNameEl.value.trim();
                     const slogan = sloganEl.value.trim();
-                    const color = colorEl.value;
+                    const color = fbColor2
+                        ? `${colorEl.value} as the dominant color with ${fbColor2} as the secondary accent (use both consistently, e.g. rich gradient or color-blocking)`
+                        : colorEl.value;
                     const lang = fbLangWord();
                     const taglineLine = slogan ? `- Tagline: "${slogan}" shown small under the brand name.` : '';
                     return `You are a senior art director at a top advertising agency, designing ONE post of a 6-post premium Instagram feed campaign. All 6 posts share ONE IDENTICAL visual identity (campaign session: ${fbStyleAnchor}).
@@ -7257,7 +7338,7 @@ ${taglineLine}
 - TYPOGRAPHY: bold condensed display headlines with very short punchy words, layered creatively with the product (in front/behind). Small clean supporting text only where needed. High contrast against the background.
 - DECORATIVE ELEMENTS: floating particles, splashes, shapes or ingredients that match the product theme, plus subtle glow and depth-of-field.
 - All visible text written in ${lang}, correctly spelled, minimal wording (3-6 words max per headline).
-- Overall vibe: high-end D2C brand campaign, energetic, saturated, cohesive, scroll-stopping. Portrait 4:5.`;
+- Overall vibe: high-end D2C brand campaign, energetic, saturated, cohesive, scroll-stopping. Format: ${fbRatioWord()}.`;
                 }
 
                 function fbRolePrompt(roleObj) {
@@ -7272,7 +7353,7 @@ ${taglineLine}
 
 ${role}
 
-Premium social media advertising design, magazine-ad quality, ultra detailed, portrait 4:5 aspect ratio.`;
+Premium social media advertising design, magazine-ad quality, ultra detailed, ${fbRatioWord()} aspect ratio.`;
                 }
 
                 async function generateSingleFb(index) {
@@ -7284,7 +7365,7 @@ Premium social media advertising design, magazine-ad quality, ultra detailed, po
                             { text: fbRolePrompt(roleObj) },
                             { inlineData: { mimeType: fbProductImage.mimeType, data: fbProductImage.base64 } }
                         ];
-                        const payload = { contents: [{ parts }], generationConfig: { responseModalities: ['TEXT', 'IMAGE'], imageConfig: { aspectRatio: '4:5' } } };
+                        const payload = { contents: [{ parts }], generationConfig: { responseModalities: ['TEXT', 'IMAGE'], imageConfig: { aspectRatio: selectedFbRatio } } };
                         const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                         const result = await response.json();
                         const base64Data = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
@@ -7296,17 +7377,47 @@ Premium social media advertising design, magazine-ad quality, ultra detailed, po
                             card.querySelector('.fb-card-body').innerHTML =
                                 `<div class="relative w-full h-full group">
                                     <img src="${imageUrl}" class="w-full h-full object-cover rounded-md" alt="${roleObj.key}">
-                                    <button data-action="download" data-image-url="${imageUrl}" data-filename="${filename}" class="absolute bottom-2 right-2 bg-green-600 text-white p-2 rounded-full hover:bg-green-700 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity" title="Unduh"><i class="fas fa-download"></i></button>
+                                    <div class="absolute bottom-2 right-2 flex gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                                        <button data-action="fb-preview" data-image-url="${imageUrl}" class="min-w-[44px] min-h-[44px] bg-blue-500 text-white rounded-full hover:bg-blue-600 shadow-lg" title="Preview"><i class="fas fa-search-plus"></i></button>
+                                        <button data-action="fb-regen" data-index="${index}" class="min-w-[44px] min-h-[44px] bg-amber-500 text-white rounded-full hover:bg-amber-600 shadow-lg" title="Generate Ulang"><i class="fas fa-sync-alt"></i></button>
+                                        <button data-action="download" data-image-url="${imageUrl}" data-filename="${filename}" class="min-w-[44px] min-h-[44px] bg-green-600 text-white rounded-full hover:bg-green-700 shadow-lg" title="Unduh"><i class="fas fa-download"></i></button>
+                                    </div>
                                  </div>`;
                         }
                     } catch (error) {
                         console.error(`FB error ${index}:`, error);
                         if (card) {
                             const body = card.querySelector('.fb-card-body');
-                            if (body) body.innerHTML = '<div class="text-xs text-red-400 flex items-center justify-center h-full">gagal</div>';
+                            if (body) body.innerHTML = `<div class="flex flex-col items-center justify-center h-full gap-2"><span class="text-xs text-red-400">gagal</span><button data-action="fb-regen" data-index="${index}" class="min-h-[44px] px-4 bg-amber-500 text-white rounded-lg text-sm font-semibold hover:bg-amber-600"><i class="fas fa-sync-alt mr-1"></i>Ulangi</button></div>`;
                         }
                     }
                 }
+
+                // Preview lightbox + regenerate per-kartu
+                function fbShowPreview(url) {
+                    const modal = document.createElement('div');
+                    modal.className = 'fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[9999] p-4 cursor-zoom-out';
+                    modal.innerHTML = `<img src="${url}" class="max-w-full max-h-full rounded-lg shadow-2xl object-contain">`;
+                    modal.addEventListener('click', () => modal.remove());
+                    document.body.appendChild(modal);
+                }
+
+                async function fbRegenOne(index) {
+                    const card = document.getElementById(`fb-card-${index}`);
+                    if (!card) return;
+                    if (!fbStyleAnchor) fbStyleAnchor = 'campaign-' + Math.floor(Math.random() * 999999);
+                    fbGenerated[index - 1] = undefined;
+                    const body = card.querySelector('.fb-card-body');
+                    if (body) body.innerHTML = '<div class="loader"></div>';
+                    await generateSingleFb(index);
+                }
+
+                resultsGrid.addEventListener('click', (e) => {
+                    const pv = e.target.closest('[data-action="fb-preview"]');
+                    if (pv) { fbShowPreview(pv.dataset.imageUrl); return; }
+                    const rg = e.target.closest('[data-action="fb-regen"]');
+                    if (rg) { fbRegenOne(parseInt(rg.dataset.index, 10)); }
+                });
 
                 function fbRoleLabel(key) {
                     const idMap = { cover: 'Cover', benefit: 'Benefit', testimoni: 'Testimoni', carapakai: 'Cara Pakai', harga: 'Harga', cta: 'CTA' };
@@ -7322,10 +7433,11 @@ Premium social media advertising design, magazine-ad quality, ultra detailed, po
                     fbStyleAnchor = 'campaign-' + Math.floor(Math.random() * 999999);
                     if (downloadAllBtn) downloadAllBtn.classList.remove('hidden');
 
+                    const aspectClass = selectedFbRatio === '1:1' ? 'aspect-square' : (selectedFbRatio === '9:16' ? 'aspect-[9/16]' : 'aspect-[4/5]');
                     resultsGrid.innerHTML = FB_ROLES.map((r, i) => `
                         <div id="fb-card-${i + 1}" class="card p-3 flex flex-col">
                             <div class="text-xs font-semibold text-green-700 mb-2" data-fb-role="feedbranding.role.${r.key}">${fbRoleLabel(r.key)}</div>
-                            <div class="fb-card-body aspect-[4/5] bg-gray-100 rounded-md flex items-center justify-center"><div class="loader"></div></div>
+                            <div class="fb-card-body ${aspectClass} bg-gray-100 rounded-md flex items-center justify-center"><div class="loader"></div></div>
                         </div>`).join('');
 
                     await Promise.allSettled(FB_ROLES.map((_, i) => generateSingleFb(i + 1)));
