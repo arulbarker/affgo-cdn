@@ -7177,12 +7177,12 @@
                 let fbGenerated = [];        // sparse, index = slot peran
 
                 const FB_ROLES = [
-                    { key: 'cover',     role: "POST 1 - COVER/HERO: A striking hero feed post. Show the product large and premium as the focal point. Display the brand name prominently as the main headline. This is the cover of the feed." },
-                    { key: 'benefit',   role: "POST 2 - BENEFIT: A clean benefits post. Present 3 key product advantages as short points with simple minimal icons. Keep the product visible." },
-                    { key: 'testimoni', role: "POST 3 - TESTIMONIAL: A review card. Show a 5-star rating, one short happy-customer quote, and a small product shot. Trustworthy social-proof feel." },
-                    { key: 'carapakai', role: "POST 4 - HOW TO USE: A simple 3-step how-to-use post, numbered steps 1-2-3 with the product as the focus. Clear and instructional." },
-                    { key: 'harga',     role: "POST 5 - PRICE/PROMO: A promo post with a bold prominent price badge. Sense of a great deal." },
-                    { key: 'cta',       role: "POST 6 - CALL TO ACTION: A closing call-to-action post inviting the audience to order now. Show the brand name and product with a clear action-button style." }
+                    { key: 'cover',     role: "POST ROLE - HERO COVER: The scroll-stopping campaign cover. Render the product GIGANTIC in the center as the absolute hero, floating with dramatic spotlight and deep soft shadow. The brand name appears as a MASSIVE bold display headline layered creatively behind or above the product. Decorative elements themed to the product burst outward around it (splashes, particles, ingredients, light streaks). Maximum visual impact." },
+                    { key: 'benefit',   role: "POST ROLE - BENEFITS: A bold benefits post, NOT clinical. Short punchy headline at top (e.g. why choose this brand). The product rendered LARGE on one side. Exactly 3 short benefit callouts as clean white rounded pill chips with small icons, visually connected to the product with thin lines or dots. Keep the same explosive brand background." },
+                    { key: 'testimoni', role: "POST ROLE - SOCIAL PROOF: A trust post with energy. A row of 5 large gold stars at top, one short enthusiastic customer quote in large elegant typography as the centerpiece, a '4.9/5' rating badge, and the product visible smaller at the bottom with its shadow. Same bold brand background, premium feel." },
+                    { key: 'carapakai', role: "POST ROLE - HOW TO USE: A dynamic 3-step guide. Bold short headline at top. Three numbered circular step badges (1, 2, 3) arranged diagonally or in a flow, each with a mini render of the product in use. Energetic but easy to scan. Same brand background system." },
+                    { key: 'harga',     role: "POST ROLE - PRICE PROMO: A high-energy promo post. The price displayed HUGE inside a bold burst badge or ribbon as the focal point, with the product rendered large beside or below it. Promo urgency energy: bold shapes, exclamation accents. Same brand background system." },
+                    { key: 'cta',       role: "POST ROLE - CALL TO ACTION: The closing post. A bold action headline (order now / get yours), a button-shaped badge or arrow accent, the product as a confident hero with glow, brand name prominent. Strong urgency, same brand background system." }
                 ];
 
                 function fbLangWord() {
@@ -7239,19 +7239,25 @@
 
                 brandNameEl.addEventListener('input', updateGenerateState);
 
+                let fbStyleAnchor = '';
+
                 function fbBuildBrief() {
                     const brand = brandNameEl.value.trim();
                     const slogan = sloganEl.value.trim();
                     const color = colorEl.value;
                     const lang = fbLangWord();
-                    const taglineLine = slogan ? `- Tagline: "${slogan}"` : `- Tagline: (none)`;
-                    return `BRAND BRIEF (keep an IDENTICAL visual system across all posts):
-- Brand name: "${brand}"
+                    const taglineLine = slogan ? `- Tagline: "${slogan}" shown small under the brand name.` : '';
+                    return `You are a senior art director at a top advertising agency, designing ONE post of a 6-post premium Instagram feed campaign. All 6 posts share ONE IDENTICAL visual identity (campaign session: ${fbStyleAnchor}).
+
+BRAND IDENTITY SYSTEM (must be EXACTLY the same in every post of this session):
+- Brand name: "${brand}" - always spelled EXACTLY like this, prominent, plus a small logo-style brand mark in a corner of every post.
 ${taglineLine}
-- Accent color: ${color}
-- Style: modern, clean, cohesive Instagram feed; one consistent layout system, typography, and color palette across every post; portrait 4:5.
-- All text in the design must be written in ${lang}, correctly spelled.
-A reference product photo is provided; keep the product identity consistent.`;
+- BACKGROUND: full-bleed, rich, SATURATED brand-color background based on ${color} (use bold gradients, subtle texture, glow and depth). NEVER a plain white, gray, or pale background. The whole feed must look like one colorful branded wall.
+- PRODUCT TREATMENT: the product from the reference photo is the HERO. Render it LARGE (it should dominate the frame), floating with a dramatic soft drop shadow, premium studio lighting and subtle reflection. Keep the product 100% identical to the reference photo.
+- TYPOGRAPHY: bold condensed display headlines with very short punchy words, layered creatively with the product (in front/behind). Small clean supporting text only where needed. High contrast against the background.
+- DECORATIVE ELEMENTS: floating particles, splashes, shapes or ingredients that match the product theme, plus subtle glow and depth-of-field.
+- All visible text written in ${lang}, correctly spelled, minimal wording (3-6 words max per headline).
+- Overall vibe: high-end D2C brand campaign, energetic, saturated, cohesive, scroll-stopping. Portrait 4:5.`;
                 }
 
                 function fbRolePrompt(roleObj) {
@@ -7259,14 +7265,14 @@ A reference product photo is provided; keep the product identity consistent.`;
                     let role = roleObj.role;
                     if (roleObj.key === 'harga') {
                         role = price
-                            ? `POST 5 - PRICE/PROMO: A promo post highlighting the price "${price}" in a bold prominent badge. Sense of a great deal.`
-                            : `POST 5 - PRICE/PROMO: A promo post with a bold "Best Price" / "Special Offer" badge (no specific number). Sense of a great deal.`;
+                            ? `POST ROLE - PRICE PROMO: A high-energy promo post. The price "${price}" displayed HUGE inside a bold burst badge or ribbon as the focal point, with the product rendered large beside or below it. Promo urgency energy: bold shapes, exclamation accents. Same brand background system.`
+                            : roleObj.role;
                     }
                     return `${fbBuildBrief()}
 
 ${role}
 
-Professional social media branding design, high quality, portrait 4:5 aspect ratio.`;
+Premium social media advertising design, magazine-ad quality, ultra detailed, portrait 4:5 aspect ratio.`;
                 }
 
                 async function generateSingleFb(index) {
@@ -7313,6 +7319,7 @@ Professional social media branding design, high quality, portrait 4:5 aspect rat
                     if (!fbProductImage || !brandNameEl.value.trim()) return;
                     generateBtn.disabled = true;
                     fbGenerated = [];
+                    fbStyleAnchor = 'campaign-' + Math.floor(Math.random() * 999999);
                     if (downloadAllBtn) downloadAllBtn.classList.remove('hidden');
 
                     resultsGrid.innerHTML = FB_ROLES.map((r, i) => `
