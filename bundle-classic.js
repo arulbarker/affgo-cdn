@@ -100,6 +100,20 @@
                 'feedbranding.role.carapakai': 'Cara Pakai',
                 'feedbranding.role.harga': 'Harga',
                 'feedbranding.role.cta': 'CTA',
+                'feedbranding.purpose-title': 'Satu Feed, Satu Branding',
+                'feedbranding.purpose-desc': 'Cukup upload <strong>1 foto produk</strong> + nama brand, AI membuat <strong>6 post feed</strong> yang seragam & siap posting berurutan:',
+                'feedbranding.step1': 'Foto Produk',
+                'feedbranding.step2': 'Nama Brand',
+                'feedbranding.step3': 'Info Tambahan',
+                'feedbranding.step4': 'Warna Aksen',
+                'feedbranding.optional': '(Opsional)',
+                'feedbranding.upload-formats': 'PNG, JPG, WEBP, HEIC',
+                'feedbranding.empty-title': 'Hasil feed akan muncul di sini',
+                'feedbranding.empty-hint': 'Upload foto produk + nama brand, lalu klik Buat Feed Branding',
+                'feedbranding.tips-title': 'Tips Hasil Terbaik',
+                'feedbranding.tip1': 'Pakai foto produk yang jelas & pencahayaan bagus',
+                'feedbranding.tip2': 'Isi nama brand persis seperti yang mau tampil',
+                'feedbranding.tip3': 'Teks digambar AI — kalau ada typo, generate ulang',
                 'nav.affiliate-islami': 'Affiliate Agama',
                 'nav.affiliate-harga': 'Affiliate Harga',
                 'nav.virtual-tryon': 'Virtual Try-On',
@@ -2610,6 +2624,20 @@
                 'feedbranding.role.carapakai': 'How to Use',
                 'feedbranding.role.harga': 'Price',
                 'feedbranding.role.cta': 'CTA',
+                'feedbranding.purpose-title': 'One Feed, One Branding',
+                'feedbranding.purpose-desc': 'Just upload <strong>1 product photo</strong> + your brand name, and AI creates <strong>6 feed posts</strong> that are consistent & ready to post in sequence:',
+                'feedbranding.step1': 'Product Photo',
+                'feedbranding.step2': 'Brand Name',
+                'feedbranding.step3': 'Extra Info',
+                'feedbranding.step4': 'Accent Color',
+                'feedbranding.optional': '(Optional)',
+                'feedbranding.upload-formats': 'PNG, JPG, WEBP, HEIC',
+                'feedbranding.empty-title': 'Your feed results will appear here',
+                'feedbranding.empty-hint': 'Upload a product photo + brand name, then click Create Branding Feed',
+                'feedbranding.tips-title': 'Tips for Best Results',
+                'feedbranding.tip1': 'Use a clear product photo with good lighting',
+                'feedbranding.tip2': 'Enter the brand name exactly as you want it shown',
+                'feedbranding.tip3': 'Text is drawn by AI — if there is a typo, generate again',
                 'nav.affiliate-islami': 'Religious Affiliate',
                 'nav.affiliate-harga': 'Price Affiliate',
                 'nav.virtual-tryon': 'Virtual Try-On',
@@ -7134,13 +7162,15 @@
 
                 const imgInput = document.getElementById('fb-image-input');
                 const imgPreview = document.getElementById('fb-image-preview');
+                const previewContainer = document.getElementById('fb-preview-container');
+                const uploadLabel = document.getElementById('fb-upload-label');
+                const removeBtn = document.getElementById('fb-remove-btn');
                 const brandNameEl = document.getElementById('fb-brand-name');
                 const sloganEl = document.getElementById('fb-slogan');
                 const priceEl = document.getElementById('fb-price');
                 const colorEl = document.getElementById('fb-accent-color');
                 const generateBtn = document.getElementById('fb-generate-btn');
                 const resultsGrid = document.getElementById('fb-results-grid');
-                const resultsHeader = document.getElementById('fb-results-header');
                 const downloadAllBtn = document.getElementById('fb-download-all-btn');
 
                 let fbProductImage = null;   // { base64, mimeType }
@@ -7190,10 +7220,20 @@
                     try {
                         fbProductImage = await fbFileToBase64(file);
                         imgPreview.src = `data:${fbProductImage.mimeType};base64,${fbProductImage.base64}`;
-                        imgPreview.classList.remove('hidden');
+                        if (previewContainer) previewContainer.classList.remove('hidden');
+                        if (uploadLabel) uploadLabel.classList.add('hidden');
                     } catch (err) {
                         console.error('FB upload error:', err);
                     }
+                    updateGenerateState();
+                });
+
+                if (removeBtn) removeBtn.addEventListener('click', () => {
+                    fbProductImage = null;
+                    imgInput.value = '';
+                    imgPreview.src = '#';
+                    if (previewContainer) previewContainer.classList.add('hidden');
+                    if (uploadLabel) uploadLabel.classList.remove('hidden');
                     updateGenerateState();
                 });
 
@@ -7273,7 +7313,7 @@ Professional social media branding design, high quality, portrait 4:5 aspect rat
                     if (!fbProductImage || !brandNameEl.value.trim()) return;
                     generateBtn.disabled = true;
                     fbGenerated = [];
-                    resultsHeader.classList.remove('hidden');
+                    if (downloadAllBtn) downloadAllBtn.classList.remove('hidden');
 
                     resultsGrid.innerHTML = FB_ROLES.map((r, i) => `
                         <div id="fb-card-${i + 1}" class="card p-3 flex flex-col">
