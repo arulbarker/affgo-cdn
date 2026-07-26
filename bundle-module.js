@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '40';
+        const UPDATE_VERSION = '41';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '41',
+                dateId: 'Juli 2026',
+                dateEn: 'July 2026',
+                badgeKey: 'modal.fix-v41-badge',
+                badgeText: 'Update v41',
+                gradient: 'linear-gradient(135deg,#16a34a,#15803d)',
+                borderColor: '#16a34a',
+                icon: 'fa-tags',
+                iconColor: '#16a34a',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v41-title-harga',
+                        titleText: 'Fitur Baru: Foto Produk Affiliate — Tema Harga',
+                        bodyKey: 'modal.fix-v41-body-harga',
+                        bodyText: 'Tab baru di Foto Produk Affiliate: sama seperti Tema Umum, tapi kamu bisa memasukkan harga di tiap foto produk. Hasil foto otomatis diberi panah kecil + label harga yang rapi & estetik di dekat tiap produk — cocok untuk konten katalog & promo. Lengkap dengan foto model opsional, background, pilihan rasio, dan jumlah generate 1-10.'
+                    }
+                ]
+            },
             {
                 version: '40',
                 dateId: 'Juli 2026',
