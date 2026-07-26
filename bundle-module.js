@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '42';
+        const UPDATE_VERSION = '43';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '43',
+                dateId: 'Juli 2026',
+                dateEn: 'July 2026',
+                badgeKey: 'modal.fix-v43-badge',
+                badgeText: 'Update v43',
+                gradient: 'linear-gradient(135deg,#16a34a,#0d9488)',
+                borderColor: '#16a34a',
+                icon: 'fa-sliders-h',
+                iconColor: '#16a34a',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v43-title-feedmode',
+                        titleText: 'Feed Branding: 3 Mode Topik',
+                        bodyKey: 'modal.fix-v43-body-feedmode',
+                        bodyText: 'Feed Branding sekarang punya 3 mode topik biar konten harian tidak monoton: Standar (6 post format tetap), Acak (AI mengarang 6 topik segar & beda tiap klik), dan Custom (tulis 1 topik sendiri mis. “Promo Ramadan”, AI buat 6 post yang nyambung dari berbagai sudut).'
+                    }
+                ]
+            },
             {
                 version: '42',
                 dateId: 'Juli 2026',

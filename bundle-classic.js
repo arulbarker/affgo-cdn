@@ -100,6 +100,14 @@
                 'feedbranding.role.carapakai': 'Cara Pakai',
                 'feedbranding.role.harga': 'Harga',
                 'feedbranding.role.cta': 'CTA',
+                'feedbranding.mode-title': 'Pilih Mode',
+                'feedbranding.mode-standar': 'Standar',
+                'feedbranding.mode-random': 'Acak',
+                'feedbranding.mode-custom': 'Custom',
+                'feedbranding.custom-topic-ph': 'mis. Promo Ramadan, Manfaat untuk kulit kusam',
+                'feedbranding.mode-hint-standar': '6 post format standar: Cover, Benefit, Testimoni, Cara Pakai, Harga, CTA.',
+                'feedbranding.mode-hint-random': 'AI mengarang 6 topik segar & beda tiap kali klik.',
+                'feedbranding.mode-hint-custom': 'Tulis 1 topik, AI buat 6 post yang nyambung dari berbagai sudut.',
                 'feedbranding.purpose-title': 'Satu Feed, Satu Branding',
                 'feedbranding.purpose-desc': 'Cukup upload <strong>1 foto produk</strong> + nama brand, AI membuat <strong>6 post feed</strong> yang seragam & siap posting berurutan:',
                 'feedbranding.step1': 'Foto Produk',
@@ -317,6 +325,9 @@
                 'login.secure': '\uD83D\uDD12 Akses Terenkripsi & Aman',
                 'login.no-access-cta': '\uD83D\uDED2 Belum punya akses? Beli di sini \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v43-badge': 'Update v43',
+                'modal.fix-v43-title-feedmode': 'Feed Branding: 3 Mode Topik',
+                'modal.fix-v43-body-feedmode': 'Feed Branding sekarang punya 3 mode topik biar konten harian tidak monoton: Standar (6 post format tetap), Acak (AI mengarang 6 topik segar & beda tiap klik), dan Custom (tulis 1 topik sendiri mis. “Promo Ramadan”, AI buat 6 post yang nyambung dari berbagai sudut).',
                 'modal.fix-v42-badge': 'Update v42',
                 'modal.fix-v42-title-feedbranding': 'Fitur Baru: Feed Branding',
                 'modal.fix-v42-body-feedbranding': 'Cukup 1 foto produk + nama brand, AI langsung membuat 6 desain feed Instagram yang seragam satu branding: Cover, Benefit, Testimoni, Cara Pakai, Harga, dan CTA — bergaya kampanye premium. Bisa atur 2 warna brand (kode hex), pilih rasio 4:5 / 1:1 / 9:16, plus preview & generate ulang per post.',
@@ -377,7 +388,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Tab Ruang Saku sekarang punya halaman penjelasan singkat fitur Rindu (AI keuangan) + tombol langsung ke RuangSaku.com. Lebih nyaman dipakai di HP — tinggal klik dan terbuka di tab browser.',
                 'modal.fix-v31-title-telegram': 'Tombol Telegram di Pojok Layar',
                 'modal.fix-v31-body-telegram': 'Tombol bundar Telegram sekarang ada di pojok kanan bawah aplikasi. Sekali klik langsung join grup Telegram Affiliate Go — tempat update fitur, tips, dan tanya jawab dengan komunitas.',
-                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 42',
+                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 43',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Selamat Datang di Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Asisten AI Anda untuk menjelajahi 79++ fitur photo & video generation',
@@ -2632,6 +2643,14 @@
                 'feedbranding.role.carapakai': 'How to Use',
                 'feedbranding.role.harga': 'Price',
                 'feedbranding.role.cta': 'CTA',
+                'feedbranding.mode-title': 'Choose Mode',
+                'feedbranding.mode-standar': 'Standard',
+                'feedbranding.mode-random': 'Random',
+                'feedbranding.mode-custom': 'Custom',
+                'feedbranding.custom-topic-ph': 'e.g. Ramadan Sale, Benefits for dull skin',
+                'feedbranding.mode-hint-standar': '6 standard posts: Cover, Benefit, Testimonial, How to Use, Price, CTA.',
+                'feedbranding.mode-hint-random': 'AI invents 6 fresh, different post angles every click.',
+                'feedbranding.mode-hint-custom': 'Type one topic; AI creates 6 cohesive posts from varied angles.',
                 'feedbranding.purpose-title': 'One Feed, One Branding',
                 'feedbranding.purpose-desc': 'Just upload <strong>1 product photo</strong> + your brand name, and AI creates <strong>6 feed posts</strong> that are consistent & ready to post in sequence:',
                 'feedbranding.step1': 'Product Photo',
@@ -2849,6 +2868,9 @@
                 'login.secure': '\uD83D\uDD12 Encrypted & Secure Access',
                 'login.no-access-cta': '\uD83D\uDED2 No access yet? Buy here \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v43-badge': 'Update v43',
+                'modal.fix-v43-title-feedmode': 'Feed Branding: 3 Topic Modes',
+                'modal.fix-v43-body-feedmode': 'Feed Branding now has 3 topic modes so your daily content never feels repetitive: Standard (fixed 6-post format), Random (AI invents 6 fresh, different topics every click), and Custom (type your own topic e.g. “Ramadan Sale”, and AI creates 6 cohesive posts from varied angles).',
                 'modal.fix-v42-badge': 'Update v42',
                 'modal.fix-v42-title-feedbranding': 'New Feature: Feed Branding',
                 'modal.fix-v42-body-feedbranding': 'Just 1 product photo + your brand name, and AI instantly creates 6 Instagram feed designs with one consistent branding: Cover, Benefits, Testimonial, How to Use, Price, and CTA — in a premium campaign style. Set 2 brand colors (hex codes), choose 4:5 / 1:1 / 9:16 ratios, plus preview & regenerate per post.',
@@ -2909,7 +2931,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Ruang Saku tab now has a brief intro page for Rindu (AI finance buddy) + direct button to RuangSaku.com. Smoother mobile experience — one click and it opens in a browser tab.',
                 'modal.fix-v31-title-telegram': 'Telegram Button at Screen Corner',
                 'modal.fix-v31-body-telegram': 'Round Telegram button is now at the bottom-right corner of the app. One click jumps directly to the Affiliate Go Telegram group — for feature updates, tips, and Q&A with the community.',
-                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 42',
+                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 43',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Welcome to Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Your AI Assistant to explore 79++ photo & video generation features',
@@ -5078,6 +5100,13 @@
                 'feedbranding.downloadall': 'Muat Turun Semua',
                 'feedbranding.role.benefit': 'Manfaat',
                 'feedbranding.role.carapakai': 'Cara Guna',
+                'feedbranding.mode-title': 'Pilih Mod',
+                'feedbranding.mode-standar': 'Standard',
+                'feedbranding.mode-random': 'Rawak',
+                'feedbranding.custom-topic-ph': 'cth. Jualan Ramadan, Manfaat untuk kulit kusam',
+                'feedbranding.mode-hint-standar': '6 pos format standard: Cover, Benefit, Testimoni, Cara Guna, Harga, CTA.',
+                'feedbranding.mode-hint-random': 'AI cipta 6 topik segar & berbeza setiap kali klik.',
+                'feedbranding.mode-hint-custom': 'Tulis 1 topik, AI buat 6 pos yang berkait dari pelbagai sudut.',
                 'feedbranding.step5': 'Nisbah Foto',
                 'feedbranding.color-hint': 'Warna jadi latar utama semua pos. Pilih yang sesuai dengan produk anda.',
                 'beranda.title': 'Selamat Datang ke Affiliate Go Foto Studio',
@@ -7193,6 +7222,7 @@
                 const clear2Btn = document.getElementById('fb-accent2-clear');
                 const ratioSel = document.getElementById('fb-ratio-selection');
                 const generateBtn = document.getElementById('fb-generate-btn');
+                const fbGenBtnHtml = generateBtn.innerHTML;
                 const resultsGrid = document.getElementById('fb-results-grid');
                 const downloadAllBtn = document.getElementById('fb-download-all-btn');
 
@@ -7200,6 +7230,8 @@
                 let fbGenerated = [];        // sparse, index = slot peran
                 let fbColor2 = '';           // '' = warna sekunder tidak dipakai
                 let selectedFbRatio = '4:5';
+                let fbMode = 'standar';      // 'standar' | 'random' | 'custom'
+                let fbActiveRoles = null;    // role yang dipakai generate saat ini (di-set setelah FB_ROLES)
 
                 // Sinkronisasi picker <-> kolom hex (dua arah)
                 function normHex(v) {
@@ -7246,6 +7278,36 @@
                     selectedFbRatio = btn.dataset.ratio;
                 });
 
+                // Pilihan mode (Standar / Acak / Custom)
+                const fbModeSel = document.getElementById('fb-mode-selection');
+                const fbCustomWrap = document.getElementById('fb-custom-topic-wrap');
+                const fbModeHint = document.getElementById('fb-mode-hint');
+                function fbUpdateModeHint() {
+                    if (!fbModeHint) return;
+                    const key = 'feedbranding.mode-hint-' + fbMode;
+                    fbModeHint.setAttribute('data-i18n', key);
+                    const hints = {
+                        standar: ['6 post format standar: Cover, Benefit, Testimoni, Cara Pakai, Harga, CTA.', '6 standard posts: Cover, Benefit, Testimonial, How to Use, Price, CTA.', '6 pos format standard: Cover, Benefit, Testimoni, Cara Guna, Harga, CTA.'],
+                        random: ['AI mengarang 6 topik segar & beda tiap kali klik.', 'AI invents 6 fresh, different post angles every click.', 'AI cipta 6 topik segar & berbeza setiap kali klik.'],
+                        custom: ['Tulis 1 topik, AI buat 6 post yang nyambung dari berbagai sudut.', 'Type one topic; AI creates 6 cohesive posts from varied angles.', 'Tulis 1 topik, AI buat 6 pos yang berkait dari pelbagai sudut.']
+                    };
+                    const t = hints[fbMode] || hints.standar;
+                    fbModeHint.textContent = window.tr3 ? window.tr3(t[0], t[1], t[2]) : t[0];
+                }
+                if (fbModeSel) fbModeSel.addEventListener('click', (e) => {
+                    const btn = e.target.closest('button[data-mode]');
+                    if (!btn) return;
+                    fbModeSel.querySelectorAll('button').forEach(b => {
+                        b.classList.remove('selected', 'border-green-600', 'bg-green-600', 'text-white');
+                        b.classList.add('border-gray-200', 'text-gray-700');
+                    });
+                    btn.classList.add('selected', 'border-green-600', 'bg-green-600', 'text-white');
+                    btn.classList.remove('border-gray-200', 'text-gray-700');
+                    fbMode = btn.dataset.mode;
+                    if (fbCustomWrap) fbCustomWrap.classList.toggle('hidden', fbMode !== 'custom');
+                    fbUpdateModeHint();
+                });
+
                 const FB_ROLES = [
                     { key: 'cover',     role: "POST ROLE - HERO COVER: The scroll-stopping campaign cover. Render the product GIGANTIC in the center as the absolute hero, floating with dramatic spotlight and deep soft shadow. The brand name appears as a MASSIVE bold display headline layered creatively behind or above the product. Decorative elements themed to the product burst outward around it (splashes, particles, ingredients, light streaks). Maximum visual impact." },
                     { key: 'benefit',   role: "POST ROLE - BENEFITS: A bold benefits post, NOT clinical. Short punchy headline at top (e.g. why choose this brand). The product rendered LARGE on one side. Exactly 3 short benefit callouts as clean white rounded pill chips with small icons, visually connected to the product with thin lines or dots. Keep the same explosive brand background." },
@@ -7254,6 +7316,7 @@
                     { key: 'harga',     role: "POST ROLE - PRICE PROMO: A high-energy promo post. The price displayed HUGE inside a bold burst badge or ribbon as the focal point, with the product rendered large beside or below it. Promo urgency energy: bold shapes, exclamation accents. Same brand background system." },
                     { key: 'cta',       role: "POST ROLE - CALL TO ACTION: The closing post. A bold action headline (order now / get yours), a button-shaped badge or arrow accent, the product as a confident hero with glow, brand name prominent. Strong urgency, same brand background system." }
                 ];
+                fbActiveRoles = FB_ROLES;
 
                 function fbLangWord() {
                     const l = (localStorage.getItem('app_language') || 'id');
@@ -7362,9 +7425,55 @@ ${role}
 Premium social media advertising design, magazine-ad quality, ultra detailed, ${fbRatioWord()} aspect ratio.`;
                 }
 
+                async function fbResolveRoles() {
+                    if (fbMode === 'standar') return FB_ROLES;
+                    const brand = brandNameEl.value.trim();
+                    const slogan = sloganEl.value.trim();
+                    const lang = fbLangWord();
+                    const topicEl = document.getElementById('fb-custom-topic');
+                    const topic = (topicEl && topicEl.value || '').trim();
+                    let instruction;
+                    if (fbMode === 'custom' && topic) {
+                        instruction = `The user wants a 6-post Instagram feed campaign all centered on this TOPIC: "${topic}". Create 6 DIFFERENT but cohesive post angles that all explore this topic from varied sides.`;
+                    } else {
+                        instruction = `Create 6 DIVERSE, fresh, scroll-stopping Instagram feed post angles for this product/brand. Vary the angles widely (e.g. unboxing, before/after, key ingredients, myth vs fact, bundling deal, restock alert, quick tutorial, comparison) so a daily poster never repeats.`;
+                    }
+                    const systemPrompt = `You are a senior social media creative director. ${instruction}
+For each of the 6 posts return: "label" = a very short 1-3 word post title written in ${lang}; "role" = one vivid English art-direction sentence starting with "POST ROLE - <UPPERCASE NAME>:" describing what this single post shows, always rendering the product as the large hero.
+Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
+                    try {
+                        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                        const parts = [{ text: 'Generate the 6-post angle list now.' }];
+                        if (fbProductImage) parts.push({ inlineData: { mimeType: fbProductImage.mimeType, data: fbProductImage.base64 } });
+                        const payload = {
+                            contents: [{ parts }],
+                            systemInstruction: { parts: [{ text: systemPrompt }] },
+                            generationConfig: {
+                                responseMimeType: "application/json",
+                                responseSchema: { type: "ARRAY", items: { type: "OBJECT", properties: { "label": { "type": "STRING" }, "role": { "type": "STRING" } }, required: ["label", "role"] } }
+                            }
+                        };
+                        const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                        if (!response.ok) throw new Error('text HTTP ' + response.status);
+                        const result = await response.json();
+                        let text = result && result.candidates && result.candidates[0] && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts[0] && result.candidates[0].content.parts[0].text || '';
+                        text = text.replace(/```json/gi, '').replace(/```/g, '').trim();
+                        const arr = JSON.parse(text);
+                        if (!Array.isArray(arr) || arr.length < 6) throw new Error('bad angle array');
+                        return arr.slice(0, 6).map((a, i) => ({
+                            key: 'ai' + (i + 1),
+                            label: String(a && a.label ? a.label : ('Post ' + (i + 1))).trim().slice(0, 24),
+                            role: String(a && a.role ? a.role : FB_ROLES[i].role).trim()
+                        }));
+                    } catch (err) {
+                        console.error('FB resolveRoles fallback -> FB_ROLES:', err);
+                        return FB_ROLES;
+                    }
+                }
+
                 async function generateSingleFb(index) {
                     const card = document.getElementById(`fb-card-${index}`);
-                    const roleObj = FB_ROLES[index - 1];
+                    const roleObj = fbActiveRoles[index - 1];
                     try {
                         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${apiKey}`;
                         const parts = [
@@ -7437,16 +7546,24 @@ Premium social media advertising design, magazine-ad quality, ultra detailed, ${
                     generateBtn.disabled = true;
                     fbGenerated = [];
                     fbStyleAnchor = 'campaign-' + Math.floor(Math.random() * 999999);
+
+                    if (fbMode !== 'standar') {
+                        const composing = window.tr3 ? window.tr3('Menyusun ide…', 'Composing ideas…', 'Menyusun idea…') : 'Menyusun ide…';
+                        generateBtn.innerHTML = `<div class="loader !w-4 !h-4 !border-2 mr-2"></div><span>${composing}</span>`;
+                    }
+                    fbActiveRoles = await fbResolveRoles();
+                    generateBtn.innerHTML = fbGenBtnHtml;
+
                     if (downloadAllBtn) downloadAllBtn.classList.remove('hidden');
 
                     const aspectClass = selectedFbRatio === '1:1' ? 'aspect-square' : (selectedFbRatio === '9:16' ? 'aspect-[9/16]' : 'aspect-[4/5]');
-                    resultsGrid.innerHTML = FB_ROLES.map((r, i) => `
+                    resultsGrid.innerHTML = fbActiveRoles.map((r, i) => `
                         <div id="fb-card-${i + 1}" class="card p-3 flex flex-col">
-                            <div class="text-xs font-semibold text-green-700 mb-2" data-fb-role="feedbranding.role.${r.key}">${fbRoleLabel(r.key)}</div>
+                            <div class="text-xs font-semibold text-green-700 mb-2"${r.label ? '' : ` data-fb-role="feedbranding.role.${r.key}"`}>${r.label || fbRoleLabel(r.key)}</div>
                             <div class="fb-card-body ${aspectClass} bg-gray-100 rounded-md flex items-center justify-center"><div class="loader"></div></div>
                         </div>`).join('');
 
-                    await Promise.allSettled(FB_ROLES.map((_, i) => generateSingleFb(i + 1)));
+                    await Promise.allSettled(fbActiveRoles.map((_, i) => generateSingleFb(i + 1)));
 
                     const successCount = fbGenerated.filter(Boolean).length;
                     if (successCount === 0) {
