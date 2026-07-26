@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '41';
+        const UPDATE_VERSION = '42';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '42',
+                dateId: 'Juli 2026',
+                dateEn: 'July 2026',
+                badgeKey: 'modal.fix-v42-badge',
+                badgeText: 'Update v42',
+                gradient: 'linear-gradient(135deg,#16a34a,#0d9488)',
+                borderColor: '#16a34a',
+                icon: 'fa-layer-group',
+                iconColor: '#16a34a',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v42-title-feedbranding',
+                        titleText: 'Fitur Baru: Feed Branding',
+                        bodyKey: 'modal.fix-v42-body-feedbranding',
+                        bodyText: 'Cukup 1 foto produk + nama brand, AI langsung membuat 6 desain feed Instagram yang seragam satu branding: Cover, Benefit, Testimoni, Cara Pakai, Harga, dan CTA — bergaya kampanye premium. Bisa atur 2 warna brand (kode hex), pilih rasio 4:5 / 1:1 / 9:16, plus preview & generate ulang per post.'
+                    }
+                ]
+            },
             {
                 version: '41',
                 dateId: 'Juli 2026',
