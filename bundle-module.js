@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '43';
+        const UPDATE_VERSION = '44';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,37 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '44',
+                dateId: 'Juli 2026',
+                dateEn: 'July 2026',
+                badgeKey: 'modal.fix-v44-badge',
+                badgeText: 'Update v44',
+                gradient: 'linear-gradient(135deg,#16a34a,#0d9488)',
+                borderColor: '#16a34a',
+                icon: 'fa-camera-retro',
+                iconColor: '#16a34a',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v44-title-povselfie',
+                        titleText: 'Fitur Baru: POV Selfie + Hub POV Studio',
+                        bodyKey: 'modal.fix-v44-body-povselfie',
+                        bodyText: 'Upload foto produk + foto model, AI membuat foto selfie bareng produk dengan background yang otomatis mengikuti tema produk (skincare ke meja rias, kopi ke cafe, olahraga ke gym). POV Tangan, POV Selfie, dan Mirror Selfie kini jadi satu menu POV Studio. Bonus: tema POV Tangan naik dari 20 jadi 48 dalam 8 kategori dan diacak tiap generate.'
+                    },
+                    {
+                        titleKey: 'modal.fix-v44-title-fotomakanan',
+                        titleText: 'Foto Makanan Profesional (ex Food Selfie)',
+                        bodyKey: 'modal.fix-v44-body-fotomakanan',
+                        bodyText: 'Food Selfie naik kelas jadi Foto Makanan Profesional: 40+ tema diperkaya ala food photographer (Studio & Editorial, Restoran & Kafe, Outdoor & Lifestyle, Kreatif & Artistik), gaya kamera diacak tiap generate, dan pilihan rasio lengkap 10 (termasuk 4:5 IG Feed, 2:3 Pinterest, 21:9 Cinematic). Review Makanan pindah ke menu ini dengan 8 preset tema sekali klik.'
+                    },
+                    {
+                        titleKey: 'modal.fix-v44-title-reorg',
+                        titleText: 'Menu Lebih Rapi + UI Konsisten',
+                        bodyKey: 'modal.fix-v44-body-reorg',
+                        bodyText: 'Generator Story Iklan (ex Iklan Produk) pindah ke hub Review Generator. Tab POV Tangan, Mockup Studio, dan Review Makanan di-redesign 2 kolom yang konsisten: langkah bernomor di kiri, hasil di kanan, plus tips di tiap tab.'
+                    }
+                ]
+            },
             {
                 version: '43',
                 dateId: 'Juli 2026',
@@ -5569,7 +5600,7 @@ The result MUST fool even professional photographers - it should be IMPOSSIBLE t
             showLoading(true);
             showError('');
 
-            const allStyles = [
+            const baseStyles = [
                 'Top-Down Flat Lay',
                 'Classic 45-Degree Angle',
                 'Dynamic Action Shot (e.g., pouring, steam)',
@@ -5586,6 +5617,15 @@ The result MUST fool even professional photographers - it should be IMPOSSIBLE t
                 'Romantic Candlelight',
                 'Urban Coffee Shop Aesthetic'
             ];
+            // Shuffle supaya kombinasi gaya kamera beda tiap generate (tidak selalu 4 gaya pertama)
+            const allStyles = (() => {
+                const copy = [...baseStyles];
+                for (let i = copy.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [copy[i], copy[j]] = [copy[j], copy[i]];
+                }
+                return copy;
+            })();
 
             const MAX_ATTEMPTS = 3;
             let attempts = 0;
@@ -5658,6 +5698,25 @@ The result MUST fool even professional photographers - it should be IMPOSSIBLE t
             resultContent.classList.remove('hidden');
         }
 
+        // Detail teknik fotografi profesional per gaya kamera (label pendek tetap dipakai di badge/filename)
+        const foodStyleDetails = {
+            'Top-Down Flat Lay': 'top-down 90-degree flat lay composition, balanced negative space, styled napkin and cutlery props, soft diffused overhead lighting',
+            'Classic 45-Degree Angle': 'classic 45-degree hero angle, 50mm lens rendering, shallow depth of field, natural table setting with supporting props',
+            'Dynamic Action Shot (e.g., pouring, steam)': 'dynamic action moment frozen at high shutter speed - pouring sauce, rising steam or dusting powder, dramatic backlight highlighting the motion',
+            'Close-up Macro Shot': 'extreme macro close-up with 100mm macro lens rendering, razor-sharp texture detail, glistening surface highlights, creamy background bokeh',
+            'Minimalist Studio Shot (Clean Background)': 'minimalist studio composition on seamless backdrop, single large softbox with smooth gradient falloff, commercial product-grade lighting',
+            'Bright Natural Window Light': 'bright natural window side-light softened by sheer curtain, airy fresh mood, gentle organic shadows',
+            'Moody Dark Background': 'low-key chiaroscuro lighting with single directional side light, deep shadows on dark slate or aged wood, fine-art editorial mood',
+            'Diagonal Angle with Depth': 'diagonal leading-line composition with layered depth, foreground and background elements softly out of focus',
+            'Side Profile View': 'straight-on side profile at table level showing the layers and height of the dish, subtle backlit rim light',
+            'Overhead Birds Eye View': 'overhead birds-eye view of the full table spread, storytelling props arrangement, cohesive color palette',
+            'Rustic Natural Lighting': 'rustic natural light on weathered wood, artisan linen and handmade ceramic props, warm earthy color grade',
+            'Studio White Background': 'pure white seamless studio background, high-key even lighting, crisp catalog and menu-listing quality',
+            'Warm Golden Hour Light': 'golden hour sunlight streaking low across the table, long soft shadows, glowing appetizing highlights',
+            'Romantic Candlelight': 'intimate candlelight scene with warm flickering glow, soft-focus atmosphere, elegant evening table setting',
+            'Urban Coffee Shop Aesthetic': 'urban specialty coffee shop ambience, window light with soft city bokeh, lifestyle editorial framing'
+        };
+
         // Generate single food image
         async function generateFoodImage(index, style) {
             try {
@@ -5689,6 +5748,7 @@ The result MUST fool even professional photographers - it should be IMPOSSIBLE t
 
                 let prompt = '';
                 const parts = [];
+                const styleDesc = foodStyleDetails[style] || style;
 
                 // Get final theme (use custom input if custom theme selected)
                 let finalTheme = selectedTheme;
@@ -5734,7 +5794,7 @@ ${base64Model ? `
 - The person's identity, face, clothing, and appearance from the original image must be preserved
 ` : ''}
 
-PHOTOGRAPHY STYLE: ${style}
+PHOTOGRAPHY STYLE: ${styleDesc}
 SCENE SETTING: ${finalTheme || 'Professional food photography'}
 
 CRITICAL PHOTOREALISM REQUIREMENTS:
@@ -5874,17 +5934,25 @@ The result MUST be indistinguishable from a real ${base64Model ? 'lifestyle food
                     parts.push({ inlineData: { mimeType: styleMimeType, data: styleBase64Image } });
                 } else {
                     // Without custom background or style reference - AI generated background
-                    prompt = `Create a professional, aesthetic photograph featuring the exact food from the uploaded image.
+                    prompt = `You are an award-winning professional food photographer and food stylist. Create a professional, appetizing photograph featuring the EXACT food from the uploaded image.
 
-PHOTOGRAPHY STYLE: ${style}
-SETTING: ${finalTheme || 'Professional food photography'}
-REQUIREMENTS:
-- High quality, sharp focus with beautiful lighting
-- Cinematic composition suitable for ${finalTheme || 'professional food content'}
-- Make the food look appetizing and Instagram-worthy
-- Perfect for social media content (Instagram, TikTok, Pinterest)
-- Maintain the food's authentic appearance
-- ${selectedFoodSelfieRatio} aspect ratio composition`;
+PHOTOGRAPHY STYLE: ${styleDesc}
+SCENE / THEME: ${finalTheme || 'professional commercial food photography'}
+
+FOOD FIDELITY (MOST IMPORTANT):
+- The food must stay 100% identical to the uploaded image: same dish, portion, plating, toppings, and colors
+- Only the environment, camera angle, props, and lighting may change
+
+PROFESSIONAL FOOD STYLING:
+- Add supporting props (surface, tableware, garnish, ingredients) that complement the dish without stealing focus
+- Appetizing enhancement: vibrant fresh colors, visible texture detail, gentle steam for hot food or condensation droplets for cold drinks where appropriate
+- Styling level: professional food stylist for culinary magazines and premium restaurant menus
+
+TECHNICAL QUALITY:
+- Commercial-grade lighting with controlled highlights and soft natural shadows
+- Sharp focus on the food, natural depth of field, ${selectedFoodSelfieRatio} composition
+- Photorealistic result - must look like a real photograph from a professional camera, not CGI
+- Quality benchmark: culinary magazine spread, high-end delivery app listing, premium restaurant menu`;
 
                     parts.push({ text: prompt });
                     parts.push({ inlineData: { mimeType: foodMimeType, data: foodBase64Image } });
@@ -13129,6 +13197,7 @@ FINAL OUTPUT: An Instagram-worthy, magazine-quality touring photo that looks lik
             const errorSection = document.getElementById('pov-error-section');
             const errorMessage = document.getElementById('pov-error-message');
             const retryBtn = document.getElementById('pov-retry-btn');
+            const povEmptyState = document.getElementById('pov-empty-state');
 
             // Custom Background Elements (NEW)
             const bgInput = document.getElementById('pov-bg-input');
@@ -13145,6 +13214,7 @@ FINAL OUTPUT: An Instagram-worthy, magazine-quality touring photo that looks lik
             let generatedImageParams = []; // Track parameters for each image
             let selectedPovRatio = '16:9';
             let selectedHandCount = '1'; // Default 1 tangan
+            let selectedThemeCategory = 'random'; // Kategori tema background, default acak semua
             let currentThemesToUse = []; // Store current themes for regeneration
             let stopPov = false;
             const povStopBtn = document.getElementById('pov-stop-btn');
@@ -13163,29 +13233,83 @@ FINAL OUTPUT: An Instagram-worthy, magazine-quality touring photo that looks lik
                 });
             }
 
-            // POV Themes - berbagai setting aesthetic untuk background
-            const povThemes = [
-                "POV from above showing a hand holding the product on a soft pink aesthetic study desk with white pegboard wall, cute stationery cups, heart-shaped mirror, soft yellow lamp, tidy layout, cozy lighting, realistic 4k photo, shallow depth of field",
-                "Top-down angle at 40 degrees showing a hand holding the product on a pastel desk setup with tulip vase, soft desk mat, washi tapes, and white lamp, warm daylight, feminine cozy mood, ultra-detailed lifestyle photo",
-                "POV showing a hand delicately holding the product above a pastel pink workspace with white pegboard full of stationery cups, washi tapes, mini photos, heart mirror, pink lamp, tulip vase, natural lighting, cozy feminine tone",
-                "Slightly top-view of a hand holding the product over a mint green and white-themed desk filled with plants, pastel organizers, hanging notes, pen holders, bright daylight tone, fresh and cozy look",
-                "Standing POV of a hand holding the product above a lavender and white aesthetic desk with pegboard full of washi tapes, small artworks, headphones, notebooks, vases with tulips, clean daylight photo",
-                "Hand holding the product in POV angle above a white marble desk with gold accents, minimalist aesthetic, soft natural window light, elegant and clean composition",
-                "POV of a hand holding the product over a wooden rustic desk with green plants, terracotta pots, natural fiber mat, warm earthy tones, bohemian aesthetic",
-                "Overhead POV hand holding the product above a terracotta and beige neutral-toned desk with lit candles, dried flowers arrangement, linen cloth, warm cozy atmosphere, lifestyle product photography",
-                "POV hand holding the product above a cozy bedroom aesthetic setup with fairy lights, soft pastel pillows, knit blanket, warm golden hour lighting, dreamy feminine vibe",
-                "Top-down hand holding the product above a sleek black and gold modern desk with metallic pen holder, keyboard, neon accent light, dark luxury aesthetic, 4K photo",
-                "POV hand holding the product above a sage green aesthetic workspace with botanical prints, small potted plants, natural wood accents, clean daylight, fresh modern look",
-                "Elevated angle hand holding the product above a sunlit outdoor cafe table with a latte, croissant, flowers, natural shadow play, warm lifestyle photography",
-                "POV hand holding the product above a luxury cream and champagne vanity table with perfume bottles, pearls, soft studio lighting, elegant fashion aesthetic",
-                "Top-view hand holding the product above a dark moody library desk with stacked books, candle flame, aged wood surface, vintage sophisticated atmosphere",
-                "POV hand holding the product above a beach-side flat lay with white sand, tropical shells, sunglasses, golden hour warm light, summer lifestyle vibe",
-                "Slightly above angle hand holding the product over a vibrant tropical Bali-inspired setup with tropical leaves, rattan mat, warm sunlight, lush green aesthetic",
-                "POV hand holding the product above a minimal Japanese wabi-sabi setup with bamboo tray, linen cloth, ceramic cup, zen garden stones, soft neutral tones",
-                "Overhead hand holding the product above a Gen-Z aesthetic desk with retro Y2K accessories, holographic accents, colorful stickers, playful vibrant energy",
-                "POV hand holding the product above a cozy autumn desk with warm orange and brown tones, mini pumpkins, maple leaves, scented candle, cozy fall atmosphere",
-                "Top-down hand holding the product above a clean white marble surface with fresh flower petals, eucalyptus sprigs, minimal elegant composition, natural daylight"
-            ];
+            // POV Themes per kategori - dipilih acak (shuffle) tiap generate supaya tidak monoton
+            const povThemeCategories = {
+                feminin: [
+                    "POV from above showing a hand holding the product on a soft pink aesthetic study desk with white pegboard wall, cute stationery cups, heart-shaped mirror, soft yellow lamp, tidy layout, cozy lighting, realistic 4k photo, shallow depth of field",
+                    "Top-down angle at 40 degrees showing a hand holding the product on a pastel desk setup with tulip vase, soft desk mat, washi tapes, and white lamp, warm daylight, feminine cozy mood, ultra-detailed lifestyle photo",
+                    "POV showing a hand delicately holding the product above a pastel pink workspace with white pegboard full of stationery cups, washi tapes, mini photos, heart mirror, pink lamp, tulip vase, natural lighting, cozy feminine tone",
+                    "Standing POV of a hand holding the product above a lavender and white aesthetic desk with pegboard full of washi tapes, small artworks, headphones, notebooks, vases with tulips, clean daylight photo",
+                    "Overhead hand holding the product above a Gen-Z aesthetic desk with retro Y2K accessories, holographic accents, colorful stickers, playful vibrant energy",
+                    "POV hand holding the product above a soft peach vanity with heart-shaped LED mirror, makeup brushes, pink roses in a vase, dreamy soft-focus lighting, romantic feminine aesthetic"
+                ],
+                minimal: [
+                    "Slightly top-view of a hand holding the product over a mint green and white-themed desk filled with plants, pastel organizers, hanging notes, pen holders, bright daylight tone, fresh and cozy look",
+                    "Hand holding the product in POV angle above a white marble desk with gold accents, minimalist aesthetic, soft natural window light, elegant and clean composition",
+                    "POV hand holding the product above a minimal Japanese wabi-sabi setup with bamboo tray, linen cloth, ceramic cup, zen garden stones, soft neutral tones",
+                    "Top-down hand holding the product above a clean white marble surface with fresh flower petals, eucalyptus sprigs, minimal elegant composition, natural daylight",
+                    "Top-down hand holding the product above a pure white seamless background with soft natural shadow, clean e-commerce product photography, bright even lighting",
+                    "POV hand holding the product above a beige linen tablecloth with one ceramic plate and neutral tones, airy natural window light, calm minimalist flat lay"
+                ],
+                cafe: [
+                    "Elevated angle hand holding the product above a sunlit outdoor cafe table with a latte, croissant, flowers, natural shadow play, warm lifestyle photography",
+                    "POV hand holding the product above a wooden coffee shop table with latte art cup and an open book, warm ambient cafe lighting, cozy coffeehouse atmosphere",
+                    "POV hand holding the product above a marble bakery counter with fresh croissants and pastries in the background, warm morning light, artisan bakery vibe",
+                    "POV hand holding the product above a rustic Indonesian coffee stall table with a glass of traditional kopi tubruk and fried bananas on a plate, warm afternoon light, authentic local warung atmosphere",
+                    "Top-down hand holding the product above a bright brunch table with avocado toast, orange juice, fresh flowers, crisp daylight, fresh lifestyle food photography",
+                    "POV hand holding the product above a pastel dessert cafe table with a strawberry cake slice and milkshake, playful sweet aesthetic, soft daylight"
+                ],
+                nature: [
+                    "POV of a hand holding the product over a wooden rustic desk with green plants, terracotta pots, natural fiber mat, warm earthy tones, bohemian aesthetic",
+                    "POV hand holding the product above a beach-side flat lay with white sand, tropical shells, sunglasses, golden hour warm light, summer lifestyle vibe",
+                    "Slightly above angle hand holding the product over a vibrant tropical Bali-inspired setup with tropical leaves, rattan mat, warm sunlight, lush green aesthetic",
+                    "POV hand holding the product above a picnic blanket on green grass with a wicker basket, wildflowers, dappled sunlight through trees, relaxed outdoor picnic mood",
+                    "POV hand holding the product with a misty mountain valley and pine forest in the background, golden sunrise light, adventurous outdoor travel vibe",
+                    "POV hand holding the product surrounded by lush tropical garden leaves with soft bokeh, fresh morning dew, vibrant natural green tones"
+                ],
+                urban: [
+                    "POV hand holding the product on a busy city street with blurred pedestrians and shop signs in the background, natural daylight, candid urban lifestyle photography",
+                    "POV hand holding the product at night with colorful neon signs and city lights bokeh in the background, cinematic night street photography, vibrant urban glow",
+                    "POV hand holding the product on a rooftop with a city skyline at golden hour in the background, warm sunset tones, modern urban lifestyle",
+                    "POV hand holding the product against an industrial brick wall with metal accents and dramatic side lighting, edgy streetwear aesthetic",
+                    "POV hand holding the product in a motorcycle garage with tools and a sport bike blurred in the background, workshop lighting, masculine automotive vibe",
+                    "POV hand holding the product at an outdoor basketball court with painted asphalt and chain fence background, bright afternoon sun, sporty street style"
+                ],
+                luxury: [
+                    "Top-down hand holding the product above a sleek black and gold modern desk with metallic pen holder, keyboard, neon accent light, dark luxury aesthetic, 4K photo",
+                    "POV hand holding the product above a luxury cream and champagne vanity table with perfume bottles, pearls, soft studio lighting, elegant fashion aesthetic",
+                    "Top-view hand holding the product above a dark moody library desk with stacked books, candle flame, aged wood surface, vintage sophisticated atmosphere",
+                    "POV hand holding the product in a luxury hotel suite with silk bedding and warm golden lamp light, five-star elegant atmosphere, rich cinematic tones",
+                    "Top-down hand holding the product above a black marble surface with gold veins, dramatic spotlight, premium dark luxury product photography",
+                    "POV hand holding the product above deep emerald velvet fabric with soft glints of jewelry, moody elegant lighting, high-end editorial style"
+                ],
+                home: [
+                    "Overhead POV hand holding the product above a terracotta and beige neutral-toned desk with lit candles, dried flowers arrangement, linen cloth, warm cozy atmosphere, lifestyle product photography",
+                    "POV hand holding the product above a cozy bedroom aesthetic setup with fairy lights, soft pastel pillows, knit blanket, warm golden hour lighting, dreamy feminine vibe",
+                    "POV hand holding the product above a cozy autumn desk with warm orange and brown tones, mini pumpkins, maple leaves, scented candle, cozy fall atmosphere",
+                    "POV hand holding the product above a bright home kitchen counter with a wooden cutting board and fresh herbs, morning light through the window, homey cooking atmosphere",
+                    "POV hand holding the product in a cozy living room with a knit blanket sofa, warm string lights, indoor plants, soft evening ambiance",
+                    "POV hand holding the product on an apartment balcony table with morning coffee and small plants, soft sunrise light, calm morning routine vibe"
+                ],
+                tech: [
+                    "POV hand holding the product above a gaming desk with RGB mechanical keyboard and monitor glow in the background, purple and blue LED lighting, tech gamer aesthetic",
+                    "POV hand holding the product above a clean tech workspace with laptop, wireless earbuds, smartphone, neutral desk mat, bright productive daylight",
+                    "POV hand holding the product in a photography studio with softbox lighting and a grey backdrop, professional commercial product shot",
+                    "POV hand holding the product in a podcast studio with a microphone and acoustic foam panels in the background, warm accent lighting, content creator vibe",
+                    "POV hand holding the product above a content creator desk with ring light, camera, and editing monitor in the background, modern creator studio setup",
+                    "Top-down hand holding the product above a dark desk with holographic blue light reflections and sleek gadgets, futuristic tech aesthetic"
+                ]
+            };
+            const povThemes = Object.values(povThemeCategories).flat();
+
+            function shufflePovThemes(arr) {
+                const copy = [...arr];
+                for (let i = copy.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [copy[i], copy[j]] = [copy[j], copy[i]];
+                }
+                return copy;
+            }
 
             // Event Listeners - Using Try-On pattern
             // Main product image upload
@@ -13241,6 +13365,19 @@ FINAL OUTPUT: An Instagram-worthy, magazine-quality touring photo that looks lik
                         document.querySelectorAll('#pov-hand-count-selection .hand-count-btn-pov').forEach(btn => btn.classList.remove('selected'));
                         button.classList.add('selected');
                         selectedHandCount = button.dataset.handCount;
+                    }
+                });
+            }
+
+            // Theme category selection event listener
+            const themeCatSelection = document.getElementById('pov-theme-selection');
+            if (themeCatSelection) {
+                themeCatSelection.addEventListener('click', (e) => {
+                    const button = e.target.closest('.theme-cat-btn-pov');
+                    if (button) {
+                        themeCatSelection.querySelectorAll('.theme-cat-btn-pov').forEach(btn => btn.classList.remove('selected'));
+                        button.classList.add('selected');
+                        selectedThemeCategory = button.dataset.themeCat;
                     }
                 });
             }
@@ -13347,6 +13484,7 @@ FINAL OUTPUT: An Instagram-worthy, magazine-quality touring photo that looks lik
                     card.innerHTML = `<div class="flex flex-col items-center justify-center h-full min-h-[200px]"><div class="loader !border-l-purple-500"></div></div>`;
                     resultsGrid.appendChild(card);
                 }
+                if (povEmptyState) povEmptyState.classList.add('hidden');
                 resultsSection.classList.remove('hidden');
                 resultCount.textContent = '...';
                 downloadAllBtn.classList.add('hidden');
@@ -13380,7 +13518,7 @@ FINAL OUTPUT: An Instagram-worthy, magazine-quality touring photo that looks lik
 
                 let themesToUse;
                 if (backgroundStyleDescription && uploadedBackgroundData) {
-                    themesToUse = [
+                    themesToUse = shufflePovThemes([
                         'POV from above', 'top-down view at 45 degrees', 'elevated overhead angle',
                         'standing POV perspective', 'slightly raised view', 'bird eye perspective',
                         'high angle shot', 'diagonal overhead angle', 'close-up POV angle',
@@ -13388,9 +13526,14 @@ FINAL OUTPUT: An Instagram-worthy, magazine-quality touring photo that looks lik
                         'wide overhead perspective', 'narrow elevated angle', 'dramatic top-down angle',
                         'relaxed overhead view', 'natural hand POV angle', 'first-person perspective',
                         'over-the-shoulder POV angle', 'mid-range elevated angle'
-                    ];
+                    ]);
                 } else {
-                    themesToUse = povThemes;
+                    const themePool = povThemeCategories[selectedThemeCategory] || povThemes;
+                    let shuffledThemes = shufflePovThemes(themePool);
+                    while (shuffledThemes.length < selectedCount) {
+                        shuffledThemes = shuffledThemes.concat(shufflePovThemes(themePool));
+                    }
+                    themesToUse = shuffledThemes;
                 }
                 currentThemesToUse = [...themesToUse];
 
@@ -13431,6 +13574,7 @@ FINAL OUTPUT: An Instagram-worthy, magazine-quality touring photo that looks lik
 
                 if (successfulImages.length === 0) {
                     resultsSection.classList.add('hidden');
+                    if (povEmptyState) povEmptyState.classList.remove('hidden');
                     showError('Tidak ada gambar yang berhasil digenerate. Silakan coba lagi.');
                     return;
                 }
@@ -13845,9 +13989,461 @@ IMPORTANT: Use the EXACT environment/location from IMAGE 1 as the background. Do
                 generateBtn.disabled = true;
                 resultsSection.classList.add('hidden');
                 resultsGrid.innerHTML = '';
+                if (povEmptyState) povEmptyState.classList.remove('hidden');
                 hideError();
             }
         })();
+
+    // --- POV SELFIE TAB LOGIC ---
+    (function initPovSelfie() {
+            const productInput = document.getElementById('povselfie-product-input');
+            const productUploadArea = document.getElementById('povselfie-product-upload-area');
+            const productPlaceholder = document.getElementById('povselfie-product-placeholder');
+            const productPreviewContainer = document.getElementById('povselfie-product-preview-container');
+            const productPreviewImage = document.getElementById('povselfie-product-preview-image');
+            const modelInput = document.getElementById('povselfie-model-input');
+            const modelUploadArea = document.getElementById('povselfie-model-upload-area');
+            const modelPlaceholder = document.getElementById('povselfie-model-placeholder');
+            const modelPreviewContainer = document.getElementById('povselfie-model-preview-container');
+            const modelPreviewImage = document.getElementById('povselfie-model-preview-image');
+            const descInput = document.getElementById('povselfie-desc');
+            const generateBtn = document.getElementById('povselfie-generate-btn');
+            const stopBtn = document.getElementById('povselfie-stop-btn');
+            const resultsSection = document.getElementById('povselfie-results-section');
+            const emptyState = document.getElementById('povselfie-empty-state');
+            const resultCount = document.getElementById('povselfie-result-count');
+            const resultsGrid = document.getElementById('povselfie-results-grid');
+            const downloadAllBtn = document.getElementById('povselfie-download-all-btn');
+            const errorSection = document.getElementById('povselfie-error-section');
+            const errorMessage = document.getElementById('povselfie-error-message');
+            const retryBtn = document.getElementById('povselfie-retry-btn');
+
+            let uploadedProductData = null;
+            let uploadedModelData = null;
+            let generatedImages = [];
+            let generatedImageParams = [];
+            let selectedRatio = '3:4';
+            let selectedCount = 4;
+            let stopSelfie = false;
+
+            if (stopBtn) stopBtn.addEventListener('click', () => { stopSelfie = true; });
+
+            // Variasi gaya selfie - dipilih acak tiap generate, background mengikuti tema produk
+            const selfieStyles = [
+                "casual arm-extended selfie, warm genuine smile, product held up next to the face",
+                "close-up selfie from a slightly high angle, product held near the cheek, soft flattering light",
+                "candid selfie while actively using the product, natural laughing expression",
+                "selfie with the product held toward the camera in the foreground, face slightly behind in focus",
+                "relaxed sitting-down selfie, product resting in the other hand, cozy vibe",
+                "golden hour selfie with warm sunlight on the face, product clearly visible",
+                "excited unboxing-style selfie, showing the product to the camera with a happy surprised expression",
+                "aesthetic over-the-shoulder angle selfie, product held up beside the face",
+                "walking selfie with a slight motion feel, product in hand, cheerful energy",
+                "cozy indoor selfie with soft window light, product held at chest level",
+                "review-style selfie pointing at the product with one finger, friendly expression",
+                "content-creator style selfie, product placed prominently, bright even lighting"
+            ];
+
+            function shuffleSelfieStyles(arr) {
+                const copy = [...arr];
+                for (let i = copy.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [copy[i], copy[j]] = [copy[j], copy[i]];
+                }
+                return copy;
+            }
+
+            function updateGenerateState() {
+                generateBtn.disabled = !(uploadedProductData && uploadedModelData);
+            }
+
+            function setupUpload(area, input, onLoaded) {
+                if (!area || !input) return;
+                area.addEventListener('click', () => input.click());
+                area.addEventListener('dragover', (e) => { e.preventDefault(); area.style.borderColor = '#15803d'; });
+                area.addEventListener('dragleave', () => area.style.borderColor = '');
+                area.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    area.style.borderColor = '';
+                    if (e.dataTransfer.files[0]) readImage(e.dataTransfer.files[0], onLoaded);
+                });
+                input.addEventListener('change', (e) => { if (e.target.files[0]) readImage(e.target.files[0], onLoaded); });
+            }
+
+            function readImage(file, onLoaded) {
+                if (file.size > 10 * 1024 * 1024) {
+                    showError('Ukuran file terlalu besar. Maksimal 10MB.');
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = (e) => { onLoaded(e.target.result); hideError(); };
+                reader.readAsDataURL(file);
+            }
+
+            setupUpload(productUploadArea, productInput, (data) => {
+                uploadedProductData = data;
+                productPreviewImage.src = data;
+                productPlaceholder.classList.add('hidden');
+                productPreviewContainer.classList.remove('hidden');
+                productUploadArea.classList.add('has-image');
+                updateGenerateState();
+            });
+
+            setupUpload(modelUploadArea, modelInput, (data) => {
+                uploadedModelData = data;
+                modelPreviewImage.src = data;
+                modelPlaceholder.classList.add('hidden');
+                modelPreviewContainer.classList.remove('hidden');
+                modelUploadArea.classList.add('has-image');
+                updateGenerateState();
+            });
+
+            const ratioSelection = document.getElementById('povselfie-ratio-selection');
+            if (ratioSelection) {
+                ratioSelection.addEventListener('click', (e) => {
+                    const button = e.target.closest('.ratio-btn-povselfie');
+                    if (button) {
+                        ratioSelection.querySelectorAll('.ratio-btn-povselfie').forEach(btn => btn.classList.remove('selected'));
+                        button.classList.add('selected');
+                        selectedRatio = button.dataset.ratio;
+                    }
+                });
+            }
+
+            const countSelection = document.getElementById('povselfie-count-selection-grid');
+            if (countSelection) {
+                countSelection.addEventListener('click', (e) => {
+                    const btn = e.target.closest('button[data-count]');
+                    if (!btn) return;
+                    countSelection.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    selectedCount = parseInt(btn.dataset.count, 10);
+                });
+            }
+
+            generateBtn.addEventListener('click', startGeneration);
+            retryBtn.addEventListener('click', () => { hideError(); });
+
+            async function generateImageWithRetry(payload, retries = 3, delay = 1000) {
+                for (let i = 0; i < retries; i++) {
+                    try {
+                        const apiKey = "";
+                        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${apiKey}`;
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        const responseText = await response.text();
+                        if (!response.ok) {
+                            let errorMsg = response.statusText;
+                            try {
+                                errorMsg = JSON.parse(responseText).error?.message || errorMsg;
+                            } catch(e) {
+                                if (responseText) errorMsg = responseText;
+                            }
+                            throw new Error(`API Error: ${errorMsg}`);
+                        }
+                        try {
+                            return JSON.parse(responseText);
+                        } catch (e) {
+                            throw new Error("Invalid JSON response.");
+                        }
+                    } catch (error) {
+                        console.error(`Attempt ${i + 1} failed:`, error);
+                        if (i === retries - 1) return null;
+                        await new Promise(res => setTimeout(res, delay * Math.pow(2, i)));
+                    }
+                }
+                return null;
+            }
+
+            function buildSelfiePrompt(style, extraDesc) {
+                let prompt = `Create ONE hyper-realistic smartphone selfie photo by combining these inputs:
+
+IMAGE 1 (Person): the person taking the selfie
+IMAGE 2 (Product): the product being shown
+
+Task: The person from IMAGE 1 is taking a selfie while holding and showing the product from IMAGE 2.
+
+Requirements:
+- Keep the EXACT same face, hairstyle, and skin tone as IMAGE 1 - do not change the person's identity
+- The product from IMAGE 2 must be clearly visible with the same shape, colors, label, and packaging
+- Selfie style: ${style}
+- Background/location: analyze the product and choose a realistic setting that MATCHES the product theme (examples: skincare -> bright vanity or bathroom, coffee/food -> cozy cafe, sport gear -> gym or outdoor, fashion -> aesthetic street or mall, gadget -> modern workspace)
+- Front-camera smartphone perspective: arm-length distance, slight wide-angle look, natural casual framing
+- Realistic lighting that matches the chosen location, photorealistic skin texture, 4K quality`;
+                if (extraDesc) {
+                    prompt += `\n- Additional details from user: ${extraDesc}`;
+                }
+                return prompt;
+            }
+
+            async function startGeneration() {
+                if (generateBtn.disabled) return;
+                if (!uploadedProductData || !uploadedModelData) {
+                    showError('Silakan upload foto produk dan foto model terlebih dahulu.');
+                    return;
+                }
+
+                stopSelfie = false;
+                hideError();
+                generateBtn.disabled = true;
+                generateBtn.classList.add('hidden');
+                if (stopBtn) stopBtn.classList.remove('hidden');
+
+                const extraDesc = descInput.value.trim();
+                let styles = shuffleSelfieStyles(selfieStyles);
+                while (styles.length < selectedCount) {
+                    styles = styles.concat(shuffleSelfieStyles(selfieStyles));
+                }
+
+                try {
+                    await runGeneration(styles, extraDesc);
+                    const successCount = generatedImages.filter(img => img).length;
+                    if (successCount === 0 && !stopSelfie) {
+                        await runGeneration(styles, extraDesc);
+                    }
+                    renderSuccessfulResults();
+                } finally {
+                    updateGenerateState();
+                    generateBtn.classList.remove('hidden');
+                    if (stopBtn) stopBtn.classList.add('hidden');
+                }
+            }
+
+            async function runGeneration(styles, extraDesc) {
+                generatedImages = new Array(selectedCount).fill(null);
+                generatedImageParams = new Array(selectedCount).fill(null);
+
+                resultsGrid.innerHTML = '';
+                for (let i = 0; i < selectedCount; i++) {
+                    const card = document.createElement('div');
+                    card.id = `povselfie-card-${i}`;
+                    card.className = 'result-card';
+                    card.innerHTML = `<div class="flex flex-col items-center justify-center h-full min-h-[200px]"><div class="loader !border-l-purple-500"></div></div>`;
+                    resultsGrid.appendChild(card);
+                }
+                if (emptyState) emptyState.classList.add('hidden');
+                resultsSection.classList.remove('hidden');
+                resultCount.textContent = '...';
+                downloadAllBtn.classList.add('hidden');
+
+                if (window.innerWidth < 1024) {
+                    setTimeout(() => resultsGrid.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+                }
+
+                await Promise.allSettled(
+                    Array.from({ length: selectedCount }, (_, i) => generateSingleSelfie(i, styles, extraDesc))
+                );
+            }
+
+            async function generateSingleSelfie(index, styles, extraDesc) {
+                if (stopSelfie) return;
+                const card = document.getElementById(`povselfie-card-${index}`);
+                if (!card) return;
+
+                const style = styles[index];
+                const payload = {
+                    contents: [{ parts: [
+                        { text: buildSelfiePrompt(style, extraDesc) },
+                        { inlineData: { mimeType: "image/jpeg", data: uploadedModelData.split(',')[1] } },
+                        { inlineData: { mimeType: "image/jpeg", data: uploadedProductData.split(',')[1] } }
+                    ] }],
+                    generationConfig: {
+                        responseModalities: ['IMAGE'],
+                        imageConfig: { aspectRatio: selectedRatio }
+                    }
+                };
+
+                const result = await generateImageWithRetry(payload);
+                const base64Data = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
+
+                if (base64Data) {
+                    const imageUrl = `data:image/png;base64,${base64Data}`;
+                    generatedImages[index] = imageUrl;
+                    generatedImageParams[index] = { style, extraDesc, ratio: selectedRatio };
+                    card.innerHTML = `<img src="${imageUrl}" alt="POV Selfie" style="width:100%;height:100%;object-fit:cover;">`;
+                } else {
+                    card.innerHTML = '';
+                }
+            }
+
+            function renderSuccessfulResults() {
+                const successfulImages = [];
+                const successfulParams = [];
+                for (let i = 0; i < generatedImages.length; i++) {
+                    if (generatedImages[i]) {
+                        successfulImages.push(generatedImages[i]);
+                        successfulParams.push(generatedImageParams[i]);
+                    }
+                }
+                generatedImages = successfulImages;
+                generatedImageParams = successfulParams;
+
+                resultsGrid.innerHTML = '';
+
+                if (successfulImages.length === 0) {
+                    resultsSection.classList.add('hidden');
+                    if (emptyState) emptyState.classList.remove('hidden');
+                    showError('Tidak ada gambar yang berhasil digenerate. Silakan coba lagi.');
+                    return;
+                }
+
+                successfulImages.forEach((imageUrl, idx) => {
+                    const card = document.createElement('div');
+                    card.className = 'result-card';
+                    card.innerHTML = `
+                        <img src="${imageUrl}" alt="POV Selfie ${idx + 1}" />
+                        <div class="result-card-actions">
+                            <button class="btn-preview" data-action="preview" data-image-url="${imageUrl}">
+                                <i class="fas fa-search-plus"></i>
+                                Preview
+                            </button>
+                            <button class="btn-regenerate" data-action="regenerate" data-index="${idx}">
+                                <i class="fas fa-sync-alt"></i>
+                                Regenerate
+                            </button>
+                            <button class="btn-download" data-action="download" data-image-url="${imageUrl}" data-filename="pov-selfie-${idx + 1}.jpg">
+                                <i class="fas fa-download"></i>
+                                Download
+                            </button>
+                        </div>
+                        <div class="image-counter">#${idx + 1}</div>
+                    `;
+                    resultsGrid.appendChild(card);
+                });
+
+                resultCount.textContent = successfulImages.length;
+                downloadAllBtn.classList.remove('hidden');
+
+                if (window.innerWidth < 1024) {
+                    resultsGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+
+            async function handleRegenerate(index) {
+                const resultCards = resultsGrid.querySelectorAll('.result-card');
+                const targetCard = resultCards[index];
+                const params = generatedImageParams[index];
+                if (!targetCard || !params) return;
+
+                targetCard.innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-full min-h-[200px]">
+                        <div class="loader !border-l-purple-500"></div>
+                        <p class="mt-4 text-sm text-gray-600">Regenerating...</p>
+                    </div>
+                `;
+
+                const payload = {
+                    contents: [{ parts: [
+                        { text: buildSelfiePrompt(params.style, params.extraDesc) },
+                        { inlineData: { mimeType: "image/jpeg", data: uploadedModelData.split(',')[1] } },
+                        { inlineData: { mimeType: "image/jpeg", data: uploadedProductData.split(',')[1] } }
+                    ] }],
+                    generationConfig: {
+                        responseModalities: ['IMAGE'],
+                        imageConfig: { aspectRatio: params.ratio }
+                    }
+                };
+
+                const result = await generateImageWithRetry(payload);
+                const base64Data = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
+
+                if (base64Data) {
+                    const imageUrl = `data:image/png;base64,${base64Data}`;
+                    generatedImages[index] = imageUrl;
+                    targetCard.innerHTML = `
+                        <img src="${imageUrl}" alt="POV Selfie ${index + 1}" />
+                        <div class="result-card-actions">
+                            <button class="btn-preview" data-action="preview" data-image-url="${imageUrl}">
+                                <i class="fas fa-search-plus"></i>
+                                Preview
+                            </button>
+                            <button class="btn-regenerate" data-action="regenerate" data-index="${index}">
+                                <i class="fas fa-sync-alt"></i>
+                                Regenerate
+                            </button>
+                            <button class="btn-download" data-action="download" data-image-url="${imageUrl}" data-filename="pov-selfie-${index + 1}.jpg">
+                                <i class="fas fa-download"></i>
+                                Download
+                            </button>
+                        </div>
+                        <div class="image-counter">#${index + 1}</div>
+                    `;
+                } else {
+                    targetCard.innerHTML = `
+                        <div class="flex flex-col items-center justify-center h-full min-h-[200px] text-red-600">
+                            <i class="fas fa-exclamation-triangle text-3xl mb-2"></i>
+                            <p class="text-sm">Gagal regenerate</p>
+                        </div>
+                    `;
+                }
+            }
+
+            resultsGrid.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                const actionBtn = e.target.closest('[data-action]');
+                if (!actionBtn) return;
+
+                const action = actionBtn.dataset.action;
+                if (action === 'preview') {
+                    showSelfiePreviewModal(actionBtn.dataset.imageUrl);
+                } else if (action === 'regenerate') {
+                    await handleRegenerate(parseInt(actionBtn.dataset.index, 10));
+                } else if (action === 'download') {
+                    if (window.downloadDataURINew) {
+                        await window.downloadDataURINew(actionBtn.dataset.imageUrl, actionBtn.dataset.filename);
+                    }
+                }
+            });
+
+            if (downloadAllBtn) {
+                downloadAllBtn.addEventListener('click', async () => {
+                    if (generatedImages.length === 0) return;
+                    downloadAllBtn.disabled = true;
+                    downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                    for (let i = 0; i < generatedImages.length; i++) {
+                        if (window.downloadDataURINew) {
+                            await window.downloadDataURINew(generatedImages[i], `pov-selfie-${i + 1}.jpg`);
+                            await new Promise(resolve => setTimeout(resolve, 500));
+                        }
+                    }
+                    downloadAllBtn.disabled = false;
+                    downloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download Semua';
+                });
+            }
+
+            function showSelfiePreviewModal(imageUrl) {
+                const modal = document.createElement('div');
+                modal.className = 'image-preview-modal';
+                modal.innerHTML = `
+                    <div class="preview-modal-overlay"></div>
+                    <div class="preview-modal-content">
+                        <button class="preview-close-btn" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <img src="${imageUrl}" alt="Preview" class="preview-modal-image">
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                const closeModal = () => {
+                    modal.classList.add('closing');
+                    setTimeout(() => modal.remove(), 300);
+                };
+                modal.querySelector('.preview-close-btn').addEventListener('click', closeModal);
+                modal.querySelector('.preview-modal-overlay').addEventListener('click', closeModal);
+            }
+
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorSection.classList.remove('hidden');
+            }
+
+            function hideError() {
+                errorSection.classList.add('hidden');
+            }
+    })();
 
         // === MOCKUP STUDIO INITIALIZATION ===
         // Direct initialization like Try-On (no lazy loading)
@@ -13872,6 +14468,7 @@ IMPORTANT: Use the EXACT environment/location from IMAGE 1 as the background. Do
             const progressText = document.getElementById('mockup-progress-text');
             const progressBar = document.getElementById('mockup-progress-bar');
             const resultsSection = document.getElementById('mockup-results-section');
+            const mockupEmptyState = document.getElementById('mockup-studio-empty-state');
             const resultCount = document.getElementById('mockup-result-count');
             const resultsGrid = document.getElementById('mockup-results-grid');
             const downloadAllBtn = document.getElementById('mockup-download-all-btn');
@@ -14030,6 +14627,7 @@ IMPORTANT: Use the EXACT environment/location from IMAGE 1 as the background. Do
                     card.innerHTML = `<div class="flex flex-col items-center justify-center h-full min-h-[200px]"><div class="loader !border-l-purple-500"></div></div>`;
                     resultsGrid.appendChild(card);
                 }
+                if (mockupEmptyState) mockupEmptyState.classList.add('hidden');
                 resultsSection.classList.remove('hidden');
                 resultCount.textContent = '...';
                 downloadAllBtn.classList.add('hidden');
@@ -14104,6 +14702,7 @@ IMPORTANT: Use the EXACT environment/location from IMAGE 1 as the background. Do
 
                 if (successfulMockups.length === 0) {
                     resultsSection.classList.add('hidden');
+                    if (mockupEmptyState) mockupEmptyState.classList.remove('hidden');
                     showError('Tidak ada mockup yang berhasil digenerate. Silakan coba lagi.');
                     return;
                 }
@@ -14552,6 +15151,7 @@ The design should be clearly visible and properly placed on the mockup surface.`
                 generateBtn.disabled = true;
                 resultsSection.classList.add('hidden');
                 resultsGrid.innerHTML = '';
+                if (mockupEmptyState) mockupEmptyState.classList.remove('hidden');
                 hideError();
                 progressBar.style.width = '0%';
                 progressText.textContent = '0/21';
@@ -23716,10 +24316,8 @@ OUTPUT: Satu prompt lengkap dalam Bahasa Indonesia yang natural untuk Sora2.`;
         const createInitialFoodPlaceholders = () => {
             foodGrid.innerHTML = '';
             const selectedRatio = document.querySelector('.ratio-btn-food.selected')?.dataset.ratio || '16:9';
-            let aspectRatioClass = 'aspect-video';
-            if (selectedRatio === '1:1') aspectRatioClass = 'aspect-square';
-            else if (selectedRatio === '3:4') aspectRatioClass = 'aspect-[3/4]';
-            else if (selectedRatio === '9:16') aspectRatioClass = 'aspect-[9/16]';
+            const foodAspectMap = { '1:1': 'aspect-square', '4:5': 'aspect-[4/5]', '9:16': 'aspect-[9/16]', '3:4': 'aspect-[3/4]', '2:3': 'aspect-[2/3]', '16:9': 'aspect-video', '3:2': 'aspect-[3/2]', '4:3': 'aspect-[4/3]', '21:9': 'aspect-[21/9]', '5:4': 'aspect-[5/4]' };
+            let aspectRatioClass = foodAspectMap[selectedRatio] || 'aspect-video';
 
             for(let i = 1; i <= selectedCount; i++) {
                 const card = document.createElement('div');
@@ -23747,11 +24345,31 @@ OUTPUT: Satu prompt lengkap dalam Bahasa Indonesia yang natural untuk Sora2.`;
             });
         });
 
+        // Preset tema visual - klik chip untuk isi input tema
+        const foodThemePresets = document.getElementById('food-theme-presets');
+        if (foodThemePresets) {
+            foodThemePresets.addEventListener('click', (e) => {
+                const chip = e.target.closest('.food-theme-preset');
+                if (!chip) return;
+                const themeInputEl = document.getElementById('food-photo-theme-input');
+                if (chip.classList.contains('selected')) {
+                    chip.classList.remove('selected');
+                    if (themeInputEl) themeInputEl.value = '';
+                } else {
+                    foodThemePresets.querySelectorAll('.food-theme-preset').forEach(c => c.classList.remove('selected'));
+                    chip.classList.add('selected');
+                    if (themeInputEl) themeInputEl.value = chip.dataset.preset;
+                }
+            });
+        }
+
         foodGenerateBtn.addEventListener('click', async () => {
             if (foodProductImages.length === 0) return;
             foodGenerateBtn.disabled = true;
             const originalBtnHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg><span>Buat Scene Food Review</span>`;
             foodGenerateBtn.innerHTML = `<div class="loader"></div><span class="ml-2">Menganalisa makanan...</span>`;
+            const frEmptyState = document.getElementById('food-review-empty-state');
+            if (frEmptyState) frEmptyState.classList.add('hidden');
             foodResultsSection.classList.remove('hidden');
             foodResultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
@@ -23789,6 +24407,8 @@ OUTPUT: Satu prompt lengkap dalam Bahasa Indonesia yang natural untuk Sora2.`;
             foodGenerateBtn.innerHTML = originalBtnHTML;
 
             if (successCount === 0) {
+                foodResultsSection.classList.add('hidden');
+                if (frEmptyState) frEmptyState.classList.remove('hidden');
                 alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
             }
         });
@@ -23815,9 +24435,15 @@ Contoh 10 scene: Complete food review dari Opening sampai Final Recommendation d
 
 Kamu HARUS membuat ${selectedCount} scene sequential yang cover: opening, food presentation, close-up details, taste test, analysis, dan verdict. Scene harus flow natural seperti content creator sungguhan.
 
+**KUALITAS VISUAL PROFESIONAL (WAJIB di setiap prompt):**
+- Sebutkan angle kamera spesifik yang BERBEDA tiap scene (contoh: eye-level medium shot, over-the-shoulder, 45-degree hero angle, macro close-up on texture, top-down)
+- Sebutkan teknik lighting yang konsisten dengan setting (contoh: warm cafe window light, street food bulb lighting at dusk, soft ring light)
+- Sebutkan detail yang bikin makanan menggugah selera: uap mengepul untuk makanan panas, tekstur renyah/lumer terlihat, saus meleleh, kondensasi di minuman dingin
+- Ekspresi reviewer harus autentik dan berbeda tiap scene (penasaran, terkejut enak, menikmati, mikir menilai, puas merekomendasikan)
+
 For each scene, provide:
 - title: Judul scene dalam Bahasa Indonesia (contoh: "Scene 1: Opening & First Impression")
-- prompt: CONCISE English prompt for AI image generator yang SELALU include deskripsi reviewer konsisten + food interaction
+- prompt: CONCISE English prompt for AI image generator yang SELALU include deskripsi reviewer konsisten + food interaction + camera angle + lighting
 
 Respond ONLY with valid JSON array of ${selectedCount} objects.`;
             } else {
@@ -23830,9 +24456,15 @@ Contoh 4 scene: Full Plate Shot → Close-up Texture → Ingredients Detail → 
 Contoh 7 scene: Establishing Shot → Top View → Side Angle → Macro Texture → Cross-section → Garnish Detail → Final Presentation
 Contoh 10 scene: Complete food showcase dari various angles, lighting, details (colors, textures, steam, garnishes, etc.)
 
+**KUALITAS VISUAL PROFESIONAL (WAJIB di setiap prompt):**
+- Angle kamera BERBEDA tiap scene (top-down flat lay, 45-degree hero, macro texture, side profile showing layers, wide establishing)
+- Teknik lighting profesional yang konsisten (window light, moody low-key, golden hour, high-key studio)
+- Detail menggugah selera: uap, tekstur, saus mengalir, garnish segar, kondensasi
+- Props pendukung yang cocok dengan makanan dan setting (jangan mencuri fokus)
+
 For each scene, provide:
 - title: Judul scene dalam Bahasa Indonesia
-- prompt: CONCISE English prompt for professional food photography, NO PEOPLE
+- prompt: CONCISE English prompt for professional food photography with camera angle + lighting, NO PEOPLE
 
 Respond ONLY with valid JSON array of ${selectedCount} objects.`;
             }
@@ -23861,16 +24493,14 @@ Respond ONLY with valid JSON array of ${selectedCount} objects.`;
             if (!card) return;
             const outputContainer = card.querySelector('.food-output-container');
             const selectedRatio = document.querySelector('.ratio-btn-food.selected')?.dataset.ratio || '16:9';
-            let aspectRatioClass = 'aspect-video';
-            if (selectedRatio === '1:1') aspectRatioClass = 'aspect-square';
-            else if (selectedRatio === '3:4') aspectRatioClass = 'aspect-[3/4]';
-            else if (selectedRatio === '9:16') aspectRatioClass = 'aspect-[9/16]';
+            const foodAspectMap = { '1:1': 'aspect-square', '4:5': 'aspect-[4/5]', '9:16': 'aspect-[9/16]', '3:4': 'aspect-[3/4]', '2:3': 'aspect-[2/3]', '16:9': 'aspect-video', '3:2': 'aspect-[3/2]', '4:3': 'aspect-[4/3]', '21:9': 'aspect-[21/9]', '5:4': 'aspect-[5/4]' };
+            let aspectRatioClass = foodAspectMap[selectedRatio] || 'aspect-video';
             outputContainer.innerHTML = `<div class="${aspectRatioClass} bg-orange-50 rounded-md flex items-center justify-center"><div class="loader"></div></div>`;
             try {
                 const apiKey = "";
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${apiKey}`;
                 let finalPrompt = '';
-                if (foodModelImageBase64) { finalPrompt = `${prompt}, appetizing food photography, natural lighting, professional content creator style, 8k, photorealistic`; } else { finalPrompt = `${prompt}, professional food photography, mouthwatering, appetizing presentation, natural lighting, no people, 8k, photorealistic`; }
+                if (foodModelImageBase64) { finalPrompt = `${prompt}. The reviewer must be the EXACT same person from the reference photo (same face, hair, outfit across all scenes). The food must stay identical to the uploaded food photo. Shot like a professional food content creator video still: appetizing styling with visible texture detail, gentle steam for hot dishes, realistic skin texture, sharp focus on food and face, commercial-grade lighting, 8k photorealistic`; } else { finalPrompt = `${prompt}. The food must stay identical to the uploaded food photo (same dish, portion, plating). Professional commercial food photography: mouthwatering presentation with visible texture detail, gentle steam or fresh condensation where appropriate, styled props that complement without stealing focus, controlled highlights and soft shadows, no people, 8k photorealistic, culinary magazine quality`; }
                 const parts = [{ text: finalPrompt }];
                 foodProductImages.forEach(img => { parts.push({ inlineData: { mimeType: img.mimeType, data: img.base64 } }); });
                 if (foodModelImageBase64) { parts.push({ inlineData: { mimeType: foodModelImageMimeType, data: foodModelImageBase64 } }); }
@@ -23892,10 +24522,8 @@ Respond ONLY with valid JSON array of ${selectedCount} objects.`;
         const createFoodDynamicCards = (prompts) => {
             foodGrid.innerHTML = '';
             const selectedRatio = document.querySelector('.ratio-btn-food.selected')?.dataset.ratio || '16:9';
-            let aspectRatioClass = 'aspect-video';
-            if (selectedRatio === '1:1') aspectRatioClass = 'aspect-square';
-            else if (selectedRatio === '3:4') aspectRatioClass = 'aspect-[3/4]';
-            else if (selectedRatio === '9:16') aspectRatioClass = 'aspect-[9/16]';
+            const foodAspectMap = { '1:1': 'aspect-square', '4:5': 'aspect-[4/5]', '9:16': 'aspect-[9/16]', '3:4': 'aspect-[3/4]', '2:3': 'aspect-[2/3]', '16:9': 'aspect-video', '3:2': 'aspect-[3/2]', '4:3': 'aspect-[4/3]', '21:9': 'aspect-[21/9]', '5:4': 'aspect-[5/4]' };
+            let aspectRatioClass = foodAspectMap[selectedRatio] || 'aspect-video';
             prompts.forEach((p, index) => {
                 const card = document.createElement('div');
                 card.id = `food-card-${index + 1}`;

@@ -10,7 +10,7 @@
         <!-- Floating badge top-right -->
         <div style="position:absolute;top:16px;right:16px;background:linear-gradient(135deg,#ea580c,#c2410c);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(234,88,12,0.4);z-index:1;">90+ FITUR &#x26A1;</div>
         <!-- Floating version badge top-left (auto-sync dari UPDATE_VERSION via JS) -->
-        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V43</div>
+        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V44</div>
         <div class="login-box">
             <!-- AG Logo badge -->
             <div style="background:linear-gradient(135deg,#16a34a,#15803d);width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:1.35rem;font-weight:900;color:white;box-shadow:0 6px 18px rgba(22,163,74,0.4);">AG</div>
@@ -51,7 +51,7 @@
     <div id="main-app">
     <!-- Mobile Header -->
     <div class="mobile-header">
-        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V43</span></h1>
+        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V44</span></h1>
         <p class="text-xs text-gray-400 mt-1">by Arul CG</p>
         <div class="mobile-header-actions">
             <button type="button" id="mobile-fav-access-btn" class="mobile-fav-access-btn no-favs" aria-label="Buka tab favorit">
@@ -86,7 +86,7 @@
                 </h1>
                 <p class="text-xs text-gray-500 mt-1">by Arul CG</p>
                 <div class="mt-2">
-                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V43</span>
+                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V44</span>
                 </div>
                 <div class="lang-dropdown mt-2" id="lang-dropdown-desktop">
                     <button type="button" class="lang-dd-btn" aria-haspopup="listbox" aria-expanded="false">
@@ -172,9 +172,13 @@
                     </button>
                     <button data-tab="pov-tangan" class="main-tab-btn">
                         <i class="fas fa-hand-holding"></i>
-                        <span class="btn-text">POV Tangan</span>
+                        <span class="btn-text">POV Studio</span>
                     </button>
-                    <button data-tab="mirror-selfie" class="main-tab-btn">
+                    <button data-tab="pov-selfie" class="main-tab-btn hidden">
+                        <i class="fas fa-camera-retro"></i>
+                        <span class="btn-text">POV Selfie</span>
+                    </button>
+                    <button data-tab="mirror-selfie" class="main-tab-btn hidden">
                         <i class="fas fa-mobile-alt"></i>
                         <span class="btn-text">POV Mirror Selfie</span>
                     </button>
@@ -202,9 +206,9 @@
                         <i class="fas fa-hamburger"></i>
                         <span class="btn-text">Food Review</span>
                     </button>
-                    <button data-tab="product-ads" class="main-tab-btn">
+                    <button data-tab="product-ads" class="main-tab-btn hidden">
                         <i class="fas fa-bullhorn"></i>
-                        <span class="btn-text">Iklan Produk</span>
+                        <span class="btn-text">Generator Story Iklan</span>
                     </button>
                     <button data-tab="unboxing-scene" class="main-tab-btn">
                         <i class="fas fa-box-open"></i>
@@ -981,149 +985,154 @@
 
         <!-- TAB 0: MOCKUP STUDIO -->
         <div id="content-mockup-studio" class="main-content-panel hidden">
-            <div class="container mx-auto max-w-7xl">
+            <div class="container mx-auto p-4 md:p-8 max-w-6xl">
                 <header class="text-center mb-8">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-3 drop-shadow-lg">
-                        <i class="fas fa-palette mr-3"></i><span data-i18n="ms.h1">Mockup Studio</span>
+                    <h1 class="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600">
+                        <i class="fas fa-palette mr-3 text-green-600"></i><span data-i18n="ms.h1">Mockup Studio</span>
                     </h1>
-                    <p class="text-lg opacity-90" data-i18n="ms.subtitle">
+                    <p class="text-lg text-gray-500 mt-3 max-w-3xl mx-auto" data-i18n="ms.subtitle">
                         Buat mockup profesional dari design Anda dengan berbagai template
                     </p>
-                    <p class="text-sm opacity-75 mt-2" data-i18n="ms.hint">
+                    <p class="text-sm text-gray-400 mt-2" data-i18n="ms.hint">
                         Upload design → Pilih template mockup atau tema → Dapatkan hasil mockup realistis!
                     </p>
                 </header>
 
-                <div class="card mb-8">
-                    <!-- Upload Design Section -->
-                    <div class="mb-6">
-                        <h2 class="text-2xl font-bold mb-4 text-gray-800">
-                            <i class="fas fa-cloud-upload-alt mr-2"></i><span data-i18n="ms.upload-title">Upload Design/Artwork</span>
-                        </h2>
-                        <div id="mockup-upload-area" class="upload-area cursor-pointer">
-                            <div id="mockup-upload-placeholder" style="display: block;">
-                                <i class="fas fa-images text-6xl text-green-500 mb-4"></i>
-                                <p class="text-xl font-semibold text-gray-700 mb-2" data-i18n="ms.upload-hint">
-                                    Klik atau drag design Anda di sini
-                                </p>
-                                <p class="text-sm text-gray-500" data-i18n="ms.format">
-                                    Format: JPG, PNG, WEBP (Max 10MB)
-                                </p>
+                <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Input Column -->
+                    <div class="lg:col-span-1 space-y-6">
+                        <!-- Step 1: Upload Design -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">1</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="ms.upload-title">Upload Design/Artwork</h2>
                             </div>
-                            <div id="mockup-preview-container" class="hidden">
-                                <img id="mockup-preview-image" alt="Preview" class="preview-image" />
+                            <div id="mockup-upload-area" class="upload-area cursor-pointer">
+                                <div id="mockup-upload-placeholder" style="display: block;">
+                                    <i class="fas fa-images text-5xl text-green-500 mb-3"></i>
+                                    <p class="text-base font-semibold text-gray-700 mb-2" data-i18n="ms.upload-hint">
+                                        Klik atau drag design Anda di sini
+                                    </p>
+                                    <p class="text-xs text-gray-500" data-i18n="ms.format">
+                                        Format: JPG, PNG, WEBP (Max 10MB)
+                                    </p>
+                                </div>
+                                <div id="mockup-preview-container" class="hidden">
+                                    <img id="mockup-preview-image" alt="Preview" class="preview-image" />
+                                </div>
                             </div>
+                            <input
+                                type="file"
+                                id="mockup-design-input"
+                                accept="image/*"
+                                class="hidden"
+                            />
                         </div>
-                        <input
-                            type="file"
-                            id="mockup-design-input"
-                            accept="image/*"
-                            class="hidden"
-                        />
-                    </div>
 
-                    <!-- Mockup Template Reference Section (Optional) -->
-                    <div class="mb-6">
-                        <h3 class="text-xl font-bold mb-3 text-gray-800">
-                            <i class="fas fa-image mr-2"></i><span data-i18n="ms.tmpl-title">Template Mockup Referensi (Opsional)</span>
-                        </h3>
-                        <div id="mockup-template-upload-area" class="upload-area cursor-pointer" style="min-height: 150px;">
-                            <div id="mockup-template-placeholder" style="display: block;">
-                                <i class="fas fa-file-image text-4xl text-green-500 mb-3"></i>
-                                <p class="text-lg font-semibold text-gray-700 mb-1" data-i18n="ms.tmpl-upload">
-                                    Upload foto template mockup (Opsional)
-                                </p>
-                                <p class="text-xs text-gray-500" data-i18n="ms.tmpl-hint">
-                                    Design akan ditempelkan ke template ini
-                                </p>
+                        <!-- Step 2: Template Mockup Referensi (Opsional) -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">2</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="ms.tmpl-title">Template Mockup Referensi (Opsional)</h2>
                             </div>
-                            <div id="mockup-template-preview-container" class="hidden relative">
-                                <img id="mockup-template-preview-image" alt="Template Preview" class="preview-image" />
-                                <button id="mockup-template-remove-btn" class="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center transition-all">
-                                    <i class="fas fa-times"></i>
+                            <div id="mockup-template-upload-area" class="upload-area cursor-pointer" style="min-height: 120px; padding: 1.5rem;">
+                                <div id="mockup-template-placeholder" style="display: block;">
+                                    <i class="fas fa-file-image text-3xl text-green-500 mb-2"></i>
+                                    <p class="text-sm font-semibold text-gray-700 mb-1" data-i18n="ms.tmpl-upload">
+                                        Upload foto template mockup (Opsional)
+                                    </p>
+                                    <p class="text-xs text-gray-500" data-i18n="ms.tmpl-hint">
+                                        Design akan ditempelkan ke template ini
+                                    </p>
+                                </div>
+                                <div id="mockup-template-preview-container" class="hidden relative">
+                                    <img id="mockup-template-preview-image" alt="Template Preview" class="preview-image" />
+                                    <button id="mockup-template-remove-btn" class="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center transition-all">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <input
+                                type="file"
+                                id="mockup-template-input"
+                                accept="image/*"
+                                class="hidden"
+                            />
+                            <p class="text-xs text-gray-500 mt-2" data-i18n-html="ms.tmpl-tip">
+                                <i class="fas fa-lightbulb mr-1"></i>
+                                Tips: Upload foto template (contoh: foto kaos, gelas, poster, dll). Design akan ditempelkan secara realistis
+                            </p>
+                        </div>
+
+                        <!-- Step 3: Tema Mockup Manual (Opsional) -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">3</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="ms.theme-title">Tema Mockup Manual (Opsional)</h2>
+                            </div>
+                            <input
+                                type="text"
+                                id="mockup-theme-input"
+                                data-i18n-placeholder="ms.theme-placeholder"
+                                placeholder="Contoh: gelas, kaos, poster, mug, buku, smartphone, tote bag, dll..."
+                                class="w-full p-4 border-2 border-green-200 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"
+                            />
+                            <p class="text-xs text-gray-500 mt-2" data-i18n-html="ms.theme-tip">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                Tips: Sebutkan jenis mockup yang Anda inginkan. Kosongkan untuk variasi otomatis
+                            </p>
+                        </div>
+
+                        <!-- Step 4: Rasio Aspek -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">4</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="ms.ratio-title">Rasio Aspek</h2>
+                            </div>
+                            <div id="mockup-ratio-selection" class="grid grid-cols-2 gap-3">
+                                <button type="button" data-ratio="1:1" class="ratio-btn-mockup">
+                                    <i class="fas fa-square mr-2"></i>1:1
+                                </button>
+                                <button type="button" data-ratio="16:9" class="ratio-btn-mockup selected">
+                                    <i class="fas fa-tv mr-2"></i>16:9
+                                </button>
+                                <button type="button" data-ratio="3:4" class="ratio-btn-mockup">
+                                    <i class="fas fa-portrait mr-2"></i>3:4
+                                </button>
+                                <button type="button" data-ratio="9:16" class="ratio-btn-mockup">
+                                    <i class="fas fa-mobile-alt mr-2"></i>9:16
                                 </button>
                             </div>
+                            <p class="text-xs text-gray-500 mt-2" data-i18n-html="ms.ratio-hint">
+                                <i class="fas fa-lightbulb mr-1"></i>
+                                Pilih rasio aspek untuk semua mockup yang akan di-generate
+                            </p>
                         </div>
-                        <input
-                            type="file"
-                            id="mockup-template-input"
-                            accept="image/*"
-                            class="hidden"
-                        />
-                        <p class="text-xs text-gray-500 mt-2" data-i18n-html="ms.tmpl-tip">
-                            <i class="fas fa-lightbulb mr-1"></i>
-                            Tips: Upload foto template (contoh: foto kaos, gelas, poster, dll). Design akan ditempelkan secara realistis
-                        </p>
-                    </div>
 
-                    <!-- Mockup Theme Input Section (Optional) -->
-                    <div class="mb-6">
-                        <h3 class="text-xl font-bold mb-3 text-gray-800">
-                            <i class="fas fa-magic mr-2"></i><span data-i18n="ms.theme-title">Tema Mockup Manual (Opsional)</span>
-                        </h3>
-                        <input
-                            type="text"
-                            id="mockup-theme-input"
-                            data-i18n-placeholder="ms.theme-placeholder"
-                            placeholder="Contoh: gelas, kaos, poster, mug, buku, smartphone, tote bag, dll..."
-                            class="w-full p-4 border-2 border-green-200 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-purple-200 transition-all"
-                        />
-                        <p class="text-xs text-gray-500 mt-2" data-i18n-html="ms.theme-tip">
-                            <i class="fas fa-info-circle mr-1"></i>
-                            Tips: Sebutkan jenis mockup yang Anda inginkan. Kosongkan untuk variasi otomatis
-                        </p>
-                    </div>
-
-                    <!-- Aspect Ratio Selection -->
-                    <div class="mb-6">
-                        <h3 class="text-xl font-bold mb-3 text-gray-800">
-                            <i class="fas fa-expand-arrows-alt mr-2"></i>Rasio Aspek
-                        </h3>
-                        <div id="mockup-ratio-selection" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                            <button type="button" data-ratio="1:1" class="ratio-btn-mockup">
-                                <i class="fas fa-square mr-2"></i>1:1
-                            </button>
-                            <button type="button" data-ratio="16:9" class="ratio-btn-mockup selected">
-                                <i class="fas fa-rectangle-landscape mr-2"></i>16:9
-                            </button>
-                            <button type="button" data-ratio="3:4" class="ratio-btn-mockup">
-                                <i class="fas fa-rectangle-portrait mr-2"></i>3:4
-                            </button>
-                            <button type="button" data-ratio="9:16" class="ratio-btn-mockup">
-                                <i class="fas fa-mobile-alt mr-2"></i>9:16
-                            </button>
+                        <!-- Step 5: Jumlah Generate -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">5</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="ms.count-label">Jumlah Generate</h2>
+                            </div>
+                            <div id="mockup-count-selection-grid" class="count-btn-grid theme-emerald">
+                                <button type="button" data-count="1">1</button>
+                                <button type="button" data-count="2">2</button>
+                                <button type="button" data-count="3">3</button>
+                                <button type="button" data-count="4" class="selected">4</button>
+                                <button type="button" data-count="5">5</button>
+                                <button type="button" data-count="6">6</button>
+                                <button type="button" data-count="7">7</button>
+                                <button type="button" data-count="8">8</button>
+                                <button type="button" data-count="9">9</button>
+                                <button type="button" data-count="10">10</button>
+                            </div>
                         </div>
-                        <p class="text-xs text-gray-500 mt-2" data-i18n-html="ms.ratio-hint">
-                            <i class="fas fa-lightbulb mr-1"></i>
-                            Pilih rasio aspek untuk semua mockup yang akan di-generate
-                        </p>
-                    </div>
 
-                    <!-- Jumlah Generate -->
-                    <div class="mb-6">
-                        <h3 class="text-base sm:text-lg font-bold mb-3 text-gray-800">
-                            <i class="fas fa-layer-group mr-2 text-emerald-600"></i>
-                            <span data-i18n="ms.count-label">Jumlah Generate</span>
-                        </h3>
-                        <div id="mockup-count-selection-grid" class="count-btn-grid theme-emerald">
-                            <button type="button" data-count="1">1</button>
-                            <button type="button" data-count="2">2</button>
-                            <button type="button" data-count="3">3</button>
-                            <button type="button" data-count="4" class="selected">4</button>
-                            <button type="button" data-count="5">5</button>
-                            <button type="button" data-count="6">6</button>
-                            <button type="button" data-count="7">7</button>
-                            <button type="button" data-count="8">8</button>
-                            <button type="button" data-count="9">9</button>
-                            <button type="button" data-count="10">10</button>
-                        </div>
-                    </div>
-
-                    <!-- Generate Button -->
-                    <div class="text-center">
+                        <!-- Generate Button -->
                         <button
                             id="mockup-generate-btn"
-                            class="btn-generate disabled:opacity-50"
+                            class="btn-generate w-full disabled:opacity-50"
                             disabled
                         >
                             <i class="fas fa-magic mr-3"></i>
@@ -1131,77 +1140,94 @@
                         </button>
                         <button
                             id="mockup-stop-btn"
-                            class="hidden btn-generate"
+                            class="hidden btn-generate w-full"
                             style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);"
                         >
                             <i class="fas fa-stop-circle mr-3"></i>
                             <span data-i18n="common.stop-gen">Stop Generate</span>
                         </button>
                     </div>
-                </div>
 
-                <!-- Loading Section -->
-                <div id="mockup-loading-section" class="hidden text-center py-12">
-                    <div class="card inline-block">
-                        <div class="flex flex-col items-center">
-                            <div class="pov-loader mb-6"></div>
-                            <h3 class="text-2xl font-bold text-gray-800 mb-2" data-i18n="ms.loading-title">
-                                Sedang Membuat Mockup...
-                            </h3>
-                            <p class="text-gray-600 mb-4" data-i18n="ms.loading-hint">
-                                Mohon tunggu, AI sedang menghasilkan mockup...
-                            </p>
-                            <div class="w-full max-w-md bg-gray-200 rounded-full h-3">
-                                <div
-                                    id="mockup-progress-bar"
-                                    class="bg-gradient-to-r from-green-600 to-emerald-600 h-3 rounded-full transition-all duration-300"
-                                    style="width: 0%"
-                                ></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Results Section -->
-                <div id="mockup-results-section" class="hidden">
-                    <div class="card">
-                        <div class="flex justify-between items-center mb-6">
-                            <h2 class="text-3xl font-bold text-gray-800">
-                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span data-i18n="ms.results-title">Hasil Mockup</span> (<span id="mockup-result-count">0</span> <span data-i18n="ms.results-unit">mockup</span>)
-                            </h2>
-                            <button
-                                id="mockup-download-all-btn"
-                                class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-full transition-all"
-                            >
-                                <i class="fas fa-download mr-2"></i>
-                                <span data-i18n="common.download-all">Download Semua</span>
-                            </button>
-                        </div>
-                        <div id="mockup-results-grid" class="result-grid">
-                            <!-- Results will be inserted here -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Error Section -->
-                <div id="mockup-error-section" class="hidden">
-                    <div class="card bg-red-50 border-2 border-red-300">
-                        <div class="flex items-start">
-                            <i class="fas fa-exclamation-triangle text-red-500 text-3xl mr-4 mt-1"></i>
-                            <div>
-                                <h3 class="text-xl font-bold text-red-800 mb-2">Terjadi Kesalahan</h3>
-                                <p id="mockup-error-message" class="text-red-700"></p>
+                    <!-- Output Column -->
+                    <div class="lg:col-span-2">
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex flex-wrap justify-between items-center gap-3 mb-6">
+                                <h2 class="text-xl font-bold text-gray-800">
+                                    <i class="fas fa-images mr-2 text-green-500"></i>
+                                    <span data-i18n="ms.results-title">Hasil Mockup</span> (<span id="mockup-result-count">0</span> <span data-i18n="ms.results-unit">mockup</span>)
+                                </h2>
                                 <button
-                                    id="mockup-retry-btn"
-                                    class="mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg transition-all"
+                                    id="mockup-download-all-btn"
+                                    class="hidden min-h-[44px] bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-2.5 px-5 rounded-lg transition-all flex items-center gap-2 text-sm shadow-md hover:shadow-lg"
                                 >
-                                    <i class="fas fa-redo mr-2"></i>Coba Lagi
+                                    <i class="fas fa-download"></i>
+                                    <span data-i18n="common.download-all">Download Semua</span>
                                 </button>
                             </div>
+                            <div id="mockup-studio-empty-state" class="text-center py-16 text-gray-400">
+                                <i class="fas fa-palette text-6xl mb-4 opacity-50"></i>
+                                <p class="text-lg" data-i18n="ms.empty-title">Hasil mockup akan muncul di sini</p>
+                                <p class="text-sm mt-2" data-i18n="ms.empty-hint">Upload design lalu klik Generate</p>
+                            </div>
+                            <div id="mockup-results-section" class="hidden">
+                                <div id="mockup-results-grid" class="result-grid">
+                                    <!-- Results will be inserted here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Loading Section -->
+                        <div id="mockup-loading-section" class="hidden text-center py-12">
+                            <div class="card p-6 bg-white rounded-2xl shadow-lg inline-block">
+                                <div class="flex flex-col items-center">
+                                    <div class="pov-loader mb-6"></div>
+                                    <h3 class="text-2xl font-bold text-gray-800 mb-2" data-i18n="ms.loading-title">
+                                        Sedang Membuat Mockup...
+                                    </h3>
+                                    <p class="text-gray-600 mb-4" data-i18n="ms.loading-hint">
+                                        Mohon tunggu, AI sedang menghasilkan mockup...
+                                    </p>
+                                    <div class="w-full max-w-md bg-gray-200 rounded-full h-3">
+                                        <div
+                                            id="mockup-progress-bar"
+                                            class="bg-gradient-to-r from-green-600 to-emerald-600 h-3 rounded-full transition-all duration-300"
+                                            style="width: 0%"
+                                        ></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Error Section -->
+                        <div id="mockup-error-section" class="hidden mt-6">
+                            <div class="card p-6 rounded-2xl bg-red-50 border-2 border-red-300">
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-triangle text-red-500 text-3xl mr-4 mt-1"></i>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-red-800 mb-2" data-i18n="common.error-title">Terjadi Kesalahan</h3>
+                                        <p id="mockup-error-message" class="text-red-700"></p>
+                                        <button
+                                            id="mockup-retry-btn"
+                                            class="mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg transition-all"
+                                        >
+                                            <i class="fas fa-redo mr-2"></i><span data-i18n="common.retry">Coba Lagi</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tips Box -->
+                        <div class="mt-6 bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-200 rounded-xl p-5">
+                            <h4 class="font-bold text-amber-800 mb-2"><i class="fas fa-star mr-2"></i><span data-i18n="ms.tips-title">Tips Hasil Terbaik</span></h4>
+                            <ul class="text-sm text-amber-700 space-y-1">
+                                <li data-i18n-html="ms.tip1"><i class="fas fa-check mr-2"></i>Gunakan design resolusi tinggi (PNG background transparan lebih bagus)</li>
+                                <li data-i18n-html="ms.tip2"><i class="fas fa-check mr-2"></i>Upload template referensi supaya design ditempel ke objek yang kamu mau</li>
+                                <li data-i18n-html="ms.tip3"><i class="fas fa-check mr-2"></i>Isi tema manual (kaos, mug, poster) untuk mengarahkan jenis mockup</li>
+                            </ul>
                         </div>
                     </div>
-                </div>
+                </main>
             </div>
         </div>
 
@@ -4150,6 +4176,10 @@
         
         <!-- TAB 5: FOOD SELFIE PRO -->
         <div id="content-food-selfie" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill active" data-goto="food-selfie" data-i18n="hub.food-pro">Foto Profesional</button>
+                <button type="button" class="hub-pill" data-goto="food-review" data-i18n="hub.review-food">Review Makanan</button>
+            </div>
             <div class="container mx-auto max-w-7xl">
                 <header class="text-center mb-10">
                     <div class="inline-flex items-center gap-3 mb-4">
@@ -4157,14 +4187,14 @@
                             <i class="fas fa-utensils text-white text-2xl"></i>
                         </div>
                         <div class="flex flex-col items-start">
-                            <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-                                Food Selfie Pro
+                            <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent" data-i18n="fs.h1">
+                                Foto Makanan Profesional
                             </h1>
-                            <span class="text-xs font-semibold px-3 py-1 rounded-full mt-1 bg-gradient-to-r from-green-600 to-emerald-600 text-white">✨ AI Powered</span>
+                            <span class="text-xs font-semibold px-3 py-1 rounded-full mt-1 bg-gradient-to-r from-green-600 to-emerald-600 text-white" data-i18n="fs.badge">Tema Umum</span>
                         </div>
                     </div>
-                    <p class="text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                        Transform your food photos into stunning professional content for Instagram, TikTok & more!
+                    <p class="text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed" data-i18n="fs.subtitle">
+                        Ubah foto makananmu jadi foto profesional kelas food photographer — untuk menu, Instagram, TikTok, dan promosi
                     </p>
                 </header>
 
@@ -4231,14 +4261,32 @@
                                         <button type="button" data-ratio="1:1" class="option-btn-food selected">
                                             <i class="fas fa-square mr-2"></i>1:1 <span class="text-xs">(Instagram Post)</span>
                                         </button>
-                                        <button type="button" data-ratio="9:16" class="option-btn-food">
-                                            <i class="fas fa-mobile-alt mr-2"></i>9:16 <span class="text-xs">(Stories)</span>
+                                        <button type="button" data-ratio="4:5" class="option-btn-food">
+                                            <i class="fas fa-image mr-2"></i>4:5 <span class="text-xs">(Instagram Feed)</span>
                                         </button>
-                                        <button type="button" data-ratio="16:9" class="option-btn-food">
-                                            <i class="fas fa-rectangle-landscape mr-2"></i>16:9 <span class="text-xs">(YouTube)</span>
+                                        <button type="button" data-ratio="9:16" class="option-btn-food">
+                                            <i class="fas fa-mobile-alt mr-2"></i>9:16 <span class="text-xs">(Stories/Reels)</span>
                                         </button>
                                         <button type="button" data-ratio="3:4" class="option-btn-food">
-                                            <i class="fas fa-rectangle-portrait mr-2"></i>3:4 <span class="text-xs">(Portrait)</span>
+                                            <i class="fas fa-portrait mr-2"></i>3:4 <span class="text-xs">(Portrait)</span>
+                                        </button>
+                                        <button type="button" data-ratio="2:3" class="option-btn-food">
+                                            <i class="fas fa-thumbtack mr-2"></i>2:3 <span class="text-xs">(Pinterest)</span>
+                                        </button>
+                                        <button type="button" data-ratio="16:9" class="option-btn-food">
+                                            <i class="fas fa-tv mr-2"></i>16:9 <span class="text-xs">(YouTube)</span>
+                                        </button>
+                                        <button type="button" data-ratio="3:2" class="option-btn-food">
+                                            <i class="fas fa-camera mr-2"></i>3:2 <span class="text-xs">(Kamera DSLR)</span>
+                                        </button>
+                                        <button type="button" data-ratio="4:3" class="option-btn-food">
+                                            <i class="fas fa-desktop mr-2"></i>4:3 <span class="text-xs">(Klasik)</span>
+                                        </button>
+                                        <button type="button" data-ratio="21:9" class="option-btn-food">
+                                            <i class="fas fa-film mr-2"></i>21:9 <span class="text-xs">(Cinematic)</span>
+                                        </button>
+                                        <button type="button" data-ratio="5:4" class="option-btn-food">
+                                            <i class="fas fa-print mr-2"></i>5:4 <span class="text-xs">(Cetak/Menu)</span>
                                         </button>
                                     </div>
                                 </div>
@@ -4279,125 +4327,141 @@
                                         <button class="theme-btn-food" data-theme="sop buah es campur Indonesian Ramadan drink photography, colorful mixed fruit in sweet coconut milk or syrup, ice shavings, nata de coco, cendol hijau, cincau hitam, kolang kaling, vibrant tropical fruit colors, refreshing cold drink perfect for iftar, bright and cheerful food styling with tropical vibes">
                                             <i class="fas fa-glass-cheers mr-2"></i>Es &amp; Minuman Buka
                                         </button>
-                                        <!-- DIVIDER -->
+                                        <!-- STUDIO & EDITORIAL -->
                                         <div class="col-span-2 flex items-center gap-2 pb-1 border-b border-gray-200 mt-1">
-                                            <span class="text-xs font-bold text-gray-400" data-i18n="fs.cat-others">Tema Lainnya</span>
+                                            <i class="fas fa-camera text-xs text-gray-400"></i>
+                                            <span class="text-xs font-bold text-gray-400" data-i18n="fs.cat-studio">Studio &amp; Editorial</span>
                                         </div>
-                                        <button class="theme-btn-food" data-theme="professional restaurant setting with elegant plating">
-                                            <i class="fas fa-concierge-bell mr-2"></i>Fine Dining
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="modern cafe atmosphere with natural lighting">
-                                            <i class="fas fa-mug-hot mr-2"></i>Modern Cafe
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="street food stall with authentic urban vibe">
-                                            <i class="fas fa-truck mr-2"></i>Street Food
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="cozy home kitchen with warm ambiance">
-                                            <i class="fas fa-home mr-2"></i>Home Kitchen
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="outdoor picnic setting with natural background">
-                                            <i class="fas fa-sun mr-2"></i>Outdoor Picnic
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="minimalist studio with clean white background">
+                                        <button class="theme-btn-food" data-theme="minimalist studio food photography on seamless clean background, single large softbox with smooth gradient falloff, controlled specular highlights, commercial product-grade quality like premium delivery app listing">
                                             <i class="fas fa-camera mr-2"></i>Studio Clean
                                         </button>
-                                        <button class="theme-btn-food" data-theme="rustic wooden table with vintage props">
-                                            <i class="fas fa-leaf mr-2"></i>Rustic Vintage
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="asian restaurant with traditional ambiance">
-                                            <i class="fas fa-yin-yang mr-2"></i>Asian Style
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="mediterranean seaside dining with ocean view">
-                                            <i class="fas fa-water mr-2"></i>Mediterranean
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="tropical beach setting with palm trees">
-                                            <i class="fas fa-umbrella-beach mr-2"></i>Tropical Beach
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="luxury hotel breakfast buffet setting">
-                                            <i class="fas fa-hotel mr-2"></i>Hotel Luxury
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="dark moody atmosphere with dramatic lighting and shadows">
-                                            <i class="fas fa-moon mr-2"></i>Dark Moody
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="overhead flat lay composition, top-down view with organized arrangement">
-                                            <i class="fas fa-th mr-2"></i>Flat Lay
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="industrial loft with exposed brick walls and metal elements">
-                                            <i class="fas fa-industry mr-2"></i>Industrial Loft
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="fresh garden setting with natural greenery and herbs">
-                                            <i class="fas fa-seedling mr-2"></i>Garden Fresh
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="luxury marble surface with gold accents and elegant styling">
-                                            <i class="fas fa-gem mr-2"></i>Marble & Gold
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="bright airy atmosphere with soft white light and minimal shadows">
-                                            <i class="fas fa-cloud mr-2"></i>Bright & Airy
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="artisan dessert bar display with pastries and sweet treats showcase">
-                                            <i class="fas fa-birthday-cake mr-2"></i>Dessert Bar
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="farm to table organic aesthetic with natural rustic elements">
-                                            <i class="fas fa-tractor mr-2"></i>Farm to Table
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="Japanese minimalist zen style with clean simple composition">
-                                            <i class="fas fa-spa mr-2"></i>Japanese Zen
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="cozy coffee shop vibes with warm lighting perfect for latte art">
-                                            <i class="fas fa-coffee mr-2"></i>Coffee Shop
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="vibrant food truck festival outdoor setting with casual energy">
-                                            <i class="fas fa-utensils mr-2"></i>Food Truck
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="artisan bakery display with fresh bread and pastries showcase">
-                                            <i class="fas fa-bread-slice mr-2"></i>Bakery Display
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="neon cyberpunk aesthetic with vibrant electric colors and futuristic vibes">
-                                            <i class="fas fa-bolt mr-2"></i>Neon Cyberpunk
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="vintage retro film photography style with grain and faded colors">
-                                            <i class="fas fa-film mr-2"></i>Retro Film
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="magazine editorial high fashion food styling with professional lighting">
+                                        <button class="theme-btn-food" data-theme="high-end culinary magazine editorial food styling, art-directed composition with curated ceramic props and linen, professional strobe lighting with controlled shadows, cover-page quality food photography">
                                             <i class="fas fa-book-open mr-2"></i>Magazine Editorial
                                         </button>
-                                        <button class="theme-btn-food" data-theme="dreamy bokeh background with beautiful soft blur and light circles">
+                                        <button class="theme-btn-food" data-theme="overhead 90-degree flat lay composition professionally styled with linen napkin, vintage cutlery and scattered fresh ingredient props, balanced negative space, soft diffused overhead lighting, cohesive color palette">
+                                            <i class="fas fa-th mr-2"></i>Flat Lay
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="dark moody fine-art food photography, low-key chiaroscuro side lighting, deep rich shadows on dark slate or aged wood surface, dramatic highlights carving the food texture, editorial fine dining style">
+                                            <i class="fas fa-moon mr-2"></i>Dark Moody
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="bright and airy high-key food photography, soft white light with minimal gentle shadows, white marble and light props, fresh clean healthy mood, crisp appetizing detail">
+                                            <i class="fas fa-cloud mr-2"></i>Bright &amp; Airy
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="luxury food photography on white marble surface with subtle gold cutlery accents, elegant refined styling, soft directional light, premium restaurant brand aesthetic">
+                                            <i class="fas fa-gem mr-2"></i>Marble &amp; Gold
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="black and white artistic monochrome food photography, strong contrast and sculptural shadows emphasizing form and texture, gallery fine-art print quality">
+                                            <i class="fas fa-adjust mr-2"></i>B&amp;W Artistic
+                                        </button>
+                                        <!-- RESTORAN & KAFE -->
+                                        <div class="col-span-2 flex items-center gap-2 pb-1 border-b border-gray-200 mt-1">
+                                            <i class="fas fa-concierge-bell text-xs text-gray-400"></i>
+                                            <span class="text-xs font-bold text-gray-400" data-i18n="fs.cat-resto">Restoran &amp; Kafe</span>
+                                        </div>
+                                        <button class="theme-btn-food" data-theme="michelin-level fine dining photography, elegant minimalist plating on designer plate, white tablecloth with wine glass bokeh, sophisticated restaurant ambience, precise soft spotlight on the dish">
+                                            <i class="fas fa-concierge-bell mr-2"></i>Fine Dining
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="modern specialty cafe atmosphere, natural window light across a light wood table, minimalist scandinavian interior softly blurred behind, lifestyle cafe editorial photography">
+                                            <i class="fas fa-mug-hot mr-2"></i>Modern Cafe
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="cozy specialty coffee shop scene, warm tungsten lighting, latte art and coffee equipment props, rich brown tones, intimate barista-counter ambience">
+                                            <i class="fas fa-coffee mr-2"></i>Coffee Shop
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="five-star hotel breakfast setting, elegant buffet-style presentation with silver cloche and fresh flowers, grand window daylight, luxury hospitality photography">
+                                            <i class="fas fa-hotel mr-2"></i>Hotel Luxury
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="traditional asian restaurant ambience, dark lacquered wood and ceramic tableware, chopsticks and tea set props, warm lantern accent lighting, authentic oriental culinary photography">
+                                            <i class="fas fa-yin-yang mr-2"></i>Asian Style
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="artisan bakery display photography, fresh golden bread and pastries on wooden boards, flour dust in warm morning light, rustic boulangerie atmosphere">
+                                            <i class="fas fa-bread-slice mr-2"></i>Bakery Display
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="artisan dessert bar showcase, patisserie-grade plating with sauce artistry and edible flowers, glossy glaze highlights, sweet elegant styling, premium pastry photography">
+                                            <i class="fas fa-birthday-cake mr-2"></i>Dessert Bar
+                                        </button>
+                                        <!-- OUTDOOR & LIFESTYLE -->
+                                        <div class="col-span-2 flex items-center gap-2 pb-1 border-b border-gray-200 mt-1">
+                                            <i class="fas fa-sun text-xs text-gray-400"></i>
+                                            <span class="text-xs font-bold text-gray-400" data-i18n="fs.cat-outdoor">Outdoor &amp; Lifestyle</span>
+                                        </div>
+                                        <button class="theme-btn-food" data-theme="authentic Indonesian street food scene, kaki lima stall with warm bulb lighting at dusk, smoky grill atmosphere, banana leaf and simple plating, vibrant candid street photography energy">
+                                            <i class="fas fa-truck mr-2"></i>Street Food
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="vibrant food truck festival scene, colorful truck and string lights softly blurred behind, casual craft-paper serving style, energetic outdoor lifestyle photography">
+                                            <i class="fas fa-utensils mr-2"></i>Food Truck
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="outdoor picnic on checkered blanket over green grass, wicker basket and fresh fruit props, dappled sunlight through trees, relaxed weekend lifestyle photography">
+                                            <i class="fas fa-sun mr-2"></i>Outdoor Picnic
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="tropical beach dining setting, palm shadow patterns on the table, turquoise ocean bokeh in background, bright vacation mood, fresh summer resort photography">
+                                            <i class="fas fa-umbrella-beach mr-2"></i>Tropical Beach
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="mediterranean seaside dining, white and blue terrace with ocean view, olive branches and rustic bread props, warm coastal sunlight, travel magazine photography">
+                                            <i class="fas fa-water mr-2"></i>Mediterranean
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="fresh garden-to-plate setting surrounded by natural greenery and potted herbs, morning dew freshness, organic healthy lifestyle photography with soft daylight">
+                                            <i class="fas fa-seedling mr-2"></i>Garden Fresh
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="farm-to-table organic aesthetic, weathered farmhouse wood table with raw ingredients and burlap props, honest natural light, artisanal slow-food photography">
+                                            <i class="fas fa-tractor mr-2"></i>Farm to Table
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="cozy home kitchen scene, warm domestic ambience with soft window light, homemade comfort-food styling, lived-in props like tea towel and wooden spoon, heartwarming family photography">
+                                            <i class="fas fa-home mr-2"></i>Home Kitchen
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="rustic vintage table setting, weathered wood with antique props and dried botanicals, nostalgic warm grade, artisan heritage food photography">
+                                            <i class="fas fa-leaf mr-2"></i>Rustic Vintage
+                                        </button>
+                                        <!-- KREATIF & ARTISTIK -->
+                                        <div class="col-span-2 flex items-center gap-2 pb-1 border-b border-gray-200 mt-1">
+                                            <i class="fas fa-palette text-xs text-gray-400"></i>
+                                            <span class="text-xs font-bold text-gray-400" data-i18n="fs.cat-creative">Kreatif &amp; Artistik</span>
+                                        </div>
+                                        <button class="theme-btn-food" data-theme="industrial loft dining space, exposed brick wall and black metal elements, dramatic window light shafts, urban editorial food photography with gritty texture">
+                                            <i class="fas fa-industry mr-2"></i>Industrial Loft
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="japanese zen minimalist presentation, clean simple composition on ceramic ware with bamboo accents, quiet negative space, wabi-sabi philosophy, serene soft lighting">
+                                            <i class="fas fa-spa mr-2"></i>Japanese Zen
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="neon cyberpunk food photography, vibrant electric pink and cyan rim lighting, reflective dark surface, futuristic night-market atmosphere, bold high-impact styling">
+                                            <i class="fas fa-bolt mr-2"></i>Neon Cyberpunk
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="vintage retro film photography style, subtle analog grain and faded warm colors, 1970s diner props, nostalgic kodak-film aesthetic">
+                                            <i class="fas fa-film mr-2"></i>Retro Film
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="dreamy bokeh food photography, fairy lights melting into large soft light circles behind the dish, shallow depth of field, warm magical evening atmosphere">
                                             <i class="fas fa-circle mr-2"></i>Bokeh Dreamy
                                         </button>
-                                        <button class="theme-btn-food" data-theme="black and white artistic monochrome with strong contrast and shadows">
-                                            <i class="fas fa-adjust mr-2"></i>B&W Artistic
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="pastel dreamy aesthetic with soft pink purple blue tones">
+                                        <button class="theme-btn-food" data-theme="pastel dreamy aesthetic food styling, soft pink lavender and baby blue tones, cute props and smooth pastel backdrop, playful kawaii-inspired photography">
                                             <i class="fas fa-palette mr-2"></i>Pastel Dreamy
                                         </button>
-                                        <button class="theme-btn-food" data-theme="golden hour natural lighting with warm sunset glow">
+                                        <button class="theme-btn-food" data-theme="golden hour food photography, warm low sunset light streaking across the table, long soft shadows, glowing rim light on the dish, rich amber tones">
                                             <i class="fas fa-sun mr-2"></i>Golden Hour
                                         </button>
-                                        <button class="theme-btn-food" data-theme="rainy day cozy ambiance with water droplets and moody atmosphere">
+                                        <button class="theme-btn-food" data-theme="rainy day comfort-food mood, raindrops on the window with soft grey daylight, steam rising from the warm dish, cozy melancholic cinematic atmosphere">
                                             <i class="fas fa-cloud-rain mr-2"></i>Rainy Day
                                         </button>
-                                        <button class="theme-btn-food" data-theme="fireplace cozy winter setting with warm glow and comfort vibes">
+                                        <button class="theme-btn-food" data-theme="fireplace winter comfort scene, crackling fire glow in soft background bokeh, knit blanket and warm mug props, intimate amber lighting">
                                             <i class="fas fa-fire mr-2"></i>Fireplace Cozy
                                         </button>
-                                        <button class="theme-btn-food" data-theme="smoke and steam atmospheric with dramatic wisps and mystery">
-                                            <i class="fas fa-wind mr-2"></i>Smoke & Steam
+                                        <button class="theme-btn-food" data-theme="dramatic smoke and steam food photography, backlit wisps of steam rising from the hot dish, dark atmospheric background, mysterious chef-table energy">
+                                            <i class="fas fa-wind mr-2"></i>Smoke &amp; Steam
                                         </button>
-                                        <button class="theme-btn-food" data-theme="mirror reflection creative composition with symmetrical artistic effect">
+                                        <button class="theme-btn-food" data-theme="creative mirror reflection composition, dish placed on reflective black acrylic surface creating perfect symmetry, sleek modern advertising photography">
                                             <i class="fas fa-clone mr-2"></i>Mirror Reflection
                                         </button>
-                                        <button class="theme-btn-food" data-theme="color pop selective color with one vibrant hue standing out">
+                                        <button class="theme-btn-food" data-theme="bold color-pop advertising photography, one vibrant saturated backdrop color contrasting the dish, hard studio light with graphic shadows, modern campaign style">
                                             <i class="fas fa-eye-dropper mr-2"></i>Color Pop
                                         </button>
-                                        <button class="theme-btn-food" data-theme="icy frozen elements with frost crystals and cool blue tones">
+                                        <button class="theme-btn-food" data-theme="icy refreshment photography, frost crystals and ice cubes with crisp cool blue tones, condensation droplets, refreshing chilled beverage-ad style">
                                             <i class="fas fa-snowflake mr-2"></i>Icy Frozen
                                         </button>
-                                        <button class="theme-btn-food" data-theme="summer sunset glow with warm orange pink sky and vacation vibes">
+                                        <button class="theme-btn-food" data-theme="summer sunset vacation glow, warm orange-pink sky gradient behind the table, holiday resort mood, breezy joyful styling">
                                             <i class="fas fa-umbrella-beach mr-2"></i>Summer Sunset
                                         </button>
-                                        <button class="theme-btn-food" data-theme="geometric pattern background with modern abstract shapes and lines">
+                                        <button class="theme-btn-food" data-theme="modern geometric backdrop with abstract shapes and clean lines, coordinated color blocking with the dish, contemporary graphic design photography">
                                             <i class="fas fa-shapes mr-2"></i>Geometric Modern
                                         </button>
-                                        <button class="theme-btn-food" data-theme="underwater aquatic theme with blue tones and water movement effect">
+                                        <button class="theme-btn-food" data-theme="underwater-inspired aquatic styling, deep blue tones with light caustics ripple patterns, fresh splash energy, creative conceptual photography">
                                             <i class="fas fa-fish mr-2"></i>Underwater
                                         </button>
                                         <button class="theme-btn-food" data-theme="POV one hand holding food naturally, personal perspective angle">
@@ -4496,7 +4560,7 @@
                                 <button type="button" id="food-selfie-generate-btn" class="w-full text-white font-bold py-4 px-8 rounded-2xl flex items-center justify-center text-lg shadow-xl hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group bg-gradient-to-r from-green-600 to-emerald-600" disabled>
                                     <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                                     <i class="fas fa-sparkles mr-3 text-xl relative z-10"></i>
-                                    <span class="relative z-10">Generate Food Selfie</span>
+                                    <span class="relative z-10" data-i18n="fs.generate-btn">Generate Foto Makanan</span>
                                 </button>
                             </div>
                         </div>
@@ -4510,8 +4574,8 @@
                                 <div class="w-28 h-28 rounded-3xl flex items-center justify-center mb-6 shadow-lg bg-gradient-to-br from-green-100 to-emerald-100">
                                     <i class="fas fa-images text-6xl text-green-600"></i>
                                 </div>
-                                <h3 class="font-bold text-2xl mb-3 text-green-600">Food Photography Results</h3>
-                                <p class="text-gray-500 text-base max-w-md">Upload your food photo, select theme & count, then click generate!</p>
+                                <h3 class="font-bold text-2xl mb-3 text-green-600" data-i18n="fs.empty-title">Hasil foto makanan akan muncul di sini</h3>
+                                <p class="text-gray-500 text-base max-w-md" data-i18n="fs.empty-hint">Upload foto makanan, pilih tema &amp; jumlah, lalu klik generate!</p>
                             </div>
 
                             <!-- Loading -->
@@ -4565,7 +4629,7 @@
             <div class="hub-strip">
                 <button type="button" class="hub-pill active" data-goto="product-review" data-i18n="hub.review-product">Review Produk</button>
                 <button type="button" class="hub-pill" data-goto="skincare-review" data-i18n="hub.review-skincare">Review Skincare</button>
-                <button type="button" class="hub-pill" data-goto="food-review" data-i18n="hub.review-food">Review Makanan</button>
+                <button type="button" class="hub-pill" data-goto="product-ads" data-i18n="hub.review-ads">Story Iklan</button>
             </div>
             <div class="container mx-auto p-4 md:p-8 max-w-7xl">
                 <header class="text-center mb-8">
@@ -4710,7 +4774,7 @@
             <div class="hub-strip">
                 <button type="button" class="hub-pill" data-goto="product-review" data-i18n="hub.review-product">Review Produk</button>
                 <button type="button" class="hub-pill active" data-goto="skincare-review" data-i18n="hub.review-skincare">Review Skincare</button>
-                <button type="button" class="hub-pill" data-goto="food-review" data-i18n="hub.review-food">Review Makanan</button>
+                <button type="button" class="hub-pill" data-goto="product-ads" data-i18n="hub.review-ads">Story Iklan</button>
             </div>
             <div class="container mx-auto p-4 md:p-8 max-w-7xl">
                 <header class="text-center mb-8">
@@ -4906,8 +4970,7 @@
         <!-- TAB: FOOD REVIEW -->
         <div id="content-food-review" class="main-content-panel hidden">
             <div class="hub-strip">
-                <button type="button" class="hub-pill" data-goto="product-review" data-i18n="hub.review-product">Review Produk</button>
-                <button type="button" class="hub-pill" data-goto="skincare-review" data-i18n="hub.review-skincare">Review Skincare</button>
+                <button type="button" class="hub-pill" data-goto="food-selfie" data-i18n="hub.food-pro">Foto Profesional</button>
                 <button type="button" class="hub-pill active" data-goto="food-review" data-i18n="hub.review-food">Review Makanan</button>
             </div>
             <div class="container mx-auto p-4 md:p-8 max-w-7xl">
@@ -4918,121 +4981,157 @@
                     <p class="mt-4 text-lg sm:text-xl text-gray-600" data-i18n="fr.subtitle">Buat review makanan seperti TikToker & Selebgram dengan AI</p>
                 </header>
 
-                <main class="space-y-8">
-                    <!-- Step 1: Upload Food Photos -->
-                    <div class="card p-6">
-                        <div class="flex items-center gap-2 mb-4">
-                            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 text-white font-bold text-sm shadow-lg">1</div>
-                            <h2 class="text-xl font-semibold text-gray-800" data-i18n="fr.step1">Upload Foto Makanan</h2>
+                <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Input Column -->
+                    <div class="lg:col-span-1 space-y-6">
+                        <!-- Step 1: Upload Food Photos -->
+                        <div class="card p-6">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 text-white font-bold text-sm shadow-lg">1</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="fr.step1">Upload Foto Makanan</h2>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4" data-i18n="fr.step1-hint">Upload 1 atau lebih foto makanan yang akan direview (maksimal 5 foto)</p>
+                            <input type="file" id="food-image-input" accept="image/png, image/jpeg, image/webp, image/heic, .heic" multiple class="hidden">
+                            <div id="food-image-upload-area" class="upload-box-food cursor-pointer border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-orange-500 transition-all">
+                                <i class="fas fa-images text-5xl text-orange-500 mb-3"></i>
+                                <p class="text-gray-700 font-medium" data-i18n="fr.upload-cta">Klik untuk upload foto makanan</p>
+                                <p class="text-sm text-gray-500 mt-1" data-i18n="fr.upload-formats">Format: JPG, PNG, WEBP, HEIC (iPhone)</p>
+                            </div>
+                            <div id="food-image-preview-container" class="hidden grid grid-cols-3 gap-3 mt-4"></div>
                         </div>
-                        <p class="text-sm text-gray-600 mb-4" data-i18n="fr.step1-hint">Upload 1 atau lebih foto makanan yang akan direview (maksimal 5 foto)</p>
-                        <input type="file" id="food-image-input" accept="image/png, image/jpeg, image/webp, image/heic, .heic" multiple class="hidden">
-                        <div id="food-image-upload-area" class="upload-box-food cursor-pointer border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-orange-500 transition-all">
-                            <i class="fas fa-images text-5xl text-orange-500 mb-3"></i>
-                            <p class="text-gray-700 font-medium" data-i18n="fr.upload-cta">Klik untuk upload foto makanan</p>
-                            <p class="text-sm text-gray-500 mt-1" data-i18n="fr.upload-formats">Format: JPG, PNG, WEBP, HEIC (iPhone)</p>
-                        </div>
-                        <div id="food-image-preview-container" class="hidden grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 mt-4"></div>
-                    </div>
 
-                    <!-- Step 2: Food Description -->
-                    <div class="card p-6">
-                        <div class="flex items-center gap-2 mb-4">
-                            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 text-white font-bold text-sm shadow-lg">2</div>
-                            <h2 class="text-xl font-semibold text-gray-800" data-i18n="fr.step2">Deskripsi Makanan</h2>
+                        <!-- Step 2: Food Description -->
+                        <div class="card p-6">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 text-white font-bold text-sm shadow-lg">2</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="fr.step2">Deskripsi Makanan</h2>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3" data-i18n="fr.step2-hint">Jelaskan makanan ini (nama, rasa, tekstur, bahan, tempat, harga, dll)</p>
+                            <div class="flex gap-2 mb-3">
+                                <button id="food-generate-desc-btn" class="bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white font-semibold py-2 px-4 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 text-sm" disabled>
+                                    <i class="fas fa-magic"></i>
+                                    <span>Generate AI</span>
+                                </button>
+                            </div>
+                            <textarea id="food-product-desc-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" data-i18n-placeholder="fr.desc-placeholder" placeholder="Contoh: Nasi Goreng Spesial dengan telur mata sapi, ayam fillet, dan kerupuk. Rasanya gurih dan pedas pas. Harga Rp 35.000 di Warung Nasi Pak Budi..."></textarea>
                         </div>
-                        <p class="text-sm text-gray-600 mb-3" data-i18n="fr.step2-hint">Jelaskan makanan ini (nama, rasa, tekstur, bahan, tempat, harga, dll)</p>
-                        <div class="flex gap-2 mb-3">
-                            <button id="food-generate-desc-btn" class="bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white font-semibold py-2 px-4 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 text-sm" disabled>
-                                <i class="fas fa-magic"></i>
-                                <span>Generate AI</span>
-                            </button>
-                        </div>
-                        <textarea id="food-product-desc-input" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" data-i18n-placeholder="fr.desc-placeholder" placeholder="Contoh: Nasi Goreng Spesial dengan telur mata sapi, ayam fillet, dan kerupuk. Rasanya gurih dan pedas pas. Harga Rp 35.000 di Warung Nasi Pak Budi..."></textarea>
-                    </div>
 
-                    <!-- Step 3: Optional Model Photo -->
-                    <div class="card p-6">
-                        <div class="flex items-center gap-2 mb-4">
-                            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 text-white font-bold text-sm shadow-lg">3</div>
-                            <h2 class="text-xl font-semibold text-gray-800" data-i18n="fr.step3">Upload Foto Food Reviewer (Opsional)</h2>
+                        <!-- Step 3: Optional Model Photo -->
+                        <div class="card p-6">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 text-white font-bold text-sm shadow-lg">3</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="fr.step3">Upload Foto Food Reviewer (Opsional)</h2>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4" data-i18n="fr.step3-hint">Upload foto reviewer untuk konsistensi karakter di semua scene. Jika tidak diupload, fokus pada makanan saja.</p>
+                            <input type="file" id="food-model-image-input" accept="image/png, image/jpeg, image/webp, image/heic, .heic" class="hidden">
+                            <div id="food-model-image-upload-area" class="upload-box-food cursor-pointer border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-orange-500 transition-all">
+                                <i class="fas fa-user-circle text-4xl text-orange-500 mb-2"></i>
+                                <p class="text-gray-700 font-medium" data-i18n="fr.reviewer-cta">Klik untuk upload foto reviewer</p>
+                                <p class="text-xs text-gray-500 mt-1" data-i18n="fr.reviewer-hint">Opsional - untuk konsistensi model di semua scene</p>
+                            </div>
+                            <div id="food-model-image-preview-container" class="hidden mt-3">
+                                <div class="relative inline-block">
+                                    <img id="food-model-image-preview" src="" alt="Foto Reviewer" class="w-32 h-32 object-cover rounded-lg border-2 border-orange-300">
+                                    <button id="food-remove-model-image-btn" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-colors">
+                                        <i class="fas fa-times text-xs"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <p class="text-sm text-gray-600 mb-4" data-i18n="fr.step3-hint">Upload foto reviewer untuk konsistensi karakter di semua scene. Jika tidak diupload, fokus pada makanan saja.</p>
-                        <input type="file" id="food-model-image-input" accept="image/png, image/jpeg, image/webp, image/heic, .heic" class="hidden">
-                        <div id="food-model-image-upload-area" class="upload-box-food cursor-pointer border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-orange-500 transition-all">
-                            <i class="fas fa-user-circle text-4xl text-orange-500 mb-2"></i>
-                            <p class="text-gray-700 font-medium" data-i18n="fr.reviewer-cta">Klik untuk upload foto reviewer</p>
-                            <p class="text-xs text-gray-500 mt-1" data-i18n="fr.reviewer-hint">Opsional - untuk konsistensi model di semua scene</p>
+
+                        <!-- Step 4: Theme + Presets -->
+                        <div class="card p-6">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 text-white font-bold text-sm shadow-lg">4</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="fr.step4">Tema Visual (Opsional)</h2>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3" data-i18n="fr.step4-hint">Atur tema atau mood visual untuk review (kosongkan jika default)</p>
+                            <div id="food-theme-presets" class="flex flex-wrap gap-2 mb-3">
+                                <button type="button" class="food-theme-preset" data-preset="warung sederhana lokal, meja kayu, suasana hangat autentik Indonesia">Warung Lokal</button>
+                                <button type="button" class="food-theme-preset" data-preset="cafe aesthetic modern, natural window light, interior scandinavian">Cafe Aesthetic</button>
+                                <button type="button" class="food-theme-preset" data-preset="street food malam hari, lampu kaki lima hangat, suasana ramai autentik">Street Food Malam</button>
+                                <button type="button" class="food-theme-preset" data-preset="fine dining elegant, plating mewah, lighting dramatis restoran premium">Fine Dining</button>
+                                <button type="button" class="food-theme-preset" data-preset="rooftop dinner, city lights bokeh, golden hour romantis">Rooftop Dinner</button>
+                                <button type="button" class="food-theme-preset" data-preset="studio food vlogger profesional, ring light, background rapi content creator">Studio Vlogger</button>
+                                <button type="button" class="food-theme-preset" data-preset="mukbang setup, meja penuh makanan, lighting terang menggugah selera">Mukbang Style</button>
+                                <button type="button" class="food-theme-preset" data-preset="pasar tradisional pagi hari, suasana lokal penuh warna, cahaya alami">Pasar Tradisional</button>
+                            </div>
+                            <input type="text" id="food-photo-theme-input" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" data-i18n-placeholder="fr.theme-placeholder" placeholder="Contoh: natural lighting, cozy cafe ambience, street food vibes, fine dining elegant, dll...">
+                            <p class="text-xs text-gray-500 mt-2" data-i18n="fr.preset-hint">Klik preset di atas atau tulis tema sendiri</p>
                         </div>
-                        <div id="food-model-image-preview-container" class="hidden mt-3">
-                            <div class="relative inline-block">
-                                <img id="food-model-image-preview" src="" alt="Foto Reviewer" class="w-32 h-32 object-cover rounded-lg border-2 border-orange-300">
-                                <button id="food-remove-model-image-btn" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-colors">
-                                    <i class="fas fa-times text-xs"></i>
+
+                        <!-- Step 5: Aspect Ratio -->
+                        <div class="card p-6">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 text-white font-bold text-sm shadow-lg">5</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="fr.ratio-title">Rasio Aspek</h2>
+                            </div>
+                            <div id="food-ratio-selection" class="grid grid-cols-2 gap-3">
+                                <button type="button" class="ratio-btn-food flex items-center gap-2 p-3 border-2 border-gray-200 rounded-xl hover:border-orange-400 transition-all active:scale-95" data-ratio="1:1">
+                                    <div class="w-6 h-6 border-2 border-current rounded"></div>
+                                    <span class="font-medium text-sm">1:1 (IG Post)</span>
+                                </button>
+                                <button type="button" class="ratio-btn-food selected flex items-center gap-2 p-3 border-2 rounded-xl transition-all active:scale-95" data-ratio="16:9" style="border-color: #f97316; background: linear-gradient(135deg, #f97316, #ea580c); color: white; box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);">
+                                    <div class="w-8 h-5 border-2 border-current rounded"></div>
+                                    <span class="font-medium text-sm">16:9 (Landscape)</span>
+                                </button>
+                                <button type="button" class="ratio-btn-food flex items-center gap-2 p-3 border-2 border-gray-200 rounded-xl hover:border-orange-400 transition-all active:scale-95" data-ratio="9:16">
+                                    <div class="w-4 h-7 border-2 border-current rounded"></div>
+                                    <span class="font-medium text-sm">9:16 (TikTok/Reels)</span>
+                                </button>
+                                <button type="button" class="ratio-btn-food flex items-center gap-2 p-3 border-2 border-gray-200 rounded-xl hover:border-orange-400 transition-all active:scale-95" data-ratio="3:4">
+                                    <div class="w-5 h-6 border-2 border-current rounded"></div>
+                                    <span class="font-medium text-sm">3:4 (Portrait)</span>
+                                </button>
+                                <button type="button" class="ratio-btn-food flex items-center gap-2 p-3 border-2 border-gray-200 rounded-xl hover:border-orange-400 transition-all active:scale-95" data-ratio="4:5">
+                                    <div class="w-5 h-6 border-2 border-current rounded"></div>
+                                    <span class="font-medium text-sm">4:5 (IG Feed)</span>
+                                </button>
+                                <button type="button" class="ratio-btn-food flex items-center gap-2 p-3 border-2 border-gray-200 rounded-xl hover:border-orange-400 transition-all active:scale-95" data-ratio="2:3">
+                                    <div class="w-5 h-7 border-2 border-current rounded"></div>
+                                    <span class="font-medium text-sm">2:3 (Pinterest)</span>
+                                </button>
+                                <button type="button" class="ratio-btn-food flex items-center gap-2 p-3 border-2 border-gray-200 rounded-xl hover:border-orange-400 transition-all active:scale-95" data-ratio="3:2">
+                                    <div class="w-7 h-5 border-2 border-current rounded"></div>
+                                    <span class="font-medium text-sm">3:2 (Kamera DSLR)</span>
+                                </button>
+                                <button type="button" class="ratio-btn-food flex items-center gap-2 p-3 border-2 border-gray-200 rounded-xl hover:border-orange-400 transition-all active:scale-95" data-ratio="4:3">
+                                    <div class="w-7 h-5 border-2 border-current rounded"></div>
+                                    <span class="font-medium text-sm">4:3 (Klasik)</span>
+                                </button>
+                                <button type="button" class="ratio-btn-food flex items-center gap-2 p-3 border-2 border-gray-200 rounded-xl hover:border-orange-400 transition-all active:scale-95" data-ratio="21:9">
+                                    <div class="w-9 h-4 border-2 border-current rounded"></div>
+                                    <span class="font-medium text-sm">21:9 (Cinematic)</span>
+                                </button>
+                                <button type="button" class="ratio-btn-food flex items-center gap-2 p-3 border-2 border-gray-200 rounded-xl hover:border-orange-400 transition-all active:scale-95" data-ratio="5:4">
+                                    <div class="w-6 h-5 border-2 border-current rounded"></div>
+                                    <span class="font-medium text-sm">5:4 (Cetak/Menu)</span>
                                 </button>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Step 4: Optional Theme -->
-                    <div class="card p-6">
-                        <div class="flex items-center gap-2 mb-4">
-                            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 text-white font-bold text-sm shadow-lg">4</div>
-                            <h2 class="text-xl font-semibold text-gray-800" data-i18n="fr.step4">Tema Visual (Opsional)</h2>
+                        <!-- Step 6: Jumlah Generate -->
+                        <div class="card p-6">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 text-white font-bold text-sm shadow-lg">6</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="fr.count-label">Jumlah Generate</h2>
+                            </div>
+                            <div id="food-count-selection-grid" class="count-btn-grid theme-amber">
+                                <button type="button" data-count="1">1</button>
+                                <button type="button" data-count="2">2</button>
+                                <button type="button" data-count="3">3</button>
+                                <button type="button" data-count="4" class="selected">4</button>
+                                <button type="button" data-count="5">5</button>
+                                <button type="button" data-count="6">6</button>
+                                <button type="button" data-count="7">7</button>
+                                <button type="button" data-count="8">8</button>
+                                <button type="button" data-count="9">9</button>
+                                <button type="button" data-count="10">10</button>
+                            </div>
                         </div>
-                        <p class="text-sm text-gray-600 mb-3" data-i18n="fr.step4-hint">Atur tema atau mood visual untuk review (kosongkan jika default)</p>
-                        <input type="text" id="food-photo-theme-input" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition" data-i18n-placeholder="fr.theme-placeholder" placeholder="Contoh: natural lighting, cozy cafe ambience, street food vibes, fine dining elegant, dll...">
-                    </div>
 
-                    <!-- Step 5: Aspect Ratio -->
-                    <div class="card p-6">
-                        <div class="flex items-center gap-2 mb-4">
-                            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 text-white font-bold text-sm shadow-lg">5</div>
-                            <h2 class="text-xl font-semibold text-gray-800">Aspect Ratio</h2>
-                        </div>
-                        <div id="food-ratio-selection" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                            <button type="button" class="ratio-btn-food flex items-center gap-2 p-3 border-2 border-gray-200 rounded-xl hover:border-orange-400 transition-all active:scale-95" data-ratio="1:1">
-                                <div class="w-6 h-6 border-2 border-current rounded"></div>
-                                <span class="font-medium text-sm">1:1 (IG Post)</span>
-                            </button>
-                            <button type="button" class="ratio-btn-food selected flex items-center gap-2 p-3 border-2 rounded-xl transition-all active:scale-95" data-ratio="16:9" style="border-color: #f97316; background: linear-gradient(135deg, #f97316, #ea580c); color: white; box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);">
-                                <div class="w-8 h-5 border-2 border-current rounded"></div>
-                                <span class="font-medium text-sm">16:9 (Landscape)</span>
-                            </button>
-                            <button type="button" class="ratio-btn-food flex items-center gap-2 p-3 border-2 border-gray-200 rounded-xl hover:border-orange-400 transition-all active:scale-95" data-ratio="3:4">
-                                <div class="w-5 h-6 border-2 border-current rounded"></div>
-                                <span class="font-medium text-sm">3:4 (Portrait)</span>
-                            </button>
-                            <button type="button" class="ratio-btn-food flex items-center gap-2 p-3 border-2 border-gray-200 rounded-xl hover:border-orange-400 transition-all active:scale-95" data-ratio="9:16">
-                                <div class="w-4 h-7 border-2 border-current rounded"></div>
-                                <span class="font-medium text-sm">9:16 (TikTok/Stories)</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Jumlah Generate -->
-                    <div class="mb-4">
-                        <h3 class="text-base sm:text-lg font-bold mb-3 text-gray-800">
-                            <i class="fas fa-layer-group mr-2 text-orange-600"></i>
-                            <span data-i18n="fr.count-label">Jumlah Generate</span>
-                        </h3>
-                        <div id="food-count-selection-grid" class="count-btn-grid theme-amber">
-                            <button type="button" data-count="1">1</button>
-                            <button type="button" data-count="2">2</button>
-                            <button type="button" data-count="3">3</button>
-                            <button type="button" data-count="4" class="selected">4</button>
-                            <button type="button" data-count="5">5</button>
-                            <button type="button" data-count="6">6</button>
-                            <button type="button" data-count="7">7</button>
-                            <button type="button" data-count="8">8</button>
-                            <button type="button" data-count="9">9</button>
-                            <button type="button" data-count="10">10</button>
-                        </div>
-                    </div>
-
-                    <!-- Generate Button -->
-                    <div class="text-center">
-                        <button type="button" id="food-generate-btn" class="w-full sm:w-auto btn-primary font-bold py-4 px-8 rounded-xl flex items-center justify-center text-lg shadow-xl bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        <!-- Generate Button -->
+                        <button type="button" id="food-generate-btn" class="w-full btn-primary font-bold py-4 px-8 rounded-xl flex items-center justify-center text-lg shadow-xl bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                             </svg>
@@ -5040,16 +5139,41 @@
                         </button>
                     </div>
 
-                    <!-- Results Grid -->
-                    <div id="food-results-section" class="hidden">
-                        <div class="text-center mb-6">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-2">
-                                <i class="fas fa-check-circle text-orange-500 mr-2"></i>
-                                <span id="food-results-count">7</span> <span data-i18n="fr.results-unit">Scene Food Review Generated!</span>
-                            </h2>
-                            <p class="text-gray-600" data-i18n="fr.results-hint">Klik scene untuk preview, edit, regenerate, atau download</p>
+                    <!-- Output Column -->
+                    <div class="lg:col-span-2">
+                        <div class="card p-6">
+                            <div class="flex flex-wrap justify-between items-center gap-3 mb-6">
+                                <h2 class="text-xl font-bold text-gray-800">
+                                    <i class="fas fa-images mr-2 text-orange-500"></i>
+                                    <span data-i18n="fr.results-title">Hasil Scene Review</span>
+                                </h2>
+                            </div>
+                            <div id="food-review-empty-state" class="text-center py-16 text-gray-400">
+                                <i class="fas fa-utensils text-6xl mb-4 opacity-50"></i>
+                                <p class="text-lg" data-i18n="fr.empty-title">Scene review makanan akan muncul di sini</p>
+                                <p class="text-sm mt-2" data-i18n="fr.empty-hint">Upload foto makanan + deskripsi lalu klik Buat Scene</p>
+                            </div>
+                            <div id="food-results-section" class="hidden">
+                                <div class="text-center mb-6">
+                                    <h2 class="text-2xl font-bold text-gray-800 mb-2">
+                                        <i class="fas fa-check-circle text-orange-500 mr-2"></i>
+                                        <span id="food-results-count">7</span> <span data-i18n="fr.results-unit">Scene Food Review Generated!</span>
+                                    </h2>
+                                    <p class="text-gray-600" data-i18n="fr.results-hint">Klik scene untuk preview, edit, regenerate, atau download</p>
+                                </div>
+                                <div id="food-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-6"></div>
+                            </div>
                         </div>
-                        <div id="food-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"></div>
+
+                        <!-- Tips Box -->
+                        <div class="mt-6 bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-200 rounded-xl p-5">
+                            <h4 class="font-bold text-amber-800 mb-2"><i class="fas fa-star mr-2"></i><span data-i18n="fr.tips-title">Tips Hasil Terbaik</span></h4>
+                            <ul class="text-sm text-amber-700 space-y-1">
+                                <li data-i18n-html="fr.tip1"><i class="fas fa-check mr-2"></i>Isi deskripsi lengkap (nama, rasa, harga, tempat) — scene review jadi lebih nyambung ceritanya</li>
+                                <li data-i18n-html="fr.tip2"><i class="fas fa-check mr-2"></i>Upload foto reviewer supaya karakter konsisten di semua scene seperti video content creator asli</li>
+                                <li data-i18n-html="fr.tip3"><i class="fas fa-check mr-2"></i>Pakai preset tema (Warung Lokal, Street Food Malam, dll) supaya setting review terasa autentik</li>
+                            </ul>
+                        </div>
                     </div>
                 </main>
             </div>
@@ -5057,6 +5181,11 @@
 
         <!-- TAB: PRODUCT ADS GENERATOR -->
         <div id="content-product-ads" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill" data-goto="product-review" data-i18n="hub.review-product">Review Produk</button>
+                <button type="button" class="hub-pill" data-goto="skincare-review" data-i18n="hub.review-skincare">Review Skincare</button>
+                <button type="button" class="hub-pill active" data-goto="product-ads" data-i18n="hub.review-ads">Story Iklan</button>
+            </div>
             <div class="container mx-auto p-4 md:p-8 max-w-7xl">
                 <header class="text-center mb-8">
                     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 via-purple-500 to-pink-500" data-i18n="ads.h1">
@@ -16606,168 +16735,220 @@
 
         <!-- TAB 14: POV TANGAN -->
         <div id="content-pov-tangan" class="main-content-panel hidden">
-            <div class="container mx-auto max-w-7xl">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill active" data-goto="pov-tangan" data-i18n="hub.pov-tangan">POV Tangan</button>
+                <button type="button" class="hub-pill" data-goto="pov-selfie" data-i18n="hub.pov-selfie">POV Selfie</button>
+                <button type="button" class="hub-pill" data-goto="mirror-selfie" data-i18n="hub.pov-mirror">Mirror Selfie</button>
+            </div>
+            <div class="container mx-auto p-4 md:p-8 max-w-6xl">
                 <header class="text-center mb-8">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-3 drop-shadow-lg">
-                        <i class="fas fa-hand-holding mr-3"></i><span data-i18n="pov.h1">POV Tangan Generator</span>
+                    <h1 class="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600">
+                        <i class="fas fa-hand-holding mr-3 text-green-600"></i><span data-i18n="pov.h1">POV Tangan Generator</span>
                     </h1>
-                    <p class="text-lg opacity-90" data-i18n="pov.subtitle">
+                    <p class="text-lg text-gray-500 mt-3 max-w-3xl mx-auto" data-i18n="pov.subtitle">
                         Buat foto POV tangan memegang produk dengan background custom atau aesthetic otomatis
                     </p>
-                    <p class="text-sm opacity-75 mt-2" data-i18n="pov.hint">
+                    <p class="text-sm text-gray-400 mt-2" data-i18n="pov.hint">
                         Upload foto lokasi apapun → Produk Anda akan ditempatkan di lokasi tersebut!
                     </p>
                 </header>
 
-                <div class="card mb-8">
-                    <!-- Upload Section -->
-                    <div class="mb-6">
-                        <h2 class="text-2xl font-bold mb-4 text-gray-800">
-                            <i class="fas fa-cloud-upload-alt mr-2"></i><span data-i18n="pov.upload-title">Upload Foto Produk</span>
-                        </h2>
-                        <div id="pov-upload-area" class="upload-area cursor-pointer">
-                            <div id="pov-upload-placeholder" style="display: block;">
-                                <i class="fas fa-images text-6xl text-green-500 mb-4"></i>
-                                <p class="text-xl font-semibold text-gray-700 mb-2" data-i18n="pov.upload-hint">
-                                    Klik atau drag foto produk Anda di sini
-                                </p>
-                                <p class="text-sm text-gray-500" data-i18n="pov.format">
-                                    Format: JPG, PNG, WEBP (Max 10MB)
-                                </p>
+                <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Input Column -->
+                    <div class="lg:col-span-1 space-y-6">
+                        <!-- Step 1: Upload Foto Produk -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">1</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="pov.upload-title">Upload Foto Produk</h2>
                             </div>
-                            <div id="pov-preview-container" class="hidden">
-                                <img id="pov-preview-image" alt="Preview" class="preview-image" />
+                            <div id="pov-upload-area" class="upload-area cursor-pointer">
+                                <div id="pov-upload-placeholder" style="display: block;">
+                                    <i class="fas fa-images text-5xl text-green-500 mb-3"></i>
+                                    <p class="text-base font-semibold text-gray-700 mb-2" data-i18n="pov.upload-hint">
+                                        Klik atau drag foto produk Anda di sini
+                                    </p>
+                                    <p class="text-xs text-gray-500" data-i18n="pov.format">
+                                        Format: JPG, PNG, WEBP (Max 10MB)
+                                    </p>
+                                </div>
+                                <div id="pov-preview-container" class="hidden">
+                                    <img id="pov-preview-image" alt="Preview" class="preview-image" />
+                                </div>
                             </div>
+                            <input
+                                type="file"
+                                id="pov-image-input"
+                                accept="image/*"
+                                class="hidden"
+                            />
                         </div>
-                        <input
-                            type="file"
-                            id="pov-image-input"
-                            accept="image/*"
-                            class="hidden"
-                        />
-                    </div>
 
-                    <!-- Custom Background Section (NEW) -->
-                    <div class="mb-6">
-                        <h3 class="text-xl font-bold mb-3 text-gray-800">
-                            <i class="fas fa-image mr-2"></i><span data-i18n="pov.bg-title">Background Custom (Opsional)</span>
-                        </h3>
-                        <div id="pov-bg-upload-area" class="upload-area cursor-pointer" style="min-height: 150px;">
-                            <div id="pov-bg-placeholder" style="display: block;">
-                                <i class="fas fa-panorama text-4xl text-green-500 mb-3"></i>
-                                <p class="text-lg font-semibold text-gray-700 mb-1" data-i18n="pov.bg-upload">
-                                    Upload foto lokasi/background (Opsional)
-                                </p>
-                                <p class="text-xs text-gray-500" data-i18n="pov.bg-hint">
-                                    Produk akan ditempatkan di lokasi ini
-                                </p>
+                        <!-- Step 2: Tema Background -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">2</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="pov.theme-title">Tema Background</h2>
                             </div>
-                            <div id="pov-bg-preview-container" class="hidden relative">
-                                <img id="pov-bg-preview-image" alt="Background Preview" class="preview-image" />
-                                <button id="pov-bg-remove-btn" class="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center transition-all">
-                                    <i class="fas fa-times"></i>
+                            <div id="pov-theme-selection" class="grid grid-cols-2 gap-2">
+                                <button type="button" data-theme-cat="random" class="theme-cat-btn-pov selected col-span-2">
+                                    <i class="fas fa-random mr-2"></i><span data-i18n="pov.theme-random">Acak (Semua Tema)</span>
+                                </button>
+                                <button type="button" data-theme-cat="feminin" class="theme-cat-btn-pov">
+                                    <i class="fas fa-heart mr-2"></i><span data-i18n="pov.theme-feminin">Feminin Aesthetic</span>
+                                </button>
+                                <button type="button" data-theme-cat="minimal" class="theme-cat-btn-pov">
+                                    <i class="fas fa-circle-notch mr-2"></i><span data-i18n="pov.theme-minimal">Minimalis &amp; Clean</span>
+                                </button>
+                                <button type="button" data-theme-cat="cafe" class="theme-cat-btn-pov">
+                                    <i class="fas fa-mug-hot mr-2"></i><span data-i18n="pov.theme-cafe">Cafe &amp; Kuliner</span>
+                                </button>
+                                <button type="button" data-theme-cat="nature" class="theme-cat-btn-pov">
+                                    <i class="fas fa-leaf mr-2"></i><span data-i18n="pov.theme-nature">Alam &amp; Outdoor</span>
+                                </button>
+                                <button type="button" data-theme-cat="urban" class="theme-cat-btn-pov">
+                                    <i class="fas fa-city mr-2"></i><span data-i18n="pov.theme-urban">Urban &amp; Street</span>
+                                </button>
+                                <button type="button" data-theme-cat="luxury" class="theme-cat-btn-pov">
+                                    <i class="fas fa-gem mr-2"></i><span data-i18n="pov.theme-luxury">Dark &amp; Luxury</span>
+                                </button>
+                                <button type="button" data-theme-cat="home" class="theme-cat-btn-pov">
+                                    <i class="fas fa-couch mr-2"></i><span data-i18n="pov.theme-home">Rumah &amp; Cozy</span>
+                                </button>
+                                <button type="button" data-theme-cat="tech" class="theme-cat-btn-pov">
+                                    <i class="fas fa-desktop mr-2"></i><span data-i18n="pov.theme-tech">Tech &amp; Studio</span>
                                 </button>
                             </div>
+                            <p class="text-xs text-gray-500 mt-3" data-i18n-html="pov.theme-hint">
+                                <i class="fas fa-lightbulb mr-1"></i>
+                                Pilih kategori tema background. Acak = campuran semua tema, setiap generate hasilnya berbeda-beda.
+                            </p>
                         </div>
-                        <input
-                            type="file"
-                            id="pov-bg-input"
-                            accept="image/*"
-                            class="hidden"
-                        />
-                        <p class="text-xs text-gray-500 mt-2" data-i18n-html="pov.bg-tip">
-                            <i class="fas fa-magic mr-1"></i>
-                            Tips: Upload foto lokasi apapun (bengkel, cafe, kamar, taman, dll). Produk akan digabungkan ke lokasi tersebut dengan POV tangan
-                        </p>
-                    </div>
 
-                    <!-- Background Description Section -->
-                    <div class="mb-6">
-                        <h3 class="text-xl font-bold mb-3 text-gray-800">
-                            <i class="fas fa-image mr-2"></i><span data-i18n="pov.desc-title">Deskripsi Background (Opsional)</span>
-                        </h3>
-                        <textarea
-                            id="pov-product-description"
-                            data-i18n-placeholder="pov.desc-placeholder"
-                            placeholder="Contoh: Meja kayu minimalis dengan tanaman hijau, Cafe aesthetic Korea dengan latte, Background pink aesthetic dengan pegboard, dll..."
-                            class="w-full p-4 border-2 border-green-200 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-purple-200 transition-all"
-                            rows="3"
-                        ></textarea>
-                        <p class="text-xs text-gray-500 mt-2" data-i18n-html="pov.desc-tip">
-                            <i class="fas fa-lightbulb mr-1"></i>
-                            Tips: Deskripsikan background/setting yang Anda inginkan. Kosongkan untuk mendapatkan berbagai aesthetic background otomatis.
-                        </p>
-                    </div>
-
-                    <!-- Hand Count Selection -->
-                    <div class="mb-6">
-                        <h3 class="text-xl font-bold mb-3 text-gray-800">
-                            <i class="fas fa-hand-paper mr-2"></i><span data-i18n="pov.hand-title">Jumlah Tangan</span>
-                        </h3>
-                        <div id="pov-hand-count-selection" class="grid grid-cols-2 gap-3">
-                            <button type="button" data-hand-count="1" class="hand-count-btn-pov selected">
-                                <i class="fas fa-hand-paper mr-2"></i><span data-i18n="pov.hand-1">1 Tangan</span>
-                            </button>
-                            <button type="button" data-hand-count="2" class="hand-count-btn-pov">
-                                <i class="fas fa-hands mr-2"></i><span data-i18n="pov.hand-2">2 Tangan</span>
-                            </button>
+                        <!-- Step 3: Background Custom (Opsional) -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">3</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="pov.bg-title">Background Custom (Opsional)</h2>
+                            </div>
+                            <div id="pov-bg-upload-area" class="upload-area cursor-pointer" style="min-height: 120px; padding: 1.5rem;">
+                                <div id="pov-bg-placeholder" style="display: block;">
+                                    <i class="fas fa-map-marker-alt text-3xl text-green-500 mb-2"></i>
+                                    <p class="text-sm font-semibold text-gray-700 mb-1" data-i18n="pov.bg-upload">
+                                        Upload foto lokasi/background (Opsional)
+                                    </p>
+                                    <p class="text-xs text-gray-500" data-i18n="pov.bg-hint">
+                                        Produk akan ditempatkan di lokasi ini
+                                    </p>
+                                </div>
+                                <div id="pov-bg-preview-container" class="hidden relative">
+                                    <img id="pov-bg-preview-image" alt="Background Preview" class="preview-image" />
+                                    <button id="pov-bg-remove-btn" class="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center transition-all">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <input
+                                type="file"
+                                id="pov-bg-input"
+                                accept="image/*"
+                                class="hidden"
+                            />
+                            <p class="text-xs text-gray-500 mt-2" data-i18n-html="pov.bg-tip">
+                                <i class="fas fa-magic mr-1"></i>
+                                Tips: Upload foto lokasi apapun (bengkel, cafe, kamar, taman, dll). Produk akan digabungkan ke lokasi tersebut dengan POV tangan
+                            </p>
                         </div>
-                        <p class="text-xs text-gray-500 mt-2" data-i18n-html="pov.hand-hint">
-                            <i class="fas fa-lightbulb mr-1"></i>
-                            Pilih apakah produk akan digenggam dengan 1 tangan atau 2 tangan
-                        </p>
-                    </div>
 
-                    <!-- Aspect Ratio Selection -->
-                    <div class="mb-6">
-                        <h3 class="text-xl font-bold mb-3 text-gray-800">
-                            <i class="fas fa-expand-arrows-alt mr-2"></i><span data-i18n="pov.ratio-title">Rasio Aspek</span>
-                        </h3>
-                        <div id="pov-ratio-selection" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                            <button type="button" data-ratio="1:1" class="ratio-btn-pov">
-                                <i class="fas fa-square mr-2"></i>1:1
-                            </button>
-                            <button type="button" data-ratio="16:9" class="ratio-btn-pov selected">
-                                <i class="fas fa-rectangle-landscape mr-2"></i>16:9
-                            </button>
-                            <button type="button" data-ratio="3:4" class="ratio-btn-pov">
-                                <i class="fas fa-rectangle-portrait mr-2"></i>3:4
-                            </button>
-                            <button type="button" data-ratio="9:16" class="ratio-btn-pov">
-                                <i class="fas fa-mobile-alt mr-2"></i>9:16
-                            </button>
+                        <!-- Step 4: Deskripsi Background (Opsional) -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">4</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="pov.desc-title">Deskripsi Background (Opsional)</h2>
+                            </div>
+                            <textarea
+                                id="pov-product-description"
+                                data-i18n-placeholder="pov.desc-placeholder"
+                                placeholder="Contoh: Meja kayu minimalis dengan tanaman hijau, Cafe aesthetic Korea dengan latte, Background pink aesthetic dengan pegboard, dll..."
+                                class="w-full p-4 border-2 border-green-200 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"
+                                rows="3"
+                            ></textarea>
+                            <p class="text-xs text-gray-500 mt-2" data-i18n-html="pov.desc-tip">
+                                <i class="fas fa-lightbulb mr-1"></i>
+                                Tips: Deskripsikan background/setting yang Anda inginkan. Kosongkan untuk mendapatkan berbagai aesthetic background otomatis.
+                            </p>
                         </div>
-                        <p class="text-xs text-gray-500 mt-2" data-i18n-html="pov.ratio-hint">
-                            <i class="fas fa-lightbulb mr-1"></i>
-                            Pilih rasio aspek untuk semua foto POV yang akan di-generate
-                        </p>
-                    </div>
 
-                    <!-- Jumlah Generate -->
-                    <div class="mb-6">
-                        <h3 class="text-base sm:text-lg font-bold mb-3 text-gray-800">
-                            <i class="fas fa-layer-group mr-2 text-amber-600"></i>
-                            <span data-i18n="pov.count-label">Jumlah Generate</span>
-                        </h3>
-                        <div id="pov-count-selection-grid" class="count-btn-grid theme-amber">
-                            <button type="button" data-count="1">1</button>
-                            <button type="button" data-count="2">2</button>
-                            <button type="button" data-count="3">3</button>
-                            <button type="button" data-count="4" class="selected">4</button>
-                            <button type="button" data-count="5">5</button>
-                            <button type="button" data-count="6">6</button>
-                            <button type="button" data-count="7">7</button>
-                            <button type="button" data-count="8">8</button>
-                            <button type="button" data-count="9">9</button>
-                            <button type="button" data-count="10">10</button>
+                        <!-- Step 5: Jumlah Tangan -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">5</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="pov.hand-title">Jumlah Tangan</h2>
+                            </div>
+                            <div id="pov-hand-count-selection" class="grid grid-cols-2 gap-3">
+                                <button type="button" data-hand-count="1" class="hand-count-btn-pov selected">
+                                    <i class="fas fa-hand-paper mr-2"></i><span data-i18n="pov.hand-1">1 Tangan</span>
+                                </button>
+                                <button type="button" data-hand-count="2" class="hand-count-btn-pov">
+                                    <i class="fas fa-hands mr-2"></i><span data-i18n="pov.hand-2">2 Tangan</span>
+                                </button>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2" data-i18n-html="pov.hand-hint">
+                                <i class="fas fa-lightbulb mr-1"></i>
+                                Pilih apakah produk akan digenggam dengan 1 tangan atau 2 tangan
+                            </p>
                         </div>
-                    </div>
 
-                    <!-- Generate Button -->
-                    <div class="text-center">
+                        <!-- Step 6: Rasio Aspek -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">6</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="pov.ratio-title">Rasio Aspek</h2>
+                            </div>
+                            <div id="pov-ratio-selection" class="grid grid-cols-2 gap-3">
+                                <button type="button" data-ratio="1:1" class="ratio-btn-pov">
+                                    <i class="fas fa-square mr-2"></i>1:1
+                                </button>
+                                <button type="button" data-ratio="16:9" class="ratio-btn-pov selected">
+                                    <i class="fas fa-tv mr-2"></i>16:9
+                                </button>
+                                <button type="button" data-ratio="3:4" class="ratio-btn-pov">
+                                    <i class="fas fa-portrait mr-2"></i>3:4
+                                </button>
+                                <button type="button" data-ratio="9:16" class="ratio-btn-pov">
+                                    <i class="fas fa-mobile-alt mr-2"></i>9:16
+                                </button>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2" data-i18n-html="pov.ratio-hint">
+                                <i class="fas fa-lightbulb mr-1"></i>
+                                Pilih rasio aspek untuk semua foto POV yang akan di-generate
+                            </p>
+                        </div>
+
+                        <!-- Step 7: Jumlah Generate -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">7</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="pov.count-label">Jumlah Generate</h2>
+                            </div>
+                            <div id="pov-count-selection-grid" class="count-btn-grid theme-amber">
+                                <button type="button" data-count="1">1</button>
+                                <button type="button" data-count="2">2</button>
+                                <button type="button" data-count="3">3</button>
+                                <button type="button" data-count="4" class="selected">4</button>
+                                <button type="button" data-count="5">5</button>
+                                <button type="button" data-count="6">6</button>
+                                <button type="button" data-count="7">7</button>
+                                <button type="button" data-count="8">8</button>
+                                <button type="button" data-count="9">9</button>
+                                <button type="button" data-count="10">10</button>
+                            </div>
+                        </div>
+
+                        <!-- Generate Button -->
                         <button
                             id="pov-generate-btn"
-                            class="btn-generate disabled:opacity-50"
+                            class="btn-generate w-full disabled:opacity-50"
                             disabled
                         >
                             <i class="fas fa-magic mr-3"></i>
@@ -16775,77 +16956,94 @@
                         </button>
                         <button
                             id="pov-stop-btn"
-                            class="hidden btn-generate"
+                            class="hidden btn-generate w-full"
                             style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);"
                         >
                             <i class="fas fa-stop-circle mr-3"></i>
                             <span data-i18n="common.stop-gen">Stop Generate</span>
                         </button>
                     </div>
-                </div>
 
-                <!-- Loading Section -->
-                <div id="pov-loading-section" class="hidden text-center py-12">
-                    <div class="card inline-block">
-                        <div class="flex flex-col items-center">
-                            <div class="pov-loader mb-6"></div>
-                            <h3 class="text-2xl font-bold text-gray-800 mb-2" data-i18n="pov.loading-title">
-                                Sedang Membuat Foto POV Tangan...
-                            </h3>
-                            <p class="text-gray-600 mb-4" data-i18n="common.loading-hint">
-                                Mohon tunggu, AI sedang menghasilkan foto...
-                            </p>
-                            <div class="w-full max-w-md bg-gray-200 rounded-full h-3">
-                                <div
-                                    id="pov-progress-bar"
-                                    class="bg-gradient-to-r from-green-600 to-emerald-600 h-3 rounded-full transition-all duration-300"
-                                    style="width: 0%"
-                                ></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Results Section -->
-                <div id="pov-results-section" class="hidden">
-                    <div class="card">
-                        <div class="flex justify-between items-center mb-6">
-                            <h2 class="text-3xl font-bold text-gray-800">
-                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span data-i18n="pov.results-title">Hasil POV Tangan</span> (<span id="pov-result-count">0</span> <span data-i18n="common.photo-unit">foto</span>)
-                            </h2>
-                            <button
-                                id="pov-download-all-btn"
-                                class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-full transition-all"
-                            >
-                                <i class="fas fa-download mr-2"></i>
-                                <span data-i18n="common.download-all">Download Semua</span>
-                            </button>
-                        </div>
-                        <div id="pov-results-grid" class="result-grid">
-                            <!-- Results will be inserted here -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Error Section -->
-                <div id="pov-error-section" class="hidden">
-                    <div class="card bg-red-50 border-2 border-red-300">
-                        <div class="flex items-start">
-                            <i class="fas fa-exclamation-triangle text-red-500 text-3xl mr-4 mt-1"></i>
-                            <div>
-                                <h3 class="text-xl font-bold text-red-800 mb-2" data-i18n="common.error-title">Terjadi Kesalahan</h3>
-                                <p id="pov-error-message" class="text-red-700"></p>
+                    <!-- Output Column -->
+                    <div class="lg:col-span-2">
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex flex-wrap justify-between items-center gap-3 mb-6">
+                                <h2 class="text-xl font-bold text-gray-800">
+                                    <i class="fas fa-images mr-2 text-green-500"></i>
+                                    <span data-i18n="pov.results-title">Hasil POV Tangan</span> (<span id="pov-result-count">0</span> <span data-i18n="common.photo-unit">foto</span>)
+                                </h2>
                                 <button
-                                    id="pov-retry-btn"
-                                    class="mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg transition-all"
+                                    id="pov-download-all-btn"
+                                    class="hidden min-h-[44px] bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-2.5 px-5 rounded-lg transition-all flex items-center gap-2 text-sm shadow-md hover:shadow-lg"
                                 >
-                                    <i class="fas fa-redo mr-2"></i><span data-i18n="common.retry">Coba Lagi</span>
+                                    <i class="fas fa-download"></i>
+                                    <span data-i18n="common.download-all">Download Semua</span>
                                 </button>
                             </div>
+                            <div id="pov-empty-state" class="text-center py-16 text-gray-400">
+                                <i class="fas fa-hand-holding text-6xl mb-4 opacity-50"></i>
+                                <p class="text-lg" data-i18n="pov.empty-title">Hasil foto POV akan muncul di sini</p>
+                                <p class="text-sm mt-2" data-i18n="pov.empty-hint">Upload foto produk lalu klik Generate</p>
+                            </div>
+                            <div id="pov-results-section" class="hidden">
+                                <div id="pov-results-grid" class="result-grid">
+                                    <!-- Results will be inserted here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Loading Section -->
+                        <div id="pov-loading-section" class="hidden text-center py-12">
+                            <div class="card p-6 bg-white rounded-2xl shadow-lg inline-block">
+                                <div class="flex flex-col items-center">
+                                    <div class="pov-loader mb-6"></div>
+                                    <h3 class="text-2xl font-bold text-gray-800 mb-2" data-i18n="pov.loading-title">
+                                        Sedang Membuat Foto POV Tangan...
+                                    </h3>
+                                    <p class="text-gray-600 mb-4" data-i18n="common.loading-hint">
+                                        Mohon tunggu, AI sedang menghasilkan foto...
+                                    </p>
+                                    <div class="w-full max-w-md bg-gray-200 rounded-full h-3">
+                                        <div
+                                            id="pov-progress-bar"
+                                            class="bg-gradient-to-r from-green-600 to-emerald-600 h-3 rounded-full transition-all duration-300"
+                                            style="width: 0%"
+                                        ></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Error Section -->
+                        <div id="pov-error-section" class="hidden mt-6">
+                            <div class="card p-6 rounded-2xl bg-red-50 border-2 border-red-300">
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-triangle text-red-500 text-3xl mr-4 mt-1"></i>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-red-800 mb-2" data-i18n="common.error-title">Terjadi Kesalahan</h3>
+                                        <p id="pov-error-message" class="text-red-700"></p>
+                                        <button
+                                            id="pov-retry-btn"
+                                            class="mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg transition-all"
+                                        >
+                                            <i class="fas fa-redo mr-2"></i><span data-i18n="common.retry">Coba Lagi</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tips Box -->
+                        <div class="mt-6 bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-200 rounded-xl p-5">
+                            <h4 class="font-bold text-amber-800 mb-2"><i class="fas fa-star mr-2"></i><span data-i18n="pov.tips-title">Tips Hasil Terbaik</span></h4>
+                            <ul class="text-sm text-amber-700 space-y-1">
+                                <li data-i18n-html="pov.tip1"><i class="fas fa-check mr-2"></i>Gunakan foto produk dengan background polos agar produk terdeteksi jelas</li>
+                                <li data-i18n-html="pov.tip2"><i class="fas fa-check mr-2"></i>Coba kategori tema yang berbeda supaya feed tidak monoton</li>
+                                <li data-i18n-html="pov.tip3"><i class="fas fa-check mr-2"></i>Upload background custom untuk lokasi yang spesifik (bengkel, toko, dapur, dll)</li>
+                            </ul>
                         </div>
                     </div>
-                </div>
+                </main>
             </div>
         </div>
     </div>
@@ -17161,8 +17359,233 @@
         </div>
     </div>
 
+    <!-- TAB: POV SELFIE -->
+    <div id="content-pov-selfie" class="main-content-panel hidden">
+        <div class="hub-strip">
+            <button type="button" class="hub-pill" data-goto="pov-tangan" data-i18n="hub.pov-tangan">POV Tangan</button>
+            <button type="button" class="hub-pill active" data-goto="pov-selfie" data-i18n="hub.pov-selfie">POV Selfie</button>
+            <button type="button" class="hub-pill" data-goto="mirror-selfie" data-i18n="hub.pov-mirror">Mirror Selfie</button>
+        </div>
+        <div class="container mx-auto p-4 md:p-8 max-w-6xl">
+            <header class="text-center mb-8">
+                <h1 class="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600">
+                    <i class="fas fa-camera-retro mr-3 text-green-600"></i><span data-i18n="povselfie.h1">POV Selfie Generator</span>
+                </h1>
+                <p class="text-lg text-gray-500 mt-3 max-w-3xl mx-auto" data-i18n="povselfie.subtitle">
+                    Upload foto produk + foto model, AI membuat foto selfie bareng produk dengan background yang menyesuaikan tema produk
+                </p>
+                <p class="text-sm text-gray-400 mt-2" data-i18n="povselfie.hint">
+                    Contoh: produk skincare → selfie di meja rias, produk kopi → selfie di cafe, produk olahraga → selfie di gym
+                </p>
+            </header>
+
+            <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Input Column -->
+                <div class="lg:col-span-1 space-y-6">
+                    <!-- Step 1: Upload Foto Produk -->
+                    <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">1</div>
+                            <h2 class="text-xl font-semibold text-gray-800" data-i18n="povselfie.product-title">Upload Foto Produk</h2>
+                        </div>
+                        <div id="povselfie-product-upload-area" class="upload-area cursor-pointer">
+                            <div id="povselfie-product-placeholder" style="display: block;">
+                                <i class="fas fa-box-open text-5xl text-green-500 mb-3"></i>
+                                <p class="text-base font-semibold text-gray-700 mb-2" data-i18n="povselfie.product-hint">
+                                    Klik atau drag foto produk di sini
+                                </p>
+                                <p class="text-xs text-gray-500" data-i18n="povselfie.format">
+                                    Format: JPG, PNG, WEBP (Max 10MB)
+                                </p>
+                            </div>
+                            <div id="povselfie-product-preview-container" class="hidden">
+                                <img id="povselfie-product-preview-image" alt="Preview Produk" class="preview-image" />
+                            </div>
+                        </div>
+                        <input
+                            type="file"
+                            id="povselfie-product-input"
+                            accept="image/*"
+                            class="hidden"
+                        />
+                    </div>
+
+                    <!-- Step 2: Upload Foto Model -->
+                    <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">2</div>
+                            <h2 class="text-xl font-semibold text-gray-800" data-i18n="povselfie.model-title">Upload Foto Model</h2>
+                        </div>
+                        <div id="povselfie-model-upload-area" class="upload-area cursor-pointer">
+                            <div id="povselfie-model-placeholder" style="display: block;">
+                                <i class="fas fa-user-circle text-5xl text-green-500 mb-3"></i>
+                                <p class="text-base font-semibold text-gray-700 mb-2" data-i18n="povselfie.model-hint">
+                                    Klik atau drag foto model/wajah di sini
+                                </p>
+                                <p class="text-xs text-gray-500" data-i18n="povselfie.model-tip">
+                                    Wajah jelas menghadap kamera = hasil terbaik
+                                </p>
+                            </div>
+                            <div id="povselfie-model-preview-container" class="hidden">
+                                <img id="povselfie-model-preview-image" alt="Preview Model" class="preview-image" />
+                            </div>
+                        </div>
+                        <input
+                            type="file"
+                            id="povselfie-model-input"
+                            accept="image/*"
+                            class="hidden"
+                        />
+                    </div>
+
+                    <!-- Step 3: Deskripsi Tambahan (Opsional) -->
+                    <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">3</div>
+                            <h2 class="text-xl font-semibold text-gray-800" data-i18n="povselfie.desc-title">Deskripsi Tambahan (Opsional)</h2>
+                        </div>
+                        <textarea
+                            id="povselfie-desc"
+                            data-i18n-placeholder="povselfie.desc-placeholder"
+                            placeholder="Contoh: di cafe aesthetic, pakai hijab, senyum ceria, suasana sore hari, dll..."
+                            class="w-full p-4 border-2 border-green-200 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all"
+                            rows="3"
+                        ></textarea>
+                        <p class="text-xs text-gray-500 mt-2" data-i18n-html="povselfie.desc-tip">
+                            <i class="fas fa-lightbulb mr-1"></i>
+                            Kosongkan untuk background otomatis sesuai tema produk
+                        </p>
+                    </div>
+
+                    <!-- Step 4: Rasio Aspek -->
+                    <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">4</div>
+                            <h2 class="text-xl font-semibold text-gray-800" data-i18n="povselfie.ratio-title">Rasio Aspek</h2>
+                        </div>
+                        <div id="povselfie-ratio-selection" class="grid grid-cols-2 gap-3">
+                            <button type="button" data-ratio="1:1" class="ratio-btn-povselfie">
+                                <i class="fas fa-square mr-2"></i>1:1
+                            </button>
+                            <button type="button" data-ratio="3:4" class="ratio-btn-povselfie selected">
+                                <i class="fas fa-portrait mr-2"></i>3:4
+                            </button>
+                            <button type="button" data-ratio="9:16" class="ratio-btn-povselfie">
+                                <i class="fas fa-mobile-alt mr-2"></i>9:16
+                            </button>
+                            <button type="button" data-ratio="16:9" class="ratio-btn-povselfie">
+                                <i class="fas fa-tv mr-2"></i>16:9
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 5: Jumlah Generate -->
+                    <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">5</div>
+                            <h2 class="text-xl font-semibold text-gray-800" data-i18n="povselfie.count-label">Jumlah Generate</h2>
+                        </div>
+                        <div id="povselfie-count-selection-grid" class="count-btn-grid theme-amber">
+                            <button type="button" data-count="1">1</button>
+                            <button type="button" data-count="2">2</button>
+                            <button type="button" data-count="3">3</button>
+                            <button type="button" data-count="4" class="selected">4</button>
+                            <button type="button" data-count="5">5</button>
+                            <button type="button" data-count="6">6</button>
+                            <button type="button" data-count="7">7</button>
+                            <button type="button" data-count="8">8</button>
+                            <button type="button" data-count="9">9</button>
+                            <button type="button" data-count="10">10</button>
+                        </div>
+                    </div>
+
+                    <!-- Generate Button -->
+                    <button
+                        id="povselfie-generate-btn"
+                        class="btn-generate w-full disabled:opacity-50"
+                        disabled
+                    >
+                        <i class="fas fa-magic mr-3"></i>
+                        <span data-i18n="povselfie.generate-btn">Generate POV Selfie</span>
+                    </button>
+                    <button
+                        id="povselfie-stop-btn"
+                        class="hidden btn-generate w-full"
+                        style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);"
+                    >
+                        <i class="fas fa-stop-circle mr-3"></i>
+                        <span data-i18n="common.stop-gen">Stop Generate</span>
+                    </button>
+                </div>
+
+                <!-- Output Column -->
+                <div class="lg:col-span-2">
+                    <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                        <div class="flex flex-wrap justify-between items-center gap-3 mb-6">
+                            <h2 class="text-xl font-bold text-gray-800">
+                                <i class="fas fa-images mr-2 text-green-500"></i>
+                                <span data-i18n="povselfie.results-title">Hasil POV Selfie</span> (<span id="povselfie-result-count">0</span> <span data-i18n="common.photo-unit">foto</span>)
+                            </h2>
+                            <button
+                                id="povselfie-download-all-btn"
+                                class="hidden min-h-[44px] bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-2.5 px-5 rounded-lg transition-all flex items-center gap-2 text-sm shadow-md hover:shadow-lg"
+                            >
+                                <i class="fas fa-download"></i>
+                                <span data-i18n="common.download-all">Download Semua</span>
+                            </button>
+                        </div>
+                        <div id="povselfie-empty-state" class="text-center py-16 text-gray-400">
+                            <i class="fas fa-camera-retro text-6xl mb-4 opacity-50"></i>
+                            <p class="text-lg" data-i18n="povselfie.empty-title">Hasil foto selfie akan muncul di sini</p>
+                            <p class="text-sm mt-2" data-i18n="povselfie.empty-hint">Upload foto produk + foto model lalu klik Generate</p>
+                        </div>
+                        <div id="povselfie-results-section" class="hidden">
+                            <div id="povselfie-results-grid" class="result-grid">
+                                <!-- Results will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Error Section -->
+                    <div id="povselfie-error-section" class="hidden mt-6">
+                        <div class="card p-6 rounded-2xl bg-red-50 border-2 border-red-300">
+                            <div class="flex items-start">
+                                <i class="fas fa-exclamation-triangle text-red-500 text-3xl mr-4 mt-1"></i>
+                                <div>
+                                    <h3 class="text-xl font-bold text-red-800 mb-2" data-i18n="common.error-title">Terjadi Kesalahan</h3>
+                                    <p id="povselfie-error-message" class="text-red-700"></p>
+                                    <button
+                                        id="povselfie-retry-btn"
+                                        class="mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg transition-all"
+                                    >
+                                        <i class="fas fa-redo mr-2"></i><span data-i18n="common.retry">Coba Lagi</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tips Box -->
+                    <div class="mt-6 bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-200 rounded-xl p-5">
+                        <h4 class="font-bold text-amber-800 mb-2"><i class="fas fa-star mr-2"></i><span data-i18n="povselfie.tips-title">Tips Hasil Terbaik</span></h4>
+                        <ul class="text-sm text-amber-700 space-y-1">
+                            <li data-i18n-html="povselfie.tip1"><i class="fas fa-check mr-2"></i>Foto model: wajah jelas, menghadap kamera, pencahayaan bagus</li>
+                            <li data-i18n-html="povselfie.tip2"><i class="fas fa-check mr-2"></i>Foto produk: background polos supaya produk terdeteksi akurat</li>
+                            <li data-i18n-html="povselfie.tip3"><i class="fas fa-check mr-2"></i>Background otomatis mengikuti tema produk — isi deskripsi kalau mau lokasi spesifik</li>
+                        </ul>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
     <!-- TAB: POV Mirror Selfie -->
     <div id="content-mirror-selfie" class="main-content-panel hidden">
+        <div class="hub-strip">
+            <button type="button" class="hub-pill" data-goto="pov-tangan" data-i18n="hub.pov-tangan">POV Tangan</button>
+            <button type="button" class="hub-pill" data-goto="pov-selfie" data-i18n="hub.pov-selfie">POV Selfie</button>
+            <button type="button" class="hub-pill active" data-goto="mirror-selfie" data-i18n="hub.pov-mirror">Mirror Selfie</button>
+        </div>
         <div class="container mx-auto max-w-7xl">
             <header class="text-center mb-8">
                 <div class="inline-flex items-center gap-4 mb-4">
@@ -18911,7 +19334,7 @@
     <button id="update-info-btn" class="text-white rounded-full w-16 h-16 flex items-center justify-center shadow-xl relative" style="background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);">
         <div class="flex flex-col items-center leading-none pointer-events-none">
             <i class="fas fa-bolt text-sm"></i>
-            <span class="text-xs font-bold mt-0.5">V43</span>
+            <span class="text-xs font-bold mt-0.5">V44</span>
         </div>
         <span class="update-notif-dot"></span>
     </button>
@@ -22124,7 +22547,11 @@
             <i class="fas fa-hand-holding"></i>
             <span>POV</span>
         </button>
-        <button data-tab="mirror-selfie" class="mobile-tab-btn">
+        <button data-tab="pov-selfie" class="mobile-tab-btn hidden">
+            <i class="fas fa-camera-retro"></i>
+            <span>Selfie</span>
+        </button>
+        <button data-tab="mirror-selfie" class="mobile-tab-btn hidden">
             <i class="fas fa-mobile-alt"></i>
             <span>Mirror</span>
         </button>
@@ -22152,7 +22579,7 @@
             <i class="fas fa-hamburger"></i>
             <span>Food</span>
         </button>
-        <button data-tab="product-ads" class="mobile-tab-btn">
+        <button data-tab="product-ads" class="mobile-tab-btn hidden">
             <i class="fas fa-bullhorn"></i>
             <span>Ads</span>
         </button>

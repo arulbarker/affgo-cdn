@@ -525,6 +525,31 @@
             margin-bottom: 4px;
         }
 
+        /* Preset tema Review Makanan */
+        #content-food-review .food-theme-preset {
+            padding: 0.5rem 0.9rem;
+            min-height: 44px;
+            border-radius: 9999px;
+            border: 1px solid #fdba74;
+            background: #fff7ed;
+            color: #c2410c;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        #content-food-review .food-theme-preset:hover {
+            background: #ffedd5;
+        }
+        #content-food-review .food-theme-preset.selected {
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            color: #fff;
+            border-color: transparent;
+        }
+
         /* Mobile-friendly Upload Areas for Food Selfie */
         #food-selfie-background-upload-area {
             -webkit-tap-highlight-color: transparent;
@@ -1639,24 +1664,50 @@
         /* --- STYLES FOR TAB 14: POV TANGAN --- */
         #content-pov-tangan {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
-            color: #ffffff;
-            padding: 2rem;
-            border-radius: 1rem;
             min-height: calc(100vh - 200px);
         }
         #content-pov-tangan .card {
-            background: rgba(255, 255, 255, 0.95);
+            background: #ffffff;
             border-radius: 1rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 1.5rem;
             color: #1f2937;
+        }
+        #content-pov-tangan .theme-cat-btn-pov {
+            background-color: white;
+            border: 2px solid #cbd5e1;
+            padding: 0.65rem 0.5rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        #content-pov-tangan .theme-cat-btn-pov:hover {
+            border-color: #16a34a;
+            background-color: #f0fdf4;
+        }
+        #content-pov-tangan .theme-cat-btn-pov.selected {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: white;
+            border-color: #16a34a;
+            box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+        }
+        #content-pov-tangan .theme-cat-btn-pov * {
+            pointer-events: none;
         }
         #content-pov-tangan .upload-area {
             border: 3px dashed #16a34a;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             border-radius: 1rem;
-            padding: 3rem;
+            padding: 2rem;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -1676,7 +1727,7 @@
         }
         #content-pov-tangan .preview-image {
             width: 100%;
-            height: 300px;
+            height: 220px;
             object-fit: cover;
             border-radius: 0.75rem;
         }
@@ -1684,7 +1735,7 @@
             background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
             color: white;
             padding: 1rem 2.5rem;
-            border-radius: 9999px;
+            border-radius: 0.75rem;
             font-weight: 700;
             font-size: 1.1rem;
             transition: all 0.3s ease;
@@ -1814,25 +1865,178 @@
             font-weight: 600;
         }
 
+        /* --- STYLES FOR TAB: POV SELFIE --- */
+        #content-pov-selfie {
+            font-family: 'Inter', sans-serif;
+            min-height: calc(100vh - 200px);
+        }
+        #content-pov-selfie .card {
+            background: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 1.5rem;
+            color: #1f2937;
+        }
+        #content-pov-selfie .upload-area {
+            border: 3px dashed #16a34a;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        #content-pov-selfie .upload-area:hover {
+            border-color: #15803d;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        }
+        #content-pov-selfie .upload-area.has-image {
+            padding: 0;
+            border-style: solid;
+            border-width: 3px;
+        }
+        #content-pov-selfie .preview-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 0.75rem;
+        }
+        #content-pov-selfie .btn-generate {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(22, 163, 74, 0.4);
+        }
+        #content-pov-selfie .btn-generate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(22, 163, 74, 0.6);
+        }
+        #content-pov-selfie .btn-generate:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+        #content-pov-selfie .ratio-btn-povselfie {
+            background-color: white;
+            border: 2px solid #cbd5e1;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        #content-pov-selfie .ratio-btn-povselfie:hover {
+            border-color: #16a34a;
+            background-color: #f0fdf4;
+        }
+        #content-pov-selfie .ratio-btn-povselfie.selected {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: white;
+            border-color: #16a34a;
+            box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+        }
+        #content-pov-selfie .ratio-btn-povselfie * {
+            pointer-events: none;
+        }
+        #content-pov-selfie .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        #content-pov-selfie .result-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        #content-pov-selfie .result-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(22, 163, 74, 0.3);
+        }
+        #content-pov-selfie .result-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        #content-pov-selfie .result-card-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: #f8fafc;
+        }
+        #content-pov-selfie .result-card-actions button {
+            flex: 1 1 45%;
+            min-height: 44px;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            transition: all 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        #content-pov-selfie .result-card-actions button * {
+            pointer-events: none;
+        }
+        #content-pov-selfie .btn-preview {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+        #content-pov-selfie .btn-regenerate {
+            background: #dcfce7;
+            color: #15803d;
+        }
+        #content-pov-selfie .btn-download {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: white;
+        }
+        #content-pov-selfie .image-counter {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(22, 163, 74, 0.9);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
         /* --- STYLES FOR MOCKUP STUDIO --- */
         #content-mockup-studio {
-            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
             min-height: 100vh;
-            padding: 2rem 1rem;
         }
 
         #content-mockup-studio .card {
             background: white;
             border-radius: 1rem;
-            padding: 2rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
         }
 
         #content-mockup-studio .upload-area {
             border: 3px dashed #cbd5e1;
             border-radius: 1rem;
-            padding: 3rem 2rem;
+            padding: 2rem 1.5rem;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -1856,7 +2060,7 @@
 
         #content-mockup-studio .preview-image {
             max-width: 100%;
-            max-height: 300px;
+            max-height: 220px;
             border-radius: 0.75rem;
             object-fit: contain;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -1868,7 +2072,7 @@
             font-size: 1.125rem;
             font-weight: 700;
             padding: 1rem 3rem;
-            border-radius: 9999px;
+            border-radius: 0.75rem;
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
