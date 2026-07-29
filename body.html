@@ -10,7 +10,7 @@
         <!-- Floating badge top-right -->
         <div style="position:absolute;top:16px;right:16px;background:linear-gradient(135deg,#ea580c,#c2410c);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(234,88,12,0.4);z-index:1;">90+ FITUR &#x26A1;</div>
         <!-- Floating version badge top-left (auto-sync dari UPDATE_VERSION via JS) -->
-        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V44</div>
+        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V45</div>
         <div class="login-box">
             <!-- AG Logo badge -->
             <div style="background:linear-gradient(135deg,#16a34a,#15803d);width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:1.35rem;font-weight:900;color:white;box-shadow:0 6px 18px rgba(22,163,74,0.4);">AG</div>
@@ -51,7 +51,7 @@
     <div id="main-app">
     <!-- Mobile Header -->
     <div class="mobile-header">
-        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V44</span></h1>
+        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V45</span></h1>
         <p class="text-xs text-gray-400 mt-1">by Arul CG</p>
         <div class="mobile-header-actions">
             <button type="button" id="mobile-fav-access-btn" class="mobile-fav-access-btn no-favs" aria-label="Buka tab favorit">
@@ -86,7 +86,7 @@
                 </h1>
                 <p class="text-xs text-gray-500 mt-1">by Arul CG</p>
                 <div class="mt-2">
-                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V44</span>
+                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V45</span>
                 </div>
                 <div class="lang-dropdown mt-2" id="lang-dropdown-desktop">
                     <button type="button" class="lang-dd-btn" aria-haspopup="listbox" aria-expanded="false">
@@ -17457,10 +17457,36 @@
                         </p>
                     </div>
 
-                    <!-- Step 4: Rasio Aspek -->
+                    <!-- Step 4: Jenis Kamera -->
                     <div class="card p-6 bg-white rounded-2xl shadow-lg">
                         <div class="flex items-center gap-2 mb-4">
                             <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">4</div>
+                            <h2 class="text-xl font-semibold text-gray-800" data-i18n="povselfie.camera-title">Jenis Kamera</h2>
+                        </div>
+                        <div id="povselfie-camera-selection" class="grid grid-cols-2 gap-3">
+                            <button type="button" data-camera="hp" class="ratio-btn-povselfie selected">
+                                <i class="fas fa-mobile-alt mr-2"></i><span data-i18n="povselfie.cam-hp">Kamera HP</span>
+                            </button>
+                            <button type="button" data-camera="dslr" class="ratio-btn-povselfie">
+                                <i class="fas fa-camera mr-2"></i><span data-i18n="povselfie.cam-dslr">DSLR</span>
+                            </button>
+                            <button type="button" data-camera="mirrorless" class="ratio-btn-povselfie">
+                                <i class="fas fa-camera-retro mr-2"></i><span data-i18n="povselfie.cam-mirrorless">Mirrorless</span>
+                            </button>
+                            <button type="button" data-camera="analog" class="ratio-btn-povselfie">
+                                <i class="fas fa-film mr-2"></i><span data-i18n="povselfie.cam-analog">Analog / Film</span>
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2" data-i18n-html="povselfie.camera-hint">
+                            <i class="fas fa-lightbulb mr-1"></i>
+                            Kamera HP = paling natural khas selfie. DSLR/Mirrorless = tajam profesional dengan bokeh. Analog = vintage film grain.
+                        </p>
+                    </div>
+
+                    <!-- Step 5: Rasio Aspek -->
+                    <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">5</div>
                             <h2 class="text-xl font-semibold text-gray-800" data-i18n="povselfie.ratio-title">Rasio Aspek</h2>
                         </div>
                         <div id="povselfie-ratio-selection" class="grid grid-cols-2 gap-3">
@@ -17479,10 +17505,10 @@
                         </div>
                     </div>
 
-                    <!-- Step 5: Jumlah Generate -->
+                    <!-- Step 6: Jumlah Generate -->
                     <div class="card p-6 bg-white rounded-2xl shadow-lg">
                         <div class="flex items-center gap-2 mb-4">
-                            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">5</div>
+                            <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">6</div>
                             <h2 class="text-xl font-semibold text-gray-800" data-i18n="povselfie.count-label">Jumlah Generate</h2>
                         </div>
                         <div id="povselfie-count-selection-grid" class="count-btn-grid theme-amber">
@@ -19334,7 +19360,7 @@
     <button id="update-info-btn" class="text-white rounded-full w-16 h-16 flex items-center justify-center shadow-xl relative" style="background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);">
         <div class="flex flex-col items-center leading-none pointer-events-none">
             <i class="fas fa-bolt text-sm"></i>
-            <span class="text-xs font-bold mt-0.5">V44</span>
+            <span class="text-xs font-bold mt-0.5">V45</span>
         </div>
         <span class="update-notif-dot"></span>
     </button>

@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '44';
+        const UPDATE_VERSION = '45';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '45',
+                dateId: 'Juli 2026',
+                dateEn: 'July 2026',
+                badgeKey: 'modal.fix-v45-badge',
+                badgeText: 'Update v45',
+                gradient: 'linear-gradient(135deg,#16a34a,#0d9488)',
+                borderColor: '#16a34a',
+                icon: 'fa-camera',
+                iconColor: '#16a34a',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v45-title-preview',
+                        titleText: 'Fix: Preview POV Selfie',
+                        bodyKey: 'modal.fix-v45-body-preview',
+                        bodyText: 'Tombol Preview di POV Selfie kini berfungsi normal — sebelumnya modal terbuka tapi tidak terlihat. Bisa ditutup dengan tombol X, klik area gelap, atau tombol ESC.'
+                    },
+                    {
+                        titleKey: 'modal.fix-v45-title-kamera',
+                        titleText: 'POV Selfie: Pilihan Jenis Kamera',
+                        bodyKey: 'modal.fix-v45-body-kamera',
+                        bodyText: 'Pilih karakter hasil foto sesuai kamera: Kamera HP (paling natural khas selfie), DSLR (tajam profesional dengan bokeh), Mirrorless (rendering modern bersih), atau Analog/Film (grain vintage hangat). Regenerate otomatis memakai kamera yang sama.'
+                    }
+                ]
+            },
             {
                 version: '44',
                 dateId: 'Juli 2026',
@@ -14023,8 +14048,17 @@ IMPORTANT: Use the EXACT environment/location from IMAGE 1 as the background. Do
             let generatedImages = [];
             let generatedImageParams = [];
             let selectedRatio = '3:4';
+            let selectedCameraType = 'hp';
             let selectedCount = 4;
             let stopSelfie = false;
+
+            // Karakter hasil foto per jenis kamera - biar terlihat natural sesuai alatnya
+            const selfieCameraStyles = {
+                hp: 'Front-camera smartphone perspective (iPhone 15 Pro): arm-length distance, slight wide-angle look, natural casual framing, realistic phone-camera image quality with authentic everyday feel',
+                dslr: 'Shot on a professional DSLR camera (Canon EOS R5, 35mm f/1.8): crisp sharp detail, creamy background bokeh, professional color grading and dynamic range - framed like a natural arm-length selfie',
+                mirrorless: 'Shot on a modern mirrorless camera (Sony A7 IV, 24mm f/2): clean modern rendering, soft natural bokeh, accurate skin tones, lifestyle editorial quality - framed like a natural arm-length selfie',
+                analog: 'Shot on a 35mm analog film camera: subtle film grain, warm slightly faded tones, soft halation on highlights, nostalgic vintage snapshot look'
+            };
 
             if (stopBtn) stopBtn.addEventListener('click', () => { stopSelfie = true; });
 
@@ -14110,6 +14144,18 @@ IMPORTANT: Use the EXACT environment/location from IMAGE 1 as the background. Do
                 });
             }
 
+            const cameraSelection = document.getElementById('povselfie-camera-selection');
+            if (cameraSelection) {
+                cameraSelection.addEventListener('click', (e) => {
+                    const button = e.target.closest('button[data-camera]');
+                    if (button) {
+                        cameraSelection.querySelectorAll('button[data-camera]').forEach(btn => btn.classList.remove('selected'));
+                        button.classList.add('selected');
+                        selectedCameraType = button.dataset.camera;
+                    }
+                });
+            }
+
             const countSelection = document.getElementById('povselfie-count-selection-grid');
             if (countSelection) {
                 countSelection.addEventListener('click', (e) => {
@@ -14158,8 +14204,9 @@ IMPORTANT: Use the EXACT environment/location from IMAGE 1 as the background. Do
                 return null;
             }
 
-            function buildSelfiePrompt(style, extraDesc) {
-                let prompt = `Create ONE hyper-realistic smartphone selfie photo by combining these inputs:
+            function buildSelfiePrompt(style, extraDesc, cameraType) {
+                const cameraDesc = selfieCameraStyles[cameraType] || selfieCameraStyles.hp;
+                let prompt = `Create ONE hyper-realistic selfie photo by combining these inputs:
 
 IMAGE 1 (Person): the person taking the selfie
 IMAGE 2 (Product): the product being shown
@@ -14171,8 +14218,8 @@ Requirements:
 - The product from IMAGE 2 must be clearly visible with the same shape, colors, label, and packaging
 - Selfie style: ${style}
 - Background/location: analyze the product and choose a realistic setting that MATCHES the product theme (examples: skincare -> bright vanity or bathroom, coffee/food -> cozy cafe, sport gear -> gym or outdoor, fashion -> aesthetic street or mall, gadget -> modern workspace)
-- Front-camera smartphone perspective: arm-length distance, slight wide-angle look, natural casual framing
-- Realistic lighting that matches the chosen location, photorealistic skin texture, 4K quality`;
+- Camera character: ${cameraDesc}
+- Realistic lighting that matches the chosen location, photorealistic skin texture, natural authentic look`;
                 if (extraDesc) {
                     prompt += `\n- Additional details from user: ${extraDesc}`;
                 }
@@ -14246,7 +14293,7 @@ Requirements:
                 const style = styles[index];
                 const payload = {
                     contents: [{ parts: [
-                        { text: buildSelfiePrompt(style, extraDesc) },
+                        { text: buildSelfiePrompt(style, extraDesc, selectedCameraType) },
                         { inlineData: { mimeType: "image/jpeg", data: uploadedModelData.split(',')[1] } },
                         { inlineData: { mimeType: "image/jpeg", data: uploadedProductData.split(',')[1] } }
                     ] }],
@@ -14262,7 +14309,7 @@ Requirements:
                 if (base64Data) {
                     const imageUrl = `data:image/png;base64,${base64Data}`;
                     generatedImages[index] = imageUrl;
-                    generatedImageParams[index] = { style, extraDesc, ratio: selectedRatio };
+                    generatedImageParams[index] = { style, extraDesc, ratio: selectedRatio, camera: selectedCameraType };
                     card.innerHTML = `<img src="${imageUrl}" alt="POV Selfie" style="width:100%;height:100%;object-fit:cover;">`;
                 } else {
                     card.innerHTML = '';
@@ -14337,7 +14384,7 @@ Requirements:
 
                 const payload = {
                     contents: [{ parts: [
-                        { text: buildSelfiePrompt(params.style, params.extraDesc) },
+                        { text: buildSelfiePrompt(params.style, params.extraDesc, params.camera) },
                         { inlineData: { mimeType: "image/jpeg", data: uploadedModelData.split(',')[1] } },
                         { inlineData: { mimeType: "image/jpeg", data: uploadedProductData.split(',')[1] } }
                     ] }],
@@ -14427,12 +14474,35 @@ Requirements:
                     </div>
                 `;
                 document.body.appendChild(modal);
+
+                const closeBtn = modal.querySelector('.preview-close-btn');
+                const overlay = modal.querySelector('.preview-modal-overlay');
+
                 const closeModal = () => {
                     modal.classList.add('closing');
                     setTimeout(() => modal.remove(), 300);
                 };
-                modal.querySelector('.preview-close-btn').addEventListener('click', closeModal);
-                modal.querySelector('.preview-modal-overlay').addEventListener('click', closeModal);
+
+                closeBtn.addEventListener('click', closeModal);
+                overlay.addEventListener('click', closeModal);
+
+                const handleEsc = (e) => {
+                    if (e.key === 'Escape') {
+                        closeModal();
+                        document.removeEventListener('keydown', handleEsc);
+                    }
+                };
+                document.addEventListener('keydown', handleEsc);
+
+                closeBtn.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.9)';
+                }, { passive: true });
+                closeBtn.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                }, { passive: true });
+
+                // Animate in — tanpa class 'show' modal tetap opacity 0 (bug preview V44)
+                setTimeout(() => modal.classList.add('show'), 10);
             }
 
             function showError(message) {
