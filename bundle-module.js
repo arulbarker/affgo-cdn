@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '45';
+        const UPDATE_VERSION = '46';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,37 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '46',
+                dateId: 'Juli 2026',
+                dateEn: 'July 2026',
+                badgeKey: 'modal.fix-v46-badge',
+                badgeText: 'Update v46',
+                gradient: 'linear-gradient(135deg,#16a34a,#0d9488)',
+                borderColor: '#16a34a',
+                icon: 'fa-baby',
+                iconColor: '#16a34a',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v46-title-mode',
+                        titleText: 'New Born: Milestone Bulanan & Kartu Ucapan',
+                        bodyKey: 'modal.fix-v46-body-mode',
+                        bodyText: 'Tab Bayi Newborn kini punya 3 mode: Foto Tema, Milestone Bulanan (usia bayi terdeteksi otomatis dari tanggal lahir, props angka rajut/kartu kayu/balon/bunga), dan Kartu Ucapan Kelahiran (4 gaya termasuk Islami/Aqiqah, lengkap nama + tanggal + berat + panjang). Bayi tetap asli — hanya suasana & props yang dibuat AI.'
+                    },
+                    {
+                        titleKey: 'modal.fix-v46-title-preset',
+                        titleText: 'New Born: Preset Tema + Zodiak + Kolase 4-in-1',
+                        bodyKey: 'modal.fix-v46-body-preset',
+                        bodyText: 'Pilih kategori tema sekali klik: Profesi Cilik, Dongeng & Fantasi, Adat Nusantara, Islami & Aqiqah, Seasonal & Perayaan, plus tema Zodiak otomatis dari tanggal lahir. Ada juga Kolase 4-in-1: satu gambar berisi 4 tema berbeda dalam grid 2×2.'
+                    },
+                    {
+                        titleKey: 'modal.fix-v46-title-ref',
+                        titleText: 'New Born: Upload Gambar Referensi',
+                        bodyKey: 'modal.fix-v46-body-ref',
+                        bodyText: 'Punya contoh foto dari Pinterest atau fotografer? Upload sebagai referensi — tema, kostum, pose, dan pencahayaan hasil akan mengikuti gambar referensi, wajah bayi tetap dari foto Anda.'
+                    }
+                ]
+            },
             {
                 version: '45',
                 dateId: 'Juli 2026',
@@ -6098,13 +6129,200 @@ TECHNICAL QUALITY:
         const customThemeInput = document.getElementById('new-born-custom-theme');
         const genderRadios = document.querySelectorAll('#content-new-born input[name="gender"]');
         const ratioOptions = document.getElementById('newborn-ratio-options');
+        const refUpload = document.getElementById('new-born-ref-upload');
+        const refUploadButton = document.getElementById('new-born-ref-upload-button');
+        const refPreview = document.getElementById('new-born-ref-preview');
+        const refPreviewText = document.getElementById('new-born-ref-preview-text');
+        const refClearBtn = document.getElementById('new-born-ref-clear');
 
         let base64ImageData = null;
+        let refBase64ImageData = null;
         let selectedRatio = '3:4'; // Default aspect ratio
         let generatedImages = []; // Store generated images
 
         if (uploadButton) {
             uploadButton.addEventListener('click', () => imageUpload.click());
+        }
+
+        if (refUploadButton) {
+            refUploadButton.addEventListener('click', () => refUpload.click());
+        }
+
+        if (refUpload) {
+            refUpload.addEventListener('change', event => {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = e => {
+                        refPreview.src = e.target.result;
+                        refPreview.classList.remove('hidden');
+                        refPreviewText.classList.add('hidden');
+                        refClearBtn.classList.remove('hidden');
+                        refBase64ImageData = e.target.result.split(',')[1];
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        if (refClearBtn) {
+            refClearBtn.addEventListener('click', () => {
+                refBase64ImageData = null;
+                refPreview.src = '';
+                refPreview.classList.add('hidden');
+                refPreviewText.classList.remove('hidden');
+                refClearBtn.classList.add('hidden');
+                if (refUpload) refUpload.value = '';
+            });
+        }
+
+        // --- Mode selector (tema / milestone / kartu) ---
+        let nbMode = 'tema';
+        let selectedThemeCat = 'random';
+        let selectedMilestoneAge = null;
+        let milestoneAgePicked = false;
+        let selectedMilestoneProps = 'random';
+        let selectedKartuStyle = 'pastel';
+
+        const nbModeSelection = document.getElementById('new-born-mode-selection');
+        const nbTemaSection = document.getElementById('new-born-tema-section');
+        const nbMilestoneSection = document.getElementById('new-born-milestone-section');
+        const nbKartuSection = document.getElementById('new-born-kartu-section');
+        const nbCompositeToggle = document.getElementById('new-born-composite-toggle');
+        const nbDobInput = document.getElementById('new-born-dob');
+
+        if (nbModeSelection) {
+            nbModeSelection.addEventListener('click', (e) => {
+                const btn = e.target.closest('button[data-mode]');
+                if (!btn) return;
+                nbModeSelection.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                nbMode = btn.dataset.mode;
+                if (nbTemaSection) nbTemaSection.classList.toggle('hidden', nbMode !== 'tema');
+                if (nbMilestoneSection) nbMilestoneSection.classList.toggle('hidden', nbMode !== 'milestone');
+                if (nbKartuSection) nbKartuSection.classList.toggle('hidden', nbMode !== 'kartu');
+                const nbRefBlock = document.getElementById('new-born-ref-block');
+                if (nbRefBlock) nbRefBlock.classList.toggle('hidden', nbMode !== 'tema');
+                if (nbMode === 'milestone') updateNewbornAgeInfo();
+            });
+        }
+
+        // --- Kategori tema preset + zodiak ---
+        const nbThemeCatSelection = document.getElementById('new-born-theme-cat-selection');
+        const nbZodiakInfo = document.getElementById('new-born-zodiak-info');
+        if (nbThemeCatSelection) {
+            nbThemeCatSelection.addEventListener('click', (e) => {
+                const btn = e.target.closest('button[data-theme-cat]');
+                if (!btn) return;
+                nbThemeCatSelection.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedThemeCat = btn.dataset.themeCat;
+                updateNewbornZodiakInfo();
+            });
+        }
+
+        function updateNewbornZodiakInfo() {
+            if (!nbZodiakInfo) return;
+            if (selectedThemeCat !== 'zodiak') { nbZodiakInfo.classList.add('hidden'); return; }
+            const zod = getNewbornZodiac(nbDobInput ? nbDobInput.value : '');
+            if (zod) {
+                nbZodiakInfo.textContent = window.tr3('Zodiak bayi: ' + zod, 'Baby zodiac: ' + zod, 'Zodiak bayi: ' + zod);
+            } else {
+                nbZodiakInfo.textContent = window.tr3('Isi tanggal lahir dulu untuk deteksi zodiak', 'Fill in the date of birth first to detect the zodiac', 'Isi tarikh lahir dahulu untuk kesan zodiak');
+            }
+            nbZodiakInfo.classList.remove('hidden');
+        }
+
+        const nbZodiacTable = [
+            { name: 'Aquarius', from: [1, 20] }, { name: 'Pisces', from: [2, 19] },
+            { name: 'Aries', from: [3, 21] }, { name: 'Taurus', from: [4, 20] },
+            { name: 'Gemini', from: [5, 21] }, { name: 'Cancer', from: [6, 21] },
+            { name: 'Leo', from: [7, 23] }, { name: 'Virgo', from: [8, 23] },
+            { name: 'Libra', from: [9, 23] }, { name: 'Scorpio', from: [10, 23] },
+            { name: 'Sagittarius', from: [11, 22] }, { name: 'Capricorn', from: [12, 22] }
+        ];
+        function getNewbornZodiac(dateStr) {
+            if (!dateStr) return null;
+            const d = new Date(dateStr);
+            if (isNaN(d)) return null;
+            const m = d.getMonth() + 1, day = d.getDate();
+            let name = 'Capricorn';
+            for (const z of nbZodiacTable) {
+                if (m > z.from[0] || (m === z.from[0] && day >= z.from[1])) name = z.name;
+            }
+            return name;
+        }
+
+        // --- Milestone: umur auto dari tanggal lahir + chips manual ---
+        const nbAgeGrid = document.getElementById('new-born-milestone-age-grid');
+        const nbAgeInfo = document.getElementById('new-born-age-info');
+        if (nbAgeGrid) {
+            nbAgeGrid.addEventListener('click', (e) => {
+                const btn = e.target.closest('button[data-age]');
+                if (!btn) return;
+                nbAgeGrid.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedMilestoneAge = btn.dataset.age;
+                milestoneAgePicked = true;
+            });
+        }
+
+        function updateNewbornAgeInfo() {
+            if (!nbAgeInfo) return;
+            const dob = nbDobInput ? nbDobInput.value : '';
+            if (!dob) { nbAgeInfo.classList.add('hidden'); return; }
+            const d = new Date(dob);
+            if (isNaN(d)) { nbAgeInfo.classList.add('hidden'); return; }
+            const days = Math.floor((Date.now() - d.getTime()) / 86400000);
+            if (days < 0) { nbAgeInfo.classList.add('hidden'); return; }
+            const months = Math.floor(days / 30.44);
+            nbAgeInfo.textContent = window.tr3(
+                'Usia bayi saat ini: ' + months + ' bulan (' + days + ' hari)',
+                'Current baby age: ' + months + ' months (' + days + ' days)',
+                'Usia bayi sekarang: ' + months + ' bulan (' + days + ' hari)'
+            );
+            nbAgeInfo.classList.remove('hidden');
+            if (!milestoneAgePicked && nbAgeGrid) {
+                let autoAge = 'newborn';
+                if (months >= 1 && months <= 12) autoAge = String(months);
+                else if (months > 12) autoAge = '1tahun';
+                const autoBtn = nbAgeGrid.querySelector('button[data-age="' + autoAge + '"]');
+                if (autoBtn) {
+                    nbAgeGrid.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+                    autoBtn.classList.add('selected');
+                    selectedMilestoneAge = autoAge;
+                }
+            }
+        }
+
+        if (nbDobInput) {
+            nbDobInput.addEventListener('change', () => {
+                updateNewbornAgeInfo();
+                updateNewbornZodiakInfo();
+            });
+        }
+
+        const nbPropsGrid = document.getElementById('new-born-milestone-props-grid');
+        if (nbPropsGrid) {
+            nbPropsGrid.addEventListener('click', (e) => {
+                const btn = e.target.closest('button[data-props]');
+                if (!btn) return;
+                nbPropsGrid.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedMilestoneProps = btn.dataset.props;
+            });
+        }
+
+        // --- Kartu Ucapan: gaya kartu ---
+        const nbKartuStyleGrid = document.getElementById('new-born-kartu-style-grid');
+        if (nbKartuStyleGrid) {
+            nbKartuStyleGrid.addEventListener('click', (e) => {
+                const btn = e.target.closest('button[data-kartu-style]');
+                if (!btn) return;
+                nbKartuStyleGrid.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedKartuStyle = btn.dataset.kartuStyle;
+            });
         }
 
         if (imageUpload) {
@@ -6155,6 +6373,17 @@ TECHNICAL QUALITY:
                 if (!base64ImageData) {
                     showError("Harap pilih foto bayi terlebih dahulu.");
                     return;
+                }
+                if (nbMode === 'kartu' && !document.getElementById('new-born-name').value.trim()) {
+                    showError(window.tr3('Isi nama bayi dulu untuk Kartu Ucapan.', 'Fill in the baby name first for the announcement card.', 'Isi nama bayi dahulu untuk Kad Ucapan.'));
+                    return;
+                }
+                if (nbMode === 'milestone') {
+                    if (!selectedMilestoneAge) updateNewbornAgeInfo();
+                    if (!selectedMilestoneAge) {
+                        showError(window.tr3('Pilih usia milestone atau isi tanggal lahir dulu.', 'Pick a milestone age or fill in the date of birth first.', 'Pilih usia milestone atau isi tarikh lahir dahulu.'));
+                        return;
+                    }
                 }
                 showError('');
                 loadingIndicator.classList.remove('hidden');
@@ -6237,10 +6466,35 @@ TECHNICAL QUALITY:
                 }
             }
 
+            // Mode Milestone / Kartu Ucapan pakai prompt builder sendiri (identity lock)
+            if (nbMode === 'milestone') {
+                return buildNewbornMilestonePrompt(detailsPrompt);
+            }
+            if (nbMode === 'kartu') {
+                return buildNewbornKartuPrompt();
+            }
+
+            // If a reference image is provided, recreate its theme/style with the baby from the first image
+            if (refBase64ImageData) {
+                const themeNote = customTheme ? ` Additional theme notes: ${customTheme}.` : '';
+                return `Ultra-realistic, high-quality newborn studio photo of the baby from the first image. Recreate the theme, costume, props, pose, composition, background, and lighting of the second reference image as closely as possible, but the baby must be the baby from the first image.${themeNote}${detailsPrompt} The baby's face must match the first image: natural, cute, and the main focus. Important: 1080p quality, hyperrealistic.`;
+            }
+
+            // Kolase 4-in-1: satu gambar berisi 4 tema dalam grid 2x2
+            if (nbCompositeToggle && nbCompositeToggle.checked) {
+                return buildNewbornCompositePrompt(customTheme, detailsPrompt);
+            }
+
             // If custom theme is provided, use it directly
             if (customTheme) {
                 const finalPrompt = `Ultra-realistic, high-quality newborn studio photo of the provided baby. Theme: ${customTheme}.${detailsPrompt} Photo style: professional studio photography with natural skin texture and detail. The baby's face must be natural, cute, and the main focus. Important: 1080p quality, hyperrealistic.`;
                 return finalPrompt;
+            }
+
+            // Kategori tema preset (profesi/dongeng/adat/islami/seasonal/zodiak)
+            const catTheme = pickNewbornCategoryTheme();
+            if (catTheme) {
+                return `Ultra-realistic, high-quality newborn studio photo of the provided baby. Theme: ${catTheme}.${detailsPrompt} Photo style: professional studio photography with natural skin texture and detail. The baby's face must be natural, cute, and the main focus. Important: 1080p quality, hyperrealistic.`;
             }
 
             // Otherwise, use random theme logic
@@ -6264,6 +6518,150 @@ TECHNICAL QUALITY:
             return finalPrompt;
         }
 
+        // --- Pool tema preset per kategori ---
+        const nbThemeCategories = {
+            profesi: [
+                'tiny doctor with a miniature white coat and cute stethoscope, pastel clinic backdrop',
+                'little pilot with a mini aviator jacket and toy airplane, soft cloud backdrop',
+                'baby chef with a mini chef hat surrounded by soft felt vegetables in a cozy toy kitchen',
+                'little police officer with a tiny uniform and soft toy car, friendly studio set',
+                'baby astronaut in a plush spacesuit surrounded by felt stars and planets',
+                'little firefighter with a mini helmet and plush dalmatian puppy, soft red accents',
+                'baby farmer with a tiny straw hat, basket of plush fruits, warm rustic backdrop'
+            ],
+            dongeng: [
+                'fairy in a magical glowing forest with soft butterflies and mushrooms',
+                'storybook prince or princess on a plush cloud throne with a tiny crown',
+                'little superhero with a soft cape flying between cotton clouds',
+                'mermaid resting on a shimmering pearl shell in a soft underwater dreamscape',
+                'tiny gnome sleeping under a giant plush mushroom in an enchanted garden',
+                'baby dragon keeper with a cute plush dragon and castle backdrop'
+            ],
+            adat: [
+                'wearing a miniature Javanese traditional outfit with soft batik wrap and tiny blangkon, elegant classic Javanese studio backdrop',
+                'wearing a miniature Minang traditional outfit with soft songket accents, elegant West Sumatran backdrop',
+                'wearing a miniature Sundanese traditional outfit with soft kebaya-inspired wrap, warm classic backdrop',
+                'wearing a miniature Balinese traditional outfit with soft udeng headband and frangipani flowers, serene Balinese backdrop',
+                'wearing a miniature Bugis traditional outfit with rich colored soft fabrics, elegant South Sulawesi backdrop',
+                'wrapped in a soft Batak ulos-inspired woven blanket, warm traditional North Sumatran backdrop'
+            ],
+            islami: [
+                'aqiqah celebration setup with soft green and gold accents, elegant Islamic geometric patterns',
+                'wearing a tiny soft peci and sarong, peaceful mosque silhouette backdrop with warm lanterns',
+                'wrapped in a soft prayer-themed blanket with beautiful Arabic calligraphy decor (accurate, elegant)',
+                'Ramadan theme with soft crescent moon pillow, star garlands and gentle lantern glow',
+                'soft white and gold Islamic theme with miniature tasbih beads and elegant ornaments',
+                'sleeping on a soft cloud with a tiny mosque dome silhouette and twinkling star backdrop'
+            ],
+            seasonal: [
+                'Lebaran theme with soft ketupat decorations, pastel green tones and festive ribbons',
+                'cozy Christmas theme with soft knitted stocking, warm fairy lights and plush reindeer',
+                'Chinese New Year theme with soft red lanterns and gold accents, cheerful festive backdrop',
+                'New Year celebration theme with soft confetti, pastel balloons and a tiny "Happy New Year" banner',
+                'Indonesian Independence Day theme with soft red and white decorations and tiny flag garlands',
+                'birthday celebration theme with a soft smash cake, pastel bunting and balloons'
+            ]
+        };
+
+        const nbZodiacThemes = {
+            'Aries': 'little Aries zodiac baby with a cute plush ram, warm coral tones and tiny star garlands',
+            'Taurus': 'little Taurus zodiac baby with a soft plush bull, earthy green tones and flower accents',
+            'Gemini': 'little Gemini zodiac baby with twin plush dolls, playful yellow pastel tones and stars',
+            'Cancer': 'little Cancer zodiac baby with a cute plush crab, soft silver moonlight tones and seashells',
+            'Leo': 'little Leo zodiac baby with a cuddly plush lion and golden sun accents',
+            'Virgo': 'little Virgo zodiac baby with soft wheat and flower arrangements, gentle earthy pastel tones',
+            'Libra': 'little Libra zodiac baby with a cute balanced scale ornament, airy pink and blue pastels',
+            'Scorpio': 'little Scorpio zodiac baby with a friendly plush scorpion, deep red and plum soft tones',
+            'Sagittarius': 'little Sagittarius zodiac baby with a tiny bow and arrow prop and plush horse, adventurous purple tones',
+            'Capricorn': 'little Capricorn zodiac baby with a soft plush mountain goat, cozy winter earth tones',
+            'Aquarius': 'little Aquarius zodiac baby with soft water wave fabrics and star constellations, aqua blue tones',
+            'Pisces': 'little Pisces zodiac baby with two cute plush fish, dreamy sea-green and lavender tones'
+        };
+
+        function pickNewbornCategoryTheme() {
+            if (selectedThemeCat === 'zodiak') {
+                const zod = getNewbornZodiac(nbDobInput ? nbDobInput.value : '');
+                return zod ? nbZodiacThemes[zod] : null;
+            }
+            const pool = nbThemeCategories[selectedThemeCat];
+            if (!pool || !pool.length) return null;
+            return pool[Math.floor(Math.random() * pool.length)];
+        }
+
+        function buildNewbornCompositePrompt(customTheme, detailsPrompt) {
+            let pool;
+            if (selectedThemeCat === 'zodiak') {
+                const zod = getNewbornZodiac(nbDobInput ? nbDobInput.value : '');
+                pool = zod ? [nbZodiacThemes[zod]] : Object.values(nbThemeCategories).flat();
+            } else if (nbThemeCategories[selectedThemeCat]) {
+                pool = nbThemeCategories[selectedThemeCat];
+            } else {
+                pool = Object.values(nbThemeCategories).flat();
+            }
+            const shuffled = [...pool].sort(() => Math.random() - 0.5);
+            const picks = [];
+            if (customTheme) picks.push(customTheme);
+            for (const t of shuffled) {
+                if (picks.length >= 4) break;
+                if (!picks.includes(t)) picks.push(t);
+            }
+            while (picks.length < 4) {
+                picks.push(shuffled[Math.floor(Math.random() * shuffled.length)] || customTheme);
+            }
+            return `Create ONE single image that is a seamless 2x2 grid collage of FOUR different professional newborn studio photos of the SAME baby from the provided photo. The baby's face and identity must be EXACTLY the same in all four quadrants — natural, cute, and the main focus. Quadrant themes — top-left: ${picks[0]}; top-right: ${picks[1]}; bottom-left: ${picks[2]}; bottom-right: ${picks[3]}. Thin clean white borders between quadrants, consistent professional studio lighting across all quadrants.${detailsPrompt} Important: 1080p quality, hyperrealistic.`;
+        }
+
+        function getNewbornMilestoneAgeText() {
+            if (selectedMilestoneAge === 'newborn') return 'Newborn';
+            if (selectedMilestoneAge === '100hari') return window.tr3('100 Hari', '100 Days', '100 Hari');
+            if (selectedMilestoneAge === '1tahun') return window.tr3('1 Tahun', '1 Year', '1 Tahun');
+            const n = parseInt(selectedMilestoneAge, 10);
+            return window.tr3(n + ' Bulan', n + (n > 1 ? ' Months' : ' Month'), n + ' Bulan');
+        }
+
+        function buildNewbornMilestonePrompt(detailsPrompt) {
+            const propsMap = {
+                rajut: 'soft knitted number pillows and a chunky knit blanket',
+                kayu: 'a rustic wooden milestone card with elegant engraved lettering',
+                balon: 'pastel balloons and a small balloon garland',
+                bunga: 'a delicate flower wreath and soft floral arrangements'
+            };
+            let propsDesc = propsMap[selectedMilestoneProps];
+            if (!propsDesc) {
+                const keys = Object.keys(propsMap);
+                propsDesc = propsMap[keys[Math.floor(Math.random() * keys.length)]];
+            }
+            const ageText = getNewbornMilestoneAgeText();
+            return `Professional baby monthly milestone studio photo. Keep the baby EXACTLY as in the provided photo — same face, same expression, same skin tone, do NOT alter the baby's identity. Only change the scene around the baby: a cozy professional studio setup with ${propsDesc}, clearly displaying the milestone text "${ageText}" with EXACT correct spelling as part of the props (carved, knitted, or printed — never a digital text overlay). Soft natural window lighting, warm tones, high-end baby photography.${detailsPrompt} Important: 1080p quality, hyperrealistic.`;
+        }
+
+        function buildNewbornKartuPrompt() {
+            const styleMap = {
+                pastel: 'soft elegant pastel palette, dreamy clouds and tiny gold stars, delicate gold accents',
+                aqiqah: 'elegant Islamic ornamental frame with soft arabesque patterns and crescent moon accents, include the heading text "Tasyakuran Aqiqah"',
+                floral: 'romantic watercolor florals framing the design, blush pink and sage green tones',
+                minimalis: 'clean minimalist layout with generous white space and thin modern typography accents'
+            };
+            const name = document.getElementById('new-born-name').value.trim();
+            const dob = nbDobInput ? nbDobInput.value : '';
+            const weightEl = document.getElementById('new-born-weight');
+            const lengthEl = document.getElementById('new-born-length');
+            const weight = weightEl ? weightEl.value.trim() : '';
+            const length = lengthEl ? lengthEl.value.trim() : '';
+            const textParts = [`the baby's name "${name}" in beautiful large calligraphy`];
+            if (dob) {
+                const dateObj = new Date(dob);
+                if (!isNaN(dateObj)) {
+                    const locale = window.tr3('id-ID', 'en-US', 'ms-MY');
+                    const formattedDate = dateObj.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' });
+                    textParts.push(`the birth date "${formattedDate}"`);
+                }
+            }
+            if (weight) textParts.push(`the weight "${weight} kg"`);
+            if (length) textParts.push(`the length "${length} cm"`);
+            return `Elegant premium baby birth announcement card design featuring the provided baby photo as the centerpiece. Keep the baby EXACTLY as in the photo — same face, do NOT alter the baby's identity. Card style: ${styleMap[selectedKartuStyle] || styleMap.pastel}. Beautifully and accurately render this text on the card: ${textParts.join(', ')}. Every word and number must be spelled EXACTLY as given, in elegant typography. Premium printable invitation card quality, soft studio lighting on the baby. Important: 1080p quality.`;
+        }
+
         async function generateSingleImage(index) {
             const card = document.getElementById(`new-born-card-${index}`);
             try {
@@ -6271,8 +6669,12 @@ TECHNICAL QUALITY:
                 const apiKey = "";
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${apiKey}`;
 
+                const newbornParts = [ { text: userPrompt }, { inlineData: { mimeType: "image/png", data: base64ImageData } } ];
+                if (refBase64ImageData && nbMode === 'tema') {
+                    newbornParts.push({ inlineData: { mimeType: "image/png", data: refBase64ImageData } });
+                }
                 const payload = {
-                    contents: [{ parts: [ { text: userPrompt }, { inlineData: { mimeType: "image/png", data: base64ImageData } } ] }],
+                    contents: [{ parts: newbornParts }],
                     generationConfig: {
                         responseModalities: ['TEXT', 'IMAGE'],
                         imageConfig: { aspectRatio: selectedRatio }
