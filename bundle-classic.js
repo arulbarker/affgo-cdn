@@ -7096,10 +7096,10 @@
         // ==================== BEBAS IKLAN — KONFIGURASI ====================
         // GANTI URL DI BAWAH SAAT SUDAH SIAP:
         //   - AD_URL: Adsterra Direct/Smart Link (sudah diisi)
-        //   - LYNK_BEBAS_IKLAN_URL: link checkout produk Bebas Iklan di Lynk.id
+        //   - LYNK_BEBAS_IKLAN_URL: link checkout produk Bebas Iklan (Mayar)
         // Kalau salah satu masih "YOUR-...", sistem iklan otomatis non-aktif (failsafe).
         const AD_URL = "https://www.profitablecpmratenetwork.com/cruvfekt?key=e9e907eb7243c5ba2443b17b570520f9";
-        const LYNK_BEBAS_IKLAN_URL = "https://lynk.id/arullagi/9plw09dw01l9";
+        const LYNK_BEBAS_IKLAN_URL = "https://aiadalahbudak.myr.id/m/anti-iklan-affgo";
         // [v33+] Lynk.id paid feature: "fitur favorit tab affgo" (lifetime). Saat user
         // klik bintang dan flag belum aktif → buka link ini di tab baru.
         const LYNK_FAVORIT_FEATURE_URL = "https://lynk.id/arullagi/rm306vzjzjx0";
