@@ -358,6 +358,9 @@
                 'login.secure': '\uD83D\uDD12 Akses Terenkripsi & Aman',
                 'login.no-access-cta': '\uD83D\uDED2 Belum punya akses? Beli di sini \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v47-badge': 'Update v47',
+                'modal.fix-v47-title-dark': 'Mode Gelap (Dark Mode)',
+                'modal.fix-v47-body-dark': 'Tampilan gelap untuk seluruh aplikasi — nyaman di mata saat dipakai malam hari. Otomatis mengikuti setting gelap/terang HP atau komputer Anda, dan bisa diganti manual lewat tombol bulan/matahari di samping pilihan bahasa. Pilihan Anda tersimpan permanen.',
                 'modal.fix-v46-badge': 'Update v46',
                 'modal.fix-v46-title-mode': 'New Born: Milestone Bulanan & Kartu Ucapan',
                 'modal.fix-v46-body-mode': 'Tab Bayi Newborn kini punya 3 mode: Foto Tema, Milestone Bulanan (usia bayi terdeteksi otomatis dari tanggal lahir, props angka rajut/kartu kayu/balon/bunga), dan Kartu Ucapan Kelahiran (4 gaya termasuk Islami/Aqiqah, lengkap nama + tanggal + berat + panjang). Bayi tetap asli — hanya suasana & props yang dibuat AI.',
@@ -440,7 +443,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Tab Ruang Saku sekarang punya halaman penjelasan singkat fitur Rindu (AI keuangan) + tombol langsung ke RuangSaku.com. Lebih nyaman dipakai di HP — tinggal klik dan terbuka di tab browser.',
                 'modal.fix-v31-title-telegram': 'Tombol Telegram di Pojok Layar',
                 'modal.fix-v31-body-telegram': 'Tombol bundar Telegram sekarang ada di pojok kanan bawah aplikasi. Sekali klik langsung join grup Telegram Affiliate Go — tempat update fitur, tips, dan tanya jawab dengan komunitas.',
-                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 46',
+                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 47',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Selamat Datang di Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Asisten AI Anda untuk menjelajahi 79++ fitur photo & video generation',
@@ -3031,6 +3034,9 @@
                 'login.secure': '\uD83D\uDD12 Encrypted & Secure Access',
                 'login.no-access-cta': '\uD83D\uDED2 No access yet? Buy here \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v47-badge': 'Update v47',
+                'modal.fix-v47-title-dark': 'Dark Mode',
+                'modal.fix-v47-body-dark': 'A dark look for the entire app — easy on the eyes at night. It automatically follows your phone or computer dark/light setting, and you can switch manually anytime via the moon/sun button next to the language selector. Your choice is saved permanently.',
                 'modal.fix-v46-badge': 'Update v46',
                 'modal.fix-v46-title-mode': 'New Born: Monthly Milestone & Announcement Card',
                 'modal.fix-v46-body-mode': 'The Newborn Baby tab now has 3 modes: Theme Photo, Monthly Milestone (baby age auto-detected from the birth date, with knitted number/wooden card/balloon/flower props), and Birth Announcement Card (4 styles including Islamic/Aqiqah, complete with name + date + weight + length). The baby stays original — AI only creates the scene & props.',
@@ -3113,7 +3119,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Ruang Saku tab now has a brief intro page for Rindu (AI finance buddy) + direct button to RuangSaku.com. Smoother mobile experience — one click and it opens in a browser tab.',
                 'modal.fix-v31-title-telegram': 'Telegram Button at Screen Corner',
                 'modal.fix-v31-body-telegram': 'Round Telegram button is now at the bottom-right corner of the app. One click jumps directly to the Affiliate Go Telegram group — for feature updates, tips, and Q&A with the community.',
-                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 46',
+                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 47',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Welcome to Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Your AI Assistant to explore 79++ photo & video generation features',
@@ -7018,6 +7024,36 @@
             applyLanguage(lang);
         };
 
+        // ===== Dark mode: html.dark + persist app_theme =====
+        function applyTheme(theme, persist) {
+            if (theme !== 'dark') theme = 'light';
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+            if (persist) { try { localStorage.setItem('app_theme', theme); } catch (e) {} }
+            var isDark = theme === 'dark';
+            var label = isDark
+                ? window.tr3('Mode Terang', 'Light Mode', 'Mod Cerah')
+                : window.tr3('Mode Gelap', 'Dark Mode', 'Mod Gelap');
+            document.querySelectorAll('.theme-toggle-btn').forEach(function(btn) {
+                var icon = btn.querySelector('i');
+                if (icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+                btn.setAttribute('aria-label', label);
+                btn.title = label;
+            });
+        }
+
+        // Exposed global: switch theme + persist (cermin setAppLanguage)
+        window.setAppTheme = function(theme) { applyTheme(theme, true); };
+
+        // Default pertama kali: ikut OS; pilihan manual tersimpan menang.
+        function initTheme() {
+            var saved = null;
+            try { saved = localStorage.getItem('app_theme'); } catch (e) {}
+            if (saved === 'dark' || saved === 'light') { applyTheme(saved, false); return; }
+            var prefersDark = false;
+            try { prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) {}
+            applyTheme(prefersDark ? 'dark' : 'light', false);
+        }
+
         // Hook for Favorites IIFE to re-apply after cloning buttons
         window._i18nApplyNow = function() {
             var lang = localStorage.getItem('app_language') || 'id';
@@ -7074,6 +7110,15 @@
             var saved = null;
             try { saved = localStorage.getItem('app_language'); } catch(e) {}
             window.setAppLanguage(saved || detectInitialLang());
+
+            // Dark mode: bind toggle + apply initial theme
+            document.querySelectorAll('.theme-toggle-btn').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.setAppTheme(document.documentElement.classList.contains('dark') ? 'light' : 'dark');
+                });
+            });
+            initTheme();
         }
 
         if (document.readyState === 'loading') {

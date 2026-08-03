@@ -10345,4 +10345,59 @@
         }
         /* ===== END COUNT SELECTOR ===== */
 
+        /* ===== Dark Mode — tombol toggle ===== */
+        .theme-toggle-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            min-width: 44px; min-height: 44px;
+            border: 1px solid #cbd5e1; border-radius: 9999px;
+            background: #ffffff; color: #475569; cursor: pointer;
+            font-size: 1rem; transition: background 0.2s, color 0.2s;
+        }
+        .theme-toggle-btn:hover { background: #f1f5f9; }
+        .mobile-header-actions .theme-toggle-btn {
+            border-color: rgba(255,255,255,0.7); color: #ffffff; background: rgba(255,255,255,0.15);
+        }
+        .mobile-header-actions .theme-toggle-btn:hover { background: rgba(255,255,255,0.25); }
+
+        /* ===== Dark Mode — override layer (html.dark, di-toggle setAppTheme) =====
+           Menimpa utility Tailwind terang. html.dark .x = specificity (0,2,1)
+           > utility (0,1,0), menang tanpa !important walau stylesheet
+           Tailwind CDN di-inject runtime setelah blok ini. */
+        html.dark { color-scheme: dark; }
+        html.dark body { background-color: #0f172a; color: #e2e8f0; }
+        html.dark .bg-white { background-color: #1e293b; }
+        html.dark .bg-gray-50, html.dark .bg-slate-50,
+        html.dark .bg-gray-100, html.dark .bg-slate-100 { background-color: #1b273c; }
+        html.dark .bg-gray-200, html.dark .bg-slate-200 { background-color: #334155; }
+        html.dark .text-gray-900, html.dark .text-slate-900,
+        html.dark .text-gray-800, html.dark .text-slate-800 { color: #f1f5f9; }
+        html.dark .text-gray-700, html.dark .text-slate-700,
+        html.dark .text-gray-600, html.dark .text-slate-600 { color: #cbd5e1; }
+        html.dark .text-gray-500, html.dark .text-slate-500 { color: #94a3b8; }
+        html.dark .border-gray-100, html.dark .border-gray-200, html.dark .border-gray-300,
+        html.dark .border-slate-100, html.dark .border-slate-200, html.dark .border-slate-300 { border-color: #334155; }
+        html.dark input, html.dark select, html.dark textarea {
+            background-color: #1e293b; color: #e2e8f0; border-color: #334155;
+        }
+        html.dark .theme-toggle-btn { background: #1e293b; color: #e2e8f0; border-color: #334155; }
+        html.dark .theme-toggle-btn:hover { background: #334155; }
+        /* App shell (class custom, dari smoke test visual) */
+        html.dark .sidebar { background: linear-gradient(180deg, #0f172a 0%, #131f35 100%); border-right-color: #334155; }
+        html.dark .main-content-panel { background-color: #0f172a !important; }
+        html.dark .modal-content-universal { background-color: #1e293b; }
+        html.dark .main-tab-btn { color: #cbd5e1; }
+        html.dark .main-tab-btn.active { background-color: #14532d; color: #dcfce7; }
+        html.dark .lang-dd-menu { background: #1e293b; border-color: #334155; color: #e2e8f0; }
+        /* Gradient utility Tailwind terang (pakai CSS vars --tw-gradient-*) */
+        html.dark .from-white, html.dark .from-gray-50, html.dark .from-slate-50 {
+            --tw-gradient-from: #1b273c;
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(27, 39, 60, 0));
+        }
+        html.dark .to-white, html.dark .to-gray-50, html.dark .to-slate-50 { --tw-gradient-to: #1e293b; }
+        /* .card putih di-set per-tab via selector ID (#content-* .card) — butuh !important */
+        html.dark .card, html.dark .result-card { background-color: #1e293b !important; }
+        html.dark .hub-pill:not(.active) { background: #0f2b1a; color: #86efac; }
+        html.dark .hub-pill:not(.active):hover { background: #14532d; }
+        /* ===== END DARK MODE ===== */
+
     

@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '46';
+        const UPDATE_VERSION = '47';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '47',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v47-badge',
+                badgeText: 'Update v47',
+                gradient: 'linear-gradient(135deg,#16a34a,#0d9488)',
+                borderColor: '#16a34a',
+                icon: 'fa-moon',
+                iconColor: '#16a34a',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v47-title-dark',
+                        titleText: 'Mode Gelap (Dark Mode)',
+                        bodyKey: 'modal.fix-v47-body-dark',
+                        bodyText: 'Tampilan gelap untuk seluruh aplikasi — nyaman di mata saat dipakai malam hari. Otomatis mengikuti setting gelap/terang HP atau komputer Anda, dan bisa diganti manual lewat tombol bulan/matahari di samping pilihan bahasa. Pilihan Anda tersimpan permanen.'
+                    }
+                ]
+            },
             {
                 version: '46',
                 dateId: 'Juli 2026',
