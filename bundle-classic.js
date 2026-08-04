@@ -9,6 +9,10 @@
         hidden = !hidden;
         nav.classList.toggle('nav-hidden', hidden);
         btn.classList.toggle('nav-hidden', hidden);
+        ['theme-toggle-float', 'update-info-btn', 'telegram-floating-btn'].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.classList.toggle('float-hidden', hidden);
+        });
         var ic = btn.querySelector('i');
         if (ic) ic.className = hidden ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
         var label = hidden

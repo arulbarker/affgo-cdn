@@ -7317,6 +7317,13 @@
                 border-radius: 0.75rem 0.75rem 0 0;
             }
 
+            /* Saat bottom nav disembunyikan: 3 tombol melayang ikut sembunyi (mobile only) */
+            #theme-toggle-float.float-hidden,
+            #update-info-btn.float-hidden,
+            #telegram-floating-btn.float-hidden {
+                display: none;
+            }
+
             /* Container for tabs */
             .mobile-tabs-container {
                 display: flex;
