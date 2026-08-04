@@ -7317,11 +7317,14 @@
                 border-radius: 0.75rem 0.75rem 0 0;
             }
 
-            /* Saat bottom nav disembunyikan: 3 tombol melayang ikut sembunyi (mobile only) */
+            /* Saat bottom nav disembunyikan: tombol melayang + badge user/ad-free ikut sembunyi (mobile only).
+               !important perlu: #ad-free-status-badge di-show via inline style.display oleh JS. */
             #theme-toggle-float.float-hidden,
             #update-info-btn.float-hidden,
-            #telegram-floating-btn.float-hidden {
-                display: none;
+            #telegram-floating-btn.float-hidden,
+            #userInfoBadge.float-hidden,
+            #ad-free-status-badge.float-hidden {
+                display: none !important;
             }
 
             /* Container for tabs */

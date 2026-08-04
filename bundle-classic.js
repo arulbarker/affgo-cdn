@@ -9,7 +9,7 @@
         hidden = !hidden;
         nav.classList.toggle('nav-hidden', hidden);
         btn.classList.toggle('nav-hidden', hidden);
-        ['theme-toggle-float', 'update-info-btn', 'telegram-floating-btn'].forEach(function(id) {
+        ['theme-toggle-float', 'update-info-btn', 'telegram-floating-btn', 'userInfoBadge', 'ad-free-status-badge'].forEach(function(id) {
             var el = document.getElementById(id);
             if (el) el.classList.toggle('float-hidden', hidden);
         });
