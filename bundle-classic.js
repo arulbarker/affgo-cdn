@@ -8168,7 +8168,13 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
                     loading.style.display = "none";
                     loginBtn.disabled = false;
                     loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> MASUK APLIKASI';
-                    error.innerText = "❌ Gagal koneksi ke server. Periksa koneksi internet Anda.";
+                    // SyntaxError = server merespons tapi bukan JSON (GAS overload
+                    // mengembalikan halaman HTML error) — bukan masalah internet user.
+                    if (err instanceof SyntaxError) {
+                        error.innerText = "❌ Server sedang sibuk. Tunggu sebentar lalu coba lagi.";
+                    } else {
+                        error.innerText = "❌ Gagal koneksi ke server. Periksa koneksi internet Anda.";
+                    }
                     console.error("Login error:", err);
                 });
         }
@@ -8244,8 +8250,11 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
             userBadge.classList.add('active');
             document.getElementById('userNameDisplay').innerText = nama;
 
-            // Start session monitoring (check every 10 seconds)
-            setInterval(jagaSesi, 10000);
+            // Start session monitoring (check every 60 seconds).
+            // JANGAN turunkan ke 10s lagi — polling agresif x jumlah user bikin
+            // 30 simultaneous executions GAS penuh → login user lain gagal
+            // ("Gagal koneksi ke server", insiden 2026-08-05).
+            setInterval(jagaSesi, 60000);
 
             // Tampilkan popup Bebas Iklan setelah delay (sekali per device, lihat
             // showAdFreePromoIfEligible untuk guard logic). Delay 1.5s supaya user
@@ -8269,14 +8278,14 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
                         alert("⚠️ SESI BERAKHIR!\n\nAkun Anda sedang digunakan di perangkat lain.\nAnda akan dikembalikan ke halaman login.");
                         logout();
                     } else if (data.status === "VALID") {
-                        // Refresh status Bebas Iklan tiap 10 detik (mengikuti polling sesi)
+                        // Refresh status Bebas Iklan tiap 60 detik (mengikuti polling sesi)
                         const wasAdFree = window.isAdFree;
                         window.isAdFree = !!data.ad_free;
                         if (wasAdFree !== window.isAdFree && typeof updateAdFreeBadge === "function") {
                             updateAdFreeBadge();
                         }
                         // [v33+] Refresh status fitur Favorit Tab — supaya saat user baru bayar
-                        // di tab lain, dalam <10 detik flag terupdate dan paywall popup berhenti.
+                        // di tab lain, dalam <60 detik flag terupdate dan paywall popup berhenti.
                         window.favoritFeatureActive = !!data.favorit_feature_active;
                     }
                 })
