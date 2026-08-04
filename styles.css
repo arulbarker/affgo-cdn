@@ -629,6 +629,18 @@
             transform: scale(1.1);
         }
 
+        /* Floating Theme Toggle — mobile only (desktop pakai toggle di sidebar) */
+        #theme-toggle-float {
+            position: fixed;
+            bottom: 10.5rem;
+            right: 1.5rem;
+            z-index: 40;
+            width: 4rem;
+            height: 4rem;
+            font-size: 1.35rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.25);
+        }
+
         /* --- STYLES FOR TAB 7: FOTO PROFESI ANAK - CHEERFUL THEME --- */
         #content-profesi-anak {
             background: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fcd34d 100%); /* Cheerful yellow gradient */
@@ -7242,6 +7254,7 @@
         .mobile-bottom-nav {
             display: none;
         }
+        #mobile-nav-toggle { display: none; }
 
         @media (max-width: 768px) {
             /* Hide sidebar on mobile */
@@ -7273,6 +7286,35 @@
             .mobile-bottom-nav {
                 -ms-overflow-style: none;
                 scrollbar-width: none;
+                transition: transform 0.25s ease;
+            }
+            .mobile-bottom-nav.nav-hidden { transform: translateY(110%); }
+
+            /* Handle sembunyikan/munculkan bottom nav */
+            #mobile-nav-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: fixed;
+                bottom: 4.75rem;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 1001;
+                width: 64px;
+                min-height: 44px;
+                border: 2px solid #e2e8f0;
+                border-bottom: none;
+                border-radius: 0.75rem 0.75rem 0 0;
+                background: rgba(255, 255, 255, 0.95);
+                color: #64748b;
+                font-size: 0.9rem;
+                box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+                cursor: pointer;
+                transition: bottom 0.25s ease;
+            }
+            #mobile-nav-toggle.nav-hidden {
+                bottom: 0;
+                border-radius: 0.75rem 0.75rem 0 0;
             }
 
             /* Container for tabs */
@@ -10398,6 +10440,214 @@
         html.dark .card, html.dark .result-card { background-color: #1e293b !important; }
         html.dark .hub-pill:not(.active) { background: #0f2b1a; color: #86efac; }
         html.dark .hub-pill:not(.active):hover { background: #14532d; }
+        html.dark input::placeholder, html.dark textarea::placeholder { color: #64748b; }
+        html.dark .hover\:bg-gray-50:hover, html.dark .hover\:bg-slate-50:hover,
+        html.dark .hover\:bg-gray-100:hover, html.dark .hover\:bg-gray-200:hover { background-color: #334155; }
+        /* Varian Tailwind berprefix (has-checked / hover) dengan bg pastel */
+        html.dark .has-\[\:checked\]\:bg-green-50:has(:checked) { background-color: #14532d; }
+        html.dark .hover\:bg-red-100:hover { background-color: #7f1d1d; }
+        html.dark .hover\:bg-rose-100:hover { background-color: #881337; }
+        html.dark .hover\:bg-cyan-50:hover { background-color: #164e63; }
+        html.dark .hover\:bg-green-50:hover, html.dark .hover\:bg-green-100:hover { background-color: #14532d; }
+        html.dark .hover\:bg-orange-50:hover { background-color: #7c2d12; }
+        html.dark .hover\:bg-purple-50:hover { background-color: #581c87; }
+        html.dark .hover\:bg-amber-50:hover { background-color: #78350f; }
+        html.dark .hover\:bg-blue-50:hover, html.dark .hover\:bg-blue-100:hover { background-color: #1e3a8a; }
+        html.dark .hover\:bg-emerald-100:hover { background-color: #064e3b; }
+        html.dark .hover\:bg-pink-50:hover, html.dark .hover\:bg-pink-100:hover { background-color: #831843; }
+        html.dark .hover\:bg-sky-100:hover { background-color: #0c4a6e; }
+        /* Panel pastel berwarna: bg-X-50 -> X-950, bg-X-100 -> X-900 (pola badge dark Tailwind).
+           Teks berwarna gelap dinaikkan: 900/800 -> 200, 700 -> 300, 600 -> 400.
+           Border pastel X-100/200/300 -> X-800. Tanpa ini, teks abu yang sudah
+           di-override terang jatuh di atas panel pastel terang = tidak terbaca. */
+        html.dark .bg-red-50 { background-color: #450a0a; }
+        html.dark .bg-red-100 { background-color: #7f1d1d; }
+        html.dark .text-red-900, html.dark .text-red-800 { color: #fecaca; }
+        html.dark .text-red-700 { color: #fca5a5; }
+        html.dark .text-red-600 { color: #f87171; }
+        html.dark .border-red-100, html.dark .border-red-200, html.dark .border-red-300 { border-color: #991b1b; }
+        html.dark .bg-green-50 { background-color: #052e16; }
+        html.dark .bg-green-100 { background-color: #14532d; }
+        html.dark .text-green-900, html.dark .text-green-800 { color: #bbf7d0; }
+        html.dark .text-green-700 { color: #86efac; }
+        html.dark .text-green-600 { color: #4ade80; }
+        html.dark .border-green-100, html.dark .border-green-200, html.dark .border-green-300 { border-color: #166534; }
+        html.dark .bg-blue-50 { background-color: #172554; }
+        html.dark .bg-blue-100 { background-color: #1e3a8a; }
+        html.dark .text-blue-900, html.dark .text-blue-800 { color: #bfdbfe; }
+        html.dark .text-blue-700 { color: #93c5fd; }
+        html.dark .text-blue-600 { color: #60a5fa; }
+        html.dark .border-blue-100, html.dark .border-blue-200, html.dark .border-blue-300 { border-color: #1e40af; }
+        html.dark .bg-yellow-50 { background-color: #422006; }
+        html.dark .bg-yellow-100 { background-color: #713f12; }
+        html.dark .text-yellow-900, html.dark .text-yellow-800 { color: #fef08a; }
+        html.dark .text-yellow-700 { color: #fde047; }
+        html.dark .text-yellow-600 { color: #facc15; }
+        html.dark .border-yellow-100, html.dark .border-yellow-200, html.dark .border-yellow-300 { border-color: #854d0e; }
+        html.dark .bg-amber-50 { background-color: #451a03; }
+        html.dark .bg-amber-100 { background-color: #78350f; }
+        html.dark .text-amber-900, html.dark .text-amber-800 { color: #fde68a; }
+        html.dark .text-amber-700 { color: #fcd34d; }
+        html.dark .text-amber-600 { color: #fbbf24; }
+        html.dark .border-amber-100, html.dark .border-amber-200, html.dark .border-amber-300 { border-color: #92400e; }
+        html.dark .bg-orange-50 { background-color: #431407; }
+        html.dark .bg-orange-100 { background-color: #7c2d12; }
+        html.dark .text-orange-900, html.dark .text-orange-800 { color: #fed7aa; }
+        html.dark .text-orange-700 { color: #fdba74; }
+        html.dark .text-orange-600 { color: #fb923c; }
+        html.dark .border-orange-100, html.dark .border-orange-200, html.dark .border-orange-300 { border-color: #9a3412; }
+        html.dark .bg-purple-50 { background-color: #3b0764; }
+        html.dark .bg-purple-100 { background-color: #581c87; }
+        html.dark .text-purple-900, html.dark .text-purple-800 { color: #e9d5ff; }
+        html.dark .text-purple-700 { color: #d8b4fe; }
+        html.dark .text-purple-600 { color: #c084fc; }
+        html.dark .border-purple-100, html.dark .border-purple-200, html.dark .border-purple-300 { border-color: #6b21a8; }
+        html.dark .bg-pink-50 { background-color: #500724; }
+        html.dark .bg-pink-100 { background-color: #831843; }
+        html.dark .text-pink-900, html.dark .text-pink-800 { color: #fbcfe8; }
+        html.dark .text-pink-700 { color: #f9a8d4; }
+        html.dark .text-pink-600 { color: #f472b6; }
+        html.dark .border-pink-100, html.dark .border-pink-200, html.dark .border-pink-300 { border-color: #9d174d; }
+        html.dark .bg-indigo-50 { background-color: #1e1b4b; }
+        html.dark .bg-indigo-100 { background-color: #312e81; }
+        html.dark .text-indigo-900, html.dark .text-indigo-800 { color: #c7d2fe; }
+        html.dark .text-indigo-700 { color: #a5b4fc; }
+        html.dark .text-indigo-600 { color: #818cf8; }
+        html.dark .border-indigo-100, html.dark .border-indigo-200, html.dark .border-indigo-300 { border-color: #3730a3; }
+        html.dark .bg-teal-50 { background-color: #042f2e; }
+        html.dark .bg-teal-100 { background-color: #134e4a; }
+        html.dark .text-teal-900, html.dark .text-teal-800 { color: #99f6e4; }
+        html.dark .text-teal-700 { color: #5eead4; }
+        html.dark .text-teal-600 { color: #2dd4bf; }
+        html.dark .border-teal-100, html.dark .border-teal-200, html.dark .border-teal-300 { border-color: #115e59; }
+        html.dark .bg-emerald-50 { background-color: #022c22; }
+        html.dark .bg-emerald-100 { background-color: #064e3b; }
+        html.dark .text-emerald-900, html.dark .text-emerald-800 { color: #a7f3d0; }
+        html.dark .text-emerald-700 { color: #6ee7b7; }
+        html.dark .text-emerald-600 { color: #34d399; }
+        html.dark .border-emerald-100, html.dark .border-emerald-200, html.dark .border-emerald-300 { border-color: #065f46; }
+        html.dark .bg-rose-50 { background-color: #4c0519; }
+        html.dark .bg-rose-100 { background-color: #881337; }
+        html.dark .text-rose-900, html.dark .text-rose-800 { color: #fecdd3; }
+        html.dark .text-rose-700 { color: #fda4af; }
+        html.dark .text-rose-600 { color: #fb7185; }
+        html.dark .border-rose-100, html.dark .border-rose-200, html.dark .border-rose-300 { border-color: #9f1239; }
+        html.dark .bg-cyan-50 { background-color: #083344; }
+        html.dark .bg-cyan-100 { background-color: #164e63; }
+        html.dark .text-cyan-900, html.dark .text-cyan-800 { color: #a5f3fc; }
+        html.dark .text-cyan-700 { color: #67e8f9; }
+        html.dark .text-cyan-600 { color: #22d3ee; }
+        html.dark .border-cyan-100, html.dark .border-cyan-200, html.dark .border-cyan-300 { border-color: #155e75; }
+        html.dark .bg-sky-50 { background-color: #082f49; }
+        html.dark .bg-sky-100 { background-color: #0c4a6e; }
+        html.dark .text-sky-900, html.dark .text-sky-800 { color: #bae6fd; }
+        html.dark .text-sky-700 { color: #7dd3fc; }
+        html.dark .text-sky-600 { color: #38bdf8; }
+        html.dark .border-sky-100, html.dark .border-sky-200, html.dark .border-sky-300 { border-color: #075985; }
+        /* Gradient pastel berwarna (from/via/to X-50 & X-100) -> versi gelap */
+        html.dark .from-red-50, html.dark .from-red-100 { --tw-gradient-from: #450a0a; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(69,10,10,0)); }
+        html.dark .to-red-50, html.dark .to-red-100 { --tw-gradient-to: #7f1d1d; }
+        html.dark .from-green-50, html.dark .from-green-100 { --tw-gradient-from: #052e16; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(5,46,22,0)); }
+        html.dark .to-green-50, html.dark .to-green-100 { --tw-gradient-to: #14532d; }
+        html.dark .from-blue-50, html.dark .from-blue-100 { --tw-gradient-from: #172554; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(23,37,84,0)); }
+        html.dark .to-blue-50, html.dark .to-blue-100 { --tw-gradient-to: #1e3a8a; }
+        html.dark .from-yellow-50, html.dark .from-yellow-100 { --tw-gradient-from: #422006; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(66,32,6,0)); }
+        html.dark .to-yellow-50, html.dark .to-yellow-100 { --tw-gradient-to: #713f12; }
+        html.dark .from-amber-50, html.dark .from-amber-100 { --tw-gradient-from: #451a03; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(69,26,3,0)); }
+        html.dark .to-amber-50, html.dark .to-amber-100 { --tw-gradient-to: #78350f; }
+        html.dark .from-orange-50, html.dark .from-orange-100 { --tw-gradient-from: #431407; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(67,20,7,0)); }
+        html.dark .to-orange-50, html.dark .to-orange-100 { --tw-gradient-to: #7c2d12; }
+        html.dark .from-purple-50, html.dark .from-purple-100 { --tw-gradient-from: #3b0764; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59,7,100,0)); }
+        html.dark .to-purple-50, html.dark .to-purple-100 { --tw-gradient-to: #581c87; }
+        html.dark .from-pink-50, html.dark .from-pink-100 { --tw-gradient-from: #500724; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(80,7,36,0)); }
+        html.dark .to-pink-50, html.dark .to-pink-100 { --tw-gradient-to: #831843; }
+        html.dark .from-indigo-50, html.dark .from-indigo-100 { --tw-gradient-from: #1e1b4b; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(30,27,75,0)); }
+        html.dark .to-indigo-50, html.dark .to-indigo-100 { --tw-gradient-to: #312e81; }
+        html.dark .from-teal-50, html.dark .from-teal-100 { --tw-gradient-from: #042f2e; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(4,47,46,0)); }
+        html.dark .to-teal-50, html.dark .to-teal-100 { --tw-gradient-to: #134e4a; }
+        html.dark .from-emerald-50, html.dark .from-emerald-100 { --tw-gradient-from: #022c22; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(2,44,34,0)); }
+        html.dark .to-emerald-50, html.dark .to-emerald-100 { --tw-gradient-to: #064e3b; }
+        html.dark .from-rose-50, html.dark .from-rose-100 { --tw-gradient-from: #4c0519; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(76,5,25,0)); }
+        html.dark .to-rose-50, html.dark .to-rose-100 { --tw-gradient-to: #881337; }
+        html.dark .from-cyan-50, html.dark .from-cyan-100 { --tw-gradient-from: #083344; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(8,51,68,0)); }
+        html.dark .to-cyan-50, html.dark .to-cyan-100 { --tw-gradient-to: #164e63; }
+        html.dark .from-sky-50, html.dark .from-sky-100 { --tw-gradient-from: #082f49; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(8,47,73,0)); }
+        html.dark .to-sky-50, html.dark .to-sky-100 { --tw-gradient-to: #0c4a6e; }
+        html.dark .from-violet-50, html.dark .from-violet-100 { --tw-gradient-from: #2e1065; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(46,16,101,0)); }
+        html.dark .to-violet-50, html.dark .to-violet-100 { --tw-gradient-to: #4c1d95; }
+        html.dark .to-lime-100 { --tw-gradient-to: #365314; }
+        html.dark .via-purple-50, html.dark .via-purple-100 { --tw-gradient-stops: var(--tw-gradient-from), #3b0764, var(--tw-gradient-to, rgba(59,7,100,0)); }
+        html.dark .via-orange-50, html.dark .via-orange-100 { --tw-gradient-stops: var(--tw-gradient-from), #431407, var(--tw-gradient-to, rgba(67,20,7,0)); }
+        html.dark .via-indigo-50 { --tw-gradient-stops: var(--tw-gradient-from), #1e1b4b, var(--tw-gradient-to, rgba(30,27,75,0)); }
+        html.dark .via-emerald-50 { --tw-gradient-stops: var(--tw-gradient-from), #022c22, var(--tw-gradient-to, rgba(2,44,34,0)); }
+        html.dark .via-blue-50 { --tw-gradient-stops: var(--tw-gradient-from), #172554, var(--tw-gradient-to, rgba(23,37,84,0)); }
+        /* Container tab dengan background terang hardcoded via selector ID.
+           html.dark #content-x = specificity (1,1,1) > (1,0,0) — menang tanpa !important. */
+        html.dark #content-miniature, html.dark #content-halu, html.dark #content-affiliate,
+        html.dark #content-feedbranding, html.dark #content-affiliate-harga, html.dark #content-family,
+        html.dark #content-food-selfie, html.dark #content-new-born, html.dark #content-profesi-anak,
+        html.dark #content-desain-kamar, html.dark #content-story-update, html.dark #content-wedding,
+        html.dark #content-opal, html.dark #content-voice-over, html.dark #content-sticker {
+            background-color: #0f172a;
+            background-image: none;
+            color: #e2e8f0;
+        }
+        /* Area upload (global + per-tab ID pakai background terang) — butuh !important lawan ID */
+        html.dark .file-input-label {
+            background: linear-gradient(135deg, #1b273c 0%, #16233a 100%) !important;
+            border-color: #475569 !important; color: #94a3b8;
+        }
+        html.dark .file-input-label:hover { background: #233149 !important; border-color: #64748b !important; }
+        /* Keluarga tombol selector putih per-tab (ratio/theme/option/orientation/dst).
+           State .selected/.active dibiarkan pakai warna vivid masing-masing. */
+        html.dark [class*="ratio-btn"]:not(.selected):not(.active),
+        html.dark [class*="theme-btn"]:not(.selected):not(.active),
+        html.dark [class*="option-btn"]:not(.selected):not(.active),
+        html.dark [class*="count-btn"]:not(.selected):not(.active),
+        html.dark .orientation-btn:not(.selected):not(.active),
+        html.dark .nb-mode-btn:not(.selected):not(.active),
+        html.dark .nb-chip-btn:not(.selected):not(.active) {
+            background-color: #1e293b !important;
+            color: #cbd5e1 !important;
+            border-color: #475569 !important;
+        }
+        html.dark [class*="ratio-btn"]:not(.selected):not(.active):hover,
+        html.dark [class*="theme-btn"]:not(.selected):not(.active):hover,
+        html.dark [class*="option-btn"]:not(.selected):not(.active):hover,
+        html.dark [class*="count-btn"]:not(.selected):not(.active):hover,
+        html.dark .orientation-btn:not(.selected):not(.active):hover,
+        html.dark .nb-mode-btn:not(.selected):not(.active):hover,
+        html.dark .nb-chip-btn:not(.selected):not(.active):hover {
+            background-color: #334155 !important;
+        }
+        /* Ekor: upload box, empty-state, dan keluarga tombol custom per-tab lain */
+        html.dark [class*="upload-box"], html.dark .file-input-wrapper {
+            background-color: #1b273c !important;
+            background-image: none !important;
+        }
+        html.dark .empty-state, html.dark [id$="empty-state"] {
+            background-color: #1e293b !important;
+        }
+        html.dark [class*="checkbox-btn"]:not(.selected):not(.active),
+        html.dark .desc-platform-btn:not(.selected):not(.active), html.dark .desc-length-btn:not(.selected):not(.active),
+        html.dark .tiktok-type-btn:not(.selected):not(.active), html.dark .tiktok-duration-btn:not(.selected):not(.active),
+        html.dark .story-tone-btn:not(.selected):not(.active), html.dark .story-length-btn:not(.selected):not(.active),
+        html.dark .category-filter-btn:not(.selected):not(.active),
+        html.dark .fotogenic-cat-btn:not(.selected):not(.active), html.dark .fotogenic-effect-btn:not(.selected):not(.active),
+        html.dark .pose-quick-btn:not(.selected):not(.active), html.dark .preset-btn-photoeditor:not(.selected):not(.active),
+        html.dark .remover-mode-btn:not(.selected):not(.active), html.dark .remover-tool-btn:not(.selected):not(.active),
+        html.dark .remover-variation-btn:not(.selected):not(.active), html.dark .timelapse-frame-btn:not(.selected):not(.active),
+        html.dark .brandkit-tab-btn:not(.selected):not(.active),
+        html.dark .platform-btn-caption:not(.selected):not(.active), html.dark .tone-btn-caption:not(.selected):not(.active),
+        html.dark .view-toggle-btn:not(.selected):not(.active), html.dark .profesi-mode-btn:not(.active),
+        html.dark .theme-cat-btn-pov:not(.selected):not(.active), html.dark .food-theme-preset:not(.selected):not(.active) {
+            background-color: #1e293b !important;
+            color: #cbd5e1 !important;
+            border-color: #475569 !important;
+        }
+        html.dark ::-webkit-scrollbar-track { background: #1e293b; }
+        html.dark ::-webkit-scrollbar-thumb { background: #475569; }
+        html.dark #mobile-nav-toggle { background: rgba(30, 41, 59, 0.95); color: #cbd5e1; border-color: #475569; }
         /* ===== END DARK MODE ===== */
 
     

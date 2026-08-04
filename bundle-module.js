@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '47';
+        const UPDATE_VERSION = '48';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '48',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v48-badge',
+                badgeText: 'Update v48',
+                gradient: 'linear-gradient(135deg,#16a34a,#0d9488)',
+                borderColor: '#16a34a',
+                icon: 'fa-moon',
+                iconColor: '#16a34a',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v48-title-dark',
+                        titleText: 'Mode Gelap Manual & Warna Lebih Nyaman',
+                        bodyKey: 'modal.fix-v48-body-dark',
+                        bodyText: 'Mode gelap kini hanya aktif kalau Anda menyalakannya sendiri lewat tombol bulan/matahari — tidak lagi otomatis mengikuti setting HP/komputer. Warna yang tadinya bertabrakan di mode gelap (panel terang, teks sulit dibaca) sudah dirapikan di semua fitur, desktop maupun HP.'
+                    }
+                ]
+            },
             {
                 version: '47',
                 dateId: 'Agustus 2026',
@@ -925,7 +944,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         titleKey: 'modal.fix-v47-title-dark',
                         titleText: 'Mode Gelap (Dark Mode)',
                         bodyKey: 'modal.fix-v47-body-dark',
-                        bodyText: 'Tampilan gelap untuk seluruh aplikasi — nyaman di mata saat dipakai malam hari. Otomatis mengikuti setting gelap/terang HP atau komputer Anda, dan bisa diganti manual lewat tombol bulan/matahari di samping pilihan bahasa. Pilihan Anda tersimpan permanen.'
+                        bodyText: 'Tampilan gelap untuk seluruh aplikasi — nyaman di mata saat dipakai malam hari. Aktifkan atau matikan lewat tombol bulan/matahari di samping pilihan bahasa. Pilihan Anda tersimpan permanen.'
                     }
                 ]
             },

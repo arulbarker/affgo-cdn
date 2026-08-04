@@ -1,4 +1,26 @@
 
+(function() {
+    var nav = document.querySelector('.mobile-bottom-nav');
+    var btn = document.getElementById('mobile-nav-toggle');
+    if (!nav || !btn) return;
+    var hidden = false;
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        hidden = !hidden;
+        nav.classList.toggle('nav-hidden', hidden);
+        btn.classList.toggle('nav-hidden', hidden);
+        var ic = btn.querySelector('i');
+        if (ic) ic.className = hidden ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
+        var label = hidden
+            ? (window.tr3 ? window.tr3('Munculkan menu bawah', 'Show bottom menu', 'Papar menu bawah') : 'Munculkan menu bawah')
+            : (window.tr3 ? window.tr3('Sembunyikan menu bawah', 'Hide bottom menu', 'Sembunyikan menu bawah') : 'Sembunyikan menu bawah');
+        btn.setAttribute('aria-label', label);
+        btn.title = label;
+    });
+})();
+
+;
+
     (function() {
         var T = {
             id: {
@@ -358,9 +380,12 @@
                 'login.secure': '\uD83D\uDD12 Akses Terenkripsi & Aman',
                 'login.no-access-cta': '\uD83D\uDED2 Belum punya akses? Beli di sini \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v48-badge': 'Update v48',
+                'modal.fix-v48-title-dark': 'Mode Gelap Manual & Warna Lebih Nyaman',
+                'modal.fix-v48-body-dark': 'Mode gelap kini hanya aktif kalau Anda menyalakannya sendiri lewat tombol bulan/matahari — tidak lagi otomatis mengikuti setting HP/komputer. Warna yang tadinya bertabrakan di mode gelap (panel terang, teks sulit dibaca) sudah dirapikan di semua fitur, desktop maupun HP.',
                 'modal.fix-v47-badge': 'Update v47',
                 'modal.fix-v47-title-dark': 'Mode Gelap (Dark Mode)',
-                'modal.fix-v47-body-dark': 'Tampilan gelap untuk seluruh aplikasi — nyaman di mata saat dipakai malam hari. Otomatis mengikuti setting gelap/terang HP atau komputer Anda, dan bisa diganti manual lewat tombol bulan/matahari di samping pilihan bahasa. Pilihan Anda tersimpan permanen.',
+                'modal.fix-v47-body-dark': 'Tampilan gelap untuk seluruh aplikasi — nyaman di mata saat dipakai malam hari. Aktifkan atau matikan lewat tombol bulan/matahari di samping pilihan bahasa. Pilihan Anda tersimpan permanen.',
                 'modal.fix-v46-badge': 'Update v46',
                 'modal.fix-v46-title-mode': 'New Born: Milestone Bulanan & Kartu Ucapan',
                 'modal.fix-v46-body-mode': 'Tab Bayi Newborn kini punya 3 mode: Foto Tema, Milestone Bulanan (usia bayi terdeteksi otomatis dari tanggal lahir, props angka rajut/kartu kayu/balon/bunga), dan Kartu Ucapan Kelahiran (4 gaya termasuk Islami/Aqiqah, lengkap nama + tanggal + berat + panjang). Bayi tetap asli — hanya suasana & props yang dibuat AI.',
@@ -443,7 +468,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Tab Ruang Saku sekarang punya halaman penjelasan singkat fitur Rindu (AI keuangan) + tombol langsung ke RuangSaku.com. Lebih nyaman dipakai di HP — tinggal klik dan terbuka di tab browser.',
                 'modal.fix-v31-title-telegram': 'Tombol Telegram di Pojok Layar',
                 'modal.fix-v31-body-telegram': 'Tombol bundar Telegram sekarang ada di pojok kanan bawah aplikasi. Sekali klik langsung join grup Telegram Affiliate Go — tempat update fitur, tips, dan tanya jawab dengan komunitas.',
-                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 47',
+                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 48',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Selamat Datang di Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Asisten AI Anda untuk menjelajahi 79++ fitur photo & video generation',
@@ -3034,9 +3059,12 @@
                 'login.secure': '\uD83D\uDD12 Encrypted & Secure Access',
                 'login.no-access-cta': '\uD83D\uDED2 No access yet? Buy here \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v48-badge': 'Update v48',
+                'modal.fix-v48-title-dark': 'Manual Dark Mode & Better Colors',
+                'modal.fix-v48-body-dark': 'Dark mode now only turns on when you enable it yourself via the moon/sun button — it no longer follows your phone or computer setting automatically. Colors that used to clash in dark mode (bright panels, hard-to-read text) have been cleaned up across all features, on desktop and mobile.',
                 'modal.fix-v47-badge': 'Update v47',
                 'modal.fix-v47-title-dark': 'Dark Mode',
-                'modal.fix-v47-body-dark': 'A dark look for the entire app — easy on the eyes at night. It automatically follows your phone or computer dark/light setting, and you can switch manually anytime via the moon/sun button next to the language selector. Your choice is saved permanently.',
+                'modal.fix-v47-body-dark': 'A dark look for the entire app — easy on the eyes at night. Turn it on or off anytime via the moon/sun button next to the language selector. Your choice is saved permanently.',
                 'modal.fix-v46-badge': 'Update v46',
                 'modal.fix-v46-title-mode': 'New Born: Monthly Milestone & Announcement Card',
                 'modal.fix-v46-body-mode': 'The Newborn Baby tab now has 3 modes: Theme Photo, Monthly Milestone (baby age auto-detected from the birth date, with knitted number/wooden card/balloon/flower props), and Birth Announcement Card (4 styles including Islamic/Aqiqah, complete with name + date + weight + length). The baby stays original — AI only creates the scene & props.',
@@ -3119,7 +3147,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Ruang Saku tab now has a brief intro page for Rindu (AI finance buddy) + direct button to RuangSaku.com. Smoother mobile experience — one click and it opens in a browser tab.',
                 'modal.fix-v31-title-telegram': 'Telegram Button at Screen Corner',
                 'modal.fix-v31-body-telegram': 'Round Telegram button is now at the bottom-right corner of the app. One click jumps directly to the Affiliate Go Telegram group — for feature updates, tips, and Q&A with the community.',
-                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 47',
+                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 48',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Welcome to Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Your AI Assistant to explore 79++ photo & video generation features',
@@ -7044,14 +7072,11 @@
         // Exposed global: switch theme + persist (cermin setAppLanguage)
         window.setAppTheme = function(theme) { applyTheme(theme, true); };
 
-        // Default pertama kali: ikut OS; pilihan manual tersimpan menang.
+        // Default selalu terang. Dark mode hanya aktif kalau user pernah memilih via toggle.
         function initTheme() {
             var saved = null;
             try { saved = localStorage.getItem('app_theme'); } catch (e) {}
-            if (saved === 'dark' || saved === 'light') { applyTheme(saved, false); return; }
-            var prefersDark = false;
-            try { prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) {}
-            applyTheme(prefersDark ? 'dark' : 'light', false);
+            applyTheme(saved === 'dark' ? 'dark' : 'light', false);
         }
 
         // Hook for Favorites IIFE to re-apply after cloning buttons
