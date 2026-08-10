@@ -922,6 +922,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 iconColor: '#16a34a',
                 items: [
                     {
+                        titleKey: 'modal.fix-v48-title-affiliate',
+                        titleText: 'Program Affiliate — Cuan Rp50.000/Penjualan',
+                        bodyKey: 'modal.fix-v48-body-affiliate',
+                        bodyText: 'Sekarang Anda bisa jadi affiliate Affiliate GO dan dapat komisi Rp50.000 untuk setiap penjualan aplikasi lewat link Anda. Buka menu Ads untuk lihat detail + tonton tutorial cara jadi affiliate.'
+                    },
+                    {
                         titleKey: 'modal.fix-v48-title-dark',
                         titleText: 'Mode Gelap Manual & Warna Lebih Nyaman',
                         bodyKey: 'modal.fix-v48-body-dark',
