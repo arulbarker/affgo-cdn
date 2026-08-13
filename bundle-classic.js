@@ -388,6 +388,9 @@
                 'login.secure': '\uD83D\uDD12 Akses Terenkripsi & Aman',
                 'login.no-access-cta': '\uD83D\uDED2 Belum punya akses? Beli di sini \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v49-badge': 'Update v49',
+                'modal.fix-v49-title-login': 'Login Lebih Cepat',
+                'modal.fix-v49-body-login': 'Masuk ke aplikasi sekarang jauh lebih cepat — tidak ada lagi "loading" lama saat pertama buka, terutama di jam sepi. Kalau server sempat lambat, aplikasi otomatis mencoba lagi supaya Anda tetap masuk sekali klik.',
                 'modal.fix-v48-badge': 'Update v48',
                 'modal.fix-v48-title-affiliate': 'Program Affiliate — Cuan Rp50.000/Penjualan',
                 'modal.fix-v48-body-affiliate': 'Sekarang Anda bisa jadi affiliate Affiliate GO dan dapat komisi Rp50.000 untuk setiap penjualan aplikasi lewat link Anda. Buka menu Ads untuk lihat detail + tonton tutorial cara jadi affiliate.',
@@ -478,7 +481,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Tab Ruang Saku sekarang punya halaman penjelasan singkat fitur Rindu (AI keuangan) + tombol langsung ke RuangSaku.com. Lebih nyaman dipakai di HP — tinggal klik dan terbuka di tab browser.',
                 'modal.fix-v31-title-telegram': 'Tombol Telegram di Pojok Layar',
                 'modal.fix-v31-body-telegram': 'Tombol bundar Telegram sekarang ada di pojok kanan bawah aplikasi. Sekali klik langsung join grup Telegram Affiliate Go — tempat update fitur, tips, dan tanya jawab dengan komunitas.',
-                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 48',
+                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 49',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Selamat Datang di Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Asisten AI Anda untuk menjelajahi 79++ fitur photo & video generation',
@@ -3073,6 +3076,9 @@
                 'login.secure': '\uD83D\uDD12 Encrypted & Secure Access',
                 'login.no-access-cta': '\uD83D\uDED2 No access yet? Buy here \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v49-badge': 'Update v49',
+                'modal.fix-v49-title-login': 'Faster Login',
+                'modal.fix-v49-body-login': 'Signing in is now much faster — no more long "loading" on first open, especially during off-peak hours. If the server is briefly slow, the app automatically retries so you still get in with one click.',
                 'modal.fix-v48-badge': 'Update v48',
                 'modal.fix-v48-title-affiliate': 'Affiliate Program — Earn Rp50,000/Sale',
                 'modal.fix-v48-body-affiliate': 'You can now become an Affiliate GO affiliate and earn a Rp50,000 commission for every app sale through your link. Open the Ads menu for details + watch the tutorial on how to become an affiliate.',
@@ -3163,7 +3169,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Ruang Saku tab now has a brief intro page for Rindu (AI finance buddy) + direct button to RuangSaku.com. Smoother mobile experience — one click and it opens in a browser tab.',
                 'modal.fix-v31-title-telegram': 'Telegram Button at Screen Corner',
                 'modal.fix-v31-body-telegram': 'Round Telegram button is now at the bottom-right corner of the app. One click jumps directly to the Affiliate Go Telegram group — for feature updates, tips, and Q&A with the community.',
-                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 48',
+                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 49',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Welcome to Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Your AI Assistant to explore 79++ photo & video generation features',
@@ -8115,6 +8121,30 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
             return Math.random().toString(36).substr(2, 9) + Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
         }
 
+        // Fetch dengan batas waktu. Backend GAS bisa lambat / cold start di jam sepi;
+        // fetch biasa hanya reject saat error koneksi, TIDAK saat server lambat, sehingga
+        // spinner login menggantung selamanya. Timeout → controller.abort() → masuk .catch
+        // (err.name === 'AbortError') supaya user dapat pesan & bisa coba lagi.
+        function fetchWithTimeout(url, timeoutMs) {
+            const controller = new AbortController();
+            const timer = setTimeout(function() { controller.abort(); }, timeoutMs || 15000);
+            return fetch(url, { signal: controller.signal }).finally(function() { clearTimeout(timer); });
+        }
+
+        // Auto-retry khusus cold start GAS: percobaan pertama "membangunkan" server yang
+        // tidur (sering timeout), percobaan kedua kena instance yang sudah panas → cepat.
+        // Retry HANYA saat fetch gagal/timeout (bukan saat server balas), jeda 800ms.
+        // URL login pakai token yang sudah di-generate di luar (idempoten kalau di-retry).
+        function fetchWithTimeoutRetry(url, timeoutMs, retries) {
+            return fetchWithTimeout(url, timeoutMs).catch(function(err) {
+                if (retries > 0) {
+                    return new Promise(function(resolve) { setTimeout(resolve, 800); })
+                        .then(function() { return fetchWithTimeoutRetry(url, timeoutMs, retries - 1); });
+                }
+                throw err;
+            });
+        }
+
         // ==================== LOGIN FUNCTIONS ====================
 
         // Fungsi 1: Proses Login
@@ -8146,8 +8176,9 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
             // Generate Token Baru
             const newToken = generateToken();
 
-            // Panggil Google Apps Script (Action: login)
-            fetch(SCRIPT_URL + "?action=login&email=" + encodeURIComponent(email) + "&token=" + encodeURIComponent(newToken) + "&app_secret=" + encodeURIComponent(APP_SECRET) + "&product=" + encodeURIComponent(PRODUCT_ID))
+            // Panggil Google Apps Script (Action: login) — timeout 15s + 1x auto-retry.
+            // Retry menutup cold start: request pertama bangunkan GAS, kedua kena yang panas.
+            fetchWithTimeoutRetry(SCRIPT_URL + "?action=login&email=" + encodeURIComponent(email) + "&token=" + encodeURIComponent(newToken) + "&app_secret=" + encodeURIComponent(APP_SECRET) + "&product=" + encodeURIComponent(PRODUCT_ID), 15000, 1)
                 .then(res => res.json())
                 .then(data => {
                     loading.style.display = "none";
@@ -8184,9 +8215,13 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
                     loading.style.display = "none";
                     loginBtn.disabled = false;
                     loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> MASUK APLIKASI';
+                    // AbortError = timeout (server lambat merespons, bukan mati) — tombol
+                    // sudah re-enabled di atas jadi user tinggal klik lagi.
                     // SyntaxError = server merespons tapi bukan JSON (GAS overload
                     // mengembalikan halaman HTML error) — bukan masalah internet user.
-                    if (err instanceof SyntaxError) {
+                    if (err && err.name === "AbortError") {
+                        error.innerText = "❌ Server lambat merespons. Coba klik MASUK lagi ya.";
+                    } else if (err instanceof SyntaxError) {
                         error.innerText = "❌ Server sedang sibuk. Tunggu sebentar lalu coba lagi.";
                     } else {
                         error.innerText = "❌ Gagal koneksi ke server. Periksa koneksi internet Anda.";
@@ -8285,8 +8320,9 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
 
             if (!email || !token) return;
 
-            // Panggil Google Apps Script (Action: cek)
-            fetch(SCRIPT_URL + "?action=cek&email=" + encodeURIComponent(email) + "&token=" + encodeURIComponent(token) + "&app_secret=" + encodeURIComponent(APP_SECRET) + "&product=" + encodeURIComponent(PRODUCT_ID))
+            // Panggil Google Apps Script (Action: cek) — timeout 30s (< interval 60s) supaya
+            // request yang menggantung tidak menumpuk & memperparah beban GAS.
+            fetchWithTimeout(SCRIPT_URL + "?action=cek&email=" + encodeURIComponent(email) + "&token=" + encodeURIComponent(token) + "&app_secret=" + encodeURIComponent(APP_SECRET) + "&product=" + encodeURIComponent(PRODUCT_ID), 30000)
                 .then(res => res.json())
                 .then(data => {
                     if (data.status === "INVALID") {
@@ -8321,8 +8357,9 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
                 // Tampilkan loading
                 document.getElementById('loadingMsg').style.display = "block";
 
-                // Verifikasi token ke server
-                fetch(SCRIPT_URL + "?action=cek&email=" + encodeURIComponent(email) + "&token=" + encodeURIComponent(token) + "&app_secret=" + encodeURIComponent(APP_SECRET) + "&product=" + encodeURIComponent(PRODUCT_ID))
+                // Verifikasi token ke server — timeout 15s + 1x auto-retry (cold start).
+                // Kalau tetap gagal, .catch di bawah menyembunyikan loading & buka app (offline).
+                fetchWithTimeoutRetry(SCRIPT_URL + "?action=cek&email=" + encodeURIComponent(email) + "&token=" + encodeURIComponent(token) + "&app_secret=" + encodeURIComponent(APP_SECRET) + "&product=" + encodeURIComponent(PRODUCT_ID), 15000, 1)
                     .then(res => res.json())
                     .then(data => {
                         document.getElementById('loadingMsg').style.display = "none";

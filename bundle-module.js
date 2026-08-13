@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '48';
+        const UPDATE_VERSION = '49';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '49',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v49-badge',
+                badgeText: 'Update v49',
+                gradient: 'linear-gradient(135deg,#16a34a,#15803d)',
+                borderColor: '#16a34a',
+                icon: 'fa-bolt',
+                iconColor: '#16a34a',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v49-title-login',
+                        titleText: 'Login Lebih Cepat',
+                        bodyKey: 'modal.fix-v49-body-login',
+                        bodyText: 'Masuk ke aplikasi sekarang jauh lebih cepat — tidak ada lagi "loading" lama saat pertama buka, terutama di jam sepi. Kalau server sempat lambat, aplikasi otomatis mencoba lagi supaya Anda tetap masuk sekali klik.'
+                    }
+                ]
+            },
             {
                 version: '48',
                 dateId: 'Agustus 2026',
