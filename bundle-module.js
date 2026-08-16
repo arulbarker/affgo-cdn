@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '55';
+        const UPDATE_VERSION = '56';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '56',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v56-badge',
+                badgeText: 'Update v56',
+                gradient: 'linear-gradient(135deg,#0ea5e9,#0284c7)',
+                borderColor: '#0ea5e9',
+                icon: 'fa-expand-arrows-alt',
+                iconColor: '#0ea5e9',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v56-title-fullwidth',
+                        titleText: 'Foto Makanan & Foto Miniatur Kini Layar Penuh',
+                        bodyKey: 'modal.fix-v56-body-fullwidth',
+                        bodyText: 'Panel Foto Makanan Profesional dan Foto Miniatur tidak lagi mengecil di tengah saat zoom out — sekarang melebar mengisi layar penuh, konsisten dengan semua panel lain.'
+                    }
+                ]
+            },
             {
                 version: '55',
                 dateId: 'Agustus 2026',
