@@ -10,7 +10,7 @@
         <!-- Floating badge top-right -->
         <div style="position:absolute;top:16px;right:16px;background:linear-gradient(135deg,#ea580c,#c2410c);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(234,88,12,0.4);z-index:1;">90+ FITUR &#x26A1;</div>
         <!-- Floating version badge top-left (auto-sync dari UPDATE_VERSION via JS) -->
-        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V50</div>
+        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V51</div>
         <div class="login-box">
             <!-- AG Logo badge -->
             <div style="background:linear-gradient(135deg,#16a34a,#15803d);width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:1.35rem;font-weight:900;color:white;box-shadow:0 6px 18px rgba(22,163,74,0.4);">AG</div>
@@ -51,7 +51,7 @@
     <div id="main-app">
     <!-- Mobile Header -->
     <div class="mobile-header">
-        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V50</span></h1>
+        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V51</span></h1>
         <p class="text-xs text-gray-400 mt-1">by Arul CG</p>
         <div class="mobile-header-actions">
             <button type="button" id="mobile-fav-access-btn" class="mobile-fav-access-btn no-favs" aria-label="Buka tab favorit">
@@ -89,7 +89,7 @@
                 </h1>
                 <p class="text-xs text-gray-500 mt-1">by Arul CG</p>
                 <div class="mt-2">
-                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V50</span>
+                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V51</span>
                 </div>
                 <div class="lang-dropdown mt-2" id="lang-dropdown-desktop">
                     <button type="button" class="lang-dd-btn" aria-haspopup="listbox" aria-expanded="false">
@@ -19776,7 +19776,7 @@
     <button id="update-info-btn" class="text-white rounded-full w-16 h-16 flex items-center justify-center shadow-xl relative" style="background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);">
         <div class="flex flex-col items-center leading-none pointer-events-none">
             <i class="fas fa-bolt text-sm"></i>
-            <span class="text-xs font-bold mt-0.5">V50</span>
+            <span class="text-xs font-bold mt-0.5">V51</span>
         </div>
         <span class="update-notif-dot"></span>
     </button>
@@ -22017,228 +22017,230 @@
 
         <!-- TAB: Size Guide Generator -->
         <div id="content-size-guide" class="main-content-panel hidden">
-            <div class="container mx-auto max-w-7xl">
+            <div class="container mx-auto p-4 md:p-8 max-w-6xl">
                 <header class="text-center mb-8">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-orange-700">
-                        <i class="fas fa-ruler-combined mr-3"></i><span data-i18n="sg.h1">AI Size Guide Generator</span>
+                    <h1 class="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-orange-600 to-amber-600">
+                        <i class="fas fa-ruler-combined mr-3 text-orange-600"></i><span data-i18n="sg.h1">AI Size Guide Generator</span>
                     </h1>
-                    <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto" data-i18n="sg.subtitle">
+                    <p class="text-lg text-gray-500 mt-3 max-w-3xl mx-auto" data-i18n="sg.subtitle">
                         Generate product size comparisons and dimension guides automatically
                     </p>
                 </header>
 
-                <!-- Step 1: Upload Product Photo -->
-                <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
-                    <div class="flex items-center mb-4">
-                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white font-bold text-sm shadow-lg mr-3">1</div>
-                        <h2 class="text-xl font-bold text-gray-800">Upload Product Photo</h2>
-                    </div>
-                    <div class="upload-box-sizeguide">
-                        <input type="file" id="sizeguide-image-upload" accept="image/png, image/jpeg, image/webp, image/heic, .heic" class="hidden">
-                        <i class="fas fa-cloud-upload-alt text-5xl text-orange-400 mb-3"></i>
-                        <p class="text-lg font-semibold text-gray-700">Click to upload product photo</p>
-                        <p class="text-sm text-gray-500 mt-2">PNG, JPG, WEBP, HEIC up to 10MB</p>
-                    </div>
-                    <!-- Photo preview (visible on all screens after upload) -->
-                    <div id="sizeguide-preview-container" class="mt-3 hidden">
-                        <img id="sizeguide-image-preview" src="" alt="Preview" class="w-full rounded-lg shadow-lg max-h-48 object-cover">
-                        <button id="sizeguide-remove-preview" class="mt-2 w-full bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-3 rounded-lg">
-                            <i class="fas fa-times mr-1"></i> <span data-i18n="mr.delete-photo">Hapus Foto</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Step 2: Comparison Object Selection -->
-                <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
-                    <div class="flex items-center mb-4">
-                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white font-bold text-sm shadow-lg mr-3">2</div>
-                        <h2 class="text-xl font-bold text-gray-800">Select Comparison Object</h2>
-                    </div>
-                    <div id="sizeguide-comparison-selection" class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                        <button type="button" data-comparison="hand" class="option-btn-sizeguide selected">
-                            <i class="fas fa-hand-paper text-xl mb-1"></i>
-                            <div class="font-semibold">Hand</div>
-                        </button>
-                        <button type="button" data-comparison="coin" class="option-btn-sizeguide">
-                            <i class="fas fa-coins text-xl mb-1"></i>
-                            <div class="font-semibold">Coin</div>
-                        </button>
-                        <button type="button" data-comparison="ruler" class="option-btn-sizeguide">
-                            <i class="fas fa-ruler text-xl mb-1"></i>
-                            <div class="font-semibold">Ruler</div>
-                        </button>
-                        <button type="button" data-comparison="bottle" class="option-btn-sizeguide">
-                            <i class="fas fa-wine-bottle text-xl mb-1"></i>
-                            <div class="font-semibold">Water Bottle</div>
-                        </button>
-                        <button type="button" data-comparison="phone" class="option-btn-sizeguide">
-                            <i class="fas fa-mobile-alt text-xl mb-1"></i>
-                            <div class="font-semibold">Smartphone</div>
-                        </button>
-                        <button type="button" data-comparison="card" class="option-btn-sizeguide">
-                            <i class="fas fa-credit-card text-xl mb-1"></i>
-                            <div class="font-semibold">Credit Card</div>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Step 3: Product Dimensions (Optional) -->
-                <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
-                    <div class="flex items-center mb-4">
-                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white font-bold text-sm shadow-lg mr-3">3</div>
-                        <h2 class="text-xl font-bold text-gray-800">Product Dimensions (Optional)</h2>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Width (cm)</label>
-                            <input type="number" id="sizeguide-width" placeholder="e.g., 10" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none">
+                <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Input Column -->
+                    <div class="lg:col-span-1 space-y-6">
+                        <!-- Step 1: Upload Product Photo -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white font-bold text-sm shadow-lg">1</div>
+                                <h2 class="text-xl font-semibold text-gray-800">Upload Product Photo</h2>
+                            </div>
+                            <div class="upload-box-sizeguide">
+                                <input type="file" id="sizeguide-image-upload" accept="image/png, image/jpeg, image/webp, image/heic, .heic" class="hidden">
+                                <i class="fas fa-cloud-upload-alt text-5xl text-orange-400 mb-3"></i>
+                                <p class="text-lg font-semibold text-gray-700">Click to upload product photo</p>
+                                <p class="text-sm text-gray-500 mt-2">PNG, JPG, WEBP, HEIC up to 10MB</p>
+                            </div>
+                            <!-- Photo preview (visible on all screens after upload) -->
+                            <div id="sizeguide-preview-container" class="mt-3 hidden">
+                                <img id="sizeguide-image-preview" src="" alt="Preview" class="w-full rounded-lg shadow-lg max-h-48 object-cover">
+                                <button id="sizeguide-remove-preview" class="mt-2 w-full bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-3 rounded-lg">
+                                    <i class="fas fa-times mr-1"></i> <span data-i18n="mr.delete-photo">Hapus Foto</span>
+                                </button>
+                            </div>
                         </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Height (cm)</label>
-                            <input type="number" id="sizeguide-height" placeholder="e.g., 15" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none">
+
+                        <!-- Step 2: Comparison Object Selection -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white font-bold text-sm shadow-lg">2</div>
+                                <h2 class="text-xl font-semibold text-gray-800">Select Comparison Object</h2>
+                            </div>
+                            <div id="sizeguide-comparison-selection" class="grid grid-cols-2 gap-3">
+                                <button type="button" data-comparison="hand" class="option-btn-sizeguide selected">
+                                    <i class="fas fa-hand-paper text-xl mb-1"></i>
+                                    <div class="font-semibold">Hand</div>
+                                </button>
+                                <button type="button" data-comparison="coin" class="option-btn-sizeguide">
+                                    <i class="fas fa-coins text-xl mb-1"></i>
+                                    <div class="font-semibold">Coin</div>
+                                </button>
+                                <button type="button" data-comparison="ruler" class="option-btn-sizeguide">
+                                    <i class="fas fa-ruler text-xl mb-1"></i>
+                                    <div class="font-semibold">Ruler</div>
+                                </button>
+                                <button type="button" data-comparison="bottle" class="option-btn-sizeguide">
+                                    <i class="fas fa-wine-bottle text-xl mb-1"></i>
+                                    <div class="font-semibold">Water Bottle</div>
+                                </button>
+                                <button type="button" data-comparison="phone" class="option-btn-sizeguide">
+                                    <i class="fas fa-mobile-alt text-xl mb-1"></i>
+                                    <div class="font-semibold">Smartphone</div>
+                                </button>
+                                <button type="button" data-comparison="card" class="option-btn-sizeguide">
+                                    <i class="fas fa-credit-card text-xl mb-1"></i>
+                                    <div class="font-semibold">Credit Card</div>
+                                </button>
+                            </div>
                         </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Depth (cm)</label>
-                            <input type="number" id="sizeguide-depth" placeholder="e.g., 5" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none">
+
+                        <!-- Step 3: Product Dimensions (Optional) -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white font-bold text-sm shadow-lg">3</div>
+                                <h2 class="text-xl font-semibold text-gray-800">Product Dimensions (Optional)</h2>
+                            </div>
+                            <div class="grid grid-cols-3 gap-3">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Width (cm)</label>
+                                    <input type="number" id="sizeguide-width" placeholder="10" class="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Height (cm)</label>
+                                    <input type="number" id="sizeguide-height" placeholder="15" class="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Depth (cm)</label>
+                                    <input type="number" id="sizeguide-depth" placeholder="5" class="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Guide Style -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white font-bold text-sm shadow-lg">4</div>
+                                <h2 class="text-xl font-semibold text-gray-800">Guide Style</h2>
+                            </div>
+                            <div id="sizeguide-style-selection" class="grid grid-cols-2 gap-3">
+                                <button type="button" data-guidestyle="side-by-side" class="option-btn-sizeguide selected">
+                                    <i class="fas fa-columns text-xl mb-1"></i>
+                                    <div class="font-semibold">Side by Side</div>
+                                </button>
+                                <button type="button" data-guidestyle="overlay" class="option-btn-sizeguide">
+                                    <i class="fas fa-layer-group text-xl mb-1"></i>
+                                    <div class="font-semibold">Overlay</div>
+                                </button>
+                                <button type="button" data-guidestyle="dimension-lines" class="option-btn-sizeguide">
+                                    <i class="fas fa-drafting-compass text-xl mb-1"></i>
+                                    <div class="font-semibold">Dimension Lines</div>
+                                </button>
+                                <button type="button" data-guidestyle="infographic" class="option-btn-sizeguide">
+                                    <i class="fas fa-chart-bar text-xl mb-1"></i>
+                                    <div class="font-semibold">Infographic</div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Step 5: Aspect Ratio -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white font-bold text-sm shadow-lg">5</div>
+                                <h2 class="text-xl font-semibold text-gray-800">Aspect Ratio</h2>
+                            </div>
+                            <div id="sizeguide-aspect-selection" class="grid grid-cols-3 gap-3">
+                                <button type="button" data-aspect="1:1" class="option-btn-sizeguide selected">
+                                    <div class="font-semibold">1:1 Square</div>
+                                </button>
+                                <button type="button" data-aspect="3:4" class="option-btn-sizeguide">
+                                    <div class="font-semibold">3:4 Portrait</div>
+                                </button>
+                                <button type="button" data-aspect="9:16" class="option-btn-sizeguide">
+                                    <div class="font-semibold">9:16 Story</div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Step 6: Jumlah Generate -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white font-bold text-sm shadow-lg">6</div>
+                                <h2 class="text-xl font-semibold text-gray-800">
+                                    <span data-i18n="sg.count-label">Jumlah Generate</span>
+                                </h2>
+                            </div>
+                            <div id="sizeguide-count-selection-grid" class="count-btn-grid theme-amber">
+                                <button type="button" data-count="1">1</button>
+                                <button type="button" data-count="2">2</button>
+                                <button type="button" data-count="3">3</button>
+                                <button type="button" data-count="4" class="selected">4</button>
+                                <button type="button" data-count="5">5</button>
+                                <button type="button" data-count="6">6</button>
+                                <button type="button" data-count="7">7</button>
+                                <button type="button" data-count="8">8</button>
+                                <button type="button" data-count="9">9</button>
+                                <button type="button" data-count="10">10</button>
+                            </div>
+                        </div>
+
+                        <!-- Generate Button -->
+                        <button type="button" id="sizeguide-generate-btn" disabled class="w-full bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] disabled:hover:scale-100 disabled:cursor-not-allowed text-lg">
+                            <i class="fas fa-magic mr-2"></i> Generate Size Guides
+                        </button>
+                    </div>
+
+                    <!-- Output Column -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- Error Message -->
+                        <div id="sizeguide-error-message" class="hidden bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fas fa-exclamation-circle text-red-500 text-xl mr-3"></i>
+                                <p id="sizeguide-error-text" class="text-red-700 font-semibold"></p>
+                            </div>
+                        </div>
+
+                        <!-- Loading Indicator -->
+                        <div id="sizeguide-loading-indicator" class="hidden bg-gradient-to-r from-orange-50 to-orange-100 rounded-2xl shadow-lg p-8">
+                            <div class="text-center">
+                                <div class="inline-block animate-spin rounded-full h-16 w-16 border-b-4 border-orange-600 mb-4"></div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">
+                                    <i class="fas fa-wand-magic-sparkles mr-2 text-orange-600"></i>
+                                    <span id="sizeguide-loading-text">Generating size guides...</span>
+                                </h3>
+                                <div class="mt-4 bg-white rounded-full h-3 overflow-hidden shadow-inner">
+                                    <div id="sizeguide-progress-bar" class="bg-gradient-to-r from-orange-500 to-orange-600 h-full transition-all duration-500 rounded-full" style="width: 0%"></div>
+                                </div>
+                                <p id="sizeguide-progress-text" class="text-sm text-gray-600 mt-2">0/4</p>
+                            </div>
+                        </div>
+
+                        <!-- Results Section -->
+                        <div id="sizeguide-results-section" class="hidden card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex flex-wrap justify-between items-center gap-3 mb-6">
+                                <h3 class="text-xl font-bold text-gray-800">
+                                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                    <span id="sizeguide-results-count">4</span> Size Guides Generated!
+                                </h3>
+                                <button id="sizeguide-download-all-btn" class="min-h-[44px] bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white font-semibold py-2.5 px-5 rounded-lg transition-all flex items-center gap-2 text-sm shadow-md hover:shadow-lg">
+                                    <i class="fas fa-download"></i> Download All
+                                </button>
+                            </div>
+                            <div id="sizeguide-results-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+                        </div>
+
+                        <!-- Empty State -->
+                        <div id="sizeguide-empty-state" class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="text-center text-gray-500 py-10">
+                                 <div class="inline-block p-6 bg-gradient-to-br from-orange-100 to-orange-200 rounded-full mb-4">
+                                     <i class="fas fa-ruler-combined text-6xl text-orange-400"></i>
+                                 </div>
+                                 <p class="text-lg font-semibold" data-i18n="sg.empty-title">AI-Generated Size Guides</p>
+                                 <p class="text-sm" data-i18n="sg.empty-hint">Upload produk dan pilih settings untuk generate size guides</p>
+                                 <div class="mt-6 bg-orange-50 rounded-lg p-4 max-w-md mx-auto">
+                                     <p class="text-xs text-gray-600 text-left" data-i18n-html="sg.features">
+                                         <strong class="text-orange-600">Fitur:</strong><br>
+                                         ✓ Size comparison dengan objek umum<br>
+                                         ✓ Hand for scale reference<br>
+                                         ✓ Dimension overlay graphics<br>
+                                         ✓ 4 guide styles (side-by-side, overlay, dimension lines, infographic)<br>
+                                         ✓ Perfect untuk e-commerce & product pages
+                                     </p>
+                                 </div>
+                             </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Step 4: Guide Style -->
-                <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
-                    <div class="flex items-center mb-4">
-                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white font-bold text-sm shadow-lg mr-3">4</div>
-                        <h2 class="text-xl font-bold text-gray-800">Guide Style</h2>
-                    </div>
-                    <div id="sizeguide-style-selection" class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                        <button type="button" data-guidestyle="side-by-side" class="option-btn-sizeguide selected">
-                            <i class="fas fa-columns text-xl mb-1"></i>
-                            <div class="font-semibold">Side by Side</div>
-                        </button>
-                        <button type="button" data-guidestyle="overlay" class="option-btn-sizeguide">
-                            <i class="fas fa-layer-group text-xl mb-1"></i>
-                            <div class="font-semibold">Overlay</div>
-                        </button>
-                        <button type="button" data-guidestyle="dimension-lines" class="option-btn-sizeguide">
-                            <i class="fas fa-drafting-compass text-xl mb-1"></i>
-                            <div class="font-semibold">Dimension Lines</div>
-                        </button>
-                        <button type="button" data-guidestyle="infographic" class="option-btn-sizeguide">
-                            <i class="fas fa-chart-bar text-xl mb-1"></i>
-                            <div class="font-semibold">Infographic</div>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Step 5: Aspect Ratio -->
-                <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
-                    <div class="flex items-center mb-4">
-                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white font-bold text-sm shadow-lg mr-3">5</div>
-                        <h2 class="text-xl font-bold text-gray-800">Aspect Ratio</h2>
-                    </div>
-                    <div id="sizeguide-aspect-selection" class="grid grid-cols-3 gap-3">
-                        <button type="button" data-aspect="1:1" class="option-btn-sizeguide selected">
-                            <div class="font-semibold">1:1 Square</div>
-                        </button>
-                        <button type="button" data-aspect="3:4" class="option-btn-sizeguide">
-                            <div class="font-semibold">3:4 Portrait</div>
-                        </button>
-                        <button type="button" data-aspect="9:16" class="option-btn-sizeguide">
-                            <div class="font-semibold">9:16 Story</div>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Step 6: Jumlah Generate -->
-                <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
-                    <div class="flex items-center mb-4">
-                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white font-bold text-sm shadow-lg mr-3">6</div>
-                        <h2 class="text-xl font-bold text-gray-800">
-                            <span data-i18n="sg.count-label">Jumlah Generate</span>
-                        </h2>
-                    </div>
-                    <div id="sizeguide-count-selection-grid" class="count-btn-grid theme-amber">
-                        <button type="button" data-count="1">1</button>
-                        <button type="button" data-count="2">2</button>
-                        <button type="button" data-count="3">3</button>
-                        <button type="button" data-count="4" class="selected">4</button>
-                        <button type="button" data-count="5">5</button>
-                        <button type="button" data-count="6">6</button>
-                        <button type="button" data-count="7">7</button>
-                        <button type="button" data-count="8">8</button>
-                        <button type="button" data-count="9">9</button>
-                        <button type="button" data-count="10">10</button>
-                    </div>
-                </div>
-
-                <!-- Step 7: Generate Button -->
-                <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
-                    <div class="flex items-center mb-4">
-                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white font-bold text-sm shadow-lg mr-3">6</div>
-                        <h2 class="text-xl font-bold text-gray-800">Generate Size Guides</h2>
-                    </div>
-                    <button type="button" id="sizeguide-generate-btn" disabled class="w-full bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] disabled:hover:scale-100 disabled:cursor-not-allowed text-lg">
-                        <i class="fas fa-magic mr-2"></i> Generate Size Guides
-                    </button>
-                </div>
-
-                <!-- Error Message -->
-                <div id="sizeguide-error-message" class="hidden bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded-lg">
-                    <div class="flex items-center">
-                        <i class="fas fa-exclamation-circle text-red-500 text-xl mr-3"></i>
-                        <p id="sizeguide-error-text" class="text-red-700 font-semibold"></p>
-                    </div>
-                </div>
-
-                <!-- Loading Indicator -->
-                <div id="sizeguide-loading-indicator" class="hidden bg-gradient-to-r from-orange-50 to-orange-100 rounded-2xl shadow-xl p-8 mb-6">
-                    <div class="text-center">
-                        <div class="inline-block animate-spin rounded-full h-16 w-16 border-b-4 border-orange-600 mb-4"></div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">
-                            <i class="fas fa-wand-magic-sparkles mr-2 text-orange-600"></i>
-                            <span id="sizeguide-loading-text">Generating size guides...</span>
-                        </h3>
-                        <div class="mt-4 bg-white rounded-full h-3 overflow-hidden shadow-inner">
-                            <div id="sizeguide-progress-bar" class="bg-gradient-to-r from-orange-500 to-orange-600 h-full transition-all duration-500 rounded-full" style="width: 0%"></div>
-                        </div>
-                        <p id="sizeguide-progress-text" class="text-sm text-gray-600 mt-2">0/4</p>
-                    </div>
-                </div>
-
-                <!-- Results Section -->
-                <div id="sizeguide-results-section" class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-4 md:mb-0">
-                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                            <span id="sizeguide-results-count">4</span> Size Guides Generated!
-                        </h3>
-                        <button id="sizeguide-download-all-btn" class="bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
-                            <i class="fas fa-download mr-2"></i> Download All
-                        </button>
-                    </div>
-                    <div id="sizeguide-results-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-                </div>
-
-                <!-- Empty State -->
-                <div id="sizeguide-empty-state" class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl shadow-xl p-12">
-                    <div class="text-center text-gray-500">
-                         <div class="inline-block p-6 bg-gradient-to-br from-orange-100 to-orange-200 rounded-full mb-4">
-                             <i class="fas fa-ruler-combined text-6xl text-orange-400"></i>
-                         </div>
-                         <p class="text-lg font-semibold" data-i18n="sg.empty-title">AI-Generated Size Guides</p>
-                         <p class="text-sm" data-i18n="sg.empty-hint">Upload produk dan pilih settings untuk generate size guides</p>
-                         <div class="mt-6 bg-orange-50 rounded-lg p-4 max-w-md mx-auto">
-                             <p class="text-xs text-gray-600 text-left" data-i18n-html="sg.features">
-                                 <strong class="text-orange-600">Fitur:</strong><br>
-                                 ✓ Size comparison dengan objek umum<br>
-                                 ✓ Hand for scale reference<br>
-                                 ✓ Dimension overlay graphics<br>
-                                 ✓ 4 guide styles (side-by-side, overlay, dimension lines, infographic)<br>
-                                 ✓ Perfect untuk e-commerce & product pages
-                             </p>
-                         </div>
-                     </div>
-                </div>
+                </main>
             </div>
         </div>
 

@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '50';
+        const UPDATE_VERSION = '51';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '51',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v51-badge',
+                badgeText: 'Update v51',
+                gradient: 'linear-gradient(135deg,#ea580c,#c2410c)',
+                borderColor: '#ea580c',
+                icon: 'fa-expand',
+                iconColor: '#ea580c',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v51-title-fullwidth',
+                        titleText: 'Tampilan Layar Penuh',
+                        bodyKey: 'modal.fix-v51-body-fullwidth',
+                        bodyText: 'Semua fitur kini memakai lebar layar penuh seperti tab Foto Produk Affiliate — konten tidak lagi mengecil di tengah saat halaman di-zoom out, hasil generate tampil lebih lega.'
+                    },
+                    {
+                        titleKey: 'modal.fix-v51-title-sizeguide',
+                        titleText: 'Size Guide Tampilan Baru',
+                        bodyKey: 'modal.fix-v51-body-sizeguide',
+                        bodyText: 'Halaman Size Guide dirombak mengikuti tata letak standar: pengaturan di kolom kiri, hasil di kolom kanan — tidak perlu scroll panjang lagi untuk melihat hasil.'
+                    }
+                ]
+            },
             {
                 version: '50',
                 dateId: 'Agustus 2026',

@@ -10411,6 +10411,13 @@
         }
         .mobile-header-actions .theme-toggle-btn:hover { background: rgba(255,255,255,0.25); }
 
+        /* ===== FULL-WIDTH PANELS — samakan dengan tab Foto Produk Affiliate =====
+           Panel lain dibungkus .container max-w-6xl/7xl (center + cap lebar) sehingga
+           saat zoom out konten mengecil di tengah. Affiliate tanpa cap = mengisi
+           layar penuh. Rule ini melepas cap untuk SEMUA panel; specificity (0,2,0)
+           menang atas utility Tailwind (0,1,0) walau Tailwind di-inject runtime. */
+        .main-content-panel .container { max-width: 100%; }
+
         /* ===== Dark Mode — override layer (html.dark, di-toggle setAppTheme) =====
            Menimpa utility Tailwind terang. html.dark .x = specificity (0,2,1)
            > utility (0,1,0), menang tanpa !important walau stylesheet
