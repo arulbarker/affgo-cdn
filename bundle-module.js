@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '49';
+        const UPDATE_VERSION = '50';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '50',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v50-badge',
+                badgeText: 'Update v50',
+                gradient: 'linear-gradient(135deg,#16a34a,#15803d)',
+                borderColor: '#16a34a',
+                icon: 'fa-layer-group',
+                iconColor: '#16a34a',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v50-title-hub',
+                        titleText: 'Menu Lebih Rapi — Hub Baru',
+                        bodyKey: 'modal.fix-v50-body-hub',
+                        bodyText: 'Menu samping dirapikan: Walking Pad kini jadi POV Walking Pad di dalam POV Studio, Unboxing dan Before/After bergabung ke Review Generator, dan Foto Produk Premium masuk ke Foto Produk Affiliate. Pindah antar fitur cukup lewat tombol pill di bagian atas halaman.'
+                    },
+                    {
+                        titleKey: 'modal.fix-v50-title-ba',
+                        titleText: 'Before/After 3 Mode',
+                        bodyKey: 'modal.fix-v50-body-ba',
+                        bodyText: 'Halaman Before/After yang dulu tampil dobel kini digabung jadi satu halaman rapi dengan 3 mode: Upload & Transform, Text to Image, dan Showcase Produk untuk konten skincare & beauty.'
+                    }
+                ]
+            },
             {
                 version: '49',
                 dateId: 'Agustus 2026',
@@ -22017,8 +22042,17 @@ OUTPUT: Create a stunning, production-ready packaging design that a brand would 
         // DOM Elements
         const modeUploadBtn = document.getElementById('ba-mode-upload');
         const modeTextBtn = document.getElementById('ba-mode-text');
+        const modeProductBtn = document.getElementById('ba-mode-product');
         const uploadModeContent = document.getElementById('ba-upload-mode-content');
         const textModeContent = document.getElementById('ba-text-mode-content');
+        const transformWrapper = document.getElementById('ba-transform-wrapper');
+        const productSection = document.getElementById('ba-product-section');
+
+        function baExitProductMode() {
+            if (modeProductBtn) modeProductBtn.classList.remove('active');
+            if (productSection) productSection.classList.add('hidden');
+            if (transformWrapper) transformWrapper.classList.remove('hidden');
+        }
 
         // Upload Mode Elements
         const imageUpload = document.getElementById('ba-before-upload');
@@ -22056,6 +22090,7 @@ OUTPUT: Create a stunning, production-ready packaging design that a brand would 
                 modeTextBtn.classList.remove('active');
                 uploadModeContent.classList.remove('hidden');
                 textModeContent.classList.add('hidden');
+                baExitProductMode();
                 resetState();
             });
         }
@@ -22067,7 +22102,18 @@ OUTPUT: Create a stunning, production-ready packaging design that a brand would 
                 modeUploadBtn.classList.remove('active');
                 textModeContent.classList.remove('hidden');
                 uploadModeContent.classList.add('hidden');
+                baExitProductMode();
                 resetState();
+            });
+        }
+
+        if (modeProductBtn) {
+            modeProductBtn.addEventListener('click', () => {
+                modeProductBtn.classList.add('active');
+                modeUploadBtn.classList.remove('active');
+                modeTextBtn.classList.remove('active');
+                if (transformWrapper) transformWrapper.classList.add('hidden');
+                if (productSection) productSection.classList.remove('hidden');
             });
         }
 

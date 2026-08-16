@@ -10,7 +10,7 @@
         <!-- Floating badge top-right -->
         <div style="position:absolute;top:16px;right:16px;background:linear-gradient(135deg,#ea580c,#c2410c);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(234,88,12,0.4);z-index:1;">90+ FITUR &#x26A1;</div>
         <!-- Floating version badge top-left (auto-sync dari UPDATE_VERSION via JS) -->
-        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V49</div>
+        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V50</div>
         <div class="login-box">
             <!-- AG Logo badge -->
             <div style="background:linear-gradient(135deg,#16a34a,#15803d);width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:1.35rem;font-weight:900;color:white;box-shadow:0 6px 18px rgba(22,163,74,0.4);">AG</div>
@@ -51,7 +51,7 @@
     <div id="main-app">
     <!-- Mobile Header -->
     <div class="mobile-header">
-        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V49</span></h1>
+        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V50</span></h1>
         <p class="text-xs text-gray-400 mt-1">by Arul CG</p>
         <div class="mobile-header-actions">
             <button type="button" id="mobile-fav-access-btn" class="mobile-fav-access-btn no-favs" aria-label="Buka tab favorit">
@@ -89,7 +89,7 @@
                 </h1>
                 <p class="text-xs text-gray-500 mt-1">by Arul CG</p>
                 <div class="mt-2">
-                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V49</span>
+                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V50</span>
                 </div>
                 <div class="lang-dropdown mt-2" id="lang-dropdown-desktop">
                     <button type="button" class="lang-dd-btn" aria-haspopup="listbox" aria-expanded="false">
@@ -188,9 +188,9 @@
                         <i class="fas fa-mobile-alt"></i>
                         <span class="btn-text">POV Mirror Selfie</span>
                     </button>
-                    <button data-tab="walking-pad" class="main-tab-btn">
+                    <button data-tab="walking-pad" class="main-tab-btn hidden">
                         <i class="fas fa-walking"></i>
-                        <span class="btn-text">Walking Pad</span>
+                        <span class="btn-text">POV Walking Pad</span>
                     </button>
                     <button data-tab="pose-fashion" class="main-tab-btn">
                         <i class="fas fa-user-tie"></i>
@@ -216,15 +216,15 @@
                         <i class="fas fa-bullhorn"></i>
                         <span class="btn-text">Generator Story Iklan</span>
                     </button>
-                    <button data-tab="unboxing-scene" class="main-tab-btn">
+                    <button data-tab="unboxing-scene" class="main-tab-btn hidden">
                         <i class="fas fa-box-open"></i>
                         <span class="btn-text">Unboxing Scene</span>
                     </button>
-                    <button data-tab="before-after" class="main-tab-btn">
+                    <button data-tab="before-after" class="main-tab-btn hidden">
                         <i class="fas fa-arrows-left-right"></i>
                         <span class="btn-text">Before/After</span>
                     </button>
-                    <button data-tab="product-premium" class="main-tab-btn">
+                    <button data-tab="product-premium" class="main-tab-btn hidden">
                         <i class="fas fa-wand-magic-sparkles"></i>
                         <span class="btn-text" data-i18n="nav.product-premium">Foto Produk Premium</span>
                     </button>
@@ -2404,6 +2404,7 @@
                 <button type="button" class="hub-pill active" data-goto="affiliate" data-i18n="hub.aff-umum">Tema Umum</button>
                 <button type="button" class="hub-pill" data-goto="affiliate-islami" data-i18n="hub.aff-agama">Tema Agama</button>
                 <button type="button" class="hub-pill" data-goto="affiliate-harga" data-i18n="hub.aff-harga">Tema Harga</button>
+                <button type="button" class="hub-pill" data-goto="product-premium" data-i18n="hub.aff-premium">Premium</button>
             </div>
                 <main class="flex flex-col lg:flex-row gap-8">
                     <!-- Kolom Input -->
@@ -2666,6 +2667,7 @@
                 <button type="button" class="hub-pill" data-goto="affiliate" data-i18n="hub.aff-umum">Tema Umum</button>
                 <button type="button" class="hub-pill" data-goto="affiliate-islami" data-i18n="hub.aff-agama">Tema Agama</button>
                 <button type="button" class="hub-pill active" data-goto="affiliate-harga" data-i18n="hub.aff-harga">Tema Harga</button>
+                <button type="button" class="hub-pill" data-goto="product-premium" data-i18n="hub.aff-premium">Premium</button>
             </div>
                 <main class="flex flex-col lg:flex-row gap-8">
                     <!-- Kolom Input -->
@@ -3306,6 +3308,7 @@
                 <button type="button" class="hub-pill" data-goto="affiliate" data-i18n="hub.aff-umum">Tema Umum</button>
                 <button type="button" class="hub-pill active" data-goto="affiliate-islami" data-i18n="hub.aff-agama">Tema Agama</button>
                 <button type="button" class="hub-pill" data-goto="affiliate-harga" data-i18n="hub.aff-harga">Tema Harga</button>
+                <button type="button" class="hub-pill" data-goto="product-premium" data-i18n="hub.aff-premium">Premium</button>
             </div>
             <div class="container mx-auto max-w-7xl">
                 <header class="text-center mb-8">
@@ -4636,6 +4639,8 @@
                 <button type="button" class="hub-pill active" data-goto="product-review" data-i18n="hub.review-product">Review Produk</button>
                 <button type="button" class="hub-pill" data-goto="skincare-review" data-i18n="hub.review-skincare">Review Skincare</button>
                 <button type="button" class="hub-pill" data-goto="product-ads" data-i18n="hub.review-ads">Story Iklan</button>
+                <button type="button" class="hub-pill" data-goto="unboxing-scene" data-i18n="hub.review-unboxing">Unboxing</button>
+                <button type="button" class="hub-pill" data-goto="before-after" data-i18n="hub.review-beforeafter">Before/After</button>
             </div>
             <div class="container mx-auto p-4 md:p-8 max-w-7xl">
                 <header class="text-center mb-8">
@@ -4781,6 +4786,8 @@
                 <button type="button" class="hub-pill" data-goto="product-review" data-i18n="hub.review-product">Review Produk</button>
                 <button type="button" class="hub-pill active" data-goto="skincare-review" data-i18n="hub.review-skincare">Review Skincare</button>
                 <button type="button" class="hub-pill" data-goto="product-ads" data-i18n="hub.review-ads">Story Iklan</button>
+                <button type="button" class="hub-pill" data-goto="unboxing-scene" data-i18n="hub.review-unboxing">Unboxing</button>
+                <button type="button" class="hub-pill" data-goto="before-after" data-i18n="hub.review-beforeafter">Before/After</button>
             </div>
             <div class="container mx-auto p-4 md:p-8 max-w-7xl">
                 <header class="text-center mb-8">
@@ -5191,6 +5198,8 @@
                 <button type="button" class="hub-pill" data-goto="product-review" data-i18n="hub.review-product">Review Produk</button>
                 <button type="button" class="hub-pill" data-goto="skincare-review" data-i18n="hub.review-skincare">Review Skincare</button>
                 <button type="button" class="hub-pill active" data-goto="product-ads" data-i18n="hub.review-ads">Story Iklan</button>
+                <button type="button" class="hub-pill" data-goto="unboxing-scene" data-i18n="hub.review-unboxing">Unboxing</button>
+                <button type="button" class="hub-pill" data-goto="before-after" data-i18n="hub.review-beforeafter">Before/After</button>
             </div>
             <div class="container mx-auto p-4 md:p-8 max-w-7xl">
                 <header class="text-center mb-8">
@@ -5970,6 +5979,12 @@
 
         <!-- TAB: PRODUCT PREMIUM (Foto Produk Premium) -->
         <div id="content-product-premium" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill" data-goto="affiliate" data-i18n="hub.aff-umum">Tema Umum</button>
+                <button type="button" class="hub-pill" data-goto="affiliate-islami" data-i18n="hub.aff-agama">Tema Agama</button>
+                <button type="button" class="hub-pill" data-goto="affiliate-harga" data-i18n="hub.aff-harga">Tema Harga</button>
+                <button type="button" class="hub-pill active" data-goto="product-premium" data-i18n="hub.aff-premium">Premium</button>
+            </div>
             <div class="container mx-auto max-w-7xl">
                 <header class="text-center mb-10">
                     <div class="inline-flex items-center gap-3 mb-4">
@@ -14982,6 +14997,13 @@
 
         <!-- TAB: BEFORE AFTER GENERATOR -->
         <div id="content-before-after" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill" data-goto="product-review" data-i18n="hub.review-product">Review Produk</button>
+                <button type="button" class="hub-pill" data-goto="skincare-review" data-i18n="hub.review-skincare">Review Skincare</button>
+                <button type="button" class="hub-pill" data-goto="product-ads" data-i18n="hub.review-ads">Story Iklan</button>
+                <button type="button" class="hub-pill" data-goto="unboxing-scene" data-i18n="hub.review-unboxing">Unboxing</button>
+                <button type="button" class="hub-pill active" data-goto="before-after" data-i18n="hub.review-beforeafter">Before/After</button>
+            </div>
             <div class="container mx-auto max-w-7xl">
                 <header class="text-center mb-8">
                     <h1 class="text-4xl md:text-5xl font-bold mb-3">
@@ -15001,10 +15023,13 @@
                         <button id="ba-mode-text">
                             <i class="fas fa-keyboard mr-2"></i>Text to Image
                         </button>
+                        <button id="ba-mode-product">
+                            <i class="fas fa-spa mr-2"></i><span data-i18n="ba.mode-product">Showcase Produk</span>
+                        </button>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div id="ba-transform-wrapper" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <!-- Left Column: Input & Settings -->
                     <aside class="bg-white rounded-2xl shadow-xl p-6 border-2 border-transparent hover:border-green-200 transition-all duration-300">
                         <h2 class="text-2xl font-bold mb-6 flex items-center gap-2" style="color: #15803d;">
@@ -15202,6 +15227,240 @@
                     </main>
                 </div>
             </div>
+                <div id="ba-product-section" class="hidden">
+            <div class="container mx-auto max-w-7xl">
+                <header class="text-center mb-8 hidden">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600">
+                        <i class="fas fa-arrows-left-right mr-3"></i><span data-i18n="ba.h1">AI Before/After Generator</span>
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-2" data-i18n="ba.subtitle">
+                        Showcase transformasi produk dengan visual before/after yang menarik
+                    </p>
+                    <p class="text-sm text-gray-500" data-i18n-html="ba.subtitle2">
+                        <i class="fas fa-sparkles mr-1"></i>
+                        Split screen, slider format, arrow indicators - perfect untuk skincare & beauty
+                    </p>
+                </header>
+
+                <div class="grid lg:grid-cols-5 gap-6">
+                    <!-- Input Section (Left Panel - 2 columns) -->
+                    <div class="lg:col-span-2">
+                        <div class="card p-6 sticky top-6">
+                            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                                <i class="fas fa-upload mr-2 text-green-600"></i>Input Settings
+                            </h2>
+
+                            <div class="space-y-6">
+                                <!-- Step 1: Upload Photo -->
+                                <div>
+                                    <div class="flex items-center gap-2 mb-3">
+                                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">1</div>
+                                        <h3 class="text-lg font-bold text-gray-800" data-i18n="ba.step1">Upload Foto</h3>
+                                    </div>
+                                    <div class="upload-box-beforeafter cursor-pointer border-2 border-dashed border-gray-300 rounded-xl p-8 text-center">
+                                        <input type="file" id="beforeafter-image-upload" class="hidden" accept="image/png, image/jpeg, image/webp, image/heic, .heic">
+                                        <i class="fas fa-cloud-upload-alt text-5xl mb-3 text-green-400"></i>
+                                        <p class="text-gray-700 font-semibold mb-1" data-i18n="ba.upload-cta">Click to upload image</p>
+                                        <p class="text-sm text-gray-500" data-i18n="ub.upload-formats">PNG, JPG, WEBP, HEIC (max 10MB)</p>
+                                    </div>
+
+                                    <!-- Photo preview (visible on all screens after upload) -->
+                                    <div id="beforeafter-preview-container" class="mt-3 hidden">
+                                        <img id="beforeafter-image-preview" src="" alt="Preview" class="w-full rounded-lg shadow-lg max-h-48 object-cover">
+                                        <button id="beforeafter-remove-preview" class="mt-2 w-full bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-3 rounded-lg">
+                                            <i class="fas fa-times mr-1"></i> <span data-i18n="mr.delete-photo">Hapus Foto</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Step 2: Product Category -->
+                                <div>
+                                    <div class="flex items-center gap-2 mb-3">
+                                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">2</div>
+                                        <h3 class="text-lg font-bold text-gray-800">Product Category</h3>
+                                    </div>
+                                    <div id="beforeafter-category-selection" class="grid grid-cols-2 gap-3">
+                                        <button type="button" data-category="skincare" class="option-btn-beforeafter selected">
+                                            <i class="fas fa-spa text-lg mb-1"></i>
+                                            <span class="text-sm">Skincare</span>
+                                        </button>
+                                        <button type="button" data-category="makeup" class="option-btn-beforeafter">
+                                            <i class="fas fa-paint-brush text-lg mb-1"></i>
+                                            <span class="text-sm">Makeup</span>
+                                        </button>
+                                        <button type="button" data-category="hair" class="option-btn-beforeafter">
+                                            <i class="fas fa-scissors text-lg mb-1"></i>
+                                            <span class="text-sm">Hair Care</span>
+                                        </button>
+                                        <button type="button" data-category="fitness" class="option-btn-beforeafter">
+                                            <i class="fas fa-dumbbell text-lg mb-1"></i>
+                                            <span class="text-sm">Fitness</span>
+                                        </button>
+                                        <button type="button" data-category="dental" class="option-btn-beforeafter">
+                                            <i class="fas fa-tooth text-lg mb-1"></i>
+                                            <span class="text-sm">Dental</span>
+                                        </button>
+                                        <button type="button" data-category="other" class="option-btn-beforeafter">
+                                            <i class="fas fa-box text-lg mb-1"></i>
+                                            <span class="text-sm">Other</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Step 3: Comparison Style -->
+                                <div>
+                                    <div class="flex items-center gap-2 mb-3">
+                                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">3</div>
+                                        <h3 class="text-lg font-bold text-gray-800">Comparison Style</h3>
+                                    </div>
+                                    <div id="beforeafter-style-selection" class="grid grid-cols-2 gap-3">
+                                        <button type="button" data-style="split-screen" class="option-btn-beforeafter selected">
+                                            <i class="fas fa-grip-lines-vertical text-lg mb-1"></i>
+                                            <span class="text-sm">Split Screen</span>
+                                        </button>
+                                        <button type="button" data-style="slider" class="option-btn-beforeafter">
+                                            <i class="fas fa-sliders text-lg mb-1"></i>
+                                            <span class="text-sm">Slider Format</span>
+                                        </button>
+                                        <button type="button" data-style="side-by-side" class="option-btn-beforeafter">
+                                            <i class="fas fa-columns text-lg mb-1"></i>
+                                            <span class="text-sm">Side-by-Side</span>
+                                        </button>
+                                        <button type="button" data-style="stacked" class="option-btn-beforeafter">
+                                            <i class="fas fa-layer-group text-lg mb-1"></i>
+                                            <span class="text-sm">Stacked</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Step 4: Show Indicators -->
+                                <div>
+                                    <div class="flex items-center gap-2 mb-3">
+                                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">4</div>
+                                        <h3 class="text-lg font-bold text-gray-800" data-i18n="ba.step4">Tampilkan</h3>
+                                    </div>
+                                    <div id="beforeafter-indicators-selection" class="space-y-2">
+                                        <label class="flex items-center gap-3 p-3 bg-white border-2 border-gray-200 rounded-lg hover:border-green-400 cursor-pointer transition-all">
+                                            <input type="checkbox" id="beforeafter-show-labels" checked class="w-5 h-5 text-green-600">
+                                            <span class="text-sm font-medium text-gray-700" data-i18n="ba.indic-text">Text Labels (BEFORE/AFTER)</span>
+                                        </label>
+                                        <label class="flex items-center gap-3 p-3 bg-white border-2 border-gray-200 rounded-lg hover:border-green-400 cursor-pointer transition-all">
+                                            <input type="checkbox" id="beforeafter-show-arrows" checked class="w-5 h-5 text-green-600">
+                                            <span class="text-sm font-medium text-gray-700" data-i18n="ba.indic-arrows">Arrow Indicators</span>
+                                        </label>
+                                        <label class="flex items-center gap-3 p-3 bg-white border-2 border-gray-200 rounded-lg hover:border-green-400 cursor-pointer transition-all">
+                                            <input type="checkbox" id="beforeafter-show-highlight" checked class="w-5 h-5 text-green-600">
+                                            <span class="text-sm font-medium text-gray-700" data-i18n="ba.indic-highlight">Highlight Changes</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Step 5: Aspect Ratio -->
+                                <div>
+                                    <div class="flex items-center gap-2 mb-3">
+                                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">5</div>
+                                        <h3 class="text-lg font-bold text-gray-800">Aspect Ratio</h3>
+                                    </div>
+                                    <div id="beforeafter-aspect-selection" class="grid grid-cols-3 gap-3">
+                                        <button type="button" data-aspect="1:1" class="option-btn-beforeafter selected">
+                                            <i class="fas fa-square text-lg mb-1"></i>
+                                            <span class="text-sm">1:1</span>
+                                        </button>
+                                        <button type="button" data-aspect="16:9" class="option-btn-beforeafter">
+                                            <i class="fas fa-rectangle-wide text-lg mb-1"></i>
+                                            <span class="text-sm">16:9</span>
+                                        </button>
+                                        <button type="button" data-aspect="9:16" class="option-btn-beforeafter">
+                                            <i class="fas fa-rectangle-vertical text-lg mb-1"></i>
+                                            <span class="text-sm">9:16</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Step 6: Generate Button -->
+                                <div>
+                                    <div class="flex items-center gap-2 mb-3">
+                                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">6</div>
+                                        <h3 class="text-lg font-bold text-gray-800">Generate</h3>
+                                    </div>
+                                    <button type="button" id="beforeafter-generate-btn" disabled class="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+                                        <i class="fas fa-wand-magic-sparkles mr-2"></i>
+                                        <span data-i18n="ba.generate-btn">Generate Before/After</span>
+                                    </button>
+                                    <p class="text-sm text-gray-500 text-center mt-2" data-i18n-html="ba.generate-tip">
+                                        <i class="fas fa-info-circle mr-1"></i>
+                                        AI akan generate before/after transformasi visual
+                                    </p>
+                                </div>
+
+                                <!-- Error Message -->
+                                <div id="beforeafter-error-message" class="hidden p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-lg">
+                                    <i class="fas fa-exclamation-circle mr-2"></i>
+                                    <span id="beforeafter-error-text"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results Section (Right Panel - 3 columns) -->
+                    <div class="lg:col-span-3">
+                        <!-- Loading Indicator -->
+                        <div id="beforeafter-loading-indicator" class="hidden">
+                            <div class="bg-white p-8 rounded-xl shadow-lg text-center">
+                                <div class="inline-block animate-spin rounded-full h-16 w-16 border-b-4 border-green-600 mb-4"></div>
+                                <p class="text-lg text-gray-700 font-semibold" id="beforeafter-loading-text">Generating before/after 1/4...</p>
+                                <p class="text-sm text-gray-500 mt-2" data-i18n="ba.loading-hint">AI sedang membuat transformasi visual dengan indicators</p>
+
+                                <!-- Progress Bar -->
+                                <div class="mt-4 bg-gray-200 rounded-full h-3 overflow-hidden">
+                                    <div id="beforeafter-progress-bar" class="bg-gradient-to-r from-green-600 to-emerald-600 h-full transition-all duration-500" style="width: 0%"></div>
+                                </div>
+                                <p class="text-xs text-gray-600 mt-2">
+                                    <span id="beforeafter-progress-text">0/4</span> completed
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Results Container -->
+                        <div id="beforeafter-results-section" class="hidden">
+                            <div class="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-xl border-2 border-green-200">
+                                <h3 class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600">
+                                    <i class="fas fa-check-circle mr-2"></i>
+                                    <span id="beforeafter-results-count">4</span> Before/After Generated!
+                                </h3>
+                                <button id="beforeafter-download-all-btn" class="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-6 py-2.5 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300 text-sm">
+                                    <i class="fas fa-download mr-2"></i>Download All
+                                </button>
+                            </div>
+
+                            <!-- Results Grid -->
+                            <div id="beforeafter-results-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Before/After cards will be inserted here dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Empty State -->
+                        <div id="beforeafter-empty-state" class="text-center py-16">
+                            <div class="inline-block p-6 bg-gradient-to-br from-green-50 to-emerald-50 rounded-full mb-4">
+                                <i class="fas fa-arrows-left-right text-6xl text-green-400"></i>
+                            </div>
+                            <p class="text-lg font-semibold">AI-Generated Before/After</p>
+                            <p class="text-sm">Upload foto dan pilih settings untuk generate before/after transformasi</p>
+                            <div class="mt-6 bg-green-50 rounded-lg p-4 max-w-md mx-auto">
+                                <p class="text-xs text-gray-600 text-left">
+                                    <strong class="text-green-600">Fitur:</strong><br>
+                                    ✓ Split screen atau slider format<br>
+                                    ✓ Text labels "BEFORE" / "AFTER"<br>
+                                    ✓ Arrow indicators untuk perubahan<br>
+                                    ✓ Highlight changes visual<br>
+                                    ✓ Perfect untuk skincare & beauty products
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
 
         <!-- TAB: DESAIN RUMAH -->
@@ -16887,6 +17146,7 @@
                 <button type="button" class="hub-pill active" data-goto="pov-tangan" data-i18n="hub.pov-tangan">POV Tangan</button>
                 <button type="button" class="hub-pill" data-goto="pov-selfie" data-i18n="hub.pov-selfie">POV Selfie</button>
                 <button type="button" class="hub-pill" data-goto="mirror-selfie" data-i18n="hub.pov-mirror">Mirror Selfie</button>
+                <button type="button" class="hub-pill" data-goto="walking-pad" data-i18n="hub.pov-walkpad">POV Walking Pad</button>
             </div>
             <div class="container mx-auto p-4 md:p-8 max-w-6xl">
                 <header class="text-center mb-8">
@@ -17513,6 +17773,7 @@
             <button type="button" class="hub-pill" data-goto="pov-tangan" data-i18n="hub.pov-tangan">POV Tangan</button>
             <button type="button" class="hub-pill active" data-goto="pov-selfie" data-i18n="hub.pov-selfie">POV Selfie</button>
             <button type="button" class="hub-pill" data-goto="mirror-selfie" data-i18n="hub.pov-mirror">Mirror Selfie</button>
+            <button type="button" class="hub-pill" data-goto="walking-pad" data-i18n="hub.pov-walkpad">POV Walking Pad</button>
         </div>
         <div class="container mx-auto p-4 md:p-8 max-w-6xl">
             <header class="text-center mb-8">
@@ -17759,6 +18020,7 @@
             <button type="button" class="hub-pill" data-goto="pov-tangan" data-i18n="hub.pov-tangan">POV Tangan</button>
             <button type="button" class="hub-pill" data-goto="pov-selfie" data-i18n="hub.pov-selfie">POV Selfie</button>
             <button type="button" class="hub-pill active" data-goto="mirror-selfie" data-i18n="hub.pov-mirror">Mirror Selfie</button>
+            <button type="button" class="hub-pill" data-goto="walking-pad" data-i18n="hub.pov-walkpad">POV Walking Pad</button>
         </div>
         <div class="container mx-auto max-w-7xl">
             <header class="text-center mb-8">
@@ -18905,6 +19167,12 @@
 
         <!-- TAB: WALKING PAD LIFESTYLE -->
         <div id="content-walking-pad" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill" data-goto="pov-tangan" data-i18n="hub.pov-tangan">POV Tangan</button>
+                <button type="button" class="hub-pill" data-goto="pov-selfie" data-i18n="hub.pov-selfie">POV Selfie</button>
+                <button type="button" class="hub-pill" data-goto="mirror-selfie" data-i18n="hub.pov-mirror">Mirror Selfie</button>
+                <button type="button" class="hub-pill active" data-goto="walking-pad" data-i18n="hub.pov-walkpad">POV Walking Pad</button>
+            </div>
             <div class="container mx-auto max-w-7xl">
                 <header class="text-center mb-10">
                     <div class="inline-flex items-center gap-3 mb-4">
@@ -19508,7 +19776,7 @@
     <button id="update-info-btn" class="text-white rounded-full w-16 h-16 flex items-center justify-center shadow-xl relative" style="background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);">
         <div class="flex flex-col items-center leading-none pointer-events-none">
             <i class="fas fa-bolt text-sm"></i>
-            <span class="text-xs font-bold mt-0.5">V49</span>
+            <span class="text-xs font-bold mt-0.5">V50</span>
         </div>
         <span class="update-notif-dot"></span>
     </button>
@@ -20964,6 +21232,13 @@
 
         <!-- TAB: Unboxing Scene Generator -->
         <div id="content-unboxing-scene" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill" data-goto="product-review" data-i18n="hub.review-product">Review Produk</button>
+                <button type="button" class="hub-pill" data-goto="skincare-review" data-i18n="hub.review-skincare">Review Skincare</button>
+                <button type="button" class="hub-pill" data-goto="product-ads" data-i18n="hub.review-ads">Story Iklan</button>
+                <button type="button" class="hub-pill active" data-goto="unboxing-scene" data-i18n="hub.review-unboxing">Unboxing</button>
+                <button type="button" class="hub-pill" data-goto="before-after" data-i18n="hub.review-beforeafter">Before/After</button>
+            </div>
             <div class="container mx-auto max-w-7xl">
                 <header class="text-center mb-8">
                     <h1 class="text-4xl md:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-600">
@@ -21213,240 +21488,6 @@
         </div>
 
         <!-- TAB: Before/After Generator -->
-        <div id="content-before-after" class="main-content-panel hidden">
-            <div class="container mx-auto max-w-7xl">
-                <header class="text-center mb-8">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600">
-                        <i class="fas fa-arrows-left-right mr-3"></i><span data-i18n="ba.h1">AI Before/After Generator</span>
-                    </h1>
-                    <p class="text-lg text-gray-600 mb-2" data-i18n="ba.subtitle">
-                        Showcase transformasi produk dengan visual before/after yang menarik
-                    </p>
-                    <p class="text-sm text-gray-500" data-i18n-html="ba.subtitle2">
-                        <i class="fas fa-sparkles mr-1"></i>
-                        Split screen, slider format, arrow indicators - perfect untuk skincare & beauty
-                    </p>
-                </header>
-
-                <div class="grid lg:grid-cols-5 gap-6">
-                    <!-- Input Section (Left Panel - 2 columns) -->
-                    <div class="lg:col-span-2">
-                        <div class="card p-6 sticky top-6">
-                            <h2 class="text-2xl font-bold mb-6 text-gray-800">
-                                <i class="fas fa-upload mr-2 text-green-600"></i>Input Settings
-                            </h2>
-
-                            <div class="space-y-6">
-                                <!-- Step 1: Upload Photo -->
-                                <div>
-                                    <div class="flex items-center gap-2 mb-3">
-                                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">1</div>
-                                        <h3 class="text-lg font-bold text-gray-800" data-i18n="ba.step1">Upload Foto</h3>
-                                    </div>
-                                    <div class="upload-box-beforeafter cursor-pointer border-2 border-dashed border-gray-300 rounded-xl p-8 text-center">
-                                        <input type="file" id="beforeafter-image-upload" class="hidden" accept="image/png, image/jpeg, image/webp, image/heic, .heic">
-                                        <i class="fas fa-cloud-upload-alt text-5xl mb-3 text-green-400"></i>
-                                        <p class="text-gray-700 font-semibold mb-1" data-i18n="ba.upload-cta">Click to upload image</p>
-                                        <p class="text-sm text-gray-500" data-i18n="ub.upload-formats">PNG, JPG, WEBP, HEIC (max 10MB)</p>
-                                    </div>
-
-                                    <!-- Photo preview (visible on all screens after upload) -->
-                                    <div id="beforeafter-preview-container" class="mt-3 hidden">
-                                        <img id="beforeafter-image-preview" src="" alt="Preview" class="w-full rounded-lg shadow-lg max-h-48 object-cover">
-                                        <button id="beforeafter-remove-preview" class="mt-2 w-full bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-3 rounded-lg">
-                                            <i class="fas fa-times mr-1"></i> <span data-i18n="mr.delete-photo">Hapus Foto</span>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Step 2: Product Category -->
-                                <div>
-                                    <div class="flex items-center gap-2 mb-3">
-                                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">2</div>
-                                        <h3 class="text-lg font-bold text-gray-800">Product Category</h3>
-                                    </div>
-                                    <div id="beforeafter-category-selection" class="grid grid-cols-2 gap-3">
-                                        <button type="button" data-category="skincare" class="option-btn-beforeafter selected">
-                                            <i class="fas fa-spa text-lg mb-1"></i>
-                                            <span class="text-sm">Skincare</span>
-                                        </button>
-                                        <button type="button" data-category="makeup" class="option-btn-beforeafter">
-                                            <i class="fas fa-paint-brush text-lg mb-1"></i>
-                                            <span class="text-sm">Makeup</span>
-                                        </button>
-                                        <button type="button" data-category="hair" class="option-btn-beforeafter">
-                                            <i class="fas fa-scissors text-lg mb-1"></i>
-                                            <span class="text-sm">Hair Care</span>
-                                        </button>
-                                        <button type="button" data-category="fitness" class="option-btn-beforeafter">
-                                            <i class="fas fa-dumbbell text-lg mb-1"></i>
-                                            <span class="text-sm">Fitness</span>
-                                        </button>
-                                        <button type="button" data-category="dental" class="option-btn-beforeafter">
-                                            <i class="fas fa-tooth text-lg mb-1"></i>
-                                            <span class="text-sm">Dental</span>
-                                        </button>
-                                        <button type="button" data-category="other" class="option-btn-beforeafter">
-                                            <i class="fas fa-box text-lg mb-1"></i>
-                                            <span class="text-sm">Other</span>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Step 3: Comparison Style -->
-                                <div>
-                                    <div class="flex items-center gap-2 mb-3">
-                                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">3</div>
-                                        <h3 class="text-lg font-bold text-gray-800">Comparison Style</h3>
-                                    </div>
-                                    <div id="beforeafter-style-selection" class="grid grid-cols-2 gap-3">
-                                        <button type="button" data-style="split-screen" class="option-btn-beforeafter selected">
-                                            <i class="fas fa-grip-lines-vertical text-lg mb-1"></i>
-                                            <span class="text-sm">Split Screen</span>
-                                        </button>
-                                        <button type="button" data-style="slider" class="option-btn-beforeafter">
-                                            <i class="fas fa-sliders text-lg mb-1"></i>
-                                            <span class="text-sm">Slider Format</span>
-                                        </button>
-                                        <button type="button" data-style="side-by-side" class="option-btn-beforeafter">
-                                            <i class="fas fa-columns text-lg mb-1"></i>
-                                            <span class="text-sm">Side-by-Side</span>
-                                        </button>
-                                        <button type="button" data-style="stacked" class="option-btn-beforeafter">
-                                            <i class="fas fa-layer-group text-lg mb-1"></i>
-                                            <span class="text-sm">Stacked</span>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Step 4: Show Indicators -->
-                                <div>
-                                    <div class="flex items-center gap-2 mb-3">
-                                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">4</div>
-                                        <h3 class="text-lg font-bold text-gray-800" data-i18n="ba.step4">Tampilkan</h3>
-                                    </div>
-                                    <div id="beforeafter-indicators-selection" class="space-y-2">
-                                        <label class="flex items-center gap-3 p-3 bg-white border-2 border-gray-200 rounded-lg hover:border-green-400 cursor-pointer transition-all">
-                                            <input type="checkbox" id="beforeafter-show-labels" checked class="w-5 h-5 text-green-600">
-                                            <span class="text-sm font-medium text-gray-700" data-i18n="ba.indic-text">Text Labels (BEFORE/AFTER)</span>
-                                        </label>
-                                        <label class="flex items-center gap-3 p-3 bg-white border-2 border-gray-200 rounded-lg hover:border-green-400 cursor-pointer transition-all">
-                                            <input type="checkbox" id="beforeafter-show-arrows" checked class="w-5 h-5 text-green-600">
-                                            <span class="text-sm font-medium text-gray-700" data-i18n="ba.indic-arrows">Arrow Indicators</span>
-                                        </label>
-                                        <label class="flex items-center gap-3 p-3 bg-white border-2 border-gray-200 rounded-lg hover:border-green-400 cursor-pointer transition-all">
-                                            <input type="checkbox" id="beforeafter-show-highlight" checked class="w-5 h-5 text-green-600">
-                                            <span class="text-sm font-medium text-gray-700" data-i18n="ba.indic-highlight">Highlight Changes</span>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <!-- Step 5: Aspect Ratio -->
-                                <div>
-                                    <div class="flex items-center gap-2 mb-3">
-                                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">5</div>
-                                        <h3 class="text-lg font-bold text-gray-800">Aspect Ratio</h3>
-                                    </div>
-                                    <div id="beforeafter-aspect-selection" class="grid grid-cols-3 gap-3">
-                                        <button type="button" data-aspect="1:1" class="option-btn-beforeafter selected">
-                                            <i class="fas fa-square text-lg mb-1"></i>
-                                            <span class="text-sm">1:1</span>
-                                        </button>
-                                        <button type="button" data-aspect="16:9" class="option-btn-beforeafter">
-                                            <i class="fas fa-rectangle-wide text-lg mb-1"></i>
-                                            <span class="text-sm">16:9</span>
-                                        </button>
-                                        <button type="button" data-aspect="9:16" class="option-btn-beforeafter">
-                                            <i class="fas fa-rectangle-vertical text-lg mb-1"></i>
-                                            <span class="text-sm">9:16</span>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Step 6: Generate Button -->
-                                <div>
-                                    <div class="flex items-center gap-2 mb-3">
-                                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-600 text-white font-bold text-sm shadow-lg">6</div>
-                                        <h3 class="text-lg font-bold text-gray-800">Generate</h3>
-                                    </div>
-                                    <button type="button" id="beforeafter-generate-btn" disabled class="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
-                                        <i class="fas fa-wand-magic-sparkles mr-2"></i>
-                                        <span data-i18n="ba.generate-btn">Generate Before/After</span>
-                                    </button>
-                                    <p class="text-sm text-gray-500 text-center mt-2" data-i18n-html="ba.generate-tip">
-                                        <i class="fas fa-info-circle mr-1"></i>
-                                        AI akan generate before/after transformasi visual
-                                    </p>
-                                </div>
-
-                                <!-- Error Message -->
-                                <div id="beforeafter-error-message" class="hidden p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-lg">
-                                    <i class="fas fa-exclamation-circle mr-2"></i>
-                                    <span id="beforeafter-error-text"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Results Section (Right Panel - 3 columns) -->
-                    <div class="lg:col-span-3">
-                        <!-- Loading Indicator -->
-                        <div id="beforeafter-loading-indicator" class="hidden">
-                            <div class="bg-white p-8 rounded-xl shadow-lg text-center">
-                                <div class="inline-block animate-spin rounded-full h-16 w-16 border-b-4 border-green-600 mb-4"></div>
-                                <p class="text-lg text-gray-700 font-semibold" id="beforeafter-loading-text">Generating before/after 1/4...</p>
-                                <p class="text-sm text-gray-500 mt-2" data-i18n="ba.loading-hint">AI sedang membuat transformasi visual dengan indicators</p>
-
-                                <!-- Progress Bar -->
-                                <div class="mt-4 bg-gray-200 rounded-full h-3 overflow-hidden">
-                                    <div id="beforeafter-progress-bar" class="bg-gradient-to-r from-green-600 to-emerald-600 h-full transition-all duration-500" style="width: 0%"></div>
-                                </div>
-                                <p class="text-xs text-gray-600 mt-2">
-                                    <span id="beforeafter-progress-text">0/4</span> completed
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- Results Container -->
-                        <div id="beforeafter-results-section" class="hidden">
-                            <div class="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-xl border-2 border-green-200">
-                                <h3 class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600">
-                                    <i class="fas fa-check-circle mr-2"></i>
-                                    <span id="beforeafter-results-count">4</span> Before/After Generated!
-                                </h3>
-                                <button id="beforeafter-download-all-btn" class="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-6 py-2.5 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300 text-sm">
-                                    <i class="fas fa-download mr-2"></i>Download All
-                                </button>
-                            </div>
-
-                            <!-- Results Grid -->
-                            <div id="beforeafter-results-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <!-- Before/After cards will be inserted here dynamically -->
-                            </div>
-                        </div>
-
-                        <!-- Empty State -->
-                        <div id="beforeafter-empty-state" class="text-center py-16">
-                            <div class="inline-block p-6 bg-gradient-to-br from-green-50 to-emerald-50 rounded-full mb-4">
-                                <i class="fas fa-arrows-left-right text-6xl text-green-400"></i>
-                            </div>
-                            <p class="text-lg font-semibold">AI-Generated Before/After</p>
-                            <p class="text-sm">Upload foto dan pilih settings untuk generate before/after transformasi</p>
-                            <div class="mt-6 bg-green-50 rounded-lg p-4 max-w-md mx-auto">
-                                <p class="text-xs text-gray-600 text-left">
-                                    <strong class="text-green-600">Fitur:</strong><br>
-                                    ✓ Split screen atau slider format<br>
-                                    ✓ Text labels "BEFORE" / "AFTER"<br>
-                                    ✓ Arrow indicators untuk perubahan<br>
-                                    ✓ Highlight changes visual<br>
-                                    ✓ Perfect untuk skincare & beauty products
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- TAB: Product Mockup Generator -->
         <div id="content-product-mockup" class="main-content-panel hidden">
@@ -22734,9 +22775,9 @@
             <i class="fas fa-mobile-alt"></i>
             <span>Mirror</span>
         </button>
-        <button data-tab="walking-pad" class="mobile-tab-btn">
+        <button data-tab="walking-pad" class="mobile-tab-btn hidden">
             <i class="fas fa-walking"></i>
-            <span>Walking Pad</span>
+            <span>POV Walking Pad</span>
         </button>
         <button data-tab="pose-fashion" class="mobile-tab-btn">
             <i class="fas fa-user-tie"></i>
@@ -22762,15 +22803,15 @@
             <i class="fas fa-bullhorn"></i>
             <span>Ads</span>
         </button>
-        <button data-tab="unboxing-scene" class="mobile-tab-btn">
+        <button data-tab="unboxing-scene" class="mobile-tab-btn hidden">
             <i class="fas fa-box-open"></i>
             <span>Unboxing</span>
         </button>
-        <button data-tab="before-after" class="mobile-tab-btn">
+        <button data-tab="before-after" class="mobile-tab-btn hidden">
             <i class="fas fa-arrows-left-right"></i>
             <span>B/A</span>
         </button>
-        <button data-tab="product-premium" class="mobile-tab-btn">
+        <button data-tab="product-premium" class="mobile-tab-btn hidden">
             <i class="fas fa-wand-magic-sparkles"></i>
             <span data-i18n="nav.product-premium">Foto Produk Premium</span>
         </button>
