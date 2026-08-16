@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '53';
+        const UPDATE_VERSION = '54';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '54',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v54-badge',
+                badgeText: 'Update v54',
+                gradient: 'linear-gradient(135deg,#7c3aed,#6d28d9)',
+                borderColor: '#7c3aed',
+                icon: 'fa-folder-tree',
+                iconColor: '#7c3aed',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v54-title-kategori',
+                        titleText: 'Kategori Menu Dirapikan',
+                        bodyKey: 'modal.fix-v54-body-kategori',
+                        bodyText: 'Modifikasi Kendaraan pindah ke kategori Foto Diri & Gaya (bersebelahan Foto Touring), dan Nonton Bareng pindah ke Keluarga & Momen (bersebelahan Foto Piala Dunia) — supaya fitur lebih mudah ditemukan di kategori yang sesuai fungsinya.'
+                    }
+                ]
+            },
             {
                 version: '53',
                 dateId: 'Agustus 2026',
