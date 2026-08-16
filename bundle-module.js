@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '54';
+        const UPDATE_VERSION = '55';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '55',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v55-badge',
+                badgeText: 'Update v55',
+                gradient: 'linear-gradient(135deg,#0891b2,#0e7490)',
+                borderColor: '#0891b2',
+                icon: 'fa-tshirt',
+                iconColor: '#0891b2',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v55-title-tryon',
+                        titleText: 'Coba Baju Virtual Gabung ke Foto Produk Affiliate',
+                        bodyKey: 'modal.fix-v55-body-tryon',
+                        bodyText: 'Fitur Coba Baju Virtual kini jadi bagian tab Foto Produk Affiliate — pindah antar Tema Umum, Agama, Harga, Premium, dan Coba Baju cukup lewat tombol pill di atas halaman. Menu samping jadi lebih ringkas.'
+                    },
+                    {
+                        titleKey: 'modal.fix-v55-title-fullwidth',
+                        titleText: 'Semua Halaman Kini Layar Penuh Saat Zoom Out',
+                        bodyKey: 'modal.fix-v55-body-fullwidth',
+                        bodyText: '11 halaman yang masih mengecil di tengah saat di-zoom out (Promo, Voice Over, Sticker, Bikin Carousel, dan lainnya) kini ikut memakai lebar layar penuh seperti halaman lain — tampilan konsisten di semua fitur.'
+                    }
+                ]
+            },
             {
                 version: '54',
                 dateId: 'Agustus 2026',

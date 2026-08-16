@@ -10417,6 +10417,11 @@
            layar penuh. Rule ini melepas cap untuk SEMUA panel; specificity (0,2,0)
            menang atas utility Tailwind (0,1,0) walau Tailwind di-inject runtime. */
         .main-content-panel .container { max-width: 100%; }
+        /* Panel yang wrapper-nya pakai max-w-* TANPA class .container (mis. Promo/ruangsaku,
+           story-update, photo-angle, dst) lolos dari rule di atas → masih mengecil saat
+           zoom out. Rule ini menangkap direct-child wrapper ber-max-w-*; specificity
+           (0,2,1) menang atas utility Tailwind (0,1,0). */
+        .main-content-panel > div[class*="max-w-"] { max-width: 100%; }
 
         /* ===== Dark Mode — override layer (html.dark, di-toggle setAppTheme) =====
            Menimpa utility Tailwind terang. html.dark .x = specificity (0,2,1)
