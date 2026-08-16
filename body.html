@@ -10,7 +10,7 @@
         <!-- Floating badge top-right -->
         <div style="position:absolute;top:16px;right:16px;background:linear-gradient(135deg,#ea580c,#c2410c);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(234,88,12,0.4);z-index:1;">90+ FITUR &#x26A1;</div>
         <!-- Floating version badge top-left (auto-sync dari UPDATE_VERSION via JS) -->
-        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V51</div>
+        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V52</div>
         <div class="login-box">
             <!-- AG Logo badge -->
             <div style="background:linear-gradient(135deg,#16a34a,#15803d);width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:1.35rem;font-weight:900;color:white;box-shadow:0 6px 18px rgba(22,163,74,0.4);">AG</div>
@@ -51,7 +51,7 @@
     <div id="main-app">
     <!-- Mobile Header -->
     <div class="mobile-header">
-        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V51</span></h1>
+        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V52</span></h1>
         <p class="text-xs text-gray-400 mt-1">by Arul CG</p>
         <div class="mobile-header-actions">
             <button type="button" id="mobile-fav-access-btn" class="mobile-fav-access-btn no-favs" aria-label="Buka tab favorit">
@@ -89,7 +89,7 @@
                 </h1>
                 <p class="text-xs text-gray-500 mt-1">by Arul CG</p>
                 <div class="mt-2">
-                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V51</span>
+                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V52</span>
                 </div>
                 <div class="lang-dropdown mt-2" id="lang-dropdown-desktop">
                     <button type="button" class="lang-dd-btn" aria-haspopup="listbox" aria-expanded="false">
@@ -19776,7 +19776,7 @@
     <button id="update-info-btn" class="text-white rounded-full w-16 h-16 flex items-center justify-center shadow-xl relative" style="background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);">
         <div class="flex flex-col items-center leading-none pointer-events-none">
             <i class="fas fa-bolt text-sm"></i>
-            <span class="text-xs font-bold mt-0.5">V51</span>
+            <span class="text-xs font-bold mt-0.5">V52</span>
         </div>
         <span class="update-notif-dot"></span>
     </button>
@@ -22451,21 +22451,24 @@
 
         <!-- TAB: Vehicle Modifier (AI Car & Motorcycle Editor) -->
         <div id="content-vehicle-modifier" class="main-content-panel hidden">
-            <div class="container mx-auto max-w-7xl">
+            <div class="container mx-auto p-4 md:p-8 max-w-6xl">
                 <header class="text-center mb-8">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-700">
-                        <i class="fas fa-car mr-3"></i><span data-i18n="vm.h1">AI Vehicle Modifier</span>
+                    <h1 class="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-rose-600">
+                        <i class="fas fa-car mr-3 text-red-600"></i><span data-i18n="vm.h1">AI Vehicle Modifier</span>
                     </h1>
-                    <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto" data-i18n="vm.subtitle">
+                    <p class="text-lg text-gray-500 mt-3 max-w-3xl mx-auto" data-i18n="vm.subtitle">
                         Modifikasi mobil & motor dengan AI - Body kit, Velg, Cat, dan lebih banyak lagi!
                     </p>
                 </header>
 
+                <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Input Column -->
+                    <div class="lg:col-span-1 space-y-6">
                 <!-- Step 1: Upload Vehicle Photo -->
-                <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
-                    <div class="flex items-center mb-4">
-                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-red-600 text-white font-bold text-sm shadow-lg mr-3">1</div>
-                        <h2 class="text-xl font-bold text-gray-800" data-i18n="vm.step1">Upload Foto Mobil/Motor</h2>
+                <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-red-600 text-white font-bold text-sm shadow-lg">1</div>
+                        <h2 class="text-xl font-semibold text-gray-800" data-i18n="vm.step1">Upload Foto Mobil/Motor</h2>
                     </div>
                     <div class="upload-box-vehicle">
                         <input type="file" id="vehicle-image-upload" accept="image/png, image/jpeg, image/webp, image/heic, .heic" class="hidden">
@@ -22483,10 +22486,10 @@
                 </div>
 
                 <!-- Step 2: Vehicle Type -->
-                <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
-                    <div class="flex items-center mb-4">
-                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-red-600 text-white font-bold text-sm shadow-lg mr-3">2</div>
-                        <h2 class="text-xl font-bold text-gray-800" data-i18n="vm.step2">Jenis Kendaraan</h2>
+                <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-red-600 text-white font-bold text-sm shadow-lg">2</div>
+                        <h2 class="text-xl font-semibold text-gray-800" data-i18n="vm.step2">Jenis Kendaraan</h2>
                     </div>
                     <div id="vehicle-type-selection" class="grid grid-cols-2 gap-3">
                         <button type="button" data-vehicletype="car" class="option-btn-vehicle selected">
@@ -22501,12 +22504,12 @@
                 </div>
 
                 <!-- Step 3: Modification Categories -->
-                <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
-                    <div class="flex items-center mb-4">
-                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-red-600 text-white font-bold text-sm shadow-lg mr-3">3</div>
-                        <h2 class="text-xl font-bold text-gray-800" data-i18n="vm.step3">Kategori Modifikasi</h2>
+                <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-red-600 text-white font-bold text-sm shadow-lg">3</div>
+                        <h2 class="text-xl font-semibold text-gray-800" data-i18n="vm.step3">Kategori Modifikasi</h2>
                     </div>
-                    <div id="vehicle-mod-category-selection" class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div id="vehicle-mod-category-selection" class="grid grid-cols-2 gap-3">
                         <button type="button" data-modcategory="bodykit" class="option-btn-vehicle selected">
                             <i class="fas fa-shapes text-xl mb-1"></i>
                             <div class="font-semibold text-sm">Body Kit</div>
@@ -22543,12 +22546,12 @@
                 </div>
 
                 <!-- Step 4: Modification Style -->
-                <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
-                    <div class="flex items-center mb-4">
-                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-red-600 text-white font-bold text-sm shadow-lg mr-3">4</div>
-                        <h2 class="text-xl font-bold text-gray-800" data-i18n="vm.step4">Style Modifikasi</h2>
+                <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-red-600 text-white font-bold text-sm shadow-lg">4</div>
+                        <h2 class="text-xl font-semibold text-gray-800" data-i18n="vm.step4">Style Modifikasi</h2>
                     </div>
-                    <div id="vehicle-style-selection" class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div id="vehicle-style-selection" class="grid grid-cols-2 gap-3">
                         <button type="button" data-modstyle="jdm" class="option-btn-vehicle selected">
                             <i class="fas fa-flag-checkered text-xl mb-1"></i>
                             <div class="font-semibold text-sm">JDM Style</div>
@@ -22585,20 +22588,20 @@
                 </div>
 
                 <!-- Step 5: Custom Modification Description (Optional) -->
-                <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
-                    <div class="flex items-center mb-4">
-                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-red-600 text-white font-bold text-sm shadow-lg mr-3">5</div>
-                        <h2 class="text-xl font-bold text-gray-800" data-i18n="vm.step5">Deskripsi Custom (Optional)</h2>
+                <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-red-600 text-white font-bold text-sm shadow-lg">5</div>
+                        <h2 class="text-xl font-semibold text-gray-800" data-i18n="vm.step5">Deskripsi Custom (Optional)</h2>
                     </div>
                     <textarea id="vehicle-custom-description" rows="3" placeholder="Contoh: Tambahkan wide body kit agresif, cat hitam matte dengan racing stripes merah, velg racing 19 inch, dll..." data-i18n-placeholder="vm.custom-placeholder" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-red-500 focus:outline-none resize-none"></textarea>
                     <p class="text-xs text-gray-500 mt-2" data-i18n="vm.custom-hint">Deskripsikan modifikasi spesifik yang Anda inginkan untuk hasil yang lebih akurat</p>
                 </div>
 
                 <!-- Step 6: Aspect Ratio -->
-                <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
-                    <div class="flex items-center mb-4">
-                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-red-600 text-white font-bold text-sm shadow-lg mr-3">6</div>
-                        <h2 class="text-xl font-bold text-gray-800">Aspect Ratio</h2>
+                <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-red-600 text-white font-bold text-sm shadow-lg">6</div>
+                        <h2 class="text-xl font-semibold text-gray-800">Aspect Ratio</h2>
                     </div>
                     <div id="vehicle-aspect-selection" class="grid grid-cols-3 gap-3">
                         <button type="button" data-aspect="16:9" class="option-btn-vehicle selected">
@@ -22614,10 +22617,10 @@
                 </div>
 
                 <!-- Step 7: Jumlah Generate -->
-                <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
-                    <div class="flex items-center mb-4">
-                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-red-600 text-white font-bold text-sm shadow-lg mr-3">7</div>
-                        <h2 class="text-xl font-bold text-gray-800">
+                <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-red-600 text-white font-bold text-sm shadow-lg">7</div>
+                        <h2 class="text-xl font-semibold text-gray-800">
                             <span data-i18n="vm.count-label">Jumlah Generate</span>
                         </h2>
                     </div>
@@ -22635,19 +22638,16 @@
                     </div>
                 </div>
 
-                <!-- Step 8: Generate Button -->
-                <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
-                    <div class="flex items-center mb-4">
-                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-red-600 text-white font-bold text-sm shadow-lg mr-3">8</div>
-                        <h2 class="text-xl font-bold text-gray-800">Generate Modified Vehicles</h2>
+                <!-- Generate Button -->
+                <button type="button" id="vehicle-generate-btn" disabled class="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] disabled:hover:scale-100 disabled:cursor-not-allowed text-lg">
+                    <i class="fas fa-magic mr-2"></i> Generate Modified Versions
+                </button>
                     </div>
-                    <button type="button" id="vehicle-generate-btn" disabled class="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] disabled:hover:scale-100 disabled:cursor-not-allowed text-lg">
-                        <i class="fas fa-magic mr-2"></i> Generate Modified Versions
-                    </button>
-                </div>
 
+                    <!-- Output Column -->
+                    <div class="lg:col-span-2 space-y-6">
                 <!-- Error Message -->
-                <div id="vehicle-error-message" class="hidden bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded-lg">
+                <div id="vehicle-error-message" class="hidden bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
                     <div class="flex items-center">
                         <i class="fas fa-exclamation-circle text-red-500 text-xl mr-3"></i>
                         <p id="vehicle-error-text" class="text-red-700 font-semibold"></p>
@@ -22655,7 +22655,7 @@
                 </div>
 
                 <!-- Loading Indicator -->
-                <div id="vehicle-loading-indicator" class="hidden bg-gradient-to-r from-red-50 to-red-100 rounded-2xl shadow-xl p-8 mb-6">
+                <div id="vehicle-loading-indicator" class="hidden bg-gradient-to-r from-red-50 to-red-100 rounded-2xl shadow-lg p-8">
                     <div class="text-center">
                         <div class="inline-block animate-spin rounded-full h-16 w-16 border-b-4 border-red-600 mb-4"></div>
                         <h3 class="text-xl font-bold text-gray-800 mb-2">
@@ -22670,22 +22670,22 @@
                 </div>
 
                 <!-- Results Section -->
-                <div id="vehicle-results-section" class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-4 md:mb-0">
+                <div id="vehicle-results-section" class="hidden card p-6 bg-white rounded-2xl shadow-lg">
+                    <div class="flex flex-wrap justify-between items-center gap-3 mb-6">
+                        <h3 class="text-xl font-bold text-gray-800">
                             <i class="fas fa-check-circle text-green-500 mr-2"></i>
                             <span id="vehicle-results-count">4</span> Modified Versions Generated!
                         </h3>
-                        <button id="vehicle-download-all-btn" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
-                            <i class="fas fa-download mr-2"></i> Download All
+                        <button id="vehicle-download-all-btn" class="min-h-[44px] bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold py-2.5 px-5 rounded-lg transition-all flex items-center gap-2 text-sm shadow-md hover:shadow-lg">
+                            <i class="fas fa-download"></i> Download All
                         </button>
                     </div>
-                    <div id="vehicle-results-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                    <div id="vehicle-results-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
                 </div>
 
                 <!-- Empty State -->
-                <div id="vehicle-empty-state" class="bg-gradient-to-br from-red-50 to-red-100 rounded-2xl shadow-xl p-12">
-                    <div class="text-center text-gray-500">
+                <div id="vehicle-empty-state" class="card p-6 bg-white rounded-2xl shadow-lg">
+                    <div class="text-center text-gray-500 py-10">
                          <div class="inline-block p-6 bg-gradient-to-br from-red-100 to-red-200 rounded-full mb-4">
                              <i class="fas fa-car text-6xl text-red-400"></i>
                          </div>
@@ -22703,6 +22703,8 @@
                          </div>
                      </div>
                 </div>
+                    </div>
+                </main>
             </div>
         </div>
 

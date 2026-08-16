@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '51';
+        const UPDATE_VERSION = '52';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '52',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v52-badge',
+                badgeText: 'Update v52',
+                gradient: 'linear-gradient(135deg,#dc2626,#b91c1c)',
+                borderColor: '#dc2626',
+                icon: 'fa-car',
+                iconColor: '#dc2626',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v52-title-vehicle',
+                        titleText: 'Vehicle Modifier Tampilan Baru',
+                        bodyKey: 'modal.fix-v52-body-vehicle',
+                        bodyText: 'Halaman Vehicle Modifier dirombak mengikuti tata letak standar: semua pengaturan modifikasi di kolom kiri, hasil generate di kolom kanan — konsisten dengan fitur lain dan tidak perlu scroll panjang.'
+                    }
+                ]
+            },
             {
                 version: '51',
                 dateId: 'Agustus 2026',
