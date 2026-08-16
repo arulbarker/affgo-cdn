@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '52';
+        const UPDATE_VERSION = '53';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '53',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v53-badge',
+                badgeText: 'Update v53',
+                gradient: 'linear-gradient(135deg,#0d9488,#0f766e)',
+                borderColor: '#0d9488',
+                icon: 'fa-language',
+                iconColor: '#0d9488',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v53-title-nav',
+                        titleText: 'Nama Menu Kini Berbahasa Indonesia',
+                        bodyKey: 'modal.fix-v53-body-nav',
+                        bodyText: 'Lebih dari 60 nama menu diterjemahkan ke Bahasa Indonesia — contoh: Upscale jadi Pertajam Foto, Face Swap jadi Tukar Wajah, Size Guide jadi Panduan Ukuran. Istilah yang sudah populer seperti POV Studio, Photo Booth, dan Voice Over tetap dipertahankan. Mode English tidak berubah.'
+                    }
+                ]
+            },
             {
                 version: '52',
                 dateId: 'Agustus 2026',
