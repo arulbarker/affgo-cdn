@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '57';
+        const UPDATE_VERSION = '58';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '58',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v58-badge',
+                badgeText: 'Update v58',
+                gradient: 'linear-gradient(135deg,#16a34a,#15803d)',
+                borderColor: '#16a34a',
+                icon: 'fa-baby',
+                iconColor: '#16a34a',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v58-title-newborn',
+                        titleText: 'Studio Newborn Kini Layar Penuh',
+                        bodyKey: 'modal.fix-v58-body-newborn',
+                        bodyText: 'Area upload dan pratinjau Studio Newborn tidak lagi mengecil saat zoom out — kolom kiri kini melebar mengisi layar, konsisten dengan panel lain.'
+                    }
+                ]
+            },
             {
                 version: '57',
                 dateId: 'Agustus 2026',
