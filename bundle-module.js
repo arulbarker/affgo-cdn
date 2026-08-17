@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '59';
+        const UPDATE_VERSION = '60';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '60',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v60-badge',
+                badgeText: 'Update v60',
+                gradient: 'linear-gradient(135deg,#3b82f6,#1d4ed8)',
+                borderColor: '#3b82f6',
+                icon: 'fa-circle',
+                iconColor: '#3b82f6',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v60-title-povcards',
+                        titleText: 'POV Studio: Kartu Hasil Seragam + Tombol Ikon',
+                        bodyKey: 'modal.fix-v60-body-povcards',
+                        bodyText: 'Keempat fitur POV Studio (POV Tangan, POV Selfie, Mirror Selfie, Walking Pad) kini pakai kartu hasil seragam: gambar utuh tanpa terpotong, tombol aksi ikon bulat berwarna, dan nomor foto di pojok. Preview foto model Walking Pad juga tidak terpotong lagi.'
+                    }
+                ]
+            },
             {
                 version: '59',
                 dateId: 'Agustus 2026',
@@ -14345,21 +14364,17 @@ FINAL OUTPUT: An Instagram-worthy, magazine-quality touring photo that looks lik
                     card.innerHTML = `
                         <img src="${imageUrl}" alt="POV Tangan ${idx + 1}" />
                         <div class="result-card-actions">
-                            <button class="btn-preview" data-action="preview" data-image-url="${imageUrl}">
+                            <button class="btn-preview" data-action="preview" data-image-url="${imageUrl}" title="Preview" aria-label="Preview">
                                 <i class="fas fa-search-plus"></i>
-                                Preview
                             </button>
-                            <button class="btn-edit" data-action="edit" data-index="${idx}" data-theme="${safeTheme}">
+                            <button class="btn-edit" data-action="edit" data-index="${idx}" data-theme="${safeTheme}" title="Edit" aria-label="Edit">
                                 <i class="fas fa-edit"></i>
-                                Edit
                             </button>
-                            <button class="btn-regenerate" data-action="regenerate" data-index="${idx}">
+                            <button class="btn-regenerate" data-action="regenerate" data-index="${idx}" title="Regenerate" aria-label="Regenerate">
                                 <i class="fas fa-sync-alt"></i>
-                                Regenerate
                             </button>
-                            <button class="btn-download" data-action="download" data-image-url="${imageUrl}" data-filename="pov-tangan-${idx + 1}.jpg">
+                            <button class="btn-download" data-action="download" data-image-url="${imageUrl}" data-filename="pov-tangan-${idx + 1}.jpg" title="Download" aria-label="Download">
                                 <i class="fas fa-download"></i>
-                                Download
                             </button>
                         </div>
                         <div class="image-counter">#${idx + 1}</div>
@@ -14593,21 +14608,17 @@ IMPORTANT: Use the EXACT environment/location from IMAGE 1 as the background. Do
                         targetCard.innerHTML = `
                             <img src="${imageUrl}" alt="POV Tangan ${index + 1}" />
                             <div class="result-card-actions">
-                                <button class="btn-preview" data-action="preview" data-image-url="${imageUrl}">
+                                <button class="btn-preview" data-action="preview" data-image-url="${imageUrl}" title="Preview" aria-label="Preview">
                                     <i class="fas fa-search-plus"></i>
-                                    Preview
                                 </button>
-                                <button class="btn-edit" data-action="edit" data-index="${index}" data-theme="${safeTheme}">
+                                <button class="btn-edit" data-action="edit" data-index="${index}" data-theme="${safeTheme}" title="Edit" aria-label="Edit">
                                     <i class="fas fa-edit"></i>
-                                    Edit
                                 </button>
-                                <button class="btn-regenerate" data-action="regenerate" data-index="${index}">
+                                <button class="btn-regenerate" data-action="regenerate" data-index="${index}" title="Regenerate" aria-label="Regenerate">
                                     <i class="fas fa-sync-alt"></i>
-                                    Regenerate
                                 </button>
-                                <button class="btn-download" data-action="download" data-image-url="${imageUrl}" data-filename="pov-tangan-${index + 1}.jpg">
+                                <button class="btn-download" data-action="download" data-image-url="${imageUrl}" data-filename="pov-tangan-${index + 1}.jpg" title="Download" aria-label="Download">
                                     <i class="fas fa-download"></i>
-                                    Download
                                 </button>
                             </div>
                             <div class="image-counter">#${index + 1}</div>
@@ -15076,17 +15087,14 @@ Requirements:
                     card.innerHTML = `
                         <img src="${imageUrl}" alt="POV Selfie ${idx + 1}" />
                         <div class="result-card-actions">
-                            <button class="btn-preview" data-action="preview" data-image-url="${imageUrl}">
+                            <button class="btn-preview" data-action="preview" data-image-url="${imageUrl}" title="Preview" aria-label="Preview">
                                 <i class="fas fa-search-plus"></i>
-                                Preview
                             </button>
-                            <button class="btn-regenerate" data-action="regenerate" data-index="${idx}">
+                            <button class="btn-regenerate" data-action="regenerate" data-index="${idx}" title="Regenerate" aria-label="Regenerate">
                                 <i class="fas fa-sync-alt"></i>
-                                Regenerate
                             </button>
-                            <button class="btn-download" data-action="download" data-image-url="${imageUrl}" data-filename="pov-selfie-${idx + 1}.jpg">
+                            <button class="btn-download" data-action="download" data-image-url="${imageUrl}" data-filename="pov-selfie-${idx + 1}.jpg" title="Download" aria-label="Download">
                                 <i class="fas fa-download"></i>
-                                Download
                             </button>
                         </div>
                         <div class="image-counter">#${idx + 1}</div>
@@ -15136,17 +15144,14 @@ Requirements:
                     targetCard.innerHTML = `
                         <img src="${imageUrl}" alt="POV Selfie ${index + 1}" />
                         <div class="result-card-actions">
-                            <button class="btn-preview" data-action="preview" data-image-url="${imageUrl}">
+                            <button class="btn-preview" data-action="preview" data-image-url="${imageUrl}" title="Preview" aria-label="Preview">
                                 <i class="fas fa-search-plus"></i>
-                                Preview
                             </button>
-                            <button class="btn-regenerate" data-action="regenerate" data-index="${index}">
+                            <button class="btn-regenerate" data-action="regenerate" data-index="${index}" title="Regenerate" aria-label="Regenerate">
                                 <i class="fas fa-sync-alt"></i>
-                                Regenerate
                             </button>
-                            <button class="btn-download" data-action="download" data-image-url="${imageUrl}" data-filename="pov-selfie-${index + 1}.jpg">
+                            <button class="btn-download" data-action="download" data-image-url="${imageUrl}" data-filename="pov-selfie-${index + 1}.jpg" title="Download" aria-label="Download">
                                 <i class="fas fa-download"></i>
-                                Download
                             </button>
                         </div>
                         <div class="image-counter">#${index + 1}</div>
@@ -16475,19 +16480,18 @@ PENTING:
 
             successful.forEach((imgData, idx) => {
                 const card = document.createElement('div');
-                card.className = 'relative group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300';
+                card.className = 'result-card';
                 card.innerHTML = `
-                    <img src="${imgData.url}" class="w-full h-full object-cover" alt="Mirror Selfie ${idx + 1}">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 gap-2">
-                        <button data-action="preview" data-index="${idx}" class="action-btn bg-white/90 hover:bg-white text-gray-800 px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2">
-                            <i class="fas fa-eye"></i>
-                            <span class="hidden sm:inline">Preview</span>
+                    <img src="${imgData.url}" alt="Mirror Selfie ${idx + 1}">
+                    <div class="result-card-actions">
+                        <button class="btn-preview" data-action="preview" data-index="${idx}" title="Preview" aria-label="Preview">
+                            <i class="fas fa-search-plus"></i>
                         </button>
-                        <button data-action="download" data-index="${idx}" class="action-btn bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2">
+                        <button class="btn-download" data-action="download" data-index="${idx}" title="Download" aria-label="Download">
                             <i class="fas fa-download"></i>
-                            <span class="hidden sm:inline">Download</span>
                         </button>
                     </div>
+                    <div class="image-counter">#${idx + 1}</div>
                 `;
                 if (resultsGrid) resultsGrid.appendChild(card);
             });
@@ -16900,12 +16904,13 @@ PENTING:
                 generatedImages[index - 1] = { url: imageUrl, filename: filename };
 
                 if (card) {
-                    card.className = 'relative group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300';
-                    card.innerHTML = '<img src="' + imageUrl + '" class="w-full h-auto object-cover" alt="Walking Pad ' + index + '">' +
-                        '<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 gap-2">' +
-                        '<button data-action="preview" data-index="' + (index - 1) + '" class="action-btn bg-white/90 hover:bg-white text-gray-800 px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2"><i class="fas fa-eye"></i><span class="hidden sm:inline ml-1">Preview</span></button>' +
-                        '<button data-action="download" data-index="' + (index - 1) + '" class="action-btn text-white px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2" style="background:linear-gradient(135deg,#7c3aed 0%,#db2877 100%)"><i class="fas fa-download"></i><span class="hidden sm:inline ml-1">Download</span></button>' +
-                        '</div>';
+                    card.className = 'result-card';
+                    card.innerHTML = '<img src="' + imageUrl + '" alt="Walking Pad ' + index + '">' +
+                        '<div class="result-card-actions">' +
+                        '<button class="btn-preview" data-action="preview" data-index="' + (index - 1) + '" title="Preview" aria-label="Preview"><i class="fas fa-search-plus"></i></button>' +
+                        '<button class="btn-download" data-action="download" data-index="' + (index - 1) + '" title="Download" aria-label="Download"><i class="fas fa-download"></i></button>' +
+                        '</div>' +
+                        '<div class="image-counter">#' + index + '</div>';
                 }
             } catch (error) {
                 console.error('Error generating walking pad photo ' + index + ':', error);
@@ -16933,12 +16938,13 @@ PENTING:
             resultsGrid.innerHTML = '';
             successful.forEach((img, idx) => {
                 const card = document.createElement('div');
-                card.className = 'relative group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300';
-                card.innerHTML = '<img src="' + img.url + '" class="w-full h-auto object-cover" alt="Walking Pad ' + (idx + 1) + '">' +
-                    '<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 gap-2">' +
-                    '<button data-action="preview" data-index="' + idx + '" class="action-btn bg-white/90 hover:bg-white text-gray-800 px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2"><i class="fas fa-eye"></i><span class="hidden sm:inline ml-1">Preview</span></button>' +
-                    '<button data-action="download" data-index="' + idx + '" class="action-btn text-white px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2" style="background:linear-gradient(135deg,#7c3aed 0%,#db2877 100%)"><i class="fas fa-download"></i><span class="hidden sm:inline ml-1">Download</span></button>' +
-                    '</div>';
+                card.className = 'result-card';
+                card.innerHTML = '<img src="' + img.url + '" alt="Walking Pad ' + (idx + 1) + '">' +
+                    '<div class="result-card-actions">' +
+                    '<button class="btn-preview" data-action="preview" data-index="' + idx + '" title="Preview" aria-label="Preview"><i class="fas fa-search-plus"></i></button>' +
+                    '<button class="btn-download" data-action="download" data-index="' + idx + '" title="Download" aria-label="Download"><i class="fas fa-download"></i></button>' +
+                    '</div>' +
+                    '<div class="image-counter">#' + (idx + 1) + '</div>';
                 resultsGrid.appendChild(card);
             });
             resultsCount.textContent = successful.length;

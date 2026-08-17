@@ -1999,40 +1999,72 @@
             height: auto;
             object-fit: contain;
         }
-        #content-pov-selfie .result-card-actions {
+        #content-pov-tangan .result-card-actions,
+        #content-pov-selfie .result-card-actions,
+        #content-mirror-selfie .result-card-actions,
+        #content-walking-pad .result-card-actions {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
             padding: 0.75rem;
             background: #f8fafc;
+            justify-content: center;
         }
-        #content-pov-selfie .result-card-actions button {
-            flex: 1 1 45%;
-            min-height: 44px;
-            border-radius: 0.5rem;
-            font-size: 0.8rem;
-            font-weight: 600;
+        #content-pov-tangan .result-card-actions button,
+        #content-pov-selfie .result-card-actions button,
+        #content-mirror-selfie .result-card-actions button,
+        #content-walking-pad .result-card-actions button {
+            width: 44px;
+            height: 44px;
+            border-radius: 9999px;
+            color: white;
+            font-size: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.35rem;
             transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
             -webkit-tap-highlight-color: transparent;
         }
-        #content-pov-selfie .result-card-actions button * {
+        #content-pov-tangan .result-card-actions button:hover,
+        #content-pov-selfie .result-card-actions button:hover,
+        #content-mirror-selfie .result-card-actions button:hover,
+        #content-walking-pad .result-card-actions button:hover {
+            transform: scale(1.1);
+        }
+        #content-pov-tangan .result-card-actions button *,
+        #content-pov-selfie .result-card-actions button *,
+        #content-mirror-selfie .result-card-actions button *,
+        #content-walking-pad .result-card-actions button * {
             pointer-events: none;
         }
-        #content-pov-selfie .btn-preview {
-            background: #e0f2fe;
-            color: #0369a1;
+        #content-pov-tangan .btn-preview, #content-pov-selfie .btn-preview, #content-mirror-selfie .btn-preview, #content-walking-pad .btn-preview { background: #3b82f6; }
+        #content-pov-tangan .btn-edit, #content-pov-selfie .btn-edit, #content-mirror-selfie .btn-edit, #content-walking-pad .btn-edit { background: #a855f7; }
+        #content-pov-tangan .btn-regenerate, #content-pov-selfie .btn-regenerate, #content-mirror-selfie .btn-regenerate, #content-walking-pad .btn-regenerate { background: #22c55e; }
+        #content-pov-tangan .btn-download, #content-pov-selfie .btn-download, #content-mirror-selfie .btn-download, #content-walking-pad .btn-download { background: #0891b2; }
+        #content-mirror-selfie .result-card, #content-walking-pad .result-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
         }
-        #content-pov-selfie .btn-regenerate {
-            background: #dcfce7;
-            color: #15803d;
+        #content-mirror-selfie .result-card img, #content-walking-pad .result-card img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
         }
-        #content-pov-selfie .btn-download {
-            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+        #content-mirror-selfie .image-counter, #content-walking-pad .image-counter {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(22, 163, 74, 0.9);
             color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
         }
         #content-pov-selfie .image-counter {
             position: absolute;
