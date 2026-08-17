@@ -1745,8 +1745,9 @@
         }
         #content-pov-tangan .preview-image {
             width: 100%;
-            height: 220px;
-            object-fit: cover;
+            height: auto;
+            max-height: 260px;
+            object-fit: contain;
             border-radius: 0.75rem;
         }
         #content-pov-tangan .btn-generate {
@@ -1829,8 +1830,11 @@
         }
         #content-pov-tangan .result-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 1.5rem;
+        }
+        @media (max-width: 639px) {
+            #content-pov-tangan .result-grid { grid-template-columns: 1fr; }
         }
         #content-pov-tangan .result-card {
             background: white;
@@ -1846,8 +1850,8 @@
         }
         #content-pov-tangan .result-card img {
             width: 100%;
-            height: 250px;
-            object-fit: cover;
+            height: auto;
+            object-fit: contain;
         }
         #content-pov-tangan .download-btn-overlay {
             position: absolute;
@@ -1917,8 +1921,9 @@
         }
         #content-pov-selfie .preview-image {
             width: 100%;
-            height: 220px;
-            object-fit: cover;
+            height: auto;
+            max-height: 260px;
+            object-fit: contain;
             border-radius: 0.75rem;
         }
         #content-pov-selfie .btn-generate {
@@ -1971,8 +1976,11 @@
         }
         #content-pov-selfie .result-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 1.5rem;
+        }
+        @media (max-width: 639px) {
+            #content-pov-selfie .result-grid { grid-template-columns: 1fr; }
         }
         #content-pov-selfie .result-card {
             background: white;
@@ -1988,8 +1996,8 @@
         }
         #content-pov-selfie .result-card img {
             width: 100%;
-            height: 250px;
-            object-fit: cover;
+            height: auto;
+            object-fit: contain;
         }
         #content-pov-selfie .result-card-actions {
             display: flex;

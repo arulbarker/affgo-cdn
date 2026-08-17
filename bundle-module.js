@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '58';
+        const UPDATE_VERSION = '59';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '59',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v59-badge',
+                badgeText: 'Update v59',
+                gradient: 'linear-gradient(135deg,#a855f7,#7e22ce)',
+                borderColor: '#a855f7',
+                icon: 'fa-th-large',
+                iconColor: '#a855f7',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v59-title-povlayout',
+                        titleText: 'POV Studio: Hasil Generate Lebih Besar & Utuh',
+                        bodyKey: 'modal.fix-v59-body-povlayout',
+                        bodyText: 'Hasil POV Tangan, POV Selfie, Mirror Selfie, dan Walking Pad kini tampil 2 kolom besar tanpa terpotong, dan pratinjau upload terlihat utuh — mengikuti layout Foto Produk Premium.'
+                    },
+                    {
+                        titleKey: 'modal.fix-v59-title-ppreview',
+                        titleText: 'Tombol Preview di Foto Produk Premium',
+                        bodyKey: 'modal.fix-v59-body-ppreview',
+                        bodyText: 'Kartu hasil Foto Produk Premium kini punya tombol Preview untuk lihat gambar besar, dan tombolnya selalu tampil di HP (sebelumnya hanya muncul saat hover di desktop).'
+                    }
+                ]
+            },
             {
                 version: '58',
                 dateId: 'Agustus 2026',
@@ -16717,7 +16742,7 @@ PENTING:
                     if (productPreviewContainer) {
                         const img = document.createElement('img');
                         img.src = dataUrl;
-                        img.className = 'w-full h-20 object-cover rounded-lg border-2';
+                        img.className = 'w-full h-20 object-contain rounded-lg border-2';
                         img.style.borderColor = '#db2777';
                         productPreviewContainer.appendChild(img);
                         productPreviewContainer.classList.remove('hidden');
@@ -20823,9 +20848,12 @@ Style: ultra-realistic, 8K, fitness lifestyle photography, dramatic gym lighting
                 if (card) {
                     card.className = 'relative group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300';
                     card.innerHTML = `<img src="${imageUrl}" class="w-full object-contain" alt="Product Premium ${index}">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition flex items-end justify-center pb-3">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition flex items-end justify-center pb-3 gap-2">
+                            <button type="button" data-action="pp-preview" data-index="${index}" class="bg-white/90 hover:bg-white text-gray-800 px-4 py-2 rounded-full font-semibold shadow-lg hover:scale-105 transition flex items-center gap-2">
+                                <i class="fas fa-eye"></i><span class="hidden sm:inline">Preview</span>
+                            </button>
                             <a href="${imageUrl}" download="${filename}" class="bg-white text-gray-800 px-4 py-2 rounded-full font-semibold shadow-lg hover:scale-105 transition flex items-center gap-2">
-                                <i class="fas fa-download"></i><span>Download</span>
+                                <i class="fas fa-download"></i><span class="hidden sm:inline">Download</span>
                             </a>
                         </div>`;
                 }
@@ -20834,6 +20862,13 @@ Style: ultra-realistic, 8K, fitness lifestyle photography, dramatic gym lighting
                 if (card) card.innerHTML = '';
             }
         }
+
+        if (resultsGrid) resultsGrid.addEventListener('click', (e) => {
+            const btn = e.target.closest('[data-action="pp-preview"]');
+            if (!btn) return;
+            const img = ppGeneratedImages[parseInt(btn.dataset.index, 10) - 1];
+            if (img && window.showPreviewModal) window.showPreviewModal(img.url);
+        });
 
         async function generatePPPhotos() {
             if (!ppProductImage) {
