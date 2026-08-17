@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '56';
+        const UPDATE_VERSION = '57';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '57',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v57-badge',
+                badgeText: 'Update v57',
+                gradient: 'linear-gradient(135deg,#06b6d4,#0e7490)',
+                borderColor: '#06b6d4',
+                icon: 'fa-images',
+                iconColor: '#06b6d4',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v57-title-pose',
+                        titleText: 'Pose Fashion: Pilih Hingga 10 Pose + Mode Random',
+                        bodyKey: 'modal.fix-v57-body-pose',
+                        bodyText: 'Pose Cepat kini bisa dipilih hingga 10 pose sekaligus dengan counter pilihan, plus tombol Random yang mengacak pose otomatis setiap kali generate.'
+                    },
+                    {
+                        titleKey: 'modal.fix-v57-title-reviewhub',
+                        titleText: 'Review Makanan Pindah ke Studio Review',
+                        bodyKey: 'modal.fix-v57-body-reviewhub',
+                        bodyText: 'Review Makanan kini bergabung di hub Studio Review bersama Review Produk, Skincare, Story Iklan, Unboxing, dan Before/After — semua generator review dalam satu tempat.'
+                    }
+                ]
+            },
             {
                 version: '56',
                 dateId: 'Agustus 2026',
@@ -4476,9 +4501,17 @@ CRITICAL: The model must be clearly wearing/using the product in the specified a
         const resultsGrid    = document.getElementById('pose-results-grid');
         const resultCount    = document.getElementById('pose-result-count');
         const downloadAllBtn = document.getElementById('pose-download-all-btn');
-        const quickBtns      = document.querySelectorAll('.pose-quick-btn');
+        const quickBtns      = document.querySelectorAll('.pose-quick-btn[data-pose]');
+        const randomBtn      = document.getElementById('pose-random-btn');
+        const selectedPoseEl = document.getElementById('pose-selected-count');
 
         let selectedCount = 4; // 1-10, default 4 (count selector)
+
+        // Multi-select quick poses (max 10) + random mode
+        const MAX_QUICK_POSES = 10;
+        let selectedQuickPoses = [];
+        let randomMode = false;
+        const ALL_POSES = Array.from(quickBtns).map(b => b.dataset.pose);
 
         // Count selection (1-10), default 4
         const poseCountSel = document.getElementById('pose-count-selection-grid');
@@ -4597,13 +4630,42 @@ CRITICAL: The model must be clearly wearing/using the product in the specified a
             if (fileInput) fileInput.value = '';
         });
 
-        // ── Quick pose buttons ────────────────────────────────────
+        // ── Quick pose buttons (multi-select, max 10) ─────────────
+        function updatePoseCounter() {
+            if (selectedPoseEl) selectedPoseEl.textContent = selectedQuickPoses.length;
+        }
+
         quickBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                quickBtns.forEach(b => b.classList.remove('selected'));
-                btn.classList.add('selected');
-                if (descInput) descInput.value = btn.dataset.pose;
+                const pose = btn.dataset.pose;
+                if (btn.classList.contains('selected')) {
+                    btn.classList.remove('selected');
+                    selectedQuickPoses = selectedQuickPoses.filter(p => p !== pose);
+                } else {
+                    if (selectedQuickPoses.length >= MAX_QUICK_POSES) {
+                        alert(window.tr3 ? window.tr3('Maksimal 10 pose yang bisa dipilih', 'You can select up to 10 poses', 'Maksimum 10 pose boleh dipilih') : 'Maksimal 10 pose yang bisa dipilih');
+                        return;
+                    }
+                    if (randomMode) {
+                        randomMode = false;
+                        if (randomBtn) randomBtn.classList.remove('selected');
+                    }
+                    btn.classList.add('selected');
+                    selectedQuickPoses.push(pose);
+                }
+                updatePoseCounter();
             });
+        });
+
+        // ── Random mode toggle ────────────────────────────────────
+        if (randomBtn) randomBtn.addEventListener('click', () => {
+            randomMode = !randomMode;
+            randomBtn.classList.toggle('selected', randomMode);
+            if (randomMode) {
+                selectedQuickPoses = [];
+                quickBtns.forEach(b => b.classList.remove('selected'));
+                updatePoseCounter();
+            }
         });
 
         // ── Generate ──────────────────────────────────────────────
@@ -4614,6 +4676,15 @@ CRITICAL: The model must be clearly wearing/using the product in the specified a
             generateBtn.disabled = true;
 
             const customDesc = descInput ? descInput.value.trim() : '';
+
+            // Pose plan priority: random mode > selected quick poses > custom desc > defaults
+            let posePlan = null;
+            if (randomMode) {
+                posePlan = [...ALL_POSES].sort(() => Math.random() - 0.5).slice(0, selectedCount);
+            } else if (selectedQuickPoses.length > 0) {
+                posePlan = [...selectedQuickPoses];
+            }
+
             generatedImages = [];
 
             if (emptyState)     emptyState.classList.add('hidden');
@@ -4642,7 +4713,7 @@ CRITICAL: The model must be clearly wearing/using the product in the specified a
                 generatedImages = [];
 
                 await Promise.allSettled(
-                    Array.from({ length: selectedCount }, (_, i) => generateSinglePose(i + 1, customDesc))
+                    Array.from({ length: selectedCount }, (_, i) => generateSinglePose(i + 1, customDesc, posePlan))
                 );
 
                 if (generatedImages.filter(Boolean).length > 0) break;
@@ -4657,14 +4728,16 @@ CRITICAL: The model must be clearly wearing/using the product in the specified a
             generateBtn.disabled = false;
         });
 
-        async function generateSinglePose(index, customDesc) {
+        async function generateSinglePose(index, customDesc, posePlan) {
             const card = document.getElementById(`pose-card-${index}`);
             try {
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${apiKey}`;
 
-                const poseInstruction = customDesc
-                    ? (customDesc + ANGLE_SUFFIX[(index - 1) % ANGLE_SUFFIX.length])
-                    : DEFAULT_POSES[index - 1];
+                const poseInstruction = posePlan
+                    ? (posePlan[(index - 1) % posePlan.length] + (index > posePlan.length ? ANGLE_SUFFIX[(index - 1) % ANGLE_SUFFIX.length] : ''))
+                    : customDesc
+                        ? (customDesc + ANGLE_SUFFIX[(index - 1) % ANGLE_SUFFIX.length])
+                        : DEFAULT_POSES[(index - 1) % DEFAULT_POSES.length];
 
                 const prompt = `You are a professional fashion photographer AI. Using the person in the reference photo as the subject, generate a completely new high-quality fashion photo.
 
