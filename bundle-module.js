@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '60';
+        const UPDATE_VERSION = '61';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '61',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v61-badge',
+                badgeText: 'Update v61',
+                gradient: 'linear-gradient(135deg,#16a34a,#0e7490)',
+                borderColor: '#16a34a',
+                icon: 'fa-upload',
+                iconColor: '#16a34a',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v61-title-upload',
+                        titleText: 'POV Studio: Upload Foto Kini Seragam',
+                        bodyKey: 'modal.fix-v61-body-upload',
+                        bodyText: 'Mirror Selfie dan Walking Pad kini menampilkan foto yang diupload langsung di dalam kotak upload — utuh tanpa terpotong, sama seperti POV Tangan. Tombol hapus foto juga tampil rapi di semua ukuran layar.'
+                    }
+                ]
+            },
             {
                 version: '60',
                 dateId: 'Agustus 2026',
@@ -16109,18 +16128,10 @@ The design should be clearly visible and properly placed on the mockup surface.`
                 reader.onloadend = () => {
                     productImageData = reader.result;
 
-                    // Show preview on mobile
-                    if (productPreview && productPreviewContainer) {
-                        productPreview.src = reader.result;
-                        productPreviewContainer.classList.remove('hidden');
-                    }
-
-                    // Update placeholder
+                    // Tampilkan tombol hapus + preview di dalam kotak (pakem POV Tangan)
+                    if (productPreviewContainer) productPreviewContainer.classList.remove('hidden');
                     if (productPlaceholder) {
-                        productPlaceholder.innerHTML = `
-                            <i class="fas fa-check-circle text-cyan-500" style="font-size: 2.5rem;"></i>
-                            <p class="mt-2 text-sm font-semibold text-cyan-600">Produk berhasil diupload!</p>
-                        `;
+                        productPlaceholder.innerHTML = `<img src="${reader.result}" alt="Preview Produk" class="max-h-32 mx-auto object-contain rounded-lg">`;
                     }
 
                     // Enable generate button
@@ -16178,18 +16189,10 @@ The design should be clearly visible and properly placed on the mockup surface.`
                 reader.onloadend = () => {
                     modelImageData = reader.result;
 
-                    // Show preview on mobile
-                    if (modelPreview && modelPreviewContainer) {
-                        modelPreview.src = reader.result;
-                        modelPreviewContainer.classList.remove('hidden');
-                    }
-
-                    // Update placeholder
+                    // Tampilkan tombol hapus + preview di dalam kotak (pakem POV Tangan)
+                    if (modelPreviewContainer) modelPreviewContainer.classList.remove('hidden');
                     if (modelPlaceholder) {
-                        modelPlaceholder.innerHTML = `
-                            <i class="fas fa-check-circle text-cyan-500" style="font-size: 2.5rem;"></i>
-                            <p class="mt-2 text-sm font-semibold text-cyan-600">Model berhasil diupload!</p>
-                        `;
+                        modelPlaceholder.innerHTML = `<img src="${reader.result}" alt="Preview Model" class="max-h-32 mx-auto object-contain rounded-lg">`;
                     }
                 };
                 reader.readAsDataURL(processedFile);
@@ -16719,6 +16722,7 @@ PENTING:
                 modelPreview.src = dataUrl;
                 modelPlaceholder.classList.add('hidden');
                 modelPreviewContainer.classList.remove('hidden');
+                if (removeModelBtn) removeModelBtn.classList.remove('hidden');
                 updateGenerateBtn();
             } catch (err) {
                 console.error('Model upload error:', err);
@@ -16755,7 +16759,6 @@ PENTING:
                     console.error('Product upload error:', err);
                 }
             }
-            if (productPlaceholder) productPlaceholder.classList.add('hidden');
             if (productCountText) productCountText.textContent = productImagesData.length + '/5 foto';
             if (removeProductBtn) removeProductBtn.classList.remove('hidden');
             updateGenerateBtn();
@@ -16777,6 +16780,7 @@ PENTING:
                 if (modelInput) modelInput.value = '';
                 modelPreviewContainer.classList.add('hidden');
                 modelPlaceholder.classList.remove('hidden');
+                removeModelBtn.classList.add('hidden');
                 updateGenerateBtn();
             });
         }
