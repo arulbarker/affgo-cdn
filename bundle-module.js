@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '64';
+        const UPDATE_VERSION = '65';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '65',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v65-badge',
+                badgeText: 'Update v65',
+                gradient: 'linear-gradient(135deg,#0891b2,#0e7490)',
+                borderColor: '#0891b2',
+                icon: 'fa-keyboard',
+                iconColor: '#0891b2',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v65-title-customproduct',
+                        titleText: 'Sketsa ke Katalog: Produk Lain Bisa Diketik Sendiri',
+                        bodyKey: 'modal.fix-v65-body-customproduct',
+                        bodyText: 'Pilih "Produk Lain" di Jenis Produk, lalu tulis sendiri produk di sketsamu (mis. sajadah, tas rajut, mainan kayu) — AI akan merender katalog sesuai jenis produk yang kamu sebutkan.'
+                    }
+                ]
+            },
             {
                 version: '64',
                 dateId: 'Agustus 2026',
@@ -18162,6 +18181,8 @@ PENTING:
         const catalogStyleOptions = document.getElementById('sketch-catalog-style-options');
         const customStyleContainer = document.getElementById('sketch-custom-style-container');
         const customStyleInput = document.getElementById('sketch-custom-style-input');
+        const customProductContainer = document.getElementById('sketch-custom-product-container');
+        const customProductInput = document.getElementById('sketch-custom-product-input');
         const angleOptions = document.getElementById('sketch-angle-options');
         const backgroundOptions = document.getElementById('sketch-background-options');
         const lightingOptions = document.getElementById('sketch-lighting-options');
@@ -18338,6 +18359,11 @@ PENTING:
                 });
                 button.classList.add('selected');
                 selectedProductType = button.dataset.value;
+
+                // Show/hide custom product input
+                if (customProductContainer) {
+                    customProductContainer.classList.toggle('hidden', selectedProductType !== 'other');
+                }
             });
         }
 
@@ -18446,7 +18472,11 @@ PENTING:
                 generatedImages = [];
 
                 // Build comprehensive prompt
-                const productDesc = productTypeDescriptions[selectedProductType] || selectedProductType;
+                let productDesc = productTypeDescriptions[selectedProductType] || selectedProductType;
+                if (selectedProductType === 'other') {
+                    const customProduct = customProductInput ? customProductInput.value.trim() : '';
+                    if (customProduct) productDesc = customProduct + ', faithfully rendered from the sketch';
+                }
                 let styleDesc = catalogStyleDescriptions[selectedCatalogStyle] || selectedCatalogStyle;
                 if (selectedCatalogStyle === 'custom') {
                     const customText = customStyleInput ? customStyleInput.value.trim() : '';
