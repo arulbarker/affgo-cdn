@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '62';
+        const UPDATE_VERSION = '63';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '63',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v63-badge',
+                badgeText: 'Update v63',
+                gradient: 'linear-gradient(135deg,#16a34a,#d97706)',
+                borderColor: '#16a34a',
+                icon: 'fa-moon',
+                iconColor: '#16a34a',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v63-title-foodramadan',
+                        titleText: 'Tema Ramadan Jadi Panel Sendiri di Foto Makanan',
+                        bodyKey: 'modal.fix-v63-body-foodramadan',
+                        bodyText: 'Fitur Foto Makanan Profesional kini punya dua panel: Foto Makanan (tema umum) dan Tema Ramadan. Panel Ramadan berisi 12 tema — 8 tema lama plus Bukber Restoran, Pasar Takjil, Hampers Lebaran, dan Open House Lebaran — dengan kartu hasil seragam terbaru dan preview upload utuh.'
+                    }
+                ]
+            },
             {
                 version: '62',
                 dateId: 'Agustus 2026',
@@ -6433,6 +6452,743 @@ TECHNICAL QUALITY:
                 generatedFoodImages[index - 1] = { url: imageUrl, filename: fileName, style };
             } catch (error) {
                 console.error(`Error generating food image ${index}:`, error);
+            }
+        }
+
+        // Event delegation for result actions (works on desktop & mobile)
+        if (resultContent) {
+            resultContent.addEventListener('click', async (e) => {
+                e.stopPropagation();
+
+                const actionBtn = e.target.classList.contains('action-btn') ? e.target : e.target.closest('.action-btn[data-action]');
+                if (!actionBtn) return;
+
+                const action = actionBtn.dataset.action;
+                const index = parseInt(actionBtn.dataset.index, 10);
+                const imageData = generatedFoodImages[index];
+
+                if (!imageData) return;
+
+                if (action === 'preview') {
+                    if (window.showPreviewModal) {
+                        window.showPreviewModal(imageData.url);
+                    }
+                } else if (action === 'download') {
+                    if (window.downloadDataURINew) {
+                        await window.downloadDataURINew(imageData.url, imageData.filename);
+                    } else if (window.downloadImage) {
+                        await window.downloadImage(imageData.url, imageData.filename);
+                    }
+                }
+            });
+        }
+
+        // Download all button handler (works on desktop & mobile)
+        if (downloadAllBtn) {
+            downloadAllBtn.addEventListener('click', async (e) => {
+                e.stopPropagation();
+
+                if (generatedFoodImages.length === 0 || downloadAllBtn.disabled) return;
+
+                const originalHTML = downloadAllBtn.innerHTML;
+                downloadAllBtn.disabled = true;
+
+                try {
+                    for (let i = 0; i < generatedFoodImages.length; i++) {
+                        const img = generatedFoodImages[i];
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedFoodImages.length}...</span>`;
+
+                        try {
+                            if (window.downloadDataURINew) {
+                                await window.downloadDataURINew(img.url, img.filename);
+                            } else if (window.downloadImage) {
+                                await window.downloadImage(img.url, img.filename);
+                            }
+                            await new Promise(resolve => setTimeout(resolve, 500));
+                        } catch (error) {
+                            console.error(`Error downloading image ${i + 1}:`, error);
+                        }
+                    }
+
+                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    setTimeout(() => {
+                        downloadAllBtn.disabled = false;
+                        downloadAllBtn.innerHTML = originalHTML;
+                    }, 2000);
+                } catch (error) {
+                    console.error('Download all error:', error);
+                    downloadAllBtn.innerHTML = '<i class="fas fa-times mr-2"></i><span>Error</span>';
+                    setTimeout(() => {
+                        downloadAllBtn.disabled = false;
+                        downloadAllBtn.innerHTML = originalHTML;
+                    }, 2000);
+                }
+            });
+        }
+
+        validateInputs();
+    })();
+
+    // --- FOOD RAMADAN LOGIC (anggota hub Foto Makanan, clone food-selfie + pakem kartu hasil) ---
+    (function() {
+        const foodImageUploader = document.getElementById('food-ramadan-food-image-uploader');
+        const foodFileInput = document.getElementById('food-ramadan-food-file-input');
+        const foodUploadPrompt = document.getElementById('food-ramadan-food-upload-prompt');
+        const foodImagePreview = document.getElementById('food-ramadan-food-image-preview');
+
+        const styleImageUploader = document.getElementById('food-ramadan-style-image-uploader');
+        const styleFileInput = document.getElementById('food-ramadan-style-file-input');
+        const styleUploadPrompt = document.getElementById('food-ramadan-style-upload-prompt');
+        const styleImagePreview = document.getElementById('food-ramadan-style-image-preview');
+
+        // Background Upload Elements
+        const backgroundInput = document.getElementById('food-ramadan-background-input');
+        const backgroundUploadArea = document.getElementById('food-ramadan-background-upload-area');
+        const backgroundPreview = document.getElementById('food-ramadan-background-preview');
+        const backgroundPreviewContainer = document.getElementById('food-ramadan-background-preview-container');
+        const removeBackgroundBtn = document.getElementById('food-ramadan-remove-background');
+
+        // Model Upload Elements
+        const modelInput = document.getElementById('food-ramadan-model-input');
+        const modelUploadArea = document.getElementById('food-ramadan-model-upload-area');
+        const modelPreview = document.getElementById('food-ramadan-model-preview');
+        const modelPreviewContainer = document.getElementById('food-ramadan-model-preview-container');
+        const removeModelBtn = document.getElementById('food-ramadan-remove-model');
+
+        let selectedCount = 4; // 1-10, default 4 (count selector)
+
+        // Count selection (1-10), default 4
+        const foodRamadanCountSel = document.getElementById('food-ramadan-count-selection-grid');
+        if (foodRamadanCountSel) {
+            foodRamadanCountSel.addEventListener('click', (e) => {
+                const btn = e.target.closest('button[data-count]');
+                if (!btn) return;
+                foodRamadanCountSel.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedCount = parseInt(btn.dataset.count, 10);
+            });
+        }
+
+        const themeSelection = document.getElementById('food-ramadan-theme-selection');
+        const customThemeContainer = document.getElementById('food-ramadan-custom-theme-container');
+        const customThemeInput = document.getElementById('food-ramadan-custom-theme-input');
+        const ratioSelection = document.getElementById('food-ramadan-ratio-selection');
+        const generateBtn = document.getElementById('food-ramadan-generate-btn');
+        const loader = document.getElementById('food-ramadan-loader');
+        const progressText = document.getElementById('food-ramadan-progress-text');
+        const progressBar = document.getElementById('food-ramadan-progress-bar');
+        const currentTaskText = document.getElementById('food-ramadan-current-task');
+        const placeholderResult = document.getElementById('food-ramadan-placeholder-result');
+        const resultContent = document.getElementById('food-ramadan-result-content');
+        const errorMessage = document.getElementById('food-ramadan-error-message');
+        const resultsHeader = document.getElementById('food-ramadan-results-header');
+        const resultCount = document.getElementById('food-ramadan-result-count');
+        const downloadAllBtn = document.getElementById('food-ramadan-download-all-btn');
+
+        let foodBase64Image = null;
+        let styleBase64Image = null;
+        let customBackgroundData = null;
+        let customModelData = null;
+        let foodMimeType = null;
+        let styleMimeType = null;
+        let selectedTheme = themeSelection ? (themeSelection.querySelector('.theme-btn-food.selected')?.dataset.theme || '') : '';
+        let selectedFoodRamadanRatio = '1:1';
+        let generatedFoodImages = [];
+
+        function setupUploader(uploader, input, preview, prompt, storageCallback) {
+            if (!uploader) return;
+            uploader.addEventListener('click', () => input.click());
+            uploader.addEventListener('dragover', (e) => { e.preventDefault(); uploader.classList.add('border-green-400', 'bg-green-50'); });
+            uploader.addEventListener('dragleave', () => { uploader.classList.remove('border-green-400', 'bg-green-50'); });
+            uploader.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploader.classList.remove('border-green-400', 'bg-green-50');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    input.files = files;
+                    handleFileSelect({ target: input }, uploader, preview, prompt, storageCallback);
+                }
+            });
+            input.addEventListener('change', (e) => handleFileSelect(e, uploader, preview, prompt, storageCallback));
+        }
+
+        function handleFileSelect(event, uploader, preview, prompt, storageCallback) {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const [header, base64] = reader.result.split(',');
+                    const mimeType = header.match(/:(.*?);/)[1];
+                    storageCallback(base64, mimeType);
+                    preview.src = reader.result;
+                    preview.classList.remove('hidden');
+                    prompt.classList.add('hidden');
+                    if (uploader) uploader.classList.add('has-image');
+                    validateInputs();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        setupUploader(foodImageUploader, foodFileInput, foodImagePreview, foodUploadPrompt, (data, mime) => {
+            foodBase64Image = data;
+            foodMimeType = mime;
+        });
+        setupUploader(styleImageUploader, styleFileInput, styleImagePreview, styleUploadPrompt, (data, mime) => {
+            styleBase64Image = data;
+            styleMimeType = mime;
+            validateInputs();
+        });
+
+        // Background Upload Handler with HEIC Support
+        if (backgroundInput) {
+            backgroundInput.addEventListener('change', async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                let processedFile = file;
+
+                // Convert HEIC to JPEG if needed
+                if (file.type === 'image/heic' || file.name.toLowerCase().endsWith('.heic')) {
+                    try {
+                        const convertedBlob = await heic2any({
+                            blob: file,
+                            toType: 'image/jpeg',
+                            quality: 0.9
+                        });
+                        processedFile = new File([convertedBlob], file.name.replace(/\.heic$/i, '.jpg'), {
+                            type: 'image/jpeg'
+                        });
+                    } catch (err) {
+                        console.error('HEIC conversion failed:', err);
+                        alert('Gagal mengkonversi gambar HEIC');
+                        return;
+                    }
+                }
+
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    customBackgroundData = reader.result;
+
+                    if (backgroundPreview && backgroundPreviewContainer && backgroundUploadArea) {
+                        backgroundPreview.src = reader.result;
+                        backgroundUploadArea.classList.add('hidden');
+                        backgroundPreviewContainer.classList.remove('hidden');
+                    }
+                };
+                reader.readAsDataURL(processedFile);
+            });
+        }
+
+        // Remove Background Handler
+        if (removeBackgroundBtn) {
+            removeBackgroundBtn.addEventListener('click', () => {
+                customBackgroundData = null;
+                if (backgroundInput) backgroundInput.value = '';
+                if (backgroundUploadArea) backgroundUploadArea.classList.remove('hidden');
+                if (backgroundPreviewContainer) backgroundPreviewContainer.classList.add('hidden');
+                if (backgroundPreview) backgroundPreview.src = '';
+            });
+        }
+
+        // Model Upload Handler with HEIC Support
+        if (modelInput) {
+            modelInput.addEventListener('change', async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                let processedFile = file;
+
+                // Convert HEIC to JPEG if needed
+                if (file.type === 'image/heic' || file.name.toLowerCase().endsWith('.heic')) {
+                    try {
+                        const convertedBlob = await heic2any({
+                            blob: file,
+                            toType: 'image/jpeg',
+                            quality: 0.9
+                        });
+                        processedFile = new File([convertedBlob], file.name.replace(/\.heic$/i, '.jpg'), {
+                            type: 'image/jpeg'
+                        });
+                    } catch (err) {
+                        console.error('HEIC conversion failed:', err);
+                        alert('Gagal mengkonversi gambar HEIC');
+                        return;
+                    }
+                }
+
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    customModelData = reader.result;
+
+                    if (modelPreview && modelPreviewContainer && modelUploadArea) {
+                        modelPreview.src = reader.result;
+                        modelUploadArea.classList.add('hidden');
+                        modelPreviewContainer.classList.remove('hidden');
+
+                        // Auto-scroll to next section on mobile
+                        setTimeout(() => {
+                            if (window.innerWidth < 768 && ratioSelection) {
+                                ratioSelection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                        }, 300);
+                    }
+                };
+                reader.readAsDataURL(processedFile);
+            });
+        }
+
+        // Remove Model Handler
+        if (removeModelBtn) {
+            removeModelBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                customModelData = null;
+                if (modelInput) modelInput.value = '';
+                if (modelUploadArea) modelUploadArea.classList.remove('hidden');
+                if (modelPreviewContainer) modelPreviewContainer.classList.add('hidden');
+                if (modelPreview) modelPreview.src = '';
+            });
+        }
+
+        // Mobile touch feedback for model upload area
+        if (modelUploadArea) {
+            modelUploadArea.addEventListener('touchstart', (e) => {
+                modelUploadArea.style.transform = 'scale(0.98)';
+            }, { passive: true });
+
+            modelUploadArea.addEventListener('touchend', (e) => {
+                setTimeout(() => {
+                    modelUploadArea.style.transform = '';
+                }, 100);
+            }, { passive: true });
+        }
+
+        // Theme selection handler
+        if (themeSelection) {
+            themeSelection.addEventListener('click', (e) => {
+                const button = e.target.closest('.theme-btn-food');
+                if (button) {
+                    document.querySelectorAll('#food-ramadan-theme-selection .theme-btn-food').forEach(btn => btn.classList.remove('selected'));
+                    button.classList.add('selected');
+                    selectedTheme = button.dataset.theme;
+
+                    // Show/hide custom theme input
+                    if (customThemeContainer) {
+                        if (selectedTheme === 'custom') {
+                            customThemeContainer.classList.remove('hidden');
+                        } else {
+                            customThemeContainer.classList.add('hidden');
+                        }
+                    }
+                }
+            });
+        }
+
+        // Ratio selection handler
+        if (ratioSelection) {
+            ratioSelection.addEventListener('click', (e) => {
+                const button = e.target.closest('.option-btn-food');
+                if (button) {
+                    document.querySelectorAll('#food-ramadan-ratio-selection .option-btn-food').forEach(btn => btn.classList.remove('selected'));
+                    button.classList.add('selected');
+                    selectedFoodRamadanRatio = button.dataset.ratio;
+                }
+            });
+        }
+
+        function validateInputs() {
+            if (generateBtn) {
+                 generateBtn.disabled = !foodBase64Image;
+            }
+        }
+
+        function showLoading(show) {
+            if (show) {
+                if (placeholderResult) placeholderResult.classList.add('hidden');
+                if (loader) loader.classList.remove('hidden');
+                if (resultsHeader) resultsHeader.classList.add('hidden');
+                if (resultContent) resultContent.classList.add('hidden');
+            } else {
+                if (loader) loader.classList.add('hidden');
+            }
+        }
+
+        function showError(message) {
+            if (errorMessage && message) {
+                errorMessage.textContent = message;
+                errorMessage.classList.remove('hidden');
+            } else if (errorMessage) {
+                errorMessage.classList.add('hidden');
+            }
+        }
+
+        async function generateImageWithRetry(payload, retries = 3, delay = 1000) {
+           for (let i = 0; i < retries; i++) {
+                try {
+                    const apiKey = "";
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${apiKey}`;
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const responseText = await response.text();
+
+                    if (!response.ok) {
+                        let errorMsg = response.statusText;
+                        try {
+                           const errorJson = JSON.parse(responseText);
+                           errorMsg = errorJson.error?.message || errorMsg;
+                        } catch(e) {
+                           if(responseText) errorMsg = responseText;
+                        }
+                        throw new Error(`API Error: ${errorMsg}`);
+                    }
+
+                    try {
+                        return JSON.parse(responseText);
+                    } catch (e) {
+                        console.error("Failed to parse successful response:", responseText);
+                        throw new Error("Received an invalid JSON response from the server.");
+                    }
+
+                } catch (error) {
+                    console.error(`Attempt ${i + 1} failed:`, error);
+                    if (i === retries - 1) return null;
+                    await new Promise(res => setTimeout(res, delay * Math.pow(2, i)));
+                }
+            }
+            return null;
+        }
+
+        if (generateBtn) generateBtn.addEventListener('click', async () => {
+            validateInputs();
+            if (generateBtn.disabled) {
+                showError("Unggah foto makanan dan pilih tema atau gambar referensi.");
+                return;
+            }
+
+            const originalBtnText = generateBtn.innerHTML;
+            generateBtn.disabled = true;
+            generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Generating...';
+            generateBtn.classList.add('opacity-75', 'cursor-not-allowed');
+
+            showLoading(true);
+            showError('');
+
+            const baseStyles = [
+                'Top-Down Flat Lay',
+                'Classic 45-Degree Angle',
+                'Dynamic Action Shot (e.g., pouring, steam)',
+                'Close-up Macro Shot',
+                'Minimalist Studio Shot (Clean Background)',
+                'Bright Natural Window Light',
+                'Moody Dark Background',
+                'Diagonal Angle with Depth',
+                'Side Profile View',
+                'Overhead Birds Eye View',
+                'Rustic Natural Lighting',
+                'Studio White Background',
+                'Warm Golden Hour Light',
+                'Romantic Candlelight',
+                'Urban Coffee Shop Aesthetic'
+            ];
+            // Shuffle supaya kombinasi gaya kamera beda tiap generate (tidak selalu 4 gaya pertama)
+            const allStyles = (() => {
+                const copy = [...baseStyles];
+                for (let i = copy.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [copy[i], copy[j]] = [copy[j], copy[i]];
+                }
+                return copy;
+            })();
+
+            const MAX_ATTEMPTS = 3;
+            let attempts = 0;
+            let successCount = 0;
+
+            while (attempts < MAX_ATTEMPTS && successCount === 0) {
+                attempts++;
+                generatedFoodImages = new Array(selectedCount).fill(null);
+                resultContent.innerHTML = '';
+                if (resultsHeader) resultsHeader.classList.add('hidden');
+
+                const generationPromises = Array.from({ length: selectedCount }, (_, i) =>
+                    generateFoodImage(i + 1, allStyles[i])
+                );
+                await Promise.allSettled(generationPromises);
+
+                successCount = generatedFoodImages.filter(Boolean).length;
+            }
+
+            showLoading(false);
+            if (progressBar) progressBar.style.width = '0%';
+            if (progressText) progressText.textContent = '';
+            if (currentTaskText) currentTaskText.textContent = '';
+
+            generateBtn.disabled = false;
+            generateBtn.innerHTML = originalBtnText;
+            generateBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+
+            if (successCount > 0) {
+                renderSuccessfulFoodResults();
+                setTimeout(() => {
+                    if (window.innerWidth < 768 && resultsHeader) {
+                        resultsHeader.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 300);
+            } else {
+                placeholderResult.classList.remove('hidden');
+                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+            }
+        });
+
+        function renderSuccessfulFoodResults() {
+            const successful = generatedFoodImages.filter(Boolean);
+            if (!successful.length) return;
+            generatedFoodImages = successful;
+            resultContent.innerHTML = '';
+            successful.forEach((imgData, idx) => {
+                const card = document.createElement('div');
+                card.className = 'result-card';
+                card.innerHTML = `<img src="${imgData.url}" alt="${imgData.style}"><div class="result-card-actions"><button data-action="preview" data-index="${idx}" class="action-btn btn-preview" title="Preview" aria-label="Preview"><i class="fas fa-eye"></i></button><button data-action="download" data-index="${idx}" class="action-btn btn-download" title="Download" aria-label="Download"><i class="fas fa-download"></i></button></div><div class="image-counter">#${idx + 1}</div>`;
+                resultContent.appendChild(card);
+            });
+            if (resultsHeader) resultsHeader.classList.remove('hidden');
+            if (resultCount) resultCount.textContent = successful.length;
+            resultContent.classList.remove('hidden');
+        }
+
+        // Detail teknik fotografi profesional per gaya kamera (label pendek tetap dipakai di badge/filename)
+        const foodStyleDetails = {
+            'Top-Down Flat Lay': 'top-down 90-degree flat lay composition, balanced negative space, styled napkin and cutlery props, soft diffused overhead lighting',
+            'Classic 45-Degree Angle': 'classic 45-degree hero angle, 50mm lens rendering, shallow depth of field, natural table setting with supporting props',
+            'Dynamic Action Shot (e.g., pouring, steam)': 'dynamic action moment frozen at high shutter speed - pouring sauce, rising steam or dusting powder, dramatic backlight highlighting the motion',
+            'Close-up Macro Shot': 'extreme macro close-up with 100mm macro lens rendering, razor-sharp texture detail, glistening surface highlights, creamy background bokeh',
+            'Minimalist Studio Shot (Clean Background)': 'minimalist studio composition on seamless backdrop, single large softbox with smooth gradient falloff, commercial product-grade lighting',
+            'Bright Natural Window Light': 'bright natural window side-light softened by sheer curtain, airy fresh mood, gentle organic shadows',
+            'Moody Dark Background': 'low-key chiaroscuro lighting with single directional side light, deep shadows on dark slate or aged wood, fine-art editorial mood',
+            'Diagonal Angle with Depth': 'diagonal leading-line composition with layered depth, foreground and background elements softly out of focus',
+            'Side Profile View': 'straight-on side profile at table level showing the layers and height of the dish, subtle backlit rim light',
+            'Overhead Birds Eye View': 'overhead birds-eye view of the full table spread, storytelling props arrangement, cohesive color palette',
+            'Rustic Natural Lighting': 'rustic natural light on weathered wood, artisan linen and handmade ceramic props, warm earthy color grade',
+            'Studio White Background': 'pure white seamless studio background, high-key even lighting, crisp catalog and menu-listing quality',
+            'Warm Golden Hour Light': 'golden hour sunlight streaking low across the table, long soft shadows, glowing appetizing highlights',
+            'Romantic Candlelight': 'intimate candlelight scene with warm flickering glow, soft-focus atmosphere, elegant evening table setting',
+            'Urban Coffee Shop Aesthetic': 'urban specialty coffee shop ambience, window light with soft city bokeh, lifestyle editorial framing'
+        };
+
+        // Generate single food image
+        async function generateFoodImage(index, style) {
+            try {
+                // Update progress
+                if (progressText) {
+                    progressText.textContent = `${index}/${selectedCount}`;
+                }
+
+                // Update progress bar
+                if (progressBar) {
+                    const percentage = (index / selectedCount) * 100;
+                    progressBar.style.width = `${percentage}%`;
+                }
+
+                // Update current task
+                if (currentTaskText) {
+                    const taskDesc = customModelData
+                        ? `Creating photo ${index} with person and ${style} style...`
+                        : `Creating photo ${index} with ${style} style...`;
+                    currentTaskText.textContent = taskDesc;
+                }
+
+                // Auto-scroll to loader on mobile when first image starts
+                if (index === 1 && window.innerWidth < 768 && loader) {
+                    setTimeout(() => {
+                        loader.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 200);
+                }
+
+                let prompt = '';
+                const parts = [];
+                const styleDesc = foodStyleDetails[style] || style;
+
+                // Get final theme (use custom input if custom theme selected)
+                let finalTheme = selectedTheme;
+                if (selectedTheme === 'custom' && customThemeInput && customThemeInput.value.trim()) {
+                    finalTheme = customThemeInput.value.trim();
+                } else if (selectedTheme === 'custom') {
+                    finalTheme = 'Professional Ramadan food photography';
+                }
+
+                // Check if custom background or model is uploaded
+                if (customBackgroundData || customModelData) {
+                    // With custom background/model - composite mode
+                    const base64Background = customBackgroundData ? customBackgroundData.split(',')[1] : null;
+                    const base64Model = customModelData ? customModelData.split(',')[1] : null;
+
+                    let imageDescriptions = '';
+                    let imageCount = 1;
+
+                    if (base64Background) {
+                        imageDescriptions += `IMAGE ${imageCount} (Background Reference) = The LOCATION/ENVIRONMENT where the food will be photographed\n`;
+                        imageCount++;
+                    }
+                    imageDescriptions += `IMAGE ${imageCount} (Food Subject) = The FOOD ITEM to be featured in the photo\n`;
+                    imageCount++;
+                    if (base64Model) {
+                        imageDescriptions += `IMAGE ${imageCount} (Model/Person Reference) = The PERSON/MODEL who will appear in the photo with the food\n`;
+                    }
+
+                    prompt = `Create a PHOTOREALISTIC food photography by seamlessly integrating these ${base64Background && base64Model ? 'three' : base64Model ? 'two' : 'two'} images:
+
+${imageDescriptions}
+
+YOUR TASK: Create a single, natural-looking photograph that ${base64Model ? 'MUST SHOW the PERSON from the Model image appearing with the food, holding, presenting, or enjoying it' : 'appears as if the food was actually photographed in this location'}${base64Background ? ' in the location from the background reference' : ''}. The result must be completely seamless and photorealistic.
+
+${base64Model ? `
+CRITICAL REQUIREMENT - MODEL/PERSON MUST BE VISIBLE:
+- The final photo MUST show the PERSON/MODEL from the Model image (not just hands)
+- The person should be visible from chest-up (upper body) or full body, depending on composition
+- The person should be naturally holding, presenting, or enjoying the food
+- DO NOT show only hands - the PERSON's face, body, and presence must be clearly visible
+- The person should occupy 40-60% of the frame, with food taking 30-40%
+- Think lifestyle food photography or food blogger content - person with food, not just food alone
+- The person's identity, face, clothing, and appearance from the original image must be preserved
+- Dress the person in modest attire appropriate for the Ramadan/Eid theme when relevant
+` : ''}
+
+PHOTOGRAPHY STYLE: ${styleDesc}
+SCENE SETTING: ${finalTheme || 'Professional Ramadan food photography'}
+
+CRITICAL PHOTOREALISM REQUIREMENTS:
+
+${base64Model ? `0. MODEL/PERSON INTEGRATION (MANDATORY - THIS IS THE MOST IMPORTANT REQUIREMENT):
+   - THE PERSON FROM THE MODEL IMAGE MUST BE CLEARLY VISIBLE IN THE FINAL PHOTO
+   - PRESERVE THE PERSON'S EXACT IDENTITY: Face, facial features, skin tone, hair, clothing style from original image
+   - Show the person from chest-up (upper body portrait) or full body depending on scene
+   - DO NOT crop to only show hands - the PERSON must be recognizable in the photo
+   - Position the person naturally in the scene: sitting at table, holding food, or presenting dish
+   - The person should be interacting with the food in a natural, lifestyle way
+   - Match the person's clothing style to the theme/setting (modest festive attire for Ramadan/Eid scenes)
+   - If theme requires specific attire, dress the person appropriately while preserving their identity
+   - The person's pose should look natural and authentic for the food photography context
+   - Create proper lighting on the person's face and body to match the scene
+   - Eye contact can be: looking at food, looking at camera, or natural gaze depending on composition
+   - COMPOSITION RULE: Person 40-60% of frame, food 30-40%, background/setting 10-20%
+   - The person and food should feel like they belong together in the same moment
+
+` : ''}1. LIGHTING INTEGRATION (MOST IMPORTANT):
+   ${base64Background ? '- Analyze the lighting direction, intensity, and color temperature from the Background Reference' : '- Create professional lighting that matches the scene setting'}
+   - Apply IDENTICAL lighting to the food${base64Model ? ' AND person' : ''}
+   - Match highlights, shadows, and ambient light perfectly
+   - Create natural light falloff and reflections on the food surface${base64Model ? ' and person\'s skin' : ''}
+
+2. PERSPECTIVE & CAMERA ANGLE:
+   ${base64Background ? '- Match the camera height and angle from the Background Reference' : '- Use natural lifestyle/food photography camera angle'}
+   - Ensure food placement perspective fits the scene naturally
+   - Scale the food appropriately for the scene (not too big, not too small)
+   ${base64Model ? '- Position camera at eye-level or slightly above to capture both person and food naturally' : ''}
+
+3. SHADOWS & REFLECTIONS:
+   - Generate realistic shadows under and around the food${base64Model ? ' and person' : ''}
+   ${base64Background ? '- Shadow direction MUST match light direction from Background Reference' : '- Shadow direction should match the scene\'s natural lighting'}
+   - No floating objects - food${base64Model ? ' and person' : ''} must interact with the surface
+
+4. COLOR GRADING & ATMOSPHERE:
+   ${base64Background ? '- Match the color grading/mood of Background Reference exactly' : '- Create cohesive color grading matching the scene setting'}
+   - Apply same color temperature to the food${base64Model ? ' and person' : ''}
+   - Blend color palette so food${base64Model ? ' and person feel' : ' feels'} part of the scene
+
+5. DEPTH OF FIELD & FOCUS:
+   ${base64Background ? '- Match the depth of field from Background Reference' : '- Use natural depth of field for lifestyle food photography'}
+   - Keep food in sharp focus while maintaining scene's blur characteristics
+   ${base64Model ? '- Person\'s face should be in sharp focus, especially eyes and expression' : ''}
+
+6. SURFACE INTEGRATION:
+   - Food must sit ON the surface, not float
+   - Show contact shadows where food touches surface
+   ${base64Model ? '- Person\'s body and hands should interact naturally with the environment' : ''}
+
+FINAL CHECK - The photo must look like:
+- A single photograph taken in one moment
+${base64Model ? '- MANDATORY: PERSON is CLEARLY VISIBLE with recognizable face and upper body (NOT just hands)' : ''}
+- Same lighting conditions throughout
+- Natural, unedited, authentic food photography
+- NOT a composite or photoshopped image, NO visible cut-out edges or halos
+
+TECHNICAL SPECS:
+- Aspect ratio: ${selectedFoodRamadanRatio}
+- High resolution, sharp focus on food${base64Model ? ' and person\'s face' : ''}
+- Professional food photography quality
+- Instagram/social media ready
+
+The result MUST be indistinguishable from a real ${base64Model ? 'lifestyle food photography with person ' : ''}photograph taken at that location!`;
+
+                    parts.push({ text: prompt });
+                    if (base64Background) {
+                        parts.push({ inlineData: { mimeType: 'image/jpeg', data: base64Background } });
+                    }
+                    parts.push({ inlineData: { mimeType: foodMimeType, data: foodBase64Image } });
+                    if (base64Model) {
+                        parts.push({ inlineData: { mimeType: 'image/jpeg', data: base64Model } });
+                    }
+
+                } else if (styleBase64Image) {
+                    // With style reference image
+                    prompt = `IMPORTANT: Your task is to place the food from the first image into the exact scene of the second image. The final output MUST perfectly replicate the composition, camera angle, and lighting from the second uploaded image. The setting and photographic style must be identical. The food from the first image is the new subject, but it must be integrated photorealistically into the replicated scene.`;
+                    if (finalTheme) {
+                        prompt += ` The overall mood should have a '${finalTheme}' feel.`;
+                    }
+                    parts.push({ text: prompt });
+                    parts.push({ inlineData: { mimeType: foodMimeType, data: foodBase64Image } });
+                    parts.push({ inlineData: { mimeType: styleMimeType, data: styleBase64Image } });
+                } else {
+                    // Without custom background or style reference - AI generated background
+                    prompt = `You are an award-winning professional food photographer and food stylist. Create a professional, appetizing photograph featuring the EXACT food from the uploaded image.
+
+PHOTOGRAPHY STYLE: ${styleDesc}
+SCENE / THEME: ${finalTheme || 'professional Ramadan food photography with warm festive Islamic atmosphere'}
+
+FOOD FIDELITY (MOST IMPORTANT):
+- The food must stay 100% identical to the uploaded image: same dish, portion, plating, toppings, and colors
+- Only the environment, camera angle, props, and lighting may change
+
+PROFESSIONAL FOOD STYLING:
+- Add supporting props (surface, tableware, garnish, ingredients) that complement the dish without stealing focus
+- Appetizing enhancement: vibrant fresh colors, visible texture detail, gentle steam for hot food or condensation droplets for cold drinks where appropriate
+- Styling level: professional food stylist for culinary magazines and premium restaurant menus
+
+TECHNICAL QUALITY:
+- Commercial-grade lighting with controlled highlights and soft natural shadows
+- Sharp focus on the food, natural depth of field, ${selectedFoodRamadanRatio} composition
+- Photorealistic result - must look like a real photograph from a professional camera, not CGI
+- Quality benchmark: culinary magazine spread, high-end delivery app listing, premium restaurant menu`;
+
+                    parts.push({ text: prompt });
+                    parts.push({ inlineData: { mimeType: foodMimeType, data: foodBase64Image } });
+                }
+
+                const payload = {
+                    contents: [{ parts }],
+                    generationConfig: {
+                        responseModalities: ['TEXT', 'IMAGE'],
+                        imageConfig: { aspectRatio: selectedFoodRamadanRatio }
+                    }
+                };
+
+                const result = await generateImageWithRetry(payload);
+
+                const imagePart = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
+                const base64Data = imagePart?.inlineData?.data;
+
+                if (!base64Data) throw new Error('No image data received');
+
+                const imageUrl = `data:image/png;base64,${base64Data}`;
+                const fileName = `food_ramadan_${style.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_${index}.png`;
+                generatedFoodImages[index - 1] = { url: imageUrl, filename: fileName, style };
+            } catch (error) {
+                console.error(`Error generating food ramadan image ${index}:`, error);
             }
         }
 

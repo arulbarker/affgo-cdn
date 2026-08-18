@@ -159,6 +159,7 @@
                 'nav.virtual-tryon': 'Coba Baju Virtual',
                 'nav.pose-fashion': 'Pose Fashion',
                 'nav.food-selfie': 'Foto Makanan Profesional',
+                'nav.food-ramadan': 'Foto Makanan Ramadan',
                 'nav.product-review': 'Studio Review',
                 'nav.skincare-review': 'Review Skincare',
                 'nav.food-review': 'Review Makanan',
@@ -277,6 +278,7 @@
                 'hub.rumah-eksterior': 'Rumah / Eksterior', 'hub.rumah-kamar': 'Desain Kamar', 'hub.rumah-timelapse': 'Timelapse Renovasi',
                 'hub.aff-umum': 'Tema Umum', 'hub.aff-agama': 'Tema Agama', 'hub.aff-harga': 'Tema Harga', 'hub.aff-premium': 'Premium', 'hub.aff-tryon': 'Coba Baju',
                 'hub.pov-tangan': 'POV Tangan', 'hub.pov-selfie': 'POV Selfie', 'hub.pov-mirror': 'Mirror Selfie', 'hub.pov-walkpad': 'POV Walking Pad',
+                'hub.food-umum': 'Foto Makanan', 'hub.food-ramadan': 'Tema Ramadan',
                 'hub.review-ads': 'Story Iklan', 'hub.review-unboxing': 'Unboxing', 'hub.review-beforeafter': 'Before/After',
                 // POV Selfie (povselfie.*)
                 'povselfie.h1': 'POV Selfie Generator',
@@ -387,6 +389,9 @@
                 'login.secure': '\uD83D\uDD12 Akses Terenkripsi & Aman',
                 'login.no-access-cta': '\uD83D\uDED2 Belum punya akses? Beli di sini \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v63-badge': 'Update v63',
+                'modal.fix-v63-title-foodramadan': 'Tema Ramadan Jadi Panel Sendiri di Foto Makanan',
+                'modal.fix-v63-body-foodramadan': 'Fitur Foto Makanan Profesional kini punya dua panel: Foto Makanan (tema umum) dan Tema Ramadan. Panel Ramadan berisi 12 tema — 8 tema lama plus Bukber Restoran, Pasar Takjil, Hampers Lebaran, dan Open House Lebaran — dengan kartu hasil seragam terbaru dan preview upload utuh.',
                 'modal.fix-v62-badge': 'Update v62',
                 'modal.fix-v62-title-pakemcards': 'Kartu Hasil Seragam di 15 Fitur',
                 'modal.fix-v62-body-pakemcards': 'Hub Foto Produk Affiliate (Tema Umum, Agama, Harga, Premium, Coba Baju), Feed Branding, Studio Mockup, seluruh Studio Review (6 fitur), Sketsa ke Katalog, dan Panduan Ukuran kini pakai kartu hasil seragam: gambar besar utuh tanpa terpotong, maksimal 2 kolom, dan nomor foto di pojok.',
@@ -533,7 +538,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Tab Ruang Saku sekarang punya halaman penjelasan singkat fitur Rindu (AI keuangan) + tombol langsung ke RuangSaku.com. Lebih nyaman dipakai di HP — tinggal klik dan terbuka di tab browser.',
                 'modal.fix-v31-title-telegram': 'Tombol Telegram di Pojok Layar',
                 'modal.fix-v31-body-telegram': 'Tombol bundar Telegram sekarang ada di pojok kanan bawah aplikasi. Sekali klik langsung join grup Telegram Affiliate Go — tempat update fitur, tips, dan tanya jawab dengan komunitas.',
-                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 62',
+                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 63',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Selamat Datang di Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Asisten AI Anda untuk menjelajahi 79++ fitur photo & video generation',
@@ -821,6 +826,13 @@
                 'fs.cat-resto': 'Restoran & Kafe',
                 'fs.cat-outdoor': 'Outdoor & Lifestyle',
                 'fs.cat-creative': 'Kreatif & Artistik',
+                'fsr.h1': 'Foto Makanan Ramadan',
+                'fsr.badge': 'Tema Ramadan',
+                'fsr.subtitle': 'Foto makanan bertema Ramadan & Lebaran — takjil, menu buka puasa, hampers, dan sajian Lebaran siap promosi',
+                'fsr.cat-ramadan': 'Suasana Ramadan',
+                'fsr.cat-lebaran': 'Lebaran & Idulfitri',
+                'fsr.empty-title': 'Hasil foto Ramadan akan muncul di sini',
+                'fsr.generate-btn': 'Generate Foto Ramadan',
                 // Product Review (pr.*)
                 'pr.h1': 'Generator Review Produk',
                 'pr.subtitle': 'Solusi AI untuk konten review produk afiliasi Anda.',
@@ -2902,6 +2914,7 @@
                 'nav.virtual-tryon': 'Virtual Try-On',
                 'nav.pose-fashion': 'Fashion Pose',
                 'nav.food-selfie': 'Pro Food Photography',
+                'nav.food-ramadan': 'Ramadan Food Photography',
                 'nav.product-review': 'Review Generator',
                 'nav.skincare-review': 'Skincare Review',
                 'nav.food-review': 'Food Review',
@@ -3020,6 +3033,7 @@
                 'hub.rumah-eksterior': 'House / Exterior', 'hub.rumah-kamar': 'Room Design', 'hub.rumah-timelapse': 'Renovation Timelapse',
                 'hub.aff-umum': 'General Theme', 'hub.aff-agama': 'Religious Theme', 'hub.aff-harga': 'Price Theme', 'hub.aff-premium': 'Premium', 'hub.aff-tryon': 'Try-On',
                 'hub.pov-tangan': 'Hand POV', 'hub.pov-selfie': 'Selfie POV', 'hub.pov-mirror': 'Mirror Selfie', 'hub.pov-walkpad': 'Walking Pad POV',
+                'hub.food-umum': 'Food Photo', 'hub.food-ramadan': 'Ramadan Themes',
                 'hub.review-ads': 'Ad Story', 'hub.review-unboxing': 'Unboxing', 'hub.review-beforeafter': 'Before/After',
                 // POV Selfie (povselfie.*)
                 'povselfie.h1': 'POV Selfie Generator',
@@ -3130,6 +3144,9 @@
                 'login.secure': '\uD83D\uDD12 Encrypted & Secure Access',
                 'login.no-access-cta': '\uD83D\uDED2 No access yet? Buy here \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v63-badge': 'Update v63',
+                'modal.fix-v63-title-foodramadan': 'Ramadan Themes Now a Dedicated Panel in Food Photography',
+                'modal.fix-v63-body-foodramadan': 'Pro Food Photography now has two panels: Food Photo (general themes) and Ramadan Themes. The Ramadan panel offers 12 themes — the original 8 plus Iftar Restaurant, Takjil Market, Eid Hampers, and Eid Open House — with the latest uniform result cards and full upload previews.',
                 'modal.fix-v62-badge': 'Update v62',
                 'modal.fix-v62-title-pakemcards': 'Uniform Result Cards Across 15 Features',
                 'modal.fix-v62-body-pakemcards': 'The Affiliate Product Photo hub (General, Religious, Price, Premium, Try-On themes), Feed Branding, Mockup Studio, the entire Review Studio (6 features), Sketch to Catalog, and Size Guide now share uniform result cards: large uncropped images, max 2 columns, and a photo number badge.',
@@ -3276,7 +3293,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Ruang Saku tab now has a brief intro page for Rindu (AI finance buddy) + direct button to RuangSaku.com. Smoother mobile experience — one click and it opens in a browser tab.',
                 'modal.fix-v31-title-telegram': 'Telegram Button at Screen Corner',
                 'modal.fix-v31-body-telegram': 'Round Telegram button is now at the bottom-right corner of the app. One click jumps directly to the Affiliate Go Telegram group — for feature updates, tips, and Q&A with the community.',
-                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 62',
+                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 63',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Welcome to Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Your AI Assistant to explore 79++ photo & video generation features',
@@ -3564,6 +3581,13 @@
                 'fs.cat-resto': 'Restaurant & Cafe',
                 'fs.cat-outdoor': 'Outdoor & Lifestyle',
                 'fs.cat-creative': 'Creative & Artistic',
+                'fsr.h1': 'Ramadan Food Photography',
+                'fsr.badge': 'Ramadan Themes',
+                'fsr.subtitle': 'Ramadan & Eid themed food photos — takjil, iftar menus, hampers, and Eid dishes ready to promote',
+                'fsr.cat-ramadan': 'Ramadan Vibes',
+                'fsr.cat-lebaran': 'Eid al-Fitr',
+                'fsr.empty-title': 'Your Ramadan food photos will appear here',
+                'fsr.generate-btn': 'Generate Ramadan Photos',
                 // Product Review (pr.*)
                 'pr.h1': 'Product Review Generator',
                 'pr.subtitle': 'AI solution for your affiliate product review content.',
@@ -5994,6 +6018,8 @@
                 'pf.upload-title': 'Muat Naik Foto',
                 'fs.cat-others': 'Tema Lain',
                 'fs.cat-ramadan': 'Ramadan & Hari Raya',
+                'fsr.subtitle': 'Foto makanan bertema Ramadan & Hari Raya — takjil, menu berbuka puasa, hampers, dan juadah raya sedia untuk promosi',
+                'fsr.cat-lebaran': 'Hari Raya & Aidilfitri',
                 'fs.model-tip': '\uD83D\uDCA1 Muat naik foto orang yang akan muncul di foto bersama makanan sesuai tema',
                 'fs.step1': 'Muat Naik Foto Makanan',
                 'fs.step2': 'Muat Naik Foto Model',
@@ -7565,6 +7591,7 @@
             __attachAdGateToTab("tryon");                            // Virtual Try-On
             __attachAdGateToTab("pose");                             // Pose Fashion
             __attachAdGateToTab("food-selfie", "food-selfie-result-content"); // Food Selfie (grid non-standard)
+            __attachAdGateToTab("food-ramadan", "food-ramadan-result-content"); // Food Ramadan (anggota hub Foto Makanan)
             __attachAdGateToTab("review", "review-b-roll-grid");     // Product Review (grid non-standard, no Download All button)
             __attachAdGateToTab("skincare", "skincare-b-roll-grid"); // Skincare Review (grid non-standard, no Download All)
             __attachAdGateToTab("food", "food-grid");                // Food Review (grid non-standard, no Download All)

@@ -388,7 +388,7 @@
         }
 
         /* --- STYLES FOR FOOD SELFIE PRO --- */
-        #content-food-selfie .option-btn-food {
+        #content-food-selfie .option-btn-food, #content-food-ramadan .option-btn-food {
             background-color: white;
             border: 2px solid #e0e7ff;
             padding: 0.75rem;
@@ -402,20 +402,20 @@
             justify-content: center;
             text-align: center;
         }
-        #content-food-selfie .option-btn-food:hover {
+        #content-food-selfie .option-btn-food:hover, #content-food-ramadan .option-btn-food:hover {
             border-color: #16a34a;
             background-color: #f0fdf4;
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(22, 163, 74, 0.15);
         }
-        #content-food-selfie .option-btn-food.selected {
+        #content-food-selfie .option-btn-food.selected, #content-food-ramadan .option-btn-food.selected {
             background: linear-gradient(135deg, #16a34a, #16a34a);
             color: white;
             border-color: #16a34a;
             box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
         }
 
-        #content-food-selfie .theme-btn-food {
+        #content-food-selfie .theme-btn-food, #content-food-ramadan .theme-btn-food {
             background-color: white;
             border: 2px solid #e0e7ff;
             padding: 0.75rem;
@@ -432,16 +432,16 @@
             user-select: none;
             touch-action: manipulation;
         }
-        #content-food-selfie .theme-btn-food * {
+        #content-food-selfie .theme-btn-food *, #content-food-ramadan .theme-btn-food * {
             pointer-events: none;
         }
-        #content-food-selfie .theme-btn-food:hover {
+        #content-food-selfie .theme-btn-food:hover, #content-food-ramadan .theme-btn-food:hover {
             border-color: #16a34a;
             background-color: #f0fdf4;
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(22, 163, 74, 0.15);
         }
-        #content-food-selfie .theme-btn-food.selected {
+        #content-food-selfie .theme-btn-food.selected, #content-food-ramadan .theme-btn-food.selected {
             background: linear-gradient(135deg, #16a34a, #16a34a);
             color: white;
             border-color: #16a34a;
@@ -449,7 +449,7 @@
         }
 
         /* --- STYLES FOR TAB 5: FOOD SELFIE --- */
-        #content-food-selfie {
+        #content-food-selfie, #content-food-ramadan {
             font-family: 'Poppins', sans-serif;
             background-color: #f0fdf4;
             color: #1e3a8a;
@@ -462,6 +462,7 @@
             border-radius: 1rem;
         }
         #content-food-selfie .container { max-width: 100%; margin: auto; }
+        #content-food-ramadan .container { max-width: 100%; margin: auto; }
         #content-food-selfie .glassmorphism {
             background: rgba(240, 253, 244, 0.5);
             backdrop-filter: blur(15px);
@@ -2076,6 +2077,65 @@
             border-radius: 9999px;
             font-size: 0.75rem;
             font-weight: 600;
+        }
+
+        /* --- FOOD RAMADAN: pakem kartu hasil + upload has-image --- */
+        #content-food-ramadan .result-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        #content-food-ramadan .result-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(22, 163, 74, 0.3);
+        }
+        #content-food-ramadan .result-card img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+        #content-food-ramadan .result-card-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: #f8fafc;
+            justify-content: center;
+        }
+        #content-food-ramadan .result-card-actions button {
+            width: 44px;
+            height: 44px;
+            border-radius: 9999px;
+            color: white;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+            -webkit-tap-highlight-color: transparent;
+        }
+        #content-food-ramadan .result-card-actions button:hover { transform: scale(1.1); }
+        #content-food-ramadan .result-card-actions button * { pointer-events: none; }
+        #content-food-ramadan .btn-preview { background: #3b82f6; }
+        #content-food-ramadan .btn-download { background: #0891b2; }
+        #content-food-ramadan .image-counter {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(22, 163, 74, 0.9);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        #content-food-ramadan .upload-box.has-image {
+            height: auto;
+            border-style: solid;
         }
 
         /* --- AFFILIATE HUB + FEED BRANDING: pakem kartu hasil (Umum, Harga, Agama, Premium, Coba Baju, Feed Branding) --- */
@@ -10835,7 +10895,7 @@
            html.dark #content-x = specificity (1,1,1) > (1,0,0) — menang tanpa !important. */
         html.dark #content-miniature, html.dark #content-halu, html.dark #content-affiliate,
         html.dark #content-feedbranding, html.dark #content-affiliate-harga, html.dark #content-family,
-        html.dark #content-food-selfie, html.dark #content-new-born, html.dark #content-profesi-anak,
+        html.dark #content-food-selfie, html.dark #content-food-ramadan, html.dark #content-new-born, html.dark #content-profesi-anak,
         html.dark #content-desain-kamar, html.dark #content-story-update, html.dark #content-wedding,
         html.dark #content-opal, html.dark #content-voice-over, html.dark #content-sticker {
             background-color: #0f172a;

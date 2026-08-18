@@ -10,7 +10,7 @@
         <!-- Floating badge top-right -->
         <div style="position:absolute;top:16px;right:16px;background:linear-gradient(135deg,#ea580c,#c2410c);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(234,88,12,0.4);z-index:1;">90+ FITUR &#x26A1;</div>
         <!-- Floating version badge top-left (auto-sync dari UPDATE_VERSION via JS) -->
-        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V62</div>
+        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V63</div>
         <div class="login-box">
             <!-- AG Logo badge -->
             <div style="background:linear-gradient(135deg,#16a34a,#15803d);width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:1.35rem;font-weight:900;color:white;box-shadow:0 6px 18px rgba(22,163,74,0.4);">AG</div>
@@ -51,7 +51,7 @@
     <div id="main-app">
     <!-- Mobile Header -->
     <div class="mobile-header">
-        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V62</span></h1>
+        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V63</span></h1>
         <p class="text-xs text-gray-400 mt-1">by Arul CG</p>
         <div class="mobile-header-actions">
             <button type="button" id="mobile-fav-access-btn" class="mobile-fav-access-btn no-favs" aria-label="Buka tab favorit">
@@ -89,7 +89,7 @@
                 </h1>
                 <p class="text-xs text-gray-500 mt-1">by Arul CG</p>
                 <div class="mt-2">
-                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V62</span>
+                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V63</span>
                 </div>
                 <div class="lang-dropdown mt-2" id="lang-dropdown-desktop">
                     <button type="button" class="lang-dd-btn" aria-haspopup="listbox" aria-expanded="false">
@@ -199,6 +199,10 @@
                     <button data-tab="food-selfie" class="main-tab-btn">
                         <i class="fas fa-utensils"></i>
                         <span class="btn-text">Food Selfie</span>
+                    </button>
+                    <button data-tab="food-ramadan" class="main-tab-btn hidden">
+                        <i class="fas fa-moon"></i>
+                        <span class="btn-text">Tema Ramadan</span>
                     </button>
                     <button data-tab="product-review" class="main-tab-btn">
                         <i class="fas fa-star-half-alt"></i>
@@ -4197,6 +4201,10 @@
         
         <!-- TAB 5: FOOD SELFIE PRO -->
         <div id="content-food-selfie" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill active" data-goto="food-selfie" data-i18n="hub.food-umum">Foto Makanan</button>
+                <button type="button" class="hub-pill" data-goto="food-ramadan" data-i18n="hub.food-ramadan">Tema Ramadan</button>
+            </div>
             <div class="container mx-auto max-w-7xl">
                 <header class="text-center mb-10">
                     <div class="inline-flex items-center gap-3 mb-4">
@@ -4315,35 +4323,6 @@
                                         <h3 class="text-lg font-bold text-gray-800" data-i18n="fs.step4">Pilih Tema</h3>
                                     </div>
                                     <div id="food-selfie-theme-selection" class="grid grid-cols-2 gap-3 max-h-96 overflow-y-auto pr-2">
-                                        <!-- RAMADAN & LEBARAN -->
-                                        <div class="col-span-2 flex items-center gap-2 pb-1 border-b-2" style="border-color: #16a34a;">
-                                            <i class="fas fa-star-and-crescent text-xs" style="color: #16a34a;"></i>
-                                            <span class="text-xs font-bold" style="color: #15803d;" data-i18n="fs.cat-ramadan">Ramadan &amp; Lebaran</span>
-                                        </div>
-                                        <button class="theme-btn-food" data-theme="Indonesian iftar buka puasa table setting, traditional foods - dates kurma on small plate, kolak pisang in bowl, es buah colorful, warm amber candlelight, traditional wooden table with batik cloth, glowing lantern in soft background bokeh, warm cozy Ramadan iftar atmosphere, golden warm tones">
-                                            <i class="fas fa-moon mr-2"></i>Buka Puasa
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="colorful Indonesian takjil spread overhead flat lay composition - kolak pisang, es buah segar dengan potongan buah warna-warni, bubur kacang hijau, kurma medjool, klepon hijau, berbagai jajanan pasar tradisional Ramadan tersusun rapi di atas meja kayu dengan dekorasi Ramadan, vibrant warm colors">
-                                            <i class="fas fa-th mr-2"></i>Flat Lay Takjil
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="luxury premium dates kurma medjool photography, premium dates arranged elegantly on dark marble surface with gold accent props, Islamic geometric ornament pattern backdrop, warm golden rim lighting highlighting the dates, luxurious high-end product food photography style, deep rich tones">
-                                            <i class="fas fa-star mr-2"></i>Kurma Premium
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="romantic Ramadan food photography with beautiful hanging colorful fanoos lanterns and Indonesian lentera glowing softly in background, warm amber bokeh lights, ornate Islamic pattern tablecloth, gold and warm tones, festive magical Ramadan night atmosphere, food as hero subject">
-                                            <i class="fas fa-lightbulb mr-2"></i>Lantern Ramadan
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="traditional Indonesian Lebaran feast food photography - ketupat diamond-shaped rice cakes, opor ayam coconut milk chicken, rendang beef Padang style, sambal goreng ati, arranged beautifully on traditional batik tablecloth with flower garnish, warm family Lebaran atmosphere, Indonesian culinary heritage food styling">
-                                            <i class="fas fa-utensils mr-2"></i>Ketupat &amp; Opor
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="beautiful Indonesian Lebaran kue kering cookies photography - nastar pineapple jam tarts, kastengel cheese cookies, putri salju powdered snowball cookies, lidah kucing crisp wafer cookies, arranged elegantly in glass cookie jars and white ceramic plates, white marble background, soft natural window lighting, premium artisan bakery food photography">
-                                            <i class="fas fa-cookie mr-2"></i>Kue Lebaran
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="cozy late night Indonesian sahur meal setting, warm dim ambient home lighting, simple nourishing home-cooked food - nasi putih steaming, ayam goreng crispy, sayur bayam, tahu tempe goreng, sambal, glass of water, intimate domestic kitchen table atmosphere, soft warm candlelight, clock in background showing pre-dawn time">
-                                            <i class="fas fa-cloud-moon mr-2"></i>Sahur Subuh
-                                        </button>
-                                        <button class="theme-btn-food" data-theme="sop buah es campur Indonesian Ramadan drink photography, colorful mixed fruit in sweet coconut milk or syrup, ice shavings, nata de coco, cendol hijau, cincau hitam, kolang kaling, vibrant tropical fruit colors, refreshing cold drink perfect for iftar, bright and cheerful food styling with tropical vibes">
-                                            <i class="fas fa-glass-cheers mr-2"></i>Es &amp; Minuman Buka
-                                        </button>
                                         <!-- STUDIO & EDITORIAL -->
                                         <div class="col-span-2 flex items-center gap-2 pb-1 border-b border-gray-200 mt-1">
                                             <i class="fas fa-camera text-xs text-gray-400"></i>
@@ -4635,6 +4614,327 @@
                             <!-- Results Grid -->
                             <div id="food-selfie-result-content" class="hidden grid grid-cols-1 md:grid-cols-2 gap-6"></div>
                             <div id="food-selfie-error-message" class="hidden text-red-600"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: FOOD RAMADAN (anggota hub Foto Makanan) -->
+        <div id="content-food-ramadan" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill" data-goto="food-selfie" data-i18n="hub.food-umum">Foto Makanan</button>
+                <button type="button" class="hub-pill active" data-goto="food-ramadan" data-i18n="hub.food-ramadan">Tema Ramadan</button>
+            </div>
+            <div class="container mx-auto max-w-7xl">
+                <header class="text-center mb-10">
+                    <div class="inline-flex items-center gap-3 mb-4">
+                        <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg bg-gradient-to-br from-green-600 to-emerald-600">
+                            <i class="fas fa-moon text-white text-2xl"></i>
+                        </div>
+                        <div class="flex flex-col items-start">
+                            <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent" data-i18n="fsr.h1">
+                                Foto Makanan Ramadan
+                            </h1>
+                            <span class="text-xs font-semibold px-3 py-1 rounded-full mt-1 bg-gradient-to-r from-amber-500 to-yellow-600 text-white" data-i18n="fsr.badge">Tema Ramadan</span>
+                        </div>
+                    </div>
+                    <p class="text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed" data-i18n="fsr.subtitle">
+                        Foto makanan bertema Ramadan &amp; Lebaran — takjil, menu buka puasa, hampers, dan sajian Lebaran siap promosi
+                    </p>
+                </header>
+
+                <div class="flex flex-col lg:flex-row gap-8 w-full">
+                    <!-- Left Panel: Controls -->
+                    <div class="w-full lg:w-5/12 flex-shrink-0">
+                        <div class="card p-8 sticky top-6 shadow-xl rounded-2xl border border-green-100 bg-gradient-to-b from-white to-gray-50">
+                            <div class="flex flex-col gap-6">
+                                <!-- Step 1: Upload Food Photo -->
+                                <div>
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-white shadow-md bg-gradient-to-br from-green-600 to-emerald-600">1</div>
+                                        <h3 class="text-lg font-bold text-gray-800" data-i18n="fs.step1">Unggah Foto Makanan</h3>
+                                    </div>
+                                    <div id="food-ramadan-food-image-uploader" class="upload-box w-full h-48 rounded-lg flex items-center justify-center cursor-pointer relative overflow-hidden border-2 border-dashed border-gray-300 hover:border-green-500 transition-all bg-gradient-to-br from-gray-50 to-gray-100">
+                                        <input type="file" id="food-ramadan-food-file-input" class="hidden" accept="image/*">
+                                        <div id="food-ramadan-food-upload-prompt" class="text-center text-gray-400">
+                                            <i class="fas fa-utensils text-4xl mb-2"></i>
+                                            <p class="text-sm" data-i18n="fs.food-cta">Klik atau seret foto makanan</p>
+                                        </div>
+                                        <img id="food-ramadan-food-image-preview" src="" alt="Pratinjau Makanan" class="hidden w-full h-auto max-h-72 object-contain rounded-lg">
+                                    </div>
+                                </div>
+
+                                <!-- Optional: Upload Model Photo -->
+                                <div>
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-white shadow-md bg-gradient-to-br from-green-600 to-emerald-600">
+                                            <i class="fas fa-star text-sm"></i>
+                                        </div>
+                                        <h3 class="text-lg font-bold text-gray-800"><span data-i18n="fs.step2">Upload Foto Model</span> <span class="text-sm text-gray-500" data-i18n="bm.optional">(Opsional)</span></h3>
+                                    </div>
+                                    <div id="food-ramadan-model-upload-area" class="border-2 border-dashed border-green-300 rounded-lg p-4 text-center hover:border-green-500 transition-all cursor-pointer bg-green-50/50 touch-manipulation active:scale-95" style="-webkit-tap-highlight-color: transparent;">
+                                        <label for="food-ramadan-model-input" class="cursor-pointer flex flex-col items-center justify-center">
+                                            <i class="fas fa-user-circle text-4xl mb-2 text-green-400"></i>
+                                            <span class="text-sm text-green-600 font-medium" data-i18n="fs.model-cta">Pilih Foto Model/Orang</span>
+                                            <span class="text-xs text-gray-500 mt-1" data-i18n="fs.model-hint">Orang ini akan muncul di foto dengan makanan</span>
+                                        </label>
+                                        <input type="file" id="food-ramadan-model-input" class="hidden" accept="image/png, image/jpeg, image/webp, image/heic, .heic">
+                                    </div>
+                                    <div id="food-ramadan-model-preview-container" class="hidden mt-3 relative">
+                                        <img id="food-ramadan-model-preview" src="#" alt="Preview Model" class="rounded-lg w-full h-auto object-contain max-h-48 border-2 border-green-300">
+                                        <button type="button" id="food-ramadan-remove-model" class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 shadow-lg active:scale-95 touch-manipulation" style="-webkit-tap-highlight-color: transparent;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="pointer-events: none;">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                            </svg>
+                                        </button>
+                                        <p class="text-xs text-green-600 mt-1 text-center font-medium" data-i18n-html="fs.model-success">
+                                            <i class="fas fa-check-circle mr-1"></i> Model akan muncul di foto bersama makanan
+                                        </p>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-2" data-i18n="fs.model-tip">
+                                        &#128161; Upload foto orang yang akan muncul di foto bersama makanan sesuai tema
+                                    </p>
+                                </div>
+
+                                <!-- Step 2: Select Aspect Ratio -->
+                                <div>
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-white shadow-md bg-gradient-to-br from-green-600 to-emerald-600">2</div>
+                                        <h3 class="text-lg font-bold text-gray-800" data-i18n="fs.step3">Pilih Rasio Aspek</h3>
+                                    </div>
+                                    <div id="food-ramadan-ratio-selection" class="grid grid-cols-2 gap-3">
+                                        <button type="button" data-ratio="1:1" class="option-btn-food selected">
+                                            <i class="fas fa-square mr-2"></i>1:1 <span class="text-xs">(Instagram Post)</span>
+                                        </button>
+                                        <button type="button" data-ratio="4:5" class="option-btn-food">
+                                            <i class="fas fa-image mr-2"></i>4:5 <span class="text-xs">(Instagram Feed)</span>
+                                        </button>
+                                        <button type="button" data-ratio="9:16" class="option-btn-food">
+                                            <i class="fas fa-mobile-alt mr-2"></i>9:16 <span class="text-xs">(Stories/Reels)</span>
+                                        </button>
+                                        <button type="button" data-ratio="3:4" class="option-btn-food">
+                                            <i class="fas fa-portrait mr-2"></i>3:4 <span class="text-xs">(Portrait)</span>
+                                        </button>
+                                        <button type="button" data-ratio="2:3" class="option-btn-food">
+                                            <i class="fas fa-thumbtack mr-2"></i>2:3 <span class="text-xs">(Pinterest)</span>
+                                        </button>
+                                        <button type="button" data-ratio="16:9" class="option-btn-food">
+                                            <i class="fas fa-tv mr-2"></i>16:9 <span class="text-xs">(YouTube)</span>
+                                        </button>
+                                        <button type="button" data-ratio="3:2" class="option-btn-food">
+                                            <i class="fas fa-camera mr-2"></i>3:2 <span class="text-xs">(Kamera DSLR)</span>
+                                        </button>
+                                        <button type="button" data-ratio="4:3" class="option-btn-food">
+                                            <i class="fas fa-desktop mr-2"></i>4:3 <span class="text-xs">(Klasik)</span>
+                                        </button>
+                                        <button type="button" data-ratio="21:9" class="option-btn-food">
+                                            <i class="fas fa-film mr-2"></i>21:9 <span class="text-xs">(Cinematic)</span>
+                                        </button>
+                                        <button type="button" data-ratio="5:4" class="option-btn-food">
+                                            <i class="fas fa-print mr-2"></i>5:4 <span class="text-xs">(Cetak/Menu)</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Step 3: Select Theme -->
+                                <div>
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-white shadow-md bg-gradient-to-br from-green-600 to-emerald-600">3</div>
+                                        <h3 class="text-lg font-bold text-gray-800" data-i18n="fs.step4">Pilih Tema</h3>
+                                    </div>
+                                    <div id="food-ramadan-theme-selection" class="grid grid-cols-2 gap-3 max-h-96 overflow-y-auto pr-2">
+                                        <!-- SUASANA RAMADAN -->
+                                        <div class="col-span-2 flex items-center gap-2 pb-1 border-b-2" style="border-color: #16a34a;">
+                                            <i class="fas fa-star-and-crescent text-xs" style="color: #16a34a;"></i>
+                                            <span class="text-xs font-bold" style="color: #15803d;" data-i18n="fsr.cat-ramadan">Suasana Ramadan</span>
+                                        </div>
+                                        <button class="theme-btn-food selected" data-theme="Indonesian iftar buka puasa table setting, traditional foods - dates kurma on small plate, kolak pisang in bowl, es buah colorful, warm amber candlelight, traditional wooden table with batik cloth, glowing lantern in soft background bokeh, warm cozy Ramadan iftar atmosphere, golden warm tones">
+                                            <i class="fas fa-moon mr-2"></i>Buka Puasa
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="colorful Indonesian takjil spread overhead flat lay composition - kolak pisang, es buah segar dengan potongan buah warna-warni, bubur kacang hijau, kurma medjool, klepon hijau, berbagai jajanan pasar tradisional Ramadan tersusun rapi di atas meja kayu dengan dekorasi Ramadan, vibrant warm colors">
+                                            <i class="fas fa-th mr-2"></i>Flat Lay Takjil
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="luxury premium dates kurma medjool photography, premium dates arranged elegantly on dark marble surface with gold accent props, Islamic geometric ornament pattern backdrop, warm golden rim lighting highlighting the dates, luxurious high-end product food photography style, deep rich tones">
+                                            <i class="fas fa-star mr-2"></i>Kurma Premium
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="romantic Ramadan food photography with beautiful hanging colorful fanoos lanterns and Indonesian lentera glowing softly in background, warm amber bokeh lights, ornate Islamic pattern tablecloth, gold and warm tones, festive magical Ramadan night atmosphere, food as hero subject">
+                                            <i class="fas fa-lightbulb mr-2"></i>Lantern Ramadan
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="cozy late night Indonesian sahur meal setting, warm dim ambient home lighting, simple nourishing home-cooked food - nasi putih steaming, ayam goreng crispy, sayur bayam, tahu tempe goreng, sambal, glass of water, intimate domestic kitchen table atmosphere, soft warm candlelight, clock in background showing pre-dawn time">
+                                            <i class="fas fa-cloud-moon mr-2"></i>Sahur Subuh
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="sop buah es campur Indonesian Ramadan drink photography, colorful mixed fruit in sweet coconut milk or syrup, ice shavings, nata de coco, cendol hijau, cincau hitam, kolang kaling, vibrant tropical fruit colors, refreshing cold drink perfect for iftar, bright and cheerful food styling with tropical vibes">
+                                            <i class="fas fa-glass-cheers mr-2"></i>Es &amp; Minuman Buka
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="lively Indonesian bukber buka puasa bersama restaurant scene, long table filled with shared traditional dishes, warm restaurant ambient lighting, happy diners softly blurred in background, glowing lantern decorations, festive togetherness atmosphere, food as hero on the table">
+                                            <i class="fas fa-users mr-2"></i>Bukber Restoran
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="bustling Indonesian pasar takjil street market at golden hour before iftar, food displayed at vibrant street stall surrounded by colorful takjil snacks, warm string lights, candid market photography energy, authentic Ramadan street food atmosphere">
+                                            <i class="fas fa-store mr-2"></i>Pasar Takjil
+                                        </button>
+                                        <!-- LEBARAN & IDULFITRI -->
+                                        <div class="col-span-2 flex items-center gap-2 pb-1 border-b-2 mt-1" style="border-color: #d97706;">
+                                            <i class="fas fa-mosque text-xs" style="color: #d97706;"></i>
+                                            <span class="text-xs font-bold" style="color: #b45309;" data-i18n="fsr.cat-lebaran">Lebaran &amp; Idulfitri</span>
+                                        </div>
+                                        <button class="theme-btn-food" data-theme="traditional Indonesian Lebaran feast food photography - ketupat diamond-shaped rice cakes, opor ayam coconut milk chicken, rendang beef Padang style, sambal goreng ati, arranged beautifully on traditional batik tablecloth with flower garnish, warm family Lebaran atmosphere, Indonesian culinary heritage food styling">
+                                            <i class="fas fa-utensils mr-2"></i>Ketupat &amp; Opor
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="beautiful Indonesian Lebaran kue kering cookies photography - nastar pineapple jam tarts, kastengel cheese cookies, putri salju powdered snowball cookies, lidah kucing crisp wafer cookies, arranged elegantly in glass cookie jars and white ceramic plates, white marble background, soft natural window lighting, premium artisan bakery food photography">
+                                            <i class="fas fa-cookie mr-2"></i>Kue Lebaran
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="elegant Lebaran hampers gift box photography, beautifully arranged Eid gift basket with glass jars of kue kering, premium dates, syrup bottles wrapped in ribbon, ketupat ornament decoration, gold and green festive wrapping, soft studio lighting, premium Eid gift catalog style">
+                                            <i class="fas fa-gift mr-2"></i>Hampers Lebaran
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="elegant Lebaran open house dining spread, festive long table with traditional Eid dishes and kue kering assortment, ketupat decorations and fresh flowers, bright welcoming Indonesian home interior with natural daylight, warm hospitality atmosphere, family gathering celebration styling">
+                                            <i class="fas fa-door-open mr-2"></i>Open House Lebaran
+                                        </button>
+                                        <button class="theme-btn-food" data-theme="custom">
+                                            <i class="fas fa-edit mr-2"></i>Custom Theme
+                                        </button>
+                                    </div>
+
+                                    <!-- Custom Theme Input -->
+                                    <div id="food-ramadan-custom-theme-container" class="hidden mt-3">
+                                        <label class="block text-sm font-semibold text-gray-700 mb-2">&#10024; Tulis Tema Custom Anda:</label>
+                                        <textarea id="food-ramadan-custom-theme-input" rows="3" class="w-full p-3 rounded-lg border-2 border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-indigo-200 transition-all resize-none" placeholder="Contoh: suasana masjid dengan lampu gantung, meja buka puasa keluarga di teras rumah, dekorasi ketupat dan lampu hias..."></textarea>
+                                        <p class="text-xs text-gray-500 mt-2">&#128161; Deskripsikan tema fotografi makanan Ramadan yang Anda inginkan dengan detail</p>
+                                    </div>
+
+                                    <p class="text-xs text-gray-500 mt-2">&#128161; Pilih tema sesuai target konten Anda</p>
+
+                                    <!-- Optional Custom Background Upload -->
+                                    <div class="mt-4">
+                                        <p class="text-sm font-medium text-gray-700 mb-2">
+                                            <i class="fas fa-image mr-1"></i> Upload Background Custom (Opsional)
+                                        </p>
+                                        <div id="food-ramadan-background-upload-area" class="border-2 border-dashed border-green-300 rounded-lg p-3 text-center hover:border-green-500 transition-all cursor-pointer bg-green-50/50">
+                                            <label for="food-ramadan-background-input" class="cursor-pointer flex flex-col items-center justify-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mb-2 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                                </svg>
+                                                <span class="text-sm text-green-600">Pilih Background Custom</span>
+                                            </label>
+                                            <input type="file" id="food-ramadan-background-input" class="hidden" accept="image/png, image/jpeg, image/webp, image/heic, .heic">
+                                        </div>
+                                        <div id="food-ramadan-background-preview-container" class="hidden mt-3 relative">
+                                            <img id="food-ramadan-background-preview" src="#" alt="Preview Background" class="rounded-lg w-full h-auto object-contain max-h-32 border-2 border-green-300">
+                                            <button type="button" id="food-ramadan-remove-background" class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1.5 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                                </svg>
+                                            </button>
+                                            <p class="text-xs text-green-600 mt-1 text-center">
+                                                <i class="fas fa-check-circle mr-1"></i> Background custom akan digunakan
+                                            </p>
+                                        </div>
+                                        <p class="text-xs text-gray-500 mt-2">
+                                            &#128161; Upload background sendiri atau gunakan tema di atas
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Step 4: Reference Image (Optional) -->
+                                <div>
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-white shadow-md bg-gradient-to-br from-green-600 to-emerald-600">4</div>
+                                        <h3 class="text-lg font-bold text-gray-800">Referensi <span class="text-sm text-gray-500">(Opsional)</span></h3>
+                                    </div>
+                                    <div id="food-ramadan-style-image-uploader" class="upload-box w-full h-32 rounded-lg flex items-center justify-center cursor-pointer relative overflow-hidden border-2 border-dashed border-gray-300 hover:border-green-500 transition-all bg-gradient-to-br from-gray-50 to-gray-100">
+                                        <input type="file" id="food-ramadan-style-file-input" class="hidden" accept="image/*">
+                                        <div id="food-ramadan-style-upload-prompt" class="text-center text-gray-400">
+                                            <i class="fas fa-palette text-3xl mb-1"></i>
+                                            <p class="text-xs">Komposisi referensi</p>
+                                        </div>
+                                        <img id="food-ramadan-style-image-preview" src="" alt="Pratinjau Referensi" class="hidden w-full h-auto max-h-48 object-contain rounded-lg">
+                                    </div>
+                                </div>
+
+                                <!-- Jumlah Generate -->
+                                <div>
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-white shadow-md bg-gradient-to-br from-green-600 to-emerald-600">5</div>
+                                        <h3 class="text-lg font-bold text-gray-800">
+                                            <span data-i18n="fs.count-label">Jumlah Generate</span>
+                                        </h3>
+                                    </div>
+                                    <div id="food-ramadan-count-selection-grid" class="count-btn-grid theme-emerald">
+                                        <button type="button" data-count="1">1</button>
+                                        <button type="button" data-count="2">2</button>
+                                        <button type="button" data-count="3">3</button>
+                                        <button type="button" data-count="4" class="selected">4</button>
+                                        <button type="button" data-count="5">5</button>
+                                        <button type="button" data-count="6">6</button>
+                                        <button type="button" data-count="7">7</button>
+                                        <button type="button" data-count="8">8</button>
+                                        <button type="button" data-count="9">9</button>
+                                        <button type="button" data-count="10">10</button>
+                                    </div>
+                                </div>
+
+                                <!-- Generate Button -->
+                                <button type="button" id="food-ramadan-generate-btn" class="w-full text-white font-bold py-4 px-8 rounded-2xl flex items-center justify-center text-lg shadow-xl hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group bg-gradient-to-r from-green-600 to-emerald-600" disabled>
+                                    <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                                    <i class="fas fa-sparkles mr-3 text-xl relative z-10"></i>
+                                    <span class="relative z-10" data-i18n="fsr.generate-btn">Generate Foto Ramadan</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Panel: Results -->
+                    <div class="w-full lg:w-7/12 flex flex-col">
+                        <div class="card p-8 h-full flex flex-col shadow-xl rounded-2xl border border-green-100 bg-gradient-to-b from-white to-gray-50">
+                            <!-- Placeholder -->
+                            <div id="food-ramadan-placeholder-result" class="flex flex-grow flex-col items-center justify-center text-center">
+                                <div class="w-28 h-28 rounded-3xl flex items-center justify-center mb-6 shadow-lg bg-gradient-to-br from-green-100 to-emerald-100">
+                                    <i class="fas fa-moon text-6xl text-green-600"></i>
+                                </div>
+                                <h3 class="font-bold text-2xl mb-3 text-green-600" data-i18n="fsr.empty-title">Hasil foto Ramadan akan muncul di sini</h3>
+                                <p class="text-gray-500 text-base max-w-md" data-i18n="fs.empty-hint">Upload foto makanan, pilih tema &amp; jumlah, lalu klik generate!</p>
+                            </div>
+
+                            <!-- Loading -->
+                            <div id="food-ramadan-loader" class="hidden flex-col items-center justify-center flex-grow py-12">
+                                <div class="relative">
+                                    <div class="spinner"></div>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <div class="w-16 h-16 border-4 border-green-200 border-t-purple-600 rounded-full animate-spin"></div>
+                                    </div>
+                                </div>
+                                <div class="mt-8 text-center">
+                                    <span class="text-xl font-bold text-green-600 block">Generating Food Photos...</span>
+                                    <p class="text-sm text-gray-500 mt-2">Please wait, this may take a moment</p>
+                                </div>
+                                <!-- Progress Bar -->
+                                <div class="w-full max-w-md mt-6">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-sm font-medium text-gray-600">Progress</span>
+                                        <span id="food-ramadan-progress-text" class="text-sm font-bold text-green-600">0/6</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden shadow-inner">
+                                        <div id="food-ramadan-progress-bar" class="bg-gradient-to-r from-green-600 to-emerald-600 h-3 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+                                    </div>
+                                    <p id="food-ramadan-current-task" class="text-xs text-gray-500 mt-2 text-center italic"></p>
+                                </div>
+                            </div>
+
+                            <!-- Results Header -->
+                            <div id="food-ramadan-results-header" class="hidden mb-6 flex items-center justify-between">
+                                <h3 class="text-xl font-bold text-green-600">
+                                    <i class="fas fa-check-circle mr-2"></i>
+                                    <span id="food-ramadan-result-count">6</span> Photos Generated!
+                                </h3>
+                                <button id="food-ramadan-download-all-btn" class="px-6 py-2 rounded-lg flex items-center gap-2 font-semibold text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all bg-gradient-to-r from-green-600 to-emerald-600">
+                                    <i class="fas fa-download"></i>
+                                    Download All
+                                </button>
+                            </div>
+
+                            <!-- Results Grid -->
+                            <div id="food-ramadan-result-content" class="hidden grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+                            <div id="food-ramadan-error-message" class="hidden text-red-600"></div>
                         </div>
                     </div>
                 </div>
@@ -19791,7 +20091,7 @@
     <button id="update-info-btn" class="text-white rounded-full w-16 h-16 flex items-center justify-center shadow-xl relative" style="background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);">
         <div class="flex flex-col items-center leading-none pointer-events-none">
             <i class="fas fa-bolt text-sm"></i>
-            <span class="text-xs font-bold mt-0.5">V62</span>
+            <span class="text-xs font-bold mt-0.5">V63</span>
         </div>
         <span class="update-notif-dot"></span>
     </button>
@@ -22806,6 +23106,10 @@
         <button data-tab="food-selfie" class="mobile-tab-btn">
             <i class="fas fa-utensils"></i>
             <span>Food</span>
+        </button>
+        <button data-tab="food-ramadan" class="mobile-tab-btn hidden">
+            <i class="fas fa-moon"></i>
+            <span>Ramadan</span>
         </button>
         <button data-tab="product-review" class="mobile-tab-btn">
             <i class="fas fa-star"></i>
