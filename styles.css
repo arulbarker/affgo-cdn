@@ -2078,6 +2078,212 @@
             font-weight: 600;
         }
 
+        /* --- AFFILIATE HUB + FEED BRANDING: pakem kartu hasil (Umum, Harga, Agama, Premium, Coba Baju, Feed Branding) --- */
+        #content-affiliate .result-card, #content-affiliate-harga .result-card,
+        #content-affiliate-islami .result-card, #content-virtual-tryon .result-card,
+        #content-product-premium .result-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        #content-affiliate .result-card > img, #content-affiliate-harga .result-card > img,
+        #content-affiliate-islami .result-card > img, #content-virtual-tryon .result-card > img,
+        #content-product-premium .result-card > img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+        #content-affiliate .result-card-actions, #content-affiliate-harga .result-card-actions,
+        #content-affiliate-islami .result-card-actions, #content-virtual-tryon .result-card-actions,
+        #content-product-premium .result-card-actions, #content-feedbranding .result-card-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: #f8fafc;
+            justify-content: center;
+        }
+        #content-affiliate .result-card-actions button, #content-affiliate-harga .result-card-actions button,
+        #content-affiliate-islami .result-card-actions button, #content-virtual-tryon .result-card-actions button,
+        #content-feedbranding .result-card-actions button,
+        #content-product-premium .result-card-actions button, #content-product-premium .result-card-actions a {
+            width: 44px;
+            height: 44px;
+            border-radius: 9999px;
+            color: white;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+            -webkit-tap-highlight-color: transparent;
+        }
+        #content-affiliate .result-card-actions button:hover, #content-affiliate-harga .result-card-actions button:hover,
+        #content-affiliate-islami .result-card-actions button:hover, #content-virtual-tryon .result-card-actions button:hover,
+        #content-feedbranding .result-card-actions button:hover,
+        #content-product-premium .result-card-actions button:hover, #content-product-premium .result-card-actions a:hover {
+            transform: scale(1.1);
+        }
+        #content-affiliate .result-card-actions button *, #content-affiliate-harga .result-card-actions button *,
+        #content-affiliate-islami .result-card-actions button *, #content-virtual-tryon .result-card-actions button *,
+        #content-feedbranding .result-card-actions button *,
+        #content-product-premium .result-card-actions button *, #content-product-premium .result-card-actions a * {
+            pointer-events: none;
+        }
+        #content-affiliate .btn-preview, #content-affiliate-harga .btn-preview, #content-affiliate-islami .btn-preview, #content-virtual-tryon .btn-preview, #content-product-premium .btn-preview, #content-feedbranding .btn-preview { background: #3b82f6; }
+        #content-affiliate .btn-edit, #content-affiliate-harga .btn-edit { background: #a855f7; }
+        #content-affiliate .btn-regenerate, #content-affiliate-harga .btn-regenerate, #content-feedbranding .btn-regenerate { background: #22c55e; }
+        #content-affiliate .btn-download, #content-affiliate-harga .btn-download, #content-affiliate-islami .btn-download, #content-virtual-tryon .btn-download, #content-product-premium .btn-download, #content-feedbranding .btn-download { background: #0891b2; }
+        #content-affiliate .btn-video, #content-affiliate-harga .btn-video { background: #d946ef; }
+        #content-affiliate .btn-caption, #content-affiliate-harga .btn-caption { background: #f43f5e; }
+        #content-affiliate .image-counter, #content-affiliate-harga .image-counter,
+        #content-affiliate-islami .image-counter, #content-virtual-tryon .image-counter,
+        #content-product-premium .image-counter, #content-feedbranding .image-counter {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(22, 163, 74, 0.9);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* --- HUB REVIEW GENERATOR: pakem kartu hasil (Review Produk, Skincare, Makanan, Story Iklan, Unboxing, Before/After) --- */
+        #content-unboxing-scene .result-card, #content-before-after .result-card,
+        #content-product-review .result-card, #content-skincare-review .result-card,
+        #content-food-review .result-card, #content-product-ads .result-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        #content-unboxing-scene .result-card > img, #content-before-after .result-card > img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+        #content-product-review .result-card-actions, #content-skincare-review .result-card-actions,
+        #content-food-review .result-card-actions, #content-product-ads .result-card-actions,
+        #content-unboxing-scene .result-card-actions, #content-before-after .result-card-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: #f8fafc;
+            justify-content: center;
+        }
+        #content-product-review .result-card-actions button, #content-skincare-review .result-card-actions button,
+        #content-food-review .result-card-actions button, #content-product-ads .result-card-actions button,
+        #content-unboxing-scene .result-card-actions button, #content-before-after .result-card-actions button {
+            width: 44px;
+            height: 44px;
+            border-radius: 9999px;
+            color: white;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+            -webkit-tap-highlight-color: transparent;
+        }
+        #content-product-review .result-card-actions button:hover, #content-skincare-review .result-card-actions button:hover,
+        #content-food-review .result-card-actions button:hover, #content-product-ads .result-card-actions button:hover,
+        #content-unboxing-scene .result-card-actions button:hover, #content-before-after .result-card-actions button:hover {
+            transform: scale(1.1);
+        }
+        #content-product-review .result-card-actions button *, #content-skincare-review .result-card-actions button *,
+        #content-food-review .result-card-actions button *, #content-product-ads .result-card-actions button *,
+        #content-unboxing-scene .result-card-actions button *, #content-before-after .result-card-actions button * {
+            pointer-events: none;
+        }
+        #content-product-review .btn-preview, #content-skincare-review .btn-preview, #content-food-review .btn-preview, #content-product-ads .btn-preview, #content-unboxing-scene .btn-preview, #content-before-after .btn-preview { background: #3b82f6; }
+        #content-product-review .btn-edit, #content-skincare-review .btn-edit, #content-food-review .btn-edit, #content-product-ads .btn-edit { background: #a855f7; }
+        #content-product-review .btn-regenerate, #content-skincare-review .btn-regenerate, #content-food-review .btn-regenerate, #content-product-ads .btn-regenerate { background: #22c55e; }
+        #content-product-review .btn-video, #content-skincare-review .btn-video, #content-food-review .btn-video, #content-product-ads .btn-video { background: #d946ef; }
+        #content-product-review .btn-caption, #content-skincare-review .btn-caption, #content-food-review .btn-caption, #content-product-ads .btn-caption { background: #f43f5e; }
+        #content-product-review .btn-download, #content-skincare-review .btn-download, #content-food-review .btn-download, #content-product-ads .btn-download, #content-unboxing-scene .btn-download, #content-before-after .btn-download { background: #0891b2; }
+        #content-product-review .image-counter, #content-skincare-review .image-counter,
+        #content-food-review .image-counter, #content-product-ads .image-counter,
+        #content-unboxing-scene .image-counter, #content-before-after .image-counter {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(22, 163, 74, 0.9);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 10;
+        }
+
+        /* --- SKETSA KE KATALOG + PANDUAN UKURAN: pakem kartu hasil --- */
+        #content-sketch-catalog .result-card, #content-size-guide .result-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        #content-sketch-catalog .result-card > img, #content-size-guide .result-card > img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+        #content-sketch-catalog .result-card-actions, #content-size-guide .result-card-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: #f8fafc;
+            justify-content: center;
+        }
+        #content-sketch-catalog .result-card-actions button, #content-size-guide .result-card-actions button {
+            width: 44px;
+            height: 44px;
+            border-radius: 9999px;
+            color: white;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+            -webkit-tap-highlight-color: transparent;
+        }
+        #content-sketch-catalog .result-card-actions button:hover, #content-size-guide .result-card-actions button:hover {
+            transform: scale(1.1);
+        }
+        #content-sketch-catalog .result-card-actions button *, #content-size-guide .result-card-actions button * {
+            pointer-events: none;
+        }
+        #content-sketch-catalog .btn-preview, #content-size-guide .btn-preview { background: #3b82f6; }
+        #content-sketch-catalog .btn-download, #content-size-guide .btn-download { background: #0891b2; }
+        #content-sketch-catalog .image-counter, #content-size-guide .image-counter {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(22, 163, 74, 0.9);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
         /* --- STYLES FOR MOCKUP STUDIO --- */
         #content-mockup-studio {
             min-height: 100vh;
@@ -2183,9 +2389,12 @@
 
         #content-mockup-studio .result-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 1.5rem;
             margin-top: 2rem;
+        }
+        @media (max-width: 639px) {
+            #content-mockup-studio .result-grid { grid-template-columns: 1fr; }
         }
 
         #content-mockup-studio .result-card {
@@ -2204,69 +2413,47 @@
 
         #content-mockup-studio .result-card img {
             width: 100%;
-            height: 280px;
-            object-fit: cover;
+            height: auto;
+            object-fit: contain;
         }
 
         #content-mockup-studio .result-card-actions {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
-            padding: 1.5rem 1rem 1rem;
             display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: #f8fafc;
             justify-content: center;
-            gap: 0.5rem;
-            opacity: 0;
-            transition: opacity 0.3s ease;
         }
 
-        #content-mockup-studio .result-card:hover .result-card-actions {
-            opacity: 1;
-        }
-
-        #content-mockup-studio .btn-preview {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            color: white;
-            padding: 0.5rem 1.25rem;
+        #content-mockup-studio .result-card-actions button {
+            width: 44px;
+            height: 44px;
             border-radius: 9999px;
+            color: white;
+            font-size: 1rem;
             border: none;
             cursor: pointer;
-            font-size: 0.875rem;
-            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+            justify-content: center;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+            -webkit-tap-highlight-color: transparent;
         }
 
-        #content-mockup-studio .btn-preview:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 15px rgba(59, 130, 246, 0.5);
+        #content-mockup-studio .result-card-actions button:hover {
+            transform: scale(1.1);
         }
 
-        #content-mockup-studio .btn-download {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            padding: 0.5rem 1.25rem;
-            border-radius: 9999px;
-            border: none;
-            cursor: pointer;
-            font-size: 0.875rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+        #content-mockup-studio .result-card-actions button * {
+            pointer-events: none;
         }
 
-        #content-mockup-studio .btn-download:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 15px rgba(16, 185, 129, 0.5);
-        }
+        #content-mockup-studio .btn-preview { background: #3b82f6; }
+        #content-mockup-studio .btn-edit { background: #a855f7; }
+        #content-mockup-studio .btn-regenerate { background: #22c55e; }
+        #content-mockup-studio .btn-download { background: #0891b2; }
 
         #content-mockup-studio .image-counter {
             position: absolute;
@@ -10500,6 +10687,7 @@
         html.dark .to-white, html.dark .to-gray-50, html.dark .to-slate-50 { --tw-gradient-to: #1e293b; }
         /* .card putih di-set per-tab via selector ID (#content-* .card) — butuh !important */
         html.dark .card, html.dark .result-card { background-color: #1e293b !important; }
+        html.dark .result-card-actions { background: #0f172a !important; }
         html.dark .hub-pill:not(.active) { background: #0f2b1a; color: #86efac; }
         html.dark .hub-pill:not(.active):hover { background: #14532d; }
         html.dark input::placeholder, html.dark textarea::placeholder { color: #64748b; }

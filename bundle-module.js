@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '61';
+        const UPDATE_VERSION = '62';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,37 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '62',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v62-badge',
+                badgeText: 'Update v62',
+                gradient: 'linear-gradient(135deg,#f97316,#c2410c)',
+                borderColor: '#f97316',
+                icon: 'fa-layer-group',
+                iconColor: '#f97316',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v62-title-pakemcards',
+                        titleText: 'Kartu Hasil Seragam di 15 Fitur',
+                        bodyKey: 'modal.fix-v62-body-pakemcards',
+                        bodyText: 'Hub Foto Produk Affiliate (Tema Umum, Agama, Harga, Premium, Coba Baju), Feed Branding, Studio Mockup, seluruh Studio Review (6 fitur), Sketsa ke Katalog, dan Panduan Ukuran kini pakai kartu hasil seragam: gambar besar utuh tanpa terpotong, maksimal 2 kolom, dan nomor foto di pojok.'
+                    },
+                    {
+                        titleKey: 'modal.fix-v62-title-iconbtn',
+                        titleText: 'Tombol Aksi Ikon Bulat, Selalu Tampil di HP',
+                        bodyKey: 'modal.fix-v62-body-iconbtn',
+                        bodyText: 'Tombol kartu hasil (Preview, Edit, Regenerate, Video, Caption, Download sesuai fitur) kini ikon bulat berwarna di bawah gambar — tidak lagi menutupi foto atau hanya muncul saat hover di desktop.'
+                    },
+                    {
+                        titleKey: 'modal.fix-v62-title-uploadfull',
+                        titleText: 'Preview Upload Tampil Utuh',
+                        bodyKey: 'modal.fix-v62-body-uploadfull',
+                        bodyText: 'Foto yang diupload (produk, model, sketsa) kini terlihat utuh di dalam kotak upload pada fitur-fitur yang distandardisasi — tidak terpotong lagi.'
+                    }
+                ]
+            },
             {
                 version: '61',
                 dateId: 'Agustus 2026',
@@ -2401,7 +2432,7 @@ Jawab pertanyaan user dengan helpful dan informatif!`;
                     const previewWrapper = document.createElement('div');
                     previewWrapper.className = 'relative group';
                     previewWrapper.innerHTML = `
-                        <img src="${e.target.result}" alt="Pratinjau Produk" class="rounded-lg w-full h-24 object-cover">
+                        <img src="${e.target.result}" alt="Pratinjau Produk" class="rounded-lg w-full h-24 object-contain">
                         <button data-id="${imageData.id}" class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity focus:opacity-100">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                         </button>
@@ -2552,7 +2583,7 @@ Jawab pertanyaan user dengan helpful dan informatif!`;
 
         const createInitialBrollPlaceholders = () => {
             if(!brollGrid) return;
-            brollGrid.innerHTML = Array.from({length: 20}, () => `
+            brollGrid.innerHTML = Array.from({length: 4}, () => `
                 <div class="result-card card p-4 flex flex-col justify-between animate-pulse">
                     <div><div class="h-6 bg-gray-200 rounded w-3/4 mb-4"></div></div>
                     <div class="mt-4 aspect-video bg-gray-300 rounded-md"></div>
@@ -2666,7 +2697,6 @@ Jawab pertanyaan user dengan helpful dan informatif!`;
 
         async function generateSingleBroll(id, title, prompt) {
             const card = document.getElementById(`broll-card-${id}`);
-            const outputContainer = card.querySelector('.aspect-video');
             try {
                 const apiKey = ""; const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${apiKey}`;
                 const finalPrompt = `${prompt}, elegant, cinematic, professional product photography, dramatic lighting, 8k, photorealistic, aspect ratio ${selectedBrollRatio}`;
@@ -2712,7 +2742,8 @@ Jawab pertanyaan user dengan helpful dan informatif!`;
                     ratio: selectedBrollRatio
                 };
 
-                outputContainer.innerHTML = `<div class="relative w-full h-full group"><img src="${imageUrl}" class="w-full h-full object-cover rounded-md" alt="${title}"><div class="absolute bottom-2 right-2 flex flex-wrap gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"><button data-action="broll-preview" data-image-url="${imageUrl}" class="action-btn bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600" title="Preview"><i class="fas fa-search-plus"></i></button><button data-action="broll-edit" data-index="${id - 1}" data-prompt="${prompt.replace(/"/g, '&quot;')}" class="action-btn bg-purple-500 text-white p-2 rounded-full hover:bg-purple-600" title="Edit Prompt"><i class="fas fa-edit"></i></button><button data-action="broll-regenerate" data-index="${id - 1}" class="action-btn bg-green-500 text-white p-2 rounded-full hover:bg-green-600" title="Regenerate"><i class="fas fa-sync-alt"></i></button><button data-action="broll-video" data-image-url="${imageUrl}" data-title="${title.replace(/"/g, '&quot;')}" class="action-btn bg-fuchsia-500 text-white p-2 rounded-full hover:bg-fuchsia-600" title="Buat Prompt Video"><i class="fas fa-film"></i></button><button data-action="broll-caption" data-image-url="${imageUrl}" data-title="${title.replace(/"/g, '&quot;')}" class="action-btn bg-rose-500 text-white p-2 rounded-full hover:bg-rose-600" title="Buat Caption"><i class="fas fa-pencil-alt"></i></button><button data-action="broll-download" data-image-url="${imageUrl}" data-filename="affiliatego_${id}_${safeTitle}.png" class="action-btn bg-cyan-600 text-white p-2 rounded-full hover:bg-cyan-700" title="Unduh"><i class="fas fa-download"></i></button></div></div>`;
+                card.className = 'result-card';
+                card.innerHTML = `<img src="${imageUrl}" alt="${title.replace(/"/g, '&quot;')}"><div class="result-card-actions"><button data-action="broll-preview" data-image-url="${imageUrl}" class="action-btn btn-preview" title="Preview" aria-label="Preview"><i class="fas fa-search-plus"></i></button><button data-action="broll-edit" data-index="${id - 1}" data-prompt="${prompt.replace(/"/g, '&quot;')}" class="action-btn btn-edit" title="Edit Prompt" aria-label="Edit Prompt"><i class="fas fa-edit"></i></button><button data-action="broll-regenerate" data-index="${id - 1}" class="action-btn btn-regenerate" title="Regenerate" aria-label="Regenerate"><i class="fas fa-sync-alt"></i></button><button data-action="broll-video" data-image-url="${imageUrl}" data-title="${title.replace(/"/g, '&quot;')}" class="action-btn btn-video" title="Buat Prompt Video" aria-label="Buat Prompt Video"><i class="fas fa-film"></i></button><button data-action="broll-caption" data-image-url="${imageUrl}" data-title="${title.replace(/"/g, '&quot;')}" class="action-btn btn-caption" title="Buat Caption" aria-label="Buat Caption"><i class="fas fa-pencil-alt"></i></button><button data-action="broll-download" data-image-url="${imageUrl}" data-filename="affiliatego_${id}_${safeTitle}.png" class="action-btn btn-download" title="Unduh" aria-label="Unduh"><i class="fas fa-download"></i></button></div><div class="image-counter">#${id}</div>`;
             } catch (error) {
                 console.error(`Error generating broll ${id}:`, error);
                 if (card) card.innerHTML = '';
@@ -3188,10 +3219,8 @@ Output ONLY the video prompt, nothing else.`;
                 if (!params) return;
 
                 // Show loading state
-                const outputContainer = targetCard.querySelector('.aspect-video, .relative');
-                if (!outputContainer) return;
-
-                outputContainer.innerHTML = `
+                targetCard.className = 'result-card';
+                targetCard.innerHTML = `
                     <div class="flex flex-col items-center justify-center h-full min-h-[200px]">
                         <div class="loader !border-l-purple-500"></div>
                         <p class="mt-4 text-sm text-gray-600">Regenerating...</p>
@@ -3244,13 +3273,13 @@ Output ONLY the video prompt, nothing else.`;
                             generatedBrollImages[index].url = imageUrl;
                         }
 
-                        outputContainer.innerHTML = `<div class="relative w-full h-full group"><img src="${imageUrl}" class="w-full h-full object-cover rounded-md" alt="${params.title}"><div class="absolute bottom-2 right-2 flex flex-wrap gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"><button data-action="broll-preview" data-image-url="${imageUrl}" class="action-btn bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600" title="Preview"><i class="fas fa-search-plus"></i></button><button data-action="broll-edit" data-index="${index}" data-prompt="${safePrompt}" class="action-btn bg-purple-500 text-white p-2 rounded-full hover:bg-purple-600" title="Edit Prompt"><i class="fas fa-edit"></i></button><button data-action="broll-regenerate" data-index="${index}" class="action-btn bg-green-500 text-white p-2 rounded-full hover:bg-green-600" title="Regenerate"><i class="fas fa-sync-alt"></i></button><button data-action="broll-video" data-image-url="${imageUrl}" data-title="${params.title.replace(/"/g, '&quot;')}" class="action-btn bg-fuchsia-500 text-white p-2 rounded-full hover:bg-fuchsia-600" title="Buat Prompt Video"><i class="fas fa-film"></i></button><button data-action="broll-caption" data-image-url="${imageUrl}" data-title="${params.title.replace(/"/g, '&quot;')}" class="action-btn bg-rose-500 text-white p-2 rounded-full hover:bg-rose-600" title="Buat Caption"><i class="fas fa-pencil-alt"></i></button><button data-action="broll-download" data-image-url="${imageUrl}" data-filename="affiliatego_${index + 1}_${safeTitle}.png" class="action-btn bg-cyan-600 text-white p-2 rounded-full hover:bg-cyan-700" title="Unduh"><i class="fas fa-download"></i></button></div></div>`;
+                        targetCard.innerHTML = `<img src="${imageUrl}" alt="${params.title.replace(/"/g, '&quot;')}"><div class="result-card-actions"><button data-action="broll-preview" data-image-url="${imageUrl}" class="action-btn btn-preview" title="Preview" aria-label="Preview"><i class="fas fa-search-plus"></i></button><button data-action="broll-edit" data-index="${index}" data-prompt="${safePrompt}" class="action-btn btn-edit" title="Edit Prompt" aria-label="Edit Prompt"><i class="fas fa-edit"></i></button><button data-action="broll-regenerate" data-index="${index}" class="action-btn btn-regenerate" title="Regenerate" aria-label="Regenerate"><i class="fas fa-sync-alt"></i></button><button data-action="broll-video" data-image-url="${imageUrl}" data-title="${params.title.replace(/"/g, '&quot;')}" class="action-btn btn-video" title="Buat Prompt Video" aria-label="Buat Prompt Video"><i class="fas fa-film"></i></button><button data-action="broll-caption" data-image-url="${imageUrl}" data-title="${params.title.replace(/"/g, '&quot;')}" class="action-btn btn-caption" title="Buat Caption" aria-label="Buat Caption"><i class="fas fa-pencil-alt"></i></button><button data-action="broll-download" data-image-url="${imageUrl}" data-filename="affiliatego_${index + 1}_${safeTitle}.png" class="action-btn btn-download" title="Unduh" aria-label="Unduh"><i class="fas fa-download"></i></button></div><div class="image-counter">#${index + 1}</div>`;
                     } else {
                         throw new Error('Failed to generate image');
                     }
                 } catch (error) {
                     console.error('Regenerate error:', error);
-                    outputContainer.innerHTML = `
+                    targetCard.innerHTML = `
                         <div class="flex flex-col items-center justify-center h-full min-h-[200px] text-red-600">
                             <i class="fas fa-exclamation-triangle text-3xl mb-2"></i>
                             <p class="text-sm">Gagal regenerate</p>
@@ -3347,7 +3376,7 @@ Output ONLY the video prompt, nothing else.`;
                     const previewWrapper = document.createElement('div');
                     previewWrapper.className = 'relative group';
                     previewWrapper.innerHTML = `
-                        <img src="${e.target.result}" alt="Pratinjau Produk" class="rounded-lg w-full h-24 object-cover">
+                        <img src="${e.target.result}" alt="Pratinjau Produk" class="rounded-lg w-full h-24 object-contain">
                         <button data-id="${imageData.id}" class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity focus:opacity-100">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                         </button>
@@ -3488,7 +3517,7 @@ Output ONLY the video prompt, nothing else.`;
 
         const createInitialHrgPlaceholders = () => {
             if(!hrgGrid) return;
-            hrgGrid.innerHTML = Array.from({length: 20}, () => `
+            hrgGrid.innerHTML = Array.from({length: 4}, () => `
                 <div class="result-card card p-4 flex flex-col justify-between animate-pulse">
                     <div><div class="h-6 bg-gray-200 rounded w-3/4 mb-4"></div></div>
                     <div class="mt-4 aspect-video bg-gray-300 rounded-md"></div>
@@ -3595,7 +3624,6 @@ Output ONLY the video prompt, nothing else.`;
 
         async function generateSingleHrg(id, title, prompt) {
             const card = document.getElementById(`hrg-card-${id}`);
-            const outputContainer = card.querySelector('.aspect-video');
             try {
                 const apiKey = ""; const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${apiKey}`;
                 const finalPrompt = `${prompt}, elegant, cinematic, professional product photography, dramatic lighting, 8k, photorealistic, aspect ratio ${selectedHrgRatio}. ${buildHrgPriceInstruction(hrgProductImages)}`;
@@ -3641,7 +3669,8 @@ Output ONLY the video prompt, nothing else.`;
                     ratio: selectedHrgRatio
                 };
 
-                outputContainer.innerHTML = `<div class="relative w-full h-full group"><img src="${imageUrl}" class="w-full h-full object-cover rounded-md" alt="${title}"><div class="absolute bottom-2 right-2 flex flex-wrap gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"><button data-action="hrg-preview" data-image-url="${imageUrl}" class="action-btn bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600" title="Preview"><i class="fas fa-search-plus"></i></button><button data-action="hrg-edit" data-index="${id - 1}" data-prompt="${prompt.replace(/"/g, '&quot;')}" class="action-btn bg-purple-500 text-white p-2 rounded-full hover:bg-purple-600" title="Edit Prompt"><i class="fas fa-edit"></i></button><button data-action="hrg-regenerate" data-index="${id - 1}" class="action-btn bg-green-500 text-white p-2 rounded-full hover:bg-green-600" title="Regenerate"><i class="fas fa-sync-alt"></i></button><button data-action="hrg-video" data-image-url="${imageUrl}" data-title="${title.replace(/"/g, '&quot;')}" class="action-btn bg-fuchsia-500 text-white p-2 rounded-full hover:bg-fuchsia-600" title="Buat Prompt Video"><i class="fas fa-film"></i></button><button data-action="hrg-caption" data-image-url="${imageUrl}" data-title="${title.replace(/"/g, '&quot;')}" class="action-btn bg-rose-500 text-white p-2 rounded-full hover:bg-rose-600" title="Buat Caption"><i class="fas fa-pencil-alt"></i></button><button data-action="hrg-download" data-image-url="${imageUrl}" data-filename="affiliatego_${id}_${safeTitle}.png" class="action-btn bg-cyan-600 text-white p-2 rounded-full hover:bg-cyan-700" title="Unduh"><i class="fas fa-download"></i></button></div></div>`;
+                card.className = 'result-card';
+                card.innerHTML = `<img src="${imageUrl}" alt="${title.replace(/"/g, '&quot;')}"><div class="result-card-actions"><button data-action="hrg-preview" data-image-url="${imageUrl}" class="action-btn btn-preview" title="Preview" aria-label="Preview"><i class="fas fa-search-plus"></i></button><button data-action="hrg-edit" data-index="${id - 1}" data-prompt="${prompt.replace(/"/g, '&quot;')}" class="action-btn btn-edit" title="Edit Prompt" aria-label="Edit Prompt"><i class="fas fa-edit"></i></button><button data-action="hrg-regenerate" data-index="${id - 1}" class="action-btn btn-regenerate" title="Regenerate" aria-label="Regenerate"><i class="fas fa-sync-alt"></i></button><button data-action="hrg-video" data-image-url="${imageUrl}" data-title="${title.replace(/"/g, '&quot;')}" class="action-btn btn-video" title="Buat Prompt Video" aria-label="Buat Prompt Video"><i class="fas fa-film"></i></button><button data-action="hrg-caption" data-image-url="${imageUrl}" data-title="${title.replace(/"/g, '&quot;')}" class="action-btn btn-caption" title="Buat Caption" aria-label="Buat Caption"><i class="fas fa-pencil-alt"></i></button><button data-action="hrg-download" data-image-url="${imageUrl}" data-filename="affiliatego_${id}_${safeTitle}.png" class="action-btn btn-download" title="Unduh" aria-label="Unduh"><i class="fas fa-download"></i></button></div><div class="image-counter">#${id}</div>`;
             } catch (error) {
                 console.error(`Error generating hrg ${id}:`, error);
                 if (card) card.innerHTML = '';
@@ -4117,10 +4146,8 @@ Output ONLY the video prompt, nothing else.`;
                 if (!params) return;
 
                 // Show loading state
-                const outputContainer = targetCard.querySelector('.aspect-video, .relative');
-                if (!outputContainer) return;
-
-                outputContainer.innerHTML = `
+                targetCard.className = 'result-card';
+                targetCard.innerHTML = `
                     <div class="flex flex-col items-center justify-center h-full min-h-[200px]">
                         <div class="loader !border-l-purple-500"></div>
                         <p class="mt-4 text-sm text-gray-600">Regenerating...</p>
@@ -4173,13 +4200,13 @@ Output ONLY the video prompt, nothing else.`;
                             generatedHrgImages[index].url = imageUrl;
                         }
 
-                        outputContainer.innerHTML = `<div class="relative w-full h-full group"><img src="${imageUrl}" class="w-full h-full object-cover rounded-md" alt="${params.title}"><div class="absolute bottom-2 right-2 flex flex-wrap gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"><button data-action="hrg-preview" data-image-url="${imageUrl}" class="action-btn bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600" title="Preview"><i class="fas fa-search-plus"></i></button><button data-action="hrg-edit" data-index="${index}" data-prompt="${safePrompt}" class="action-btn bg-purple-500 text-white p-2 rounded-full hover:bg-purple-600" title="Edit Prompt"><i class="fas fa-edit"></i></button><button data-action="hrg-regenerate" data-index="${index}" class="action-btn bg-green-500 text-white p-2 rounded-full hover:bg-green-600" title="Regenerate"><i class="fas fa-sync-alt"></i></button><button data-action="hrg-video" data-image-url="${imageUrl}" data-title="${params.title.replace(/"/g, '&quot;')}" class="action-btn bg-fuchsia-500 text-white p-2 rounded-full hover:bg-fuchsia-600" title="Buat Prompt Video"><i class="fas fa-film"></i></button><button data-action="hrg-caption" data-image-url="${imageUrl}" data-title="${params.title.replace(/"/g, '&quot;')}" class="action-btn bg-rose-500 text-white p-2 rounded-full hover:bg-rose-600" title="Buat Caption"><i class="fas fa-pencil-alt"></i></button><button data-action="hrg-download" data-image-url="${imageUrl}" data-filename="affiliatego_${index + 1}_${safeTitle}.png" class="action-btn bg-cyan-600 text-white p-2 rounded-full hover:bg-cyan-700" title="Unduh"><i class="fas fa-download"></i></button></div></div>`;
+                        targetCard.innerHTML = `<img src="${imageUrl}" alt="${params.title.replace(/"/g, '&quot;')}"><div class="result-card-actions"><button data-action="hrg-preview" data-image-url="${imageUrl}" class="action-btn btn-preview" title="Preview" aria-label="Preview"><i class="fas fa-search-plus"></i></button><button data-action="hrg-edit" data-index="${index}" data-prompt="${safePrompt}" class="action-btn btn-edit" title="Edit Prompt" aria-label="Edit Prompt"><i class="fas fa-edit"></i></button><button data-action="hrg-regenerate" data-index="${index}" class="action-btn btn-regenerate" title="Regenerate" aria-label="Regenerate"><i class="fas fa-sync-alt"></i></button><button data-action="hrg-video" data-image-url="${imageUrl}" data-title="${params.title.replace(/"/g, '&quot;')}" class="action-btn btn-video" title="Buat Prompt Video" aria-label="Buat Prompt Video"><i class="fas fa-film"></i></button><button data-action="hrg-caption" data-image-url="${imageUrl}" data-title="${params.title.replace(/"/g, '&quot;')}" class="action-btn btn-caption" title="Buat Caption" aria-label="Buat Caption"><i class="fas fa-pencil-alt"></i></button><button data-action="hrg-download" data-image-url="${imageUrl}" data-filename="affiliatego_${index + 1}_${safeTitle}.png" class="action-btn btn-download" title="Unduh" aria-label="Unduh"><i class="fas fa-download"></i></button></div><div class="image-counter">#${index + 1}</div>`;
                     } else {
                         throw new Error('Failed to generate image');
                     }
                 } catch (error) {
                     console.error('Regenerate error:', error);
-                    outputContainer.innerHTML = `
+                    targetCard.innerHTML = `
                         <div class="flex flex-col items-center justify-center h-full min-h-[200px] text-red-600">
                             <i class="fas fa-exclamation-triangle text-3xl mb-2"></i>
                             <p class="text-sm">Gagal regenerate</p>
@@ -4465,8 +4492,8 @@ CRITICAL: The model must be clearly wearing/using the product in the specified a
                 generatedImages[index - 1] = { url: imageUrl, filename };
 
                 if (card) {
-                    card.className = 'relative group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white';
-                    card.innerHTML = `<img src="${imageUrl}" class="w-full object-contain ${tryonAspectClass()}" alt="Try-On ${index}"><div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 gap-2"><button data-action="preview" data-index="${index - 1}" class="action-btn bg-white/90 hover:bg-white text-gray-800 px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2"><i class="fas fa-eye"></i><span class="hidden sm:inline">Preview</span></button><button data-action="download" data-index="${index - 1}" class="action-btn bg-gradient-to-r from-teal-500 to-lime-500 text-white px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2"><i class="fas fa-download"></i><span class="hidden sm:inline">Download</span></button></div>`;
+                    card.className = 'result-card';
+                    card.innerHTML = `<img src="${imageUrl}" alt="Try-On ${index}"><div class="result-card-actions"><button data-action="preview" data-index="${index - 1}" class="action-btn btn-preview" title="Preview" aria-label="Preview"><i class="fas fa-eye"></i></button><button data-action="download" data-index="${index - 1}" class="action-btn btn-download" title="Download" aria-label="Download"><i class="fas fa-download"></i></button></div><div class="image-counter">#${index}</div>`;
                 }
             } catch (error) {
                 console.error(`Error generating try-on ${index}:`, error);
@@ -4481,8 +4508,8 @@ CRITICAL: The model must be clearly wearing/using the product in the specified a
                 tryonResultsGrid.innerHTML = '';
                 successful.forEach((img, idx) => {
                     const card = document.createElement('div');
-                    card.className = 'relative group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white';
-                    card.innerHTML = `<img src="${img.url}" class="w-full object-contain ${tryonAspectClass()}" alt="Try-On ${idx + 1}"><div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 gap-2"><button data-action="preview" data-index="${idx}" class="action-btn bg-white/90 hover:bg-white text-gray-800 px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2"><i class="fas fa-eye"></i><span class="hidden sm:inline">Preview</span></button><button data-action="download" data-index="${idx}" class="action-btn bg-gradient-to-r from-teal-500 to-lime-500 text-white px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2"><i class="fas fa-download"></i><span class="hidden sm:inline">Download</span></button></div>`;
+                    card.className = 'result-card';
+                    card.innerHTML = `<img src="${img.url}" alt="Try-On ${idx + 1}"><div class="result-card-actions"><button data-action="preview" data-index="${idx}" class="action-btn btn-preview" title="Preview" aria-label="Preview"><i class="fas fa-eye"></i></button><button data-action="download" data-index="${idx}" class="action-btn btn-download" title="Download" aria-label="Download"><i class="fas fa-download"></i></button></div><div class="image-counter">#${idx + 1}</div>`;
                     tryonResultsGrid.appendChild(card);
                 });
             }
@@ -15542,21 +15569,17 @@ Requirements:
                     card.innerHTML = `
                         <img src="${imageUrl}" alt="Mockup ${idx + 1}" />
                         <div class="result-card-actions">
-                            <button class="btn-preview" data-action="preview" data-image-url="${imageUrl}">
+                            <button class="btn-preview" data-action="preview" data-image-url="${imageUrl}" title="Preview" aria-label="Preview">
                                 <i class="fas fa-search-plus"></i>
-                                Preview
                             </button>
-                            <button class="btn-edit" data-action="edit" data-index="${idx}" data-theme="${safeTheme}">
+                            <button class="btn-edit" data-action="edit" data-index="${idx}" data-theme="${safeTheme}" title="Edit" aria-label="Edit">
                                 <i class="fas fa-edit"></i>
-                                Edit
                             </button>
-                            <button class="btn-regenerate" data-action="regenerate" data-index="${idx}">
+                            <button class="btn-regenerate" data-action="regenerate" data-index="${idx}" title="Regenerate" aria-label="Regenerate">
                                 <i class="fas fa-sync-alt"></i>
-                                Regenerate
                             </button>
-                            <button class="btn-download" data-action="download" data-image-url="${imageUrl}" data-filename="mockup-${idx + 1}.jpg">
+                            <button class="btn-download" data-action="download" data-image-url="${imageUrl}" data-filename="mockup-${idx + 1}.jpg" title="Download" aria-label="Download">
                                 <i class="fas fa-download"></i>
-                                Download
                             </button>
                         </div>
                         <div class="image-counter">#${idx + 1}</div>
@@ -15650,7 +15673,7 @@ The design should be clearly visible and properly placed on the mockup surface.`
                         ratio: selectedMockupRatio
                     };
                     // Show image inline immediately (buttons added by renderSuccessfulMockups at the end)
-                    card.innerHTML = `<img src="${imageUrl}" alt="Mockup" style="width:100%;height:100%;object-fit:cover;">`;
+                    card.innerHTML = `<img src="${imageUrl}" alt="Mockup">`;
                 } else {
                     card.innerHTML = '';
                 }
@@ -15851,21 +15874,17 @@ The design should be clearly visible and properly placed on the mockup surface.`
                         targetCard.innerHTML = `
                             <img src="${imageUrl}" alt="Mockup ${index + 1}" />
                             <div class="result-card-actions">
-                                <button class="btn-preview" data-action="preview" data-image-url="${imageUrl}">
+                                <button class="btn-preview" data-action="preview" data-image-url="${imageUrl}" title="Preview" aria-label="Preview">
                                     <i class="fas fa-search-plus"></i>
-                                    Preview
                                 </button>
-                                <button class="btn-edit" data-action="edit" data-index="${index}" data-theme="${safeTheme}">
+                                <button class="btn-edit" data-action="edit" data-index="${index}" data-theme="${safeTheme}" title="Edit" aria-label="Edit">
                                     <i class="fas fa-edit"></i>
-                                    Edit
                                 </button>
-                                <button class="btn-regenerate" data-action="regenerate" data-index="${index}">
+                                <button class="btn-regenerate" data-action="regenerate" data-index="${index}" title="Regenerate" aria-label="Regenerate">
                                     <i class="fas fa-sync-alt"></i>
-                                    Regenerate
                                 </button>
-                                <button class="btn-download" data-action="download" data-image-url="${imageUrl}" data-filename="mockup-${index + 1}.jpg">
+                                <button class="btn-download" data-action="download" data-image-url="${imageUrl}" data-filename="mockup-${index + 1}.jpg" title="Download" aria-label="Download">
                                     <i class="fas fa-download"></i>
-                                    Download
                                 </button>
                             </div>
                             <div class="image-counter">#${index + 1}</div>
@@ -17768,19 +17787,18 @@ IMPORTANT:
                 generatedImages[index - 1] = { url: imageUrl, filename: filename };
 
                 if (card) {
-                    card.className = 'relative group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300';
+                    card.className = 'result-card';
                     card.innerHTML = `
-                        <img src="${imageUrl}" class="w-full h-full object-cover" alt="Catalog Photo ${index}">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 gap-2">
-                            <button data-action="preview" data-index="${index - 1}" class="action-btn bg-white/90 hover:bg-white text-gray-800 px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2">
+                        <img src="${imageUrl}" alt="Catalog Photo ${index}">
+                        <div class="result-card-actions">
+                            <button data-action="preview" data-index="${index - 1}" class="action-btn btn-preview" title="Preview" aria-label="Preview">
                                 <i class="fas fa-eye pointer-events-none"></i>
-                                <span class="hidden sm:inline pointer-events-none">Preview</span>
                             </button>
-                            <button data-action="download" data-index="${index - 1}" class="action-btn bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2">
+                            <button data-action="download" data-index="${index - 1}" class="action-btn btn-download" title="Download" aria-label="Download">
                                 <i class="fas fa-download pointer-events-none"></i>
-                                <span class="hidden sm:inline pointer-events-none">Download</span>
                             </button>
                         </div>
+                        <div class="image-counter">#${index}</div>
                     `;
                 }
             } catch (error) {
@@ -20856,16 +20874,17 @@ Style: ultra-realistic, 8K, fitness lifestyle photography, dramatic gym lighting
                 ppGeneratedImages[index - 1] = { url: imageUrl, filename };
 
                 if (card) {
-                    card.className = 'relative group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300';
-                    card.innerHTML = `<img src="${imageUrl}" class="w-full object-contain" alt="Product Premium ${index}">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition flex items-end justify-center pb-3 gap-2">
-                            <button type="button" data-action="pp-preview" data-index="${index}" class="bg-white/90 hover:bg-white text-gray-800 px-4 py-2 rounded-full font-semibold shadow-lg hover:scale-105 transition flex items-center gap-2">
-                                <i class="fas fa-eye"></i><span class="hidden sm:inline">Preview</span>
+                    card.className = 'result-card';
+                    card.innerHTML = `<img src="${imageUrl}" alt="Product Premium ${index}">
+                        <div class="result-card-actions">
+                            <button type="button" data-action="pp-preview" data-index="${index}" class="btn-preview" title="Preview" aria-label="Preview">
+                                <i class="fas fa-eye"></i>
                             </button>
-                            <a href="${imageUrl}" download="${filename}" class="bg-white text-gray-800 px-4 py-2 rounded-full font-semibold shadow-lg hover:scale-105 transition flex items-center gap-2">
-                                <i class="fas fa-download"></i><span class="hidden sm:inline">Download</span>
+                            <a href="${imageUrl}" download="${filename}" class="btn-download" title="Download" aria-label="Download">
+                                <i class="fas fa-download"></i>
                             </a>
-                        </div>`;
+                        </div>
+                        <div class="image-counter">#${index}</div>`;
                 }
             } catch (err) {
                 console.error(`PP generate error #${index}:`, err);
@@ -22569,17 +22588,15 @@ OUTPUT: Create a stunning, production-ready packaging design that a brand would 
 
                     // Create result card
                     const card = document.createElement('div');
-                    card.className = 'relative group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300';
+                    card.className = 'result-card';
                     card.innerHTML = `
-                        <img src="${imageUrl}" class="w-full h-full object-cover" alt="After Image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 gap-2">
-                            <button data-action="preview" data-index="0" class="action-btn bg-white/90 hover:bg-white text-gray-800 px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2">
+                        <img src="${imageUrl}" alt="After Image">
+                        <div class="result-card-actions">
+                            <button data-action="preview" data-index="0" class="action-btn btn-preview" title="Preview" aria-label="Preview">
                                 <i class="fas fa-eye"></i>
-                                <span class="hidden sm:inline">Preview</span>
                             </button>
-                            <button data-action="download" data-index="0" class="action-btn bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2">
+                            <button data-action="download" data-index="0" class="action-btn btn-download" title="Download" aria-label="Download">
                                 <i class="fas fa-download"></i>
-                                <span class="hidden sm:inline">Download</span>
                             </button>
                         </div>
                     `;
@@ -22629,20 +22646,18 @@ OUTPUT: Create a stunning, production-ready packaging design that a brand would 
 
                     // Create before card
                     const beforeCard = document.createElement('div');
-                    beforeCard.className = 'relative group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300';
+                    beforeCard.className = 'result-card';
                     beforeCard.innerHTML = `
                         <div class="absolute top-3 left-3 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-10">
                             BEFORE
                         </div>
-                        <img src="${beforeImageUrl}" class="w-full h-full object-cover" alt="Before Image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 gap-2">
-                            <button data-action="preview" data-index="0" class="action-btn bg-white/90 hover:bg-white text-gray-800 px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2">
+                        <img src="${beforeImageUrl}" alt="Before Image">
+                        <div class="result-card-actions">
+                            <button data-action="preview" data-index="0" class="action-btn btn-preview" title="Preview" aria-label="Preview">
                                 <i class="fas fa-eye"></i>
-                                <span class="hidden sm:inline">Preview</span>
                             </button>
-                            <button data-action="download" data-index="0" class="action-btn bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2">
+                            <button data-action="download" data-index="0" class="action-btn btn-download" title="Download" aria-label="Download">
                                 <i class="fas fa-download"></i>
-                                <span class="hidden sm:inline">Download</span>
                             </button>
                         </div>
                     `;
@@ -22658,20 +22673,18 @@ OUTPUT: Create a stunning, production-ready packaging design that a brand would 
 
                     // Create after card
                     const afterCard = document.createElement('div');
-                    afterCard.className = 'relative group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300';
+                    afterCard.className = 'result-card';
                     afterCard.innerHTML = `
                         <div class="absolute top-3 left-3 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-10">
                             AFTER
                         </div>
-                        <img src="${afterImageUrl}" class="w-full h-full object-cover" alt="After Image">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 gap-2">
-                            <button data-action="preview" data-index="1" class="action-btn bg-white/90 hover:bg-white text-gray-800 px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2">
+                        <img src="${afterImageUrl}" alt="After Image">
+                        <div class="result-card-actions">
+                            <button data-action="preview" data-index="1" class="action-btn btn-preview" title="Preview" aria-label="Preview">
                                 <i class="fas fa-eye"></i>
-                                <span class="hidden sm:inline">Preview</span>
                             </button>
-                            <button data-action="download" data-index="1" class="action-btn bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2">
+                            <button data-action="download" data-index="1" class="action-btn btn-download" title="Download" aria-label="Download">
                                 <i class="fas fa-download"></i>
-                                <span class="hidden sm:inline">Download</span>
                             </button>
                         </div>
                     `;
@@ -23329,7 +23342,7 @@ OUTPUT: A stunning, photorealistic image showing the "after" state that demonstr
                     const previewWrapper = document.createElement('div');
                     previewWrapper.className = 'relative group';
                     previewWrapper.innerHTML = `
-                        <img src="${e.target.result}" alt="Pratinjau Produk" class="rounded-lg w-full h-24 object-cover">
+                        <img src="${e.target.result}" alt="Pratinjau Produk" class="rounded-lg w-full h-24 object-contain">
                         <button data-id="${imageData.id}" class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity focus:opacity-100">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                         </button>
@@ -23588,6 +23601,12 @@ Respond ONLY with a valid JSON array of ${selectedCount} objects, in sequential 
             const outputContainer = card.querySelector('.review-output-container');
 
             // Show loading state immediately so user knows something is happening
+            const loadingRatio = document.querySelector('.ratio-btn-review.selected')?.dataset.ratio || '16:9';
+            let loadingAspect = 'aspect-video';
+            if (loadingRatio === '1:1') loadingAspect = 'aspect-square';
+            else if (loadingRatio === '3:4') loadingAspect = 'aspect-[3/4]';
+            else if (loadingRatio === '9:16') loadingAspect = 'aspect-[9/16]';
+            outputContainer.className = `review-output-container ${loadingAspect} bg-gray-100 rounded-md flex items-center justify-center`;
             outputContainer.innerHTML = `<div class="w-full h-full flex items-center justify-center"><div class="loader"></div></div>`;
 
             const retries = 3;
@@ -23636,38 +23655,30 @@ Respond ONLY with a valid JSON array of ${selectedCount} objects, in sequential 
                     if (base64Data) {
                         const imageUrl = `data:image/png;base64,${base64Data}`;
                         const safeTitle = title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+                        outputContainer.className = 'review-output-container relative';
                         outputContainer.innerHTML = `
-                            <div class="relative w-full h-full group">
-                                <img src="${imageUrl}" class="w-full h-full object-cover rounded-md" alt="Review Scene">
-                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent p-4 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 ease-in-out rounded-b-md">
-                                    <div class="flex flex-wrap gap-2 justify-end">
-                                        <button data-action="review-preview" data-scene-id="${id}" class="action-btn bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Preview">
-                                            <i class="fas fa-search-plus pointer-events-none"></i>
-                                            <span class="hidden sm:inline pointer-events-none">Preview</span>
-                                        </button>
-                                        <button data-action="review-edit-prompt" data-scene-id="${id}" class="action-btn bg-purple-500 text-white px-3 py-2 rounded-lg hover:bg-purple-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Edit Prompt">
-                                            <i class="fas fa-edit pointer-events-none"></i>
-                                            <span class="hidden sm:inline pointer-events-none">Edit</span>
-                                        </button>
-                                        <button data-action="review-regenerate" data-scene-id="${id}" class="action-btn bg-green-500 text-white px-3 py-2 rounded-lg hover:bg-green-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Regenerate">
-                                            <i class="fas fa-sync-alt pointer-events-none"></i>
-                                            <span class="hidden sm:inline pointer-events-none">Regenerate</span>
-                                        </button>
-                                        <button data-action="review-video-prompt" data-scene-id="${id}" class="action-btn bg-fuchsia-500 text-white px-3 py-2 rounded-lg hover:bg-fuchsia-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Buat Prompt Video">
-                                            <i class="fas fa-film pointer-events-none"></i>
-                                            <span class="hidden sm:inline pointer-events-none">Video</span>
-                                        </button>
-                                        <button data-action="review-caption" data-scene-id="${id}" class="action-btn bg-rose-500 text-white px-3 py-2 rounded-lg hover:bg-rose-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Buat Caption">
-                                            <i class="fas fa-pencil-alt pointer-events-none"></i>
-                                            <span class="hidden sm:inline pointer-events-none">Caption</span>
-                                        </button>
-                                        <button data-action="review-download" data-scene-id="${id}" data-filename="review_${id}_${safeTitle}.png" class="action-btn bg-cyan-600 text-white px-3 py-2 rounded-lg hover:bg-cyan-700 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Unduh Gambar">
-                                            <i class="fas fa-download pointer-events-none"></i>
-                                            <span class="hidden sm:inline pointer-events-none">Unduh</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>`;
+                            <img src="${imageUrl}" class="w-full h-auto object-contain rounded-lg" alt="Review Scene">
+                            <div class="result-card-actions rounded-lg mt-2">
+                                <button data-action="review-preview" data-scene-id="${id}" class="action-btn btn-preview" title="Preview" aria-label="Preview">
+                                    <i class="fas fa-search-plus pointer-events-none"></i>
+                                </button>
+                                <button data-action="review-edit-prompt" data-scene-id="${id}" class="action-btn btn-edit" title="Edit Prompt" aria-label="Edit Prompt">
+                                    <i class="fas fa-edit pointer-events-none"></i>
+                                </button>
+                                <button data-action="review-regenerate" data-scene-id="${id}" class="action-btn btn-regenerate" title="Regenerate" aria-label="Regenerate">
+                                    <i class="fas fa-sync-alt pointer-events-none"></i>
+                                </button>
+                                <button data-action="review-video-prompt" data-scene-id="${id}" class="action-btn btn-video" title="Buat Prompt Video" aria-label="Buat Prompt Video">
+                                    <i class="fas fa-film pointer-events-none"></i>
+                                </button>
+                                <button data-action="review-caption" data-scene-id="${id}" class="action-btn btn-caption" title="Buat Caption" aria-label="Buat Caption">
+                                    <i class="fas fa-pencil-alt pointer-events-none"></i>
+                                </button>
+                                <button data-action="review-download" data-scene-id="${id}" data-filename="review_${id}_${safeTitle}.png" class="action-btn btn-download" title="Unduh Gambar" aria-label="Unduh Gambar">
+                                    <i class="fas fa-download pointer-events-none"></i>
+                                </button>
+                            </div>
+                            <div class="image-counter">#${id}</div>`;
 
                         // Update card's stored prompt
                         if (card) {
@@ -24190,7 +24201,7 @@ OUTPUT: Satu prompt image-to-video lengkap dalam Bahasa Indonesia yang natural.`
                     const previewWrapper = document.createElement('div');
                     previewWrapper.className = 'relative group';
                     previewWrapper.innerHTML = `
-                        <img src="${e.target.result}" alt="Pratinjau Produk" class="rounded-lg w-full h-24 object-cover">
+                        <img src="${e.target.result}" alt="Pratinjau Produk" class="rounded-lg w-full h-24 object-contain">
                         <button data-id="${imageData.id}" class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity focus:opacity-100">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                         </button>
@@ -24539,6 +24550,14 @@ Respond HANYA dengan valid JSON array dari ${selectedCount} objects, dalam uruta
             if (!card) return;
             const outputContainer = card.querySelector('.skincare-output-container');
 
+            const loadingRatio = document.querySelector('.ratio-btn-skincare.selected')?.dataset.ratio || '16:9';
+            let loadingAspect = 'aspect-video';
+            if (loadingRatio === '1:1') loadingAspect = 'aspect-square';
+            else if (loadingRatio === '3:4') loadingAspect = 'aspect-[3/4]';
+            else if (loadingRatio === '9:16') loadingAspect = 'aspect-[9/16]';
+            outputContainer.className = `skincare-output-container ${loadingAspect} bg-pink-50 rounded-md flex items-center justify-center`;
+            outputContainer.innerHTML = `<div class="w-full h-full flex items-center justify-center"><div class="loader"></div></div>`;
+
             const retries = 3;
             let lastError = null;
 
@@ -24602,38 +24621,30 @@ Respond HANYA dengan valid JSON array dari ${selectedCount} objects, dalam uruta
                     if (base64Data) {
                         const imageUrl = `data:image/png;base64,${base64Data}`;
                         const safeTitle = title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+                        outputContainer.className = 'skincare-output-container relative';
                         outputContainer.innerHTML = `
-                            <div class="relative w-full h-full group">
-                                <img src="${imageUrl}" class="w-full h-full object-cover rounded-md" alt="Skincare Review Scene">
-                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent p-4 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 ease-in-out rounded-b-md">
-                                    <div class="flex flex-wrap gap-2 justify-end">
-                                        <button data-action="skincare-preview" data-scene-id="${id}" class="action-btn bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Preview">
-                                            <i class="fas fa-search-plus pointer-events-none"></i>
-                                            <span class="hidden sm:inline pointer-events-none">Preview</span>
-                                        </button>
-                                        <button data-action="skincare-edit-prompt" data-scene-id="${id}" class="action-btn bg-purple-500 text-white px-3 py-2 rounded-lg hover:bg-purple-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Edit Prompt">
-                                            <i class="fas fa-edit pointer-events-none"></i>
-                                            <span class="hidden sm:inline pointer-events-none">Edit</span>
-                                        </button>
-                                        <button data-action="skincare-regenerate" data-scene-id="${id}" class="action-btn bg-green-500 text-white px-3 py-2 rounded-lg hover:bg-green-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Regenerate">
-                                            <i class="fas fa-sync-alt pointer-events-none"></i>
-                                            <span class="hidden sm:inline pointer-events-none">Regenerate</span>
-                                        </button>
-                                        <button data-action="skincare-video-prompt" data-scene-id="${id}" class="action-btn bg-fuchsia-500 text-white px-3 py-2 rounded-lg hover:bg-fuchsia-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Prompt Image-to-Video">
-                                            <i class="fas fa-film pointer-events-none"></i>
-                                            <span class="hidden sm:inline pointer-events-none">Video</span>
-                                        </button>
-                                        <button data-action="skincare-caption" data-scene-id="${id}" class="action-btn bg-rose-500 text-white px-3 py-2 rounded-lg hover:bg-rose-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Caption IG">
-                                            <i class="fas fa-pencil-alt pointer-events-none"></i>
-                                            <span class="hidden sm:inline pointer-events-none">Caption</span>
-                                        </button>
-                                        <button data-action="skincare-download" data-scene-id="${id}" data-filename="skincare_review_${id}_${safeTitle}.png" class="action-btn bg-cyan-600 text-white px-3 py-2 rounded-lg hover:bg-cyan-700 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Unduh">
-                                            <i class="fas fa-download pointer-events-none"></i>
-                                            <span class="hidden sm:inline pointer-events-none">Unduh</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>`;
+                            <img src="${imageUrl}" class="w-full h-auto object-contain rounded-lg" alt="Skincare Review Scene">
+                            <div class="result-card-actions rounded-lg mt-2">
+                                <button data-action="skincare-preview" data-scene-id="${id}" class="action-btn btn-preview" title="Preview" aria-label="Preview">
+                                    <i class="fas fa-search-plus pointer-events-none"></i>
+                                </button>
+                                <button data-action="skincare-edit-prompt" data-scene-id="${id}" class="action-btn btn-edit" title="Edit Prompt" aria-label="Edit Prompt">
+                                    <i class="fas fa-edit pointer-events-none"></i>
+                                </button>
+                                <button data-action="skincare-regenerate" data-scene-id="${id}" class="action-btn btn-regenerate" title="Regenerate" aria-label="Regenerate">
+                                    <i class="fas fa-sync-alt pointer-events-none"></i>
+                                </button>
+                                <button data-action="skincare-video-prompt" data-scene-id="${id}" class="action-btn btn-video" title="Prompt Image-to-Video" aria-label="Prompt Image-to-Video">
+                                    <i class="fas fa-film pointer-events-none"></i>
+                                </button>
+                                <button data-action="skincare-caption" data-scene-id="${id}" class="action-btn btn-caption" title="Caption IG" aria-label="Caption IG">
+                                    <i class="fas fa-pencil-alt pointer-events-none"></i>
+                                </button>
+                                <button data-action="skincare-download" data-scene-id="${id}" data-filename="skincare_review_${id}_${safeTitle}.png" class="action-btn btn-download" title="Unduh" aria-label="Unduh">
+                                    <i class="fas fa-download pointer-events-none"></i>
+                                </button>
+                            </div>
+                            <div class="image-counter">#${id}</div>`;
 
                         // Update card's stored prompt
                         if (card) {
@@ -25341,6 +25352,7 @@ Respond ONLY with valid JSON array of ${selectedCount} objects.`;
             const selectedRatio = document.querySelector('.ratio-btn-food.selected')?.dataset.ratio || '16:9';
             const foodAspectMap = { '1:1': 'aspect-square', '4:5': 'aspect-[4/5]', '9:16': 'aspect-[9/16]', '3:4': 'aspect-[3/4]', '2:3': 'aspect-[2/3]', '16:9': 'aspect-video', '3:2': 'aspect-[3/2]', '4:3': 'aspect-[4/3]', '21:9': 'aspect-[21/9]', '5:4': 'aspect-[5/4]' };
             let aspectRatioClass = foodAspectMap[selectedRatio] || 'aspect-video';
+            outputContainer.className = 'food-output-container';
             outputContainer.innerHTML = `<div class="${aspectRatioClass} bg-orange-50 rounded-md flex items-center justify-center"><div class="loader"></div></div>`;
             try {
                 const apiKey = "";
@@ -25357,7 +25369,8 @@ Respond ONLY with valid JSON array of ${selectedCount} objects.`;
                 if (!base64Data) throw new Error('No image data received');
                 const imageUrl = `data:image/png;base64,${base64Data}`;
                 const safeTitle = title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-                outputContainer.innerHTML = `<div class="relative w-full h-full group"><img src="${imageUrl}" class="w-full h-full object-cover rounded-md" alt="Food Review Scene"><div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent p-4 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 ease-in-out rounded-b-md"><div class="flex flex-wrap gap-2 justify-end"><button data-action="food-preview" data-scene-id="${id}" class="action-btn bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Preview"><i class="fas fa-search-plus pointer-events-none"></i><span class="hidden sm:inline pointer-events-none">Preview</span></button><button data-action="food-edit-prompt" data-scene-id="${id}" class="action-btn bg-purple-500 text-white px-3 py-2 rounded-lg hover:bg-purple-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Edit Prompt"><i class="fas fa-edit pointer-events-none"></i><span class="hidden sm:inline pointer-events-none">Edit</span></button><button data-action="food-regenerate" data-scene-id="${id}" class="action-btn bg-green-500 text-white px-3 py-2 rounded-lg hover:bg-green-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Regenerate"><i class="fas fa-sync-alt pointer-events-none"></i><span class="hidden sm:inline pointer-events-none">Regenerate</span></button><button data-action="food-video-prompt" data-scene-id="${id}" class="action-btn bg-fuchsia-500 text-white px-3 py-2 rounded-lg hover:bg-fuchsia-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Prompt Image-to-Video"><i class="fas fa-film pointer-events-none"></i><span class="hidden sm:inline pointer-events-none">Video</span></button><button data-action="food-caption" data-scene-id="${id}" class="action-btn bg-rose-500 text-white px-3 py-2 rounded-lg hover:bg-rose-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Caption IG"><i class="fas fa-pencil-alt pointer-events-none"></i><span class="hidden sm:inline pointer-events-none">Caption</span></button><button data-action="food-download" data-scene-id="${id}" data-filename="food_review_${id}_${safeTitle}.png" class="action-btn bg-cyan-600 text-white px-3 py-2 rounded-lg hover:bg-cyan-700 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Unduh"><i class="fas fa-download pointer-events-none"></i><span class="hidden sm:inline pointer-events-none">Unduh</span></button></div></div></div>`;
+                outputContainer.className = 'food-output-container relative';
+                outputContainer.innerHTML = `<img src="${imageUrl}" class="w-full h-auto object-contain rounded-lg" alt="Food Review Scene"><div class="result-card-actions rounded-lg mt-2"><button data-action="food-preview" data-scene-id="${id}" class="action-btn btn-preview" title="Preview" aria-label="Preview"><i class="fas fa-search-plus pointer-events-none"></i></button><button data-action="food-edit-prompt" data-scene-id="${id}" class="action-btn btn-edit" title="Edit Prompt" aria-label="Edit Prompt"><i class="fas fa-edit pointer-events-none"></i></button><button data-action="food-regenerate" data-scene-id="${id}" class="action-btn btn-regenerate" title="Regenerate" aria-label="Regenerate"><i class="fas fa-sync-alt pointer-events-none"></i></button><button data-action="food-video-prompt" data-scene-id="${id}" class="action-btn btn-video" title="Prompt Image-to-Video" aria-label="Prompt Image-to-Video"><i class="fas fa-film pointer-events-none"></i></button><button data-action="food-caption" data-scene-id="${id}" class="action-btn btn-caption" title="Caption IG" aria-label="Caption IG"><i class="fas fa-pencil-alt pointer-events-none"></i></button><button data-action="food-download" data-scene-id="${id}" data-filename="food_review_${id}_${safeTitle}.png" class="action-btn btn-download" title="Unduh" aria-label="Unduh"><i class="fas fa-download pointer-events-none"></i></button></div><div class="image-counter">#${id}</div>`;
                 if (card) { card.dataset.prompt = prompt; }
             } catch (error) {
                 console.error(`Error generating food card ${id}:`, error);
@@ -25647,7 +25660,7 @@ OUTPUT: Satu prompt image-to-video lengkap dalam Bahasa Indonesia yang natural.`
                     const previewWrapper = document.createElement('div');
                     previewWrapper.className = 'relative group';
                     previewWrapper.innerHTML = `
-                        <img src="${e.target.result}" alt="Pratinjau Produk" class="rounded-lg w-full h-24 object-cover">
+                        <img src="${e.target.result}" alt="Pratinjau Produk" class="rounded-lg w-full h-24 object-contain">
                         <button data-id="${imageData.id}" class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity focus:opacity-100">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                         </button>
@@ -25908,6 +25921,7 @@ Respond ONLY with a valid JSON array of ${selectedCount} objects, in sequential 
             else if (selectedRatio === '3:4') aspectRatioClass = 'aspect-[3/4]';
             else if (selectedRatio === '9:16') aspectRatioClass = 'aspect-[9/16]';
 
+            outputContainer.className = 'ads-output-container';
             outputContainer.innerHTML = `<div class="${aspectRatioClass} bg-gray-100 rounded-md flex items-center justify-center"><div class="loader"></div></div>`;
 
             try {
@@ -25957,38 +25971,30 @@ Respond ONLY with a valid JSON array of ${selectedCount} objects, in sequential 
                         // Using card variable already declared at line 45283
                         card.dataset.prompt = prompt;
 
+                        outputContainer.className = 'ads-output-container relative';
                         outputContainer.innerHTML = `
-                            <div class="relative w-full h-full group">
-                                <img src="${imageUrl}" class="w-full h-full object-cover rounded-md" alt="Ad Scene">
-                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent p-4 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 ease-in-out rounded-b-md">
-                                    <div class="flex flex-wrap gap-2 justify-end">
-                                        <button data-action="ads-preview" data-scene-id="${id}" class="action-btn bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Preview">
-                                            <i class="fas fa-search-plus"></i>
-                                            <span class="hidden sm:inline">Preview</span>
-                                        </button>
-                                        <button data-action="ads-edit-prompt" data-scene-id="${id}" class="action-btn bg-purple-500 text-white px-3 py-2 rounded-lg hover:bg-purple-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Edit Prompt">
-                                            <i class="fas fa-edit"></i>
-                                            <span class="hidden sm:inline">Edit</span>
-                                        </button>
-                                        <button data-action="ads-regenerate" data-scene-id="${id}" class="action-btn bg-green-500 text-white px-3 py-2 rounded-lg hover:bg-green-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Regenerate">
-                                            <i class="fas fa-sync-alt"></i>
-                                            <span class="hidden sm:inline">Regenerate</span>
-                                        </button>
-                                        <button data-action="ads-video-prompt" data-scene-id="${id}" class="action-btn bg-fuchsia-500 text-white px-3 py-2 rounded-lg hover:bg-fuchsia-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Buat Prompt Video">
-                                            <i class="fas fa-film"></i>
-                                            <span class="hidden sm:inline">Video</span>
-                                        </button>
-                                        <button data-action="ads-caption" data-scene-id="${id}" class="action-btn bg-rose-500 text-white px-3 py-2 rounded-lg hover:bg-rose-600 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Buat Caption">
-                                            <i class="fas fa-pencil-alt"></i>
-                                            <span class="hidden sm:inline">Caption</span>
-                                        </button>
-                                        <button data-action="ads-download" data-scene-id="${id}" data-filename="iklan_${id}_${safeTitle}.png" class="action-btn bg-cyan-600 text-white px-3 py-2 rounded-lg hover:bg-cyan-700 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 text-sm font-medium" title="Unduh Gambar">
-                                            <i class="fas fa-download"></i>
-                                            <span class="hidden sm:inline">Unduh</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>`;
+                            <img src="${imageUrl}" class="w-full h-auto object-contain rounded-lg" alt="Ad Scene">
+                            <div class="result-card-actions rounded-lg mt-2">
+                                <button data-action="ads-preview" data-scene-id="${id}" class="action-btn btn-preview" title="Preview" aria-label="Preview">
+                                    <i class="fas fa-search-plus"></i>
+                                </button>
+                                <button data-action="ads-edit-prompt" data-scene-id="${id}" class="action-btn btn-edit" title="Edit Prompt" aria-label="Edit Prompt">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button data-action="ads-regenerate" data-scene-id="${id}" class="action-btn btn-regenerate" title="Regenerate" aria-label="Regenerate">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
+                                <button data-action="ads-video-prompt" data-scene-id="${id}" class="action-btn btn-video" title="Buat Prompt Video" aria-label="Buat Prompt Video">
+                                    <i class="fas fa-film"></i>
+                                </button>
+                                <button data-action="ads-caption" data-scene-id="${id}" class="action-btn btn-caption" title="Buat Caption" aria-label="Buat Caption">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                                <button data-action="ads-download" data-scene-id="${id}" data-filename="iklan_${id}_${safeTitle}.png" class="action-btn btn-download" title="Unduh Gambar" aria-label="Unduh Gambar">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                            <div class="image-counter">#${id}</div>`;
                         return;
                 }
             } catch (error) {
@@ -30585,7 +30591,8 @@ CRITICAL: Photo must look natural, professional, and appealing for affiliate mar
 
                 const card = document.getElementById(`islami-card-${index}`);
                 if (card) {
-                    card.innerHTML = `<img src="${imageUrl}" class="w-full h-full object-cover" alt="Cultural ${index}"><div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 gap-2"><button data-action="preview" data-index="${index - 1}" class="bg-white/90 hover:bg-white text-gray-800 px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2 text-sm" style="touch-action:manipulation;-webkit-tap-highlight-color:transparent;"><i class="fas fa-eye" style="pointer-events:none;"></i><span class="hidden sm:inline" style="pointer-events:none;">Preview</span></button><button data-action="download" data-index="${index - 1}" class="bg-gradient-to-r from-violet-500 to-indigo-600 text-white px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2 text-sm" style="touch-action:manipulation;-webkit-tap-highlight-color:transparent;"><i class="fas fa-download" style="pointer-events:none;"></i><span class="hidden sm:inline" style="pointer-events:none;">Download</span></button></div>`;
+                    card.className = 'result-card';
+                    card.innerHTML = `<img src="${imageUrl}" alt="Cultural ${index}"><div class="result-card-actions"><button data-action="preview" data-index="${index - 1}" class="btn-preview" title="Preview" aria-label="Preview"><i class="fas fa-eye"></i></button><button data-action="download" data-index="${index - 1}" class="btn-download" title="Download" aria-label="Download"><i class="fas fa-download"></i></button></div><div class="image-counter">#${index}</div>`;
                 }
             } catch (error) {
                 console.error(`Error generating cultural photo ${index}:`, error);
@@ -30600,8 +30607,8 @@ CRITICAL: Photo must look natural, professional, and appealing for affiliate mar
             islamiResultsGrid.innerHTML = '';
             successful.forEach((img, idx) => {
                 const card = document.createElement('div');
-                card.className = 'relative group rounded-xl overflow-hidden bg-gray-100 shadow-lg aspect-[3/4]';
-                card.innerHTML = `<img src="${img.url}" class="w-full h-full object-cover" alt="Cultural ${idx + 1}"><div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 gap-2"><button data-action="preview" data-index="${idx}" class="bg-white/90 hover:bg-white text-gray-800 px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2 text-sm" style="touch-action:manipulation;-webkit-tap-highlight-color:transparent;"><i class="fas fa-eye" style="pointer-events:none;"></i><span class="hidden sm:inline" style="pointer-events:none;">Preview</span></button><button data-action="download" data-index="${idx}" class="bg-gradient-to-r from-violet-500 to-indigo-600 text-white px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2 text-sm" style="touch-action:manipulation;-webkit-tap-highlight-color:transparent;"><i class="fas fa-download" style="pointer-events:none;"></i><span class="hidden sm:inline" style="pointer-events:none;">Download</span></button></div>`;
+                card.className = 'result-card';
+                card.innerHTML = `<img src="${img.url}" alt="Cultural ${idx + 1}"><div class="result-card-actions"><button data-action="preview" data-index="${idx}" class="btn-preview" title="Preview" aria-label="Preview"><i class="fas fa-eye"></i></button><button data-action="download" data-index="${idx}" class="btn-download" title="Download" aria-label="Download"><i class="fas fa-download"></i></button></div><div class="image-counter">#${idx + 1}</div>`;
                 islamiResultsGrid.appendChild(card);
             });
         }
@@ -43832,19 +43839,18 @@ Generate unboxing scene yang SANGAT PROFESSIONAL dan ENGAGING - seperti unboxing
 
                 generatedScenes[index - 1] = { url: imageUrl, filename: filename };
 
-                card.className = 'relative group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300';
+                card.className = 'result-card';
                 card.innerHTML = `
-                    <img src="${imageUrl}" class="w-full h-full object-cover" alt="Unboxing ${index}">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 gap-2">
-                        <button data-action="preview" data-index="${index - 1}" class="unboxing-action-btn bg-white/90 hover:bg-white text-gray-800 px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2">
+                    <img src="${imageUrl}" alt="Unboxing ${index}">
+                    <div class="result-card-actions">
+                        <button data-action="preview" data-index="${index - 1}" class="unboxing-action-btn btn-preview" title="Preview" aria-label="Preview">
                             <i class="fas fa-eye"></i>
-                            <span class="hidden sm:inline">Preview</span>
                         </button>
-                        <button data-action="download" data-index="${index - 1}" class="unboxing-action-btn bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2">
+                        <button data-action="download" data-index="${index - 1}" class="unboxing-action-btn btn-download" title="Download" aria-label="Download">
                             <i class="fas fa-download"></i>
-                            <span class="hidden sm:inline">Download</span>
                         </button>
                     </div>
+                    <div class="image-counter">#${index}</div>
                 `;
 
             } catch (error) {
@@ -45523,19 +45529,18 @@ Generate size guide yang SANGAT HELPFUL dan PROFESSIONAL - perfect untuk e-comme
 
                 generatedGuides[index - 1] = { url: imageUrl, filename: filename };
 
-                card.className = 'relative group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300';
+                card.className = 'result-card';
                 card.innerHTML = `
-                    <img src="${imageUrl}" class="w-full h-full object-cover" alt="Size Guide ${index}">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 gap-2">
-                        <button data-action="preview" data-index="${index - 1}" class="sizeguide-action-btn bg-white/90 hover:bg-white text-gray-800 px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2">
+                    <img src="${imageUrl}" alt="Size Guide ${index}">
+                    <div class="result-card-actions">
+                        <button data-action="preview" data-index="${index - 1}" class="sizeguide-action-btn btn-preview" title="Preview" aria-label="Preview">
                             <i class="fas fa-eye"></i>
-                            <span class="hidden sm:inline">Preview</span>
                         </button>
-                        <button data-action="download" data-index="${index - 1}" class="sizeguide-action-btn bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2">
+                        <button data-action="download" data-index="${index - 1}" class="sizeguide-action-btn btn-download" title="Download" aria-label="Download">
                             <i class="fas fa-download"></i>
-                            <span class="hidden sm:inline">Download</span>
                         </button>
                     </div>
+                    <div class="image-counter">#${index}</div>
                 `;
 
             } catch (error) {

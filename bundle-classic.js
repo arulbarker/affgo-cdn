@@ -387,6 +387,13 @@
                 'login.secure': '\uD83D\uDD12 Akses Terenkripsi & Aman',
                 'login.no-access-cta': '\uD83D\uDED2 Belum punya akses? Beli di sini \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v62-badge': 'Update v62',
+                'modal.fix-v62-title-pakemcards': 'Kartu Hasil Seragam di 15 Fitur',
+                'modal.fix-v62-body-pakemcards': 'Hub Foto Produk Affiliate (Tema Umum, Agama, Harga, Premium, Coba Baju), Feed Branding, Studio Mockup, seluruh Studio Review (6 fitur), Sketsa ke Katalog, dan Panduan Ukuran kini pakai kartu hasil seragam: gambar besar utuh tanpa terpotong, maksimal 2 kolom, dan nomor foto di pojok.',
+                'modal.fix-v62-title-iconbtn': 'Tombol Aksi Ikon Bulat, Selalu Tampil di HP',
+                'modal.fix-v62-body-iconbtn': 'Tombol kartu hasil (Preview, Edit, Regenerate, Video, Caption, Download sesuai fitur) kini ikon bulat berwarna di bawah gambar — tidak lagi menutupi foto atau hanya muncul saat hover di desktop.',
+                'modal.fix-v62-title-uploadfull': 'Preview Upload Tampil Utuh',
+                'modal.fix-v62-body-uploadfull': 'Foto yang diupload (produk, model, sketsa) kini terlihat utuh di dalam kotak upload pada fitur-fitur yang distandardisasi — tidak terpotong lagi.',
                 'modal.fix-v61-badge': 'Update v61',
                 'modal.fix-v61-title-upload': 'POV Studio: Upload Foto Kini Seragam',
                 'modal.fix-v61-body-upload': 'Mirror Selfie dan Walking Pad kini menampilkan foto yang diupload langsung di dalam kotak upload — utuh tanpa terpotong, sama seperti POV Tangan. Tombol hapus foto juga tampil rapi di semua ukuran layar.',
@@ -526,7 +533,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Tab Ruang Saku sekarang punya halaman penjelasan singkat fitur Rindu (AI keuangan) + tombol langsung ke RuangSaku.com. Lebih nyaman dipakai di HP — tinggal klik dan terbuka di tab browser.',
                 'modal.fix-v31-title-telegram': 'Tombol Telegram di Pojok Layar',
                 'modal.fix-v31-body-telegram': 'Tombol bundar Telegram sekarang ada di pojok kanan bawah aplikasi. Sekali klik langsung join grup Telegram Affiliate Go — tempat update fitur, tips, dan tanya jawab dengan komunitas.',
-                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 61',
+                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 62',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Selamat Datang di Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Asisten AI Anda untuk menjelajahi 79++ fitur photo & video generation',
@@ -3123,6 +3130,13 @@
                 'login.secure': '\uD83D\uDD12 Encrypted & Secure Access',
                 'login.no-access-cta': '\uD83D\uDED2 No access yet? Buy here \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v62-badge': 'Update v62',
+                'modal.fix-v62-title-pakemcards': 'Uniform Result Cards Across 15 Features',
+                'modal.fix-v62-body-pakemcards': 'The Affiliate Product Photo hub (General, Religious, Price, Premium, Try-On themes), Feed Branding, Mockup Studio, the entire Review Studio (6 features), Sketch to Catalog, and Size Guide now share uniform result cards: large uncropped images, max 2 columns, and a photo number badge.',
+                'modal.fix-v62-title-iconbtn': 'Round Icon Action Buttons, Always Visible on Mobile',
+                'modal.fix-v62-body-iconbtn': 'Result card buttons (Preview, Edit, Regenerate, Video, Caption, Download per feature) are now round colored icons below the image — no longer covering the photo or appearing only on desktop hover.',
+                'modal.fix-v62-title-uploadfull': 'Upload Previews Shown in Full',
+                'modal.fix-v62-body-uploadfull': 'Uploaded photos (product, model, sketch) are now shown in full inside the upload box on the standardized features — no more cropping.',
                 'modal.fix-v61-badge': 'Update v61',
                 'modal.fix-v61-title-upload': 'POV Studio: Uniform Photo Upload',
                 'modal.fix-v61-body-upload': 'Mirror Selfie and Walking Pad now show your uploaded photo right inside the upload box — full and uncropped, just like POV Hand. The remove-photo button also displays neatly on all screen sizes.',
@@ -3262,7 +3276,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Ruang Saku tab now has a brief intro page for Rindu (AI finance buddy) + direct button to RuangSaku.com. Smoother mobile experience — one click and it opens in a browser tab.',
                 'modal.fix-v31-title-telegram': 'Telegram Button at Screen Corner',
                 'modal.fix-v31-body-telegram': 'Round Telegram button is now at the bottom-right corner of the app. One click jumps directly to the Affiliate Go Telegram group — for feature updates, tips, and Q&A with the community.',
-                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 61',
+                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 62',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Welcome to Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Your AI Assistant to explore 79++ photo & video generation features',
@@ -7974,15 +7988,16 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
                         const filename = `feedbranding_${index}_${roleObj.key}.png`;
                         fbGenerated[index - 1] = { url: imageUrl, filename };
                         if (card) {
-                            card.querySelector('.fb-card-body').innerHTML =
-                                `<div class="relative w-full h-full group">
-                                    <img src="${imageUrl}" class="w-full h-full object-cover rounded-md" alt="${roleObj.key}">
-                                    <div class="absolute bottom-2 right-2 flex gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
-                                        <button data-action="fb-preview" data-image-url="${imageUrl}" class="min-w-[44px] min-h-[44px] bg-blue-500 text-white rounded-full hover:bg-blue-600 shadow-lg" title="Preview"><i class="fas fa-search-plus"></i></button>
-                                        <button data-action="fb-regen" data-index="${index}" class="min-w-[44px] min-h-[44px] bg-amber-500 text-white rounded-full hover:bg-amber-600 shadow-lg" title="Generate Ulang"><i class="fas fa-sync-alt"></i></button>
-                                        <button data-action="download" data-image-url="${imageUrl}" data-filename="${filename}" class="min-w-[44px] min-h-[44px] bg-green-600 text-white rounded-full hover:bg-green-700 shadow-lg" title="Unduh"><i class="fas fa-download"></i></button>
-                                    </div>
-                                 </div>`;
+                            const body = card.querySelector('.fb-card-body');
+                            body.className = 'fb-card-body relative';
+                            body.innerHTML =
+                                `<img src="${imageUrl}" class="w-full h-auto object-contain rounded-lg" alt="${roleObj.key}">
+                                 <div class="result-card-actions rounded-lg mt-2">
+                                     <button data-action="fb-preview" data-image-url="${imageUrl}" class="btn-preview" title="Preview" aria-label="Preview"><i class="fas fa-search-plus"></i></button>
+                                     <button data-action="fb-regen" data-index="${index}" class="btn-regenerate" title="Generate Ulang" aria-label="Generate Ulang"><i class="fas fa-sync-alt"></i></button>
+                                     <button data-action="download" data-image-url="${imageUrl}" data-filename="${filename}" class="btn-download" title="Unduh" aria-label="Unduh"><i class="fas fa-download"></i></button>
+                                 </div>
+                                 <div class="image-counter">#${index}</div>`;
                         }
                     } catch (error) {
                         console.error(`FB error ${index}:`, error);
@@ -8008,7 +8023,11 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
                     if (!fbStyleAnchor) fbStyleAnchor = 'campaign-' + Math.floor(Math.random() * 999999);
                     fbGenerated[index - 1] = undefined;
                     const body = card.querySelector('.fb-card-body');
-                    if (body) body.innerHTML = '<div class="loader"></div>';
+                    if (body) {
+                        const aspectClass = selectedFbRatio === '1:1' ? 'aspect-square' : (selectedFbRatio === '9:16' ? 'aspect-[9/16]' : 'aspect-[4/5]');
+                        body.className = `fb-card-body ${aspectClass} bg-gray-100 rounded-md flex items-center justify-center`;
+                        body.innerHTML = '<div class="loader"></div>';
+                    }
                     await generateSingleFb(index);
                 }
 
