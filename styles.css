@@ -3629,6 +3629,11 @@
             box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
             transform: translateY(-2px);
         }
+        .upload-box-sketch.has-image {
+            height: auto;
+            border-style: solid;
+            padding: 0.5rem;
+        }
         .option-btn-sketch {
             padding: 0.75rem 1rem;
             border-radius: 0.75rem;

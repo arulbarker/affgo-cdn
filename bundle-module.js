@@ -897,7 +897,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '63';
+        const UPDATE_VERSION = '64';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +910,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '64',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v64-badge',
+                badgeText: 'Update v64',
+                gradient: 'linear-gradient(135deg,#8b5cf6,#6d28d9)',
+                borderColor: '#8b5cf6',
+                icon: 'fa-pen-nib',
+                iconColor: '#8b5cf6',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v64-title-sketch',
+                        titleText: 'Sketsa ke Katalog Makin Komplit',
+                        bodyKey: 'modal.fix-v64-body-sketch',
+                        bodyText: 'Jenis produk bertambah jadi 17 — termasuk Kerudung/Hijab, Gamis, Mukena, Baju Koko, Rok, Topi, Batik, dan Baju Anak. Style katalog kini bisa ditulis sendiri lewat tombol Custom Style, jumlah generate naik sampai 10 foto, dan sketsa yang diupload tampil utuh di dalam kotak upload.'
+                    }
+                ]
+            },
             {
                 version: '63',
                 dateId: 'Agustus 2026',
@@ -18141,6 +18160,8 @@ PENTING:
 
         const productTypeOptions = document.getElementById('sketch-product-type-options');
         const catalogStyleOptions = document.getElementById('sketch-catalog-style-options');
+        const customStyleContainer = document.getElementById('sketch-custom-style-container');
+        const customStyleInput = document.getElementById('sketch-custom-style-input');
         const angleOptions = document.getElementById('sketch-angle-options');
         const backgroundOptions = document.getElementById('sketch-background-options');
         const lightingOptions = document.getElementById('sketch-lighting-options');
@@ -18182,7 +18203,16 @@ PENTING:
             'jacket': 'jacket/outer wear, layering piece, stylish outerwear',
             'shoes': 'shoes/footwear, stylish kicks, premium sneakers or formal shoes',
             'bag': 'bag/handbag, fashion accessory, stylish carry item',
-            'accessories': 'fashion accessories, jewelry, belts, scarves, or other accent pieces'
+            'accessories': 'fashion accessories, jewelry, belts, scarves, or other accent pieces',
+            'hijab': 'hijab/kerudung headscarf, Muslim head covering, elegant modest fashion piece, beautifully draped fabric with visible texture and pattern detail',
+            'gamis': 'gamis/abaya long modest dress, full-length Muslim maxi dress, elegant flowing modest fashion garment',
+            'mukena': 'mukena Muslim prayer garment set, elegant prayer wear with soft flowing fabric, delicate lace or embroidery details',
+            'koko': 'baju koko Muslim men shirt, collarless shirt with embroidery accents, modest sophisticated menswear',
+            'skirt': 'skirt/rok, women bottom wear, flowing or fitted skirt with visible fabric drape',
+            'hat': 'hat/cap/peci headwear, stylish head accessory, structured form with clean stitching detail',
+            'batik': 'batik garment, Indonesian traditional patterned fabric, intricate batik motif clearly visible, elegant cultural wear',
+            'kids': 'kids clothing, cute children apparel, comfortable playful kidswear with charming details',
+            'other': 'fashion or lifestyle product, versatile catalog item, faithfully rendered from the sketch'
         };
 
         // Catalog style descriptions
@@ -18265,19 +18295,14 @@ PENTING:
                 reader.onloadend = () => {
                     sketchImageData = reader.result;
 
-                    // Show preview on mobile
-                    if (sketchPreview && sketchPreviewContainer) {
+                    // Preview utuh di dalam kotak upload (pakem has-image) + tombol hapus
+                    if (sketchPreview) {
                         sketchPreview.src = reader.result;
-                        sketchPreviewContainer.classList.remove('hidden');
+                        sketchPreview.classList.remove('hidden');
                     }
-
-                    // Update placeholder
-                    if (sketchPlaceholder) {
-                        sketchPlaceholder.innerHTML = `
-                            <i class="fas fa-check-circle text-purple-500" style="font-size: 2.5rem;"></i>
-                            <p class="mt-2 text-sm font-semibold text-purple-600">Sketsa berhasil diupload!</p>
-                        `;
-                    }
+                    if (sketchPlaceholder) sketchPlaceholder.classList.add('hidden');
+                    if (sketchUploadBox) sketchUploadBox.classList.add('has-image');
+                    if (sketchPreviewContainer) sketchPreviewContainer.classList.remove('hidden');
 
                     // Enable generate button
                     if (generateBtn) generateBtn.disabled = false;
@@ -18292,14 +18317,12 @@ PENTING:
                 sketchImageData = null;
                 if (sketchInput) sketchInput.value = '';
                 if (sketchPreviewContainer) sketchPreviewContainer.classList.add('hidden');
-                if (sketchPreview) sketchPreview.src = '';
-                if (sketchPlaceholder) {
-                    sketchPlaceholder.innerHTML = `
-                        <i class="fas fa-pen-nib transition-transform duration-300" style="font-size: 2.5rem; color: #8b5cf6;"></i>
-                        <p class="mt-2 text-sm font-semibold">✏️ Klik untuk upload sketsa</p>
-                        <p class="mt-1 text-xs text-gray-400">Sketsa gaun, jersey, sepatu, atau produk fashion lainnya</p>
-                    `;
+                if (sketchPreview) {
+                    sketchPreview.src = '';
+                    sketchPreview.classList.add('hidden');
                 }
+                if (sketchUploadBox) sketchUploadBox.classList.remove('has-image');
+                if (sketchPlaceholder) sketchPlaceholder.classList.remove('hidden');
                 if (generateBtn) generateBtn.disabled = true;
             });
         }
@@ -18329,6 +18352,11 @@ PENTING:
                 });
                 button.classList.add('selected');
                 selectedCatalogStyle = button.dataset.value;
+
+                // Show/hide custom style input
+                if (customStyleContainer) {
+                    customStyleContainer.classList.toggle('hidden', selectedCatalogStyle !== 'custom');
+                }
             });
         }
 
@@ -18388,21 +18416,13 @@ PENTING:
             });
         }
 
-        // Count selection
+        // Count selection (1-10, pakem count-btn-grid)
         if (countSelection) {
             countSelection.addEventListener('click', (e) => {
-                const button = e.target.closest('[data-count]');
+                const button = e.target.closest('button[data-count]');
                 if (!button) return;
-
-                // Remove selected state from all buttons
-                document.querySelectorAll('.sketch-count-btn').forEach(btn => {
-                    btn.classList.remove('sketch-count-selected');
-                });
-
-                // Add selected state to clicked button
-                button.classList.add('sketch-count-selected');
-
-                // Update count
+                countSelection.querySelectorAll('button').forEach(btn => btn.classList.remove('selected'));
+                button.classList.add('selected');
                 selectedCount = parseInt(button.dataset.count, 10);
                 if (countText) countText.textContent = selectedCount;
             });
@@ -18427,7 +18447,11 @@ PENTING:
 
                 // Build comprehensive prompt
                 const productDesc = productTypeDescriptions[selectedProductType] || selectedProductType;
-                const styleDesc = catalogStyleDescriptions[selectedCatalogStyle] || selectedCatalogStyle;
+                let styleDesc = catalogStyleDescriptions[selectedCatalogStyle] || selectedCatalogStyle;
+                if (selectedCatalogStyle === 'custom') {
+                    const customText = customStyleInput ? customStyleInput.value.trim() : '';
+                    styleDesc = customText || 'professional product catalog photography, clean modern presentation';
+                }
                 const angleDesc = angleDescriptions[selectedAngle] || selectedAngle;
                 const bgDesc = backgroundDescriptions[selectedBackground] || selectedBackground;
                 const lightingDesc = lightingDescriptions[selectedLighting] || selectedLighting;

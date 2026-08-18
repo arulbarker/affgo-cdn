@@ -10,7 +10,7 @@
         <!-- Floating badge top-right -->
         <div style="position:absolute;top:16px;right:16px;background:linear-gradient(135deg,#ea580c,#c2410c);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(234,88,12,0.4);z-index:1;">90+ FITUR &#x26A1;</div>
         <!-- Floating version badge top-left (auto-sync dari UPDATE_VERSION via JS) -->
-        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V63</div>
+        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V64</div>
         <div class="login-box">
             <!-- AG Logo badge -->
             <div style="background:linear-gradient(135deg,#16a34a,#15803d);width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:1.35rem;font-weight:900;color:white;box-shadow:0 6px 18px rgba(22,163,74,0.4);">AG</div>
@@ -51,7 +51,7 @@
     <div id="main-app">
     <!-- Mobile Header -->
     <div class="mobile-header">
-        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V63</span></h1>
+        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V64</span></h1>
         <p class="text-xs text-gray-400 mt-1">by Arul CG</p>
         <div class="mobile-header-actions">
             <button type="button" id="mobile-fav-access-btn" class="mobile-fav-access-btn no-favs" aria-label="Buka tab favorit">
@@ -89,7 +89,7 @@
                 </h1>
                 <p class="text-xs text-gray-500 mt-1">by Arul CG</p>
                 <div class="mt-2">
-                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V63</span>
+                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V64</span>
                 </div>
                 <div class="lang-dropdown mt-2" id="lang-dropdown-desktop">
                     <button type="button" class="lang-dd-btn" aria-haspopup="listbox" aria-expanded="false">
@@ -18701,15 +18701,15 @@
                                     <div id="sketch-placeholder" class="text-center text-gray-500 p-4">
                                         <i class="fas fa-pen-nib transition-transform duration-300" style="font-size: 2.5rem; color: #16a34a;"></i>
                                         <p class="mt-2 text-sm font-semibold" data-i18n="sk.click-upload">✏️ Klik untuk upload sketsa</p>
-                                        <p class="mt-1 text-xs text-gray-400" data-i18n="sk.upload-hint">Sketsa gaun, jersey, sepatu, atau produk fashion lainnya</p>
+                                        <p class="mt-1 text-xs text-gray-400" data-i18n="sk.upload-hint">Sketsa gaun, kerudung, jersey, sepatu, atau produk lainnya</p>
                                     </div>
+                                    <img id="sketch-preview" src="" alt="Preview" class="hidden w-full h-auto max-h-64 object-contain rounded-lg">
                                 </label>
                                 <input type="file" id="sketch-input" class="hidden" accept="image/png, image/jpeg, image/webp, .heic, .HEIC">
 
-                                <!-- Mobile-only preview -->
-                                <div id="sketch-preview-container" class="mt-3 hidden lg:hidden">
-                                    <img id="sketch-preview" src="" alt="Preview" class="w-full rounded-lg shadow-lg max-h-48 object-contain">
-                                    <button id="sketch-remove-preview" class="mt-2 w-full bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-3 rounded-lg">
+                                <!-- Remove button (tampil setelah upload, semua layar) -->
+                                <div id="sketch-preview-container" class="mt-3 hidden">
+                                    <button id="sketch-remove-preview" class="w-full bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-3 rounded-lg" style="min-height:44px;">
                                         <i class="fas fa-times mr-1"></i> <span data-i18n="sk.delete-sketch">Hapus Sketsa</span>
                                     </button>
                                 </div>
@@ -18721,7 +18721,7 @@
                                     <div class="flex items-center justify-center w-8 h-8 rounded-full text-white font-bold text-sm shadow-lg" style="background: linear-gradient(135deg, #16a34a, #16a34a);">2</div>
                                     <h3 class="text-lg font-bold text-gray-800" data-i18n="sk.step2">Jenis Produk</h3>
                                 </div>
-                                <div id="sketch-product-type-options" class="grid grid-cols-2 gap-3">
+                                <div id="sketch-product-type-options" class="grid grid-cols-2 gap-3 max-h-64 overflow-y-auto p-2 border border-gray-200 rounded-lg" style="-webkit-overflow-scrolling: touch;">
                                     <button type="button" data-value="dress" class="option-btn-sketch selected">
                                         <i class="fas fa-female mr-1"></i>Dress/Gaun
                                     </button>
@@ -18745,6 +18745,33 @@
                                     </button>
                                     <button type="button" data-value="accessories" class="option-btn-sketch">
                                         <i class="fas fa-gem mr-1"></i>Aksesoris
+                                    </button>
+                                    <button type="button" data-value="hijab" class="option-btn-sketch">
+                                        <i class="fas fa-user-circle mr-1"></i>Kerudung/Hijab
+                                    </button>
+                                    <button type="button" data-value="gamis" class="option-btn-sketch">
+                                        <i class="fas fa-person-dress mr-1"></i>Gamis/Abaya
+                                    </button>
+                                    <button type="button" data-value="mukena" class="option-btn-sketch">
+                                        <i class="fas fa-moon mr-1"></i>Mukena
+                                    </button>
+                                    <button type="button" data-value="koko" class="option-btn-sketch">
+                                        <i class="fas fa-user-tie mr-1"></i>Baju Koko
+                                    </button>
+                                    <button type="button" data-value="skirt" class="option-btn-sketch">
+                                        <i class="fas fa-venus mr-1"></i>Rok
+                                    </button>
+                                    <button type="button" data-value="hat" class="option-btn-sketch">
+                                        <i class="fas fa-hat-cowboy mr-1"></i>Topi/Peci
+                                    </button>
+                                    <button type="button" data-value="batik" class="option-btn-sketch">
+                                        <i class="fas fa-feather-alt mr-1"></i>Batik
+                                    </button>
+                                    <button type="button" data-value="kids" class="option-btn-sketch">
+                                        <i class="fas fa-child mr-1"></i>Baju Anak
+                                    </button>
+                                    <button type="button" data-value="other" class="option-btn-sketch">
+                                        <i class="fas fa-box-open mr-1"></i><span data-i18n="sk.p-other">Produk Lain</span>
                                     </button>
                                 </div>
                             </div>
@@ -18816,6 +18843,16 @@
                                     <button type="button" data-value="social-media" class="option-btn-sketch">
                                         <i class="fab fa-instagram mr-1"></i>Social Media
                                     </button>
+                                    <button type="button" data-value="custom" class="option-btn-sketch">
+                                        <i class="fas fa-edit mr-1"></i><span data-i18n="sk.s-custom">Custom Style</span>
+                                    </button>
+                                </div>
+
+                                <!-- Custom Style Input -->
+                                <div id="sketch-custom-style-container" class="hidden mt-3">
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2" data-i18n="sk.custom-style-label">&#10024; Tulis Style Katalog Anda:</label>
+                                    <textarea id="sketch-custom-style-input" rows="3" class="w-full p-3 rounded-lg border-2 border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all resize-none" data-i18n-placeholder="sk.custom-style-ph" placeholder="Contoh: katalog gaya Korea minimalis dengan properti bunga kering, background krem estetik, nuansa hangat..."></textarea>
+                                    <p class="text-xs text-gray-500 mt-2" data-i18n="sk.custom-style-hint">&#128161; Deskripsikan gaya foto katalog yang Anda inginkan dengan detail</p>
                                 </div>
                             </div>
 
@@ -18922,16 +18959,17 @@
                                     <div class="flex items-center justify-center w-8 h-8 rounded-full text-white font-bold text-sm shadow-lg" style="background: linear-gradient(135deg, #16a34a, #16a34a);">8</div>
                                     <h3 class="text-lg font-bold text-gray-800">Jumlah Foto</h3>
                                 </div>
-                                <div id="sketch-count-selection" class="grid grid-cols-3 gap-3">
-                                    <button type="button" data-count="4" class="sketch-count-btn">
-                                        4 Foto
-                                    </button>
-                                    <button type="button" data-count="6" class="sketch-count-btn sketch-count-selected">
-                                        6 Foto
-                                    </button>
-                                    <button type="button" data-count="8" class="sketch-count-btn">
-                                        8 Foto
-                                    </button>
+                                <div id="sketch-count-selection" class="count-btn-grid theme-emerald">
+                                    <button type="button" data-count="1">1</button>
+                                    <button type="button" data-count="2">2</button>
+                                    <button type="button" data-count="3">3</button>
+                                    <button type="button" data-count="4">4</button>
+                                    <button type="button" data-count="5">5</button>
+                                    <button type="button" data-count="6" class="selected">6</button>
+                                    <button type="button" data-count="7">7</button>
+                                    <button type="button" data-count="8">8</button>
+                                    <button type="button" data-count="9">9</button>
+                                    <button type="button" data-count="10">10</button>
                                 </div>
                             </div>
 
@@ -20091,7 +20129,7 @@
     <button id="update-info-btn" class="text-white rounded-full w-16 h-16 flex items-center justify-center shadow-xl relative" style="background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);">
         <div class="flex flex-col items-center leading-none pointer-events-none">
             <i class="fas fa-bolt text-sm"></i>
-            <span class="text-xs font-bold mt-0.5">V63</span>
+            <span class="text-xs font-bold mt-0.5">V64</span>
         </div>
         <span class="update-notif-dot"></span>
     </button>
