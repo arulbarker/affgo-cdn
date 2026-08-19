@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '66';
+        const UPDATE_VERSION = '67';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -718,6 +718,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '67',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v67-badge',
+                badgeText: 'Update v67',
+                gradient: 'linear-gradient(135deg,#0891b2,#0e7490)',
+                borderColor: '#0891b2',
+                icon: 'fa-wrench',
+                iconColor: '#0891b2',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v67-title-drawerfix',
+                        titleText: 'Perbaikan: Menu Samping Tidak Muncul di Sebagian HP',
+                        bodyKey: 'modal.fix-v67-body-drawerfix',
+                        bodyText: 'Sebagian pengguna HP menekan tombol menu tapi menu samping tidak muncul (tersangkut gaya tampilan versi lama di cache). Sudah diperbaiki — kalau masih terjadi, tutup lalu buka lagi aplikasinya.'
+                    }
+                ]
+            },
             {
                 version: '66',
                 dateId: 'Agustus 2026',
