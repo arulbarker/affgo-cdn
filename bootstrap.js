@@ -85,14 +85,20 @@
       if (loader) loader.remove();
       document.body.insertAdjacentHTML('afterbegin', bodyHtml);
 
-      // 2b. Inject styles dari base yang sama (menimpa CSS stale dari shell <link>).
-      //     Non-fatal: gagal fetch = lanjut boot dengan CSS dari shell.
+      // 2b. Inject styles dari base yang sama, lalu BUANG <link> stale dari shell.
+      //     Menimpa saja tidak cukup: rule lama yang tidak di-set ulang CSS baru
+      //     (mis. display:none pra-V66) tetap menang. Non-fatal: gagal fetch =
+      //     lanjut boot dengan CSS dari shell (link TIDAK dibuang).
       try {
         var cssRes = await fetch(CDN + '/styles.css', { cache: 'no-cache' });
         if (cssRes.ok) {
           var st = document.createElement('style');
+          st.setAttribute('data-affgo-fresh', '1');
           st.textContent = await cssRes.text();
           document.head.appendChild(st);
+          document.querySelectorAll('link[rel="stylesheet"][href*="styles.css"]').forEach(function (l) {
+            if (l.href.indexOf('affgo-cdn') !== -1) l.parentNode.removeChild(l);
+          });
         }
       } catch (cssErr) { console.warn('Style refresh skipped:', cssErr); }
 

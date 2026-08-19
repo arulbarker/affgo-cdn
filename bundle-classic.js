@@ -1,4 +1,18 @@
 
+        // Guard CSS stale (runtime CDN): bootstrap shell inject <style> fresh SETELAH
+        // <link styles.css@main> yang bisa stale (cache edge/browser, pra-V66 punya
+        // rule legacy .sidebar display:none / .btn-text display:none). Kalau style
+        // fresh terdeteksi, buang link stale supaya tidak ada rule lama yang menang.
+        // Lokal (kode.html utuh) tidak ada link itu — no-op aman.
+        (function() {
+            var hasFresh = Array.prototype.some.call(document.querySelectorAll('style'), function(s) {
+                return (s.textContent || '').indexOf('drawer-open') !== -1;
+            });
+            if (!hasFresh) return;
+            document.querySelectorAll('link[rel="stylesheet"][href*="affgo-cdn"][href*="styles.css"]').forEach(function(l) {
+                l.parentNode && l.parentNode.removeChild(l);
+            });
+        })();
         (function() {
             var sidebar = document.querySelector('.sidebar');
             var overlay = document.getElementById('sidebar-overlay');
