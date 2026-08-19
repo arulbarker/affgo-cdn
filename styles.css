@@ -7527,8 +7527,13 @@
         .sidebar-telegram-link { display: none; }
 
         @media (max-width: 768px) {
-            /* Sidebar jadi drawer off-canvas */
+            /* Sidebar jadi drawer off-canvas.
+               display:block WAJIB eksplisit — CSS lama (pra-V66) punya `.sidebar { display:none }`
+               di media mobile; kalau styles.css @main stale termuat di shell head,
+               tanpa display eksplisit rule stale itu menang dan drawer tak pernah tampil
+               (insiden HP user pasca rilis V66). */
             .sidebar {
+                display: block;
                 width: min(85vw, 320px);
                 transform: translateX(-105%);
                 transition: transform 0.3s ease;
