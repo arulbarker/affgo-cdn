@@ -1,28 +1,86 @@
 
-(function() {
-    var nav = document.querySelector('.mobile-bottom-nav');
-    var btn = document.getElementById('mobile-nav-toggle');
-    if (!nav || !btn) return;
-    var hidden = false;
-    btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        hidden = !hidden;
-        nav.classList.toggle('nav-hidden', hidden);
-        btn.classList.toggle('nav-hidden', hidden);
-        ['theme-toggle-float', 'update-info-btn', 'telegram-floating-btn', 'userInfoBadge', 'ad-free-status-badge'].forEach(function(id) {
-            var el = document.getElementById(id);
-            if (el) el.classList.toggle('float-hidden', hidden);
-        });
-        var ic = btn.querySelector('i');
-        if (ic) ic.className = hidden ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
-        var label = hidden
-            ? (window.tr3 ? window.tr3('Munculkan menu bawah', 'Show bottom menu', 'Papar menu bawah') : 'Munculkan menu bawah')
-            : (window.tr3 ? window.tr3('Sembunyikan menu bawah', 'Hide bottom menu', 'Sembunyikan menu bawah') : 'Sembunyikan menu bawah');
-        btn.setAttribute('aria-label', label);
-        btn.title = label;
-    });
-})();
+        (function() {
+            var sidebar = document.querySelector('.sidebar');
+            var overlay = document.getElementById('sidebar-overlay');
+            var toggle = document.getElementById('mobile-drawer-toggle');
+            if (!sidebar || !overlay || !toggle) return;
+            function setDrawer(open) {
+                sidebar.classList.toggle('drawer-open', open);
+                overlay.classList.toggle('overlay-visible', open);
+                document.body.classList.toggle('drawer-lock', open);
+                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                var label = open
+                    ? (window.tr3 ? window.tr3('Tutup menu', 'Close menu', 'Tutup menu') : 'Tutup menu')
+                    : (window.tr3 ? window.tr3('Buka menu', 'Open menu', 'Buka menu') : 'Buka menu');
+                toggle.setAttribute('aria-label', label);
+                toggle.title = label;
+            }
+            toggle.addEventListener('click', function() {
+                setDrawer(!sidebar.classList.contains('drawer-open'));
+            });
+            overlay.addEventListener('click', function() { setDrawer(false); });
+            sidebar.addEventListener('click', function(e) {
+                if (e.target.closest('.main-tab-btn') && !e.target.closest('.fav-star-btn')) setDrawer(false);
+            });
+        })();
+        
+;
 
+        (function() {
+            var STORE_KEY = 'app_nav_collapsed';
+            var sidebar = document.querySelector('.sidebar');
+            if (!sidebar) return;
+            var isMobile = window.matchMedia('(max-width: 768px)').matches;
+            var state = null;
+            try { state = JSON.parse(localStorage.getItem(STORE_KEY) || 'null'); } catch (e) {}
+            sidebar.querySelectorAll('.menu-category').forEach(function(cat) {
+                if (cat.id === 'favorites-category') return;
+                var title = cat.querySelector('.menu-category-title');
+                if (!title) return;
+                var key = title.getAttribute('data-i18n-cat') || '';
+                var collapsed = (state && Object.prototype.hasOwnProperty.call(state, key)) ? !!state[key] : isMobile;
+                cat.classList.toggle('cat-collapsed', collapsed);
+                title.setAttribute('role', 'button');
+                title.setAttribute('tabindex', '0');
+                function toggleCat() {
+                    var now = !cat.classList.contains('cat-collapsed');
+                    cat.classList.toggle('cat-collapsed', now);
+                    var s = {};
+                    try { s = JSON.parse(localStorage.getItem(STORE_KEY) || '{}'); } catch (e) {}
+                    s[key] = now;
+                    try { localStorage.setItem(STORE_KEY, JSON.stringify(s)); } catch (e) {}
+                }
+                title.addEventListener('click', toggleCat);
+                title.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleCat(); }
+                });
+            });
+        })();
+        
+;
+
+        (function() {
+            var input = document.getElementById('sidebar-search');
+            var sidebar = document.querySelector('.sidebar');
+            if (!input || !sidebar) return;
+            input.addEventListener('input', function() {
+                var q = input.value.trim().toLowerCase();
+                sidebar.classList.toggle('searching', q.length > 0);
+                sidebar.querySelectorAll('.main-tab-btn').forEach(function(btn) {
+                    if (btn.classList.contains('hidden')) return;
+                    var label = (btn.textContent || '').toLowerCase();
+                    btn.classList.toggle('search-hide', q.length > 0 && label.indexOf(q) === -1);
+                });
+                sidebar.querySelectorAll('.menu-category').forEach(function(cat) {
+                    var visible = false;
+                    cat.querySelectorAll('.main-tab-btn:not(.hidden)').forEach(function(b) {
+                        if (!b.classList.contains('search-hide')) visible = true;
+                    });
+                    cat.classList.toggle('search-hide', q.length > 0 && !visible);
+                });
+            });
+        })();
+        
 ;
 
     (function() {
@@ -382,6 +440,8 @@
                 'headers.new-born': 'Editor Foto Bayi Ajaib', 'headers.story-update': 'Story Update Generator',
                 'favorites.title': 'Favorit',
                 'favorites.sheet-title': 'Tab Favorit',
+                'nav.telegram': 'Gabung Telegram',
+                'nav.search-ph': 'Cari fitur...',
                 'favorites.empty-mobile': 'Belum ada tab favorit. Tap bintang kecil di pojok tombol bawah untuk menandai favorit.',
                 'login.title': 'Affiliate GO', 'login.subtitle': 'Foto Studio by Arul CG',
                 'login.email-placeholder': '\u2709 Email pembelian kamu...',
@@ -389,6 +449,11 @@
                 'login.secure': '\uD83D\uDD12 Akses Terenkripsi & Aman',
                 'login.no-access-cta': '\uD83D\uDED2 Belum punya akses? Beli di sini \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v66-badge': 'Update v66',
+                'modal.fix-v66-title-drawer': 'Navigasi Baru di HP: Menu Samping (Drawer)',
+                'modal.fix-v66-body-drawer': 'Menu bawah diganti menu samping — tap tombol \u2630 di kiri atas untuk membuka semua fitur. Pilih fitur, menu menutup otomatis. Layar jadi lebih lega untuk melihat hasil.',
+                'modal.fix-v66-title-search': 'Cari Fitur + Kategori Buka-Tutup',
+                'modal.fix-v66-body-search': 'Ada kotak "Cari fitur..." di menu — ketik nama fitur langsung ketemu tanpa scroll. Kategori juga bisa dibuka-tutup, berlaku di HP dan desktop.',
                 'modal.fix-v65-badge': 'Update v65',
                 'modal.fix-v65-title-customproduct': 'Sketsa ke Katalog: Produk Lain Bisa Diketik Sendiri',
                 'modal.fix-v65-body-customproduct': 'Pilih "Produk Lain" di Jenis Produk, lalu tulis sendiri produk di sketsamu (mis. sajadah, tas rajut, mainan kayu) — AI akan merender katalog sesuai jenis produk yang kamu sebutkan.',
@@ -544,7 +609,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Tab Ruang Saku sekarang punya halaman penjelasan singkat fitur Rindu (AI keuangan) + tombol langsung ke RuangSaku.com. Lebih nyaman dipakai di HP — tinggal klik dan terbuka di tab browser.',
                 'modal.fix-v31-title-telegram': 'Tombol Telegram di Pojok Layar',
                 'modal.fix-v31-body-telegram': 'Tombol bundar Telegram sekarang ada di pojok kanan bawah aplikasi. Sekali klik langsung join grup Telegram Affiliate Go — tempat update fitur, tips, dan tanya jawab dengan komunitas.',
-                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 65',
+                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 66',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Selamat Datang di Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Asisten AI Anda untuk menjelajahi 79++ fitur photo & video generation',
@@ -3151,6 +3216,8 @@
                 'headers.new-born': 'Magic Baby Photo Editor', 'headers.story-update': 'Story Update Generator',
                 'favorites.title': 'Favorites',
                 'favorites.sheet-title': 'Favorite Tabs',
+                'nav.telegram': 'Join Telegram',
+                'nav.search-ph': 'Search features...',
                 'favorites.empty-mobile': 'No favorite tabs yet. Tap the small star on the corner of any bottom button to mark it as favorite.',
                 'login.title': 'Affiliate GO', 'login.subtitle': 'Photo Studio by Arul CG',
                 'login.email-placeholder': '\u2709 Your purchase email...',
@@ -3158,6 +3225,11 @@
                 'login.secure': '\uD83D\uDD12 Encrypted & Secure Access',
                 'login.no-access-cta': '\uD83D\uDED2 No access yet? Buy here \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v66-badge': 'Update v66',
+                'modal.fix-v66-title-drawer': 'New Mobile Navigation: Side Menu (Drawer)',
+                'modal.fix-v66-body-drawer': 'The bottom menu is now a side menu — tap the \u2630 button at the top left to open all features. Pick a feature and the menu closes automatically, leaving more screen space for your results.',
+                'modal.fix-v66-title-search': 'Feature Search + Collapsible Categories',
+                'modal.fix-v66-body-search': 'A "Search features..." box now lives in the menu — type a feature name to find it instantly, no scrolling. Categories can also be collapsed, on both mobile and desktop.',
                 'modal.fix-v65-badge': 'Update v65',
                 'modal.fix-v65-title-customproduct': 'Sketch to Catalog: Type Your Own Product',
                 'modal.fix-v65-body-customproduct': 'Pick "Other Product" under Product Type, then type the product in your sketch (e.g. prayer mat, crochet bag, wooden toy) — the AI renders the catalog to match the product you name.',
@@ -3313,7 +3385,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Ruang Saku tab now has a brief intro page for Rindu (AI finance buddy) + direct button to RuangSaku.com. Smoother mobile experience — one click and it opens in a browser tab.',
                 'modal.fix-v31-title-telegram': 'Telegram Button at Screen Corner',
                 'modal.fix-v31-body-telegram': 'Round Telegram button is now at the bottom-right corner of the app. One click jumps directly to the Affiliate Go Telegram group — for feature updates, tips, and Q&A with the community.',
-                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 65',
+                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 66',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Welcome to Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Your AI Assistant to explore 79++ photo & video generation features',
@@ -5611,6 +5683,7 @@
                 'lang.en': 'English',
                 'lang.ms': 'Melayu',
                 'bebas-iklan.btn': 'Buang Iklan',
+                'nav.telegram': 'Sertai Telegram',
                 'bebas-iklan.feature-1': 'Tanpa iklan semasa Generate / Muat Turun',
                 'bebas-iklan.feature-2': 'Akses penuh tanpa gangguan 1 bulan',
                 'bebas-iklan.feature-3': 'Auto-aktif selepas pembayaran (log masuk semula)',
@@ -6662,15 +6735,6 @@
                 if (!text) return;
                 var span = btn.querySelector('.btn-text');
                 if (span) applyText(span, text);
-            });
-
-            // 2. Mobile nav labels
-            document.querySelectorAll('.mobile-tab-btn[data-tab]').forEach(function(btn) {
-                var tabId = btn.dataset.tab;
-                var text = _tkey(dict, 'nm.' + tabId) || _tkey(dict, 'nav.' + tabId);
-                if (!text) return;
-                var spans = btn.querySelectorAll('span:not(.new-badge):not(.fav-star-mobile)');
-                if (spans.length > 0) spans[0].textContent = text;
             });
 
             // 3. Category headers — data-i18n-cat

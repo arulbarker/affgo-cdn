@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- MAIN TAB SWITCHING LOGIC ---
     const mainTabButtons = document.querySelectorAll('.main-tab-btn');
-    const mobileTabButtons = document.querySelectorAll('.mobile-tab-btn');
     const mainContentPanels = document.querySelectorAll('.main-content-panel');
 
     // Global Preview Modal Function
@@ -87,15 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const sidebarBtn = document.querySelector(`.main-tab-btn[data-tab="${tabName}"]`);
         if (sidebarBtn) sidebarBtn.classList.add('active');
 
-        // Update mobile tabs
-        mobileTabButtons.forEach(btn => btn.classList.remove('active'));
-        const mobileBtn = document.querySelector(`.mobile-tab-btn[data-tab="${tabName}"]`);
-        if (mobileBtn) {
-            mobileBtn.classList.add('active');
-            // Auto-scroll to active tab in mobile view
-            mobileBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-        }
-
         // Switch content panels
         mainContentPanels.forEach(panel => {
             panel.classList.toggle('hidden', panel.id !== `content-${tabName}`);
@@ -108,13 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Sidebar tab buttons
     mainTabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            switchTab(button.dataset.tab);
-        });
-    });
-
-    // Mobile tab buttons
-    mobileTabButtons.forEach(button => {
         button.addEventListener('click', () => {
             switchTab(button.dataset.tab);
         });
@@ -138,13 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const favCategory = document.getElementById('favorites-category');
         const favContainer = document.getElementById('favorites-container');
         if (!sidebar || !favCategory || !favContainer) return;
-
-        // Mobile bottom sheet elements
-        const mobileFavBtn = document.getElementById('mobile-fav-access-btn');
-        const mobileFavCount = document.getElementById('mobile-fav-count');
-        const mobileFavSheet = document.getElementById('mobile-fav-sheet');
-        const mobileFavList = document.getElementById('mobile-fav-sheet-list');
-        const mobileFavEmpty = document.getElementById('mobile-fav-sheet-empty');
 
         // Cloud sync: single-flight + debounce. Pelajaran dari bug: debounce saja
         // tidak cukup — kalau user toggle dengan jeda >debounce_ms, tiap klik fire
@@ -304,7 +280,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 el.classList.toggle('favorited', isFav);
             });
             renderFavorites();
-            reorderMobileTabs();
         };
 
         function createStar(tabId, isFavorited) {
@@ -332,11 +307,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     s.title = 'Tambah ke Favorit';
                 }
             });
-            // Mobile star (di bottom nav) — sync juga
-            document.querySelectorAll('.fav-star-mobile[data-fav-for="' + tabId + '"]').forEach(s => {
-                if (isFavorited) s.classList.add('favorited');
-                else s.classList.remove('favorited');
-            });
         }
 
         function toggleFavorite(tabId) {
@@ -357,39 +327,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 syncStarUI(tabId, true);
             }
             saveFavs(favs);
-            reorderMobileTabs();
-            if (!wasFav) scrollMobileNavToStart();
             renderFavorites();
             // Cloud sync (single-flight + debounced fire-and-forget). Membaca fresh
             // dari localStorage di fetch time, jadi tidak perlu pass `favs` lagi.
             scheduleCloudSync();
-        }
-
-        // Reorder mobile bottom-nav tabs so favorited ones appear leftmost.
-        // Uses CSS `order` so DOM stays untouched — unfavorite restores original position.
-        function reorderMobileTabs() {
-            const favs = getFavs();
-            document.querySelectorAll('.mobile-tab-btn').forEach(btn => {
-                const tabId = btn.dataset.tab;
-                if (!tabId) return;
-                const favIdx = favs.indexOf(tabId);
-                if (favIdx !== -1) {
-                    // FIFO: first favorited gets lowest order = leftmost slot
-                    btn.style.order = String(favIdx - 1000);
-                } else {
-                    btn.style.order = '';
-                }
-            });
-        }
-
-        function scrollMobileNavToStart() {
-            const nav = document.querySelector('.mobile-bottom-nav');
-            if (!nav) return;
-            try {
-                nav.scrollTo({ left: 0, behavior: 'smooth' });
-            } catch (e) {
-                nav.scrollLeft = 0;
-            }
         }
 
         function addStarsToOriginals() {
@@ -401,24 +342,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const tabId = btn.dataset.tab;
                 if (!tabId) return;
                 const star = createStar(tabId, favs.indexOf(tabId) !== -1);
-                btn.appendChild(star);
-            });
-            // Mobile bottom nav buttons — tambah star kecil di pojok
-            document.querySelectorAll('.mobile-tab-btn').forEach(btn => {
-                if (btn.querySelector('.fav-star-mobile')) return;
-                const tabId = btn.dataset.tab;
-                if (!tabId) return;
-                const isFav = favs.indexOf(tabId) !== -1;
-                const star = document.createElement('span');
-                star.className = 'fav-star-mobile' + (isFav ? ' favorited' : '');
-                star.innerHTML = '<i class="fas fa-star"></i>';
-                star.dataset.favFor = tabId;
-                star.setAttribute('aria-label', isFav ? 'Hapus dari Favorit' : 'Tambah ke Favorit');
-                star.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    toggleFavorite(tabId);
-                });
                 btn.appendChild(star);
             });
         }
@@ -453,126 +376,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 favCategory.style.display = '';
             }
-            // Sync mobile bottom sheet + badge
-            renderMobileFavSheet();
             // Re-apply language translation to cloned buttons
             if (window._i18nApplyNow) window._i18nApplyNow();
         }
 
-        // ===== Mobile bottom sheet logic =====
-        function getTabLabel(original) {
-            // Prefer .btn-text (sidebar label), fall back to first text node
-            const labelEl = original.querySelector('.btn-text');
-            if (labelEl && labelEl.textContent.trim()) return labelEl.textContent.trim();
-            return (original.textContent || '').trim();
-        }
-
-        function getTabIconClass(original) {
-            const iconEl = original.querySelector('i');
-            return iconEl ? iconEl.className : 'fas fa-star';
-        }
-
-        function renderMobileFavSheet() {
-            const favs = getFavs();
-            // Update badge count in header button
-            if (mobileFavCount) mobileFavCount.textContent = String(favs.length);
-            if (mobileFavBtn) {
-                if (favs.length === 0) mobileFavBtn.classList.add('no-favs');
-                else mobileFavBtn.classList.remove('no-favs');
-            }
-            if (!mobileFavList) return;
-            mobileFavList.innerHTML = '';
-            if (favs.length === 0) {
-                if (mobileFavEmpty) mobileFavEmpty.classList.remove('hidden');
-                return;
-            }
-            if (mobileFavEmpty) mobileFavEmpty.classList.add('hidden');
-            favs.forEach(tabId => {
-                const originals = sidebar.querySelectorAll('.main-tab-btn[data-tab="' + tabId + '"]');
-                let original = null;
-                originals.forEach(b => { if (!b.closest('#favorites-container')) original = b; });
-                if (!original) return;
-
-                const item = document.createElement('div');
-                item.className = 'mobile-fav-item';
-                item.dataset.tab = tabId;
-                item.setAttribute('role', 'button');
-                item.setAttribute('tabindex', '0');
-                const label = getTabLabel(original);
-                const iconClass = getTabIconClass(original);
-
-                const iconSpan = document.createElement('i');
-                iconSpan.className = iconClass + ' fav-item-icon';
-                const labelSpan = document.createElement('span');
-                labelSpan.className = 'fav-item-label';
-                labelSpan.textContent = label;
-                const removeBtn = document.createElement('button');
-                removeBtn.type = 'button';
-                removeBtn.className = 'fav-item-remove';
-                removeBtn.setAttribute('aria-label', 'Hapus dari Favorit');
-                removeBtn.innerHTML = '<i class="fas fa-times"></i>';
-                removeBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    toggleFavorite(tabId);
-                });
-
-                item.appendChild(iconSpan);
-                item.appendChild(labelSpan);
-                item.appendChild(removeBtn);
-
-                item.addEventListener('click', (e) => {
-                    if (e.target.closest('.fav-item-remove')) return;
-                    e.stopPropagation();
-                    closeMobileFavSheet();
-                    // Navigate via the mobile-tab-btn if it exists (fires mobile switchTab handler),
-                    // otherwise fall back to the desktop original.
-                    const mobileBtn = document.querySelector('.mobile-tab-btn[data-tab="' + tabId + '"]');
-                    if (mobileBtn) mobileBtn.click();
-                    else original.click();
-                });
-
-                mobileFavList.appendChild(item);
-            });
-        }
-
-        function openMobileFavSheet() {
-            if (!mobileFavSheet) return;
-            renderMobileFavSheet();
-            mobileFavSheet.classList.add('open');
-            mobileFavSheet.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeMobileFavSheet() {
-            if (!mobileFavSheet) return;
-            mobileFavSheet.classList.remove('open');
-            mobileFavSheet.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = '';
-        }
-
-        if (mobileFavBtn) {
-            mobileFavBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                openMobileFavSheet();
-            });
-        }
-        if (mobileFavSheet) {
-            mobileFavSheet.querySelectorAll('[data-fav-sheet-close]').forEach(el => {
-                el.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    closeMobileFavSheet();
-                });
-            });
-            // ESC key (desktop preview / tablet with keyboard)
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && mobileFavSheet.classList.contains('open')) {
-                    closeMobileFavSheet();
-                }
-            });
-        }
-
         addStarsToOriginals();
-        reorderMobileTabs();
         renderFavorites();
     })();
 
@@ -897,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '65';
+        const UPDATE_VERSION = '66';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -910,6 +718,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '66',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v66-badge',
+                badgeText: 'Update v66',
+                gradient: 'linear-gradient(135deg,#16a34a,#15803d)',
+                borderColor: '#16a34a',
+                icon: 'fa-bars',
+                iconColor: '#16a34a',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v66-title-drawer',
+                        titleText: 'Navigasi Baru di HP: Menu Samping (Drawer)',
+                        bodyKey: 'modal.fix-v66-body-drawer',
+                        bodyText: 'Menu bawah diganti menu samping — tap tombol \u2630 di kiri atas untuk membuka semua fitur. Pilih fitur, menu menutup otomatis. Layar jadi lebih lega untuk melihat hasil.'
+                    },
+                    {
+                        titleKey: 'modal.fix-v66-title-search',
+                        titleText: 'Cari Fitur + Kategori Buka-Tutup',
+                        bodyKey: 'modal.fix-v66-body-search',
+                        bodyText: 'Ada kotak "Cari fitur..." di menu — ketik nama fitur langsung ketemu tanpa scroll. Kategori juga bisa dibuka-tutup, berlaku di HP dan desktop.'
+                    }
+                ]
+            },
             {
                 version: '65',
                 dateId: 'Agustus 2026',
@@ -5021,7 +4854,6 @@ IMPORTANT: Generate a brand new photo of this person in the specified pose. Keep
 
         // ── Tab click (desktop + mobile) ──────────────────────────
         const tabDesktop = document.querySelector('.main-tab-btn[data-tab="pose-fashion"]');
-        const tabMobile  = document.querySelector('.mobile-tab-btn[data-tab="pose-fashion"]');
         // No special initialization needed for this tab
 
     })();
@@ -12622,11 +12454,10 @@ This is NOT an AI render - this is a REAL professional wedding photograph with n
     // --- VOICE OVER STUDIO PRO TAB LOGIC ---
     (function() {
         const voiceOverTabDesktop = document.querySelector('.main-tab-btn[data-tab="voice-over"]');
-        const voiceOverTabMobile = document.querySelector('.mobile-tab-btn[data-tab="voice-over"]');
 
-        console.log('Voice Over tabs found - Desktop:', !!voiceOverTabDesktop, 'Mobile:', !!voiceOverTabMobile);
+        console.log('Voice Over tabs found - Desktop:', !!voiceOverTabDesktop);
 
-        // Initialize when either desktop or mobile tab is clicked
+        // Initialize when the tab is clicked
         const initOnClick = () => {
             console.log('Voice Over tab clicked, initialized:', window.voiceOverInitialized);
             if (!window.voiceOverInitialized) {
@@ -12638,9 +12469,6 @@ This is NOT an AI render - this is a REAL professional wedding photograph with n
 
         if (voiceOverTabDesktop) {
             voiceOverTabDesktop.addEventListener('click', initOnClick);
-        }
-        if (voiceOverTabMobile) {
-            voiceOverTabMobile.addEventListener('click', initOnClick);
         }
 
         function initVoiceOverGenerator() {
@@ -13104,8 +12932,7 @@ This is NOT an AI render - this is a REAL professional wedding photograph with n
     // --- STICKER TEMPEL TAB LOGIC ---
     (function() {
         const stickerTabDesktop = document.querySelector('.main-tab-btn[data-tab="sticker"]');
-        const stickerTabMobile  = document.querySelector('.mobile-tab-btn[data-tab="sticker"]');
-        if (!stickerTabDesktop && !stickerTabMobile) return;
+        if (!stickerTabDesktop) return;
 
         function onStickerTabClick() {
             if (!window.stickerInitialized) {
@@ -13115,7 +12942,6 @@ This is NOT an AI render - this is a REAL professional wedding photograph with n
         }
 
         if (stickerTabDesktop) stickerTabDesktop.addEventListener('click', onStickerTabClick);
-        if (stickerTabMobile)  stickerTabMobile.addEventListener('click', onStickerTabClick);
 
         function initStickerTempel() {
             // DOM Elements
@@ -13747,7 +13573,6 @@ Overall style: clean and aesthetic composition, white sticker outline aesthetic,
     // --- HAIR GENERATOR TAB LOGIC ---
     (function() {
         const hairTab = document.querySelector('.main-tab-btn[data-tab="hair-generator"]');
-        const hairTabMobile = document.querySelector('.mobile-tab-btn[data-tab="hair-generator"]');
 
         const initOnClick = () => {
             if (!window.hairGeneratorInitialized) {
@@ -13757,7 +13582,6 @@ Overall style: clean and aesthetic composition, white sticker outline aesthetic,
         };
 
         if (hairTab) hairTab.addEventListener('click', initOnClick);
-        if (hairTabMobile) hairTabMobile.addEventListener('click', initOnClick);
 
         function initHairGenerator() {
             // Data Pilihan Rambut
@@ -17859,9 +17683,7 @@ PENTING:
 
         // Tab initialization
         const tabDesktop = document.querySelector('.main-tab-btn[data-tab="walking-pad"]');
-        const tabMobile = document.querySelector('.mobile-tab-btn[data-tab="walking-pad"]');
         if (tabDesktop) tabDesktop.addEventListener('click', function() {});
-        if (tabMobile) tabMobile.addEventListener('click', function() {});
 
     })();
 
@@ -21872,9 +21694,7 @@ Style: ultra-realistic, 8K, fitness lifestyle photography, dramatic gym lighting
 
         // Tab init
         const tabDesktop = document.querySelector('.main-tab-btn[data-tab="kartu-lebaran"]');
-        const tabMobile = document.querySelector('.mobile-tab-btn[data-tab="kartu-lebaran"]');
         if (tabDesktop) tabDesktop.addEventListener('click', () => {});
-        if (tabMobile) tabMobile.addEventListener('click', () => {});
 
         // Upload box click
         if (uploadBox) uploadBox.addEventListener('click', () => imageInput && imageInput.click());
@@ -33870,9 +33690,7 @@ Generate a single high-quality architectural photo for this timelapse frame.`;
         // Tab initialization
         function initTab() {}
         const tabDesktop = document.querySelector('.main-tab-btn[data-tab="timelapse-renovasi"]');
-        const tabMobile = document.querySelector('.mobile-tab-btn[data-tab="timelapse-renovasi"]');
         if (tabDesktop) tabDesktop.addEventListener('click', initTab);
-        if (tabMobile) tabMobile.addEventListener('click', initTab);
 
     })();
 
@@ -48731,12 +48549,10 @@ VARIASI ${index}: ${variationNotes[index] || 'Variasi standar dengan slight diff
 
         // ---- TAB ACTIVATE ----
         const ftgTabDesktop = document.querySelector('.main-tab-btn[data-tab="fotogenic"]');
-        const ftgTabMobile = document.querySelector('.mobile-tab-btn[data-tab="fotogenic"]');
         function ftgOnActivate() {
             if (ftgEffectGrid && ftgEffectGrid.children.length === 0) ftgRenderEffects(ftgCategory);
         }
         if (ftgTabDesktop) ftgTabDesktop.addEventListener('click', ftgOnActivate);
-        if (ftgTabMobile) ftgTabMobile.addEventListener('click', ftgOnActivate);
 
     })();
 
