@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '67';
+        const UPDATE_VERSION = '68';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -718,6 +718,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '68',
+                dateId: 'Agustus 2026',
+                dateEn: 'August 2026',
+                badgeKey: 'modal.fix-v68-badge',
+                badgeText: 'Update v68',
+                gradient: 'linear-gradient(135deg,#0891b2,#0e7490)',
+                borderColor: '#0891b2',
+                icon: 'fa-mobile',
+                iconColor: '#0891b2',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v68-title-navfix',
+                        titleText: 'Perbaikan Lanjutan: Tombol Menu Muncul di Semua HP',
+                        bodyKey: 'modal.fix-v68-body-navfix',
+                        bodyText: 'Menyempurnakan perbaikan sebelumnya. Di sebagian HP tombol menu masih belum muncul karena tampilan terkunci mode desktop saat aplikasi dibuka dari tautan. Sekarang aplikasi mengenali ukuran HP-mu langsung, jadi tombol menu selalu muncul. Kalau belum terlihat, tutup lalu buka lagi aplikasinya.'
+                    }
+                ]
+            },
             {
                 version: '67',
                 dateId: 'Agustus 2026',

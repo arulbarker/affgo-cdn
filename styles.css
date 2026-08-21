@@ -7623,6 +7623,90 @@
             }
         }
 
+        /* Force mobile nav — salinan blok nav mobile di atas, dipicu kelas
+           html.force-mobile-nav (diset via JS di <head> dari screen.width fisik).
+           Perlu karena iframe Gemini Canvas bisa kasih layout viewport selebar
+           desktop ke HP → @media (max-width:768px) tak aktif → hamburger hilang.
+           Additive: TIDAK mengubah aturan @media di atas; hanya menang saat kelas
+           hadir (specificity html.force-mobile-nav > selector polos). */
+        html.force-mobile-nav .sidebar {
+            display: block;
+            width: min(85vw, 320px);
+            transform: translateX(-105%);
+            transition: transform 0.3s ease;
+            z-index: 1200;
+            box-shadow: none;
+        }
+        html.force-mobile-nav .sidebar.collapsed {
+            width: min(85vw, 320px);
+            transform: translateX(-105%);
+        }
+        html.force-mobile-nav .sidebar.drawer-open {
+            transform: translateX(0);
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.25);
+        }
+        html.force-mobile-nav #sidebar-overlay.overlay-visible { display: block; }
+        html.force-mobile-nav .sidebar-telegram-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            min-height: 44px;
+            border-radius: 0.75rem;
+            background: linear-gradient(135deg, #0088cc 0%, #229ED9 100%);
+            color: #ffffff;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        html.force-mobile-nav .menu-category-title { min-height: 44px; }
+        html.force-mobile-nav #telegram-floating-btn { display: none; }
+        html.force-mobile-nav .main-content-wrapper {
+            margin-left: 0;
+            width: 100%;
+            padding: 1rem;
+            padding-bottom: 1.5rem;
+        }
+        html.force-mobile-nav .toggle-sidebar-btn { display: none; }
+        html.force-mobile-nav .mobile-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: sticky;
+            top: 0;
+            z-index: 1100;
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            padding: 0.5rem 3.5rem 0.5rem 0.75rem;
+            min-height: 56px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        html.force-mobile-nav .mobile-header h1 {
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0;
+            flex: 1;
+            min-width: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: left;
+        }
+        html.force-mobile-nav #mobile-drawer-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            flex-shrink: 0;
+            border: none;
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.18);
+            color: white;
+            font-size: 1.15rem;
+            cursor: pointer;
+        }
+
         /* Action Buttons - Professional Styling */
         .action-btn {
             position: relative;

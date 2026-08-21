@@ -1,4 +1,22 @@
 
+        // Paksa navigasi mobile (hamburger + drawer) via screen.width FISIK, bukan
+        // innerWidth/media query yang bisa dibohongi lebar iframe Gemini Canvas.
+        // Sebagian HP dapat layout viewport selebar desktop di dalam iframe share
+        // Google (letterbox + mengecil), jadi @media (max-width:768px) tak pernah
+        // aktif dan hamburger hilang. screen.width = ukuran fisik perangkat, kebal
+        // iframe. Diset di <head> sebelum body render agar tanpa kedip layout.
+        (function() {
+            try {
+                var minDim = Math.min(window.screen.width || 9999, window.screen.height || 9999);
+                var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+                if (minDim <= 640 && isTouch) {
+                    document.documentElement.classList.add('force-mobile-nav');
+                }
+            } catch (e) {}
+        })();
+    
+;
+
         // Guard CSS stale (runtime CDN): bootstrap shell inject <style> fresh SETELAH
         // <link styles.css@main> yang bisa stale (cache edge/browser, pra-V66 punya
         // rule legacy .sidebar display:none / .btn-text display:none). Kalau style
@@ -463,6 +481,9 @@
                 'login.secure': '\uD83D\uDD12 Akses Terenkripsi & Aman',
                 'login.no-access-cta': '\uD83D\uDED2 Belum punya akses? Beli di sini \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v68-badge': 'Update v68',
+                'modal.fix-v68-title-navfix': 'Perbaikan Lanjutan: Tombol Menu Muncul di Semua HP',
+                'modal.fix-v68-body-navfix': 'Menyempurnakan perbaikan sebelumnya. Di sebagian HP tombol menu masih belum muncul karena tampilan terkunci mode desktop saat aplikasi dibuka dari tautan. Sekarang aplikasi mengenali ukuran HP-mu langsung, jadi tombol menu selalu muncul. Kalau belum terlihat, tutup lalu buka lagi aplikasinya.',
                 'modal.fix-v67-badge': 'Update v67',
                 'modal.fix-v67-title-drawerfix': 'Perbaikan: Menu Samping Tidak Muncul di Sebagian HP',
                 'modal.fix-v67-body-drawerfix': 'Sebagian pengguna HP menekan tombol menu tapi menu samping tidak muncul (tersangkut gaya tampilan versi lama di cache). Sudah diperbaiki — kalau masih terjadi, tutup lalu buka lagi aplikasinya.',
@@ -626,7 +647,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Tab Ruang Saku sekarang punya halaman penjelasan singkat fitur Rindu (AI keuangan) + tombol langsung ke RuangSaku.com. Lebih nyaman dipakai di HP — tinggal klik dan terbuka di tab browser.',
                 'modal.fix-v31-title-telegram': 'Tombol Telegram di Pojok Layar',
                 'modal.fix-v31-body-telegram': 'Tombol bundar Telegram sekarang ada di pojok kanan bawah aplikasi. Sekali klik langsung join grup Telegram Affiliate Go — tempat update fitur, tips, dan tanya jawab dengan komunitas.',
-                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 67',
+                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 68',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Selamat Datang di Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Asisten AI Anda untuk menjelajahi 79++ fitur photo & video generation',
@@ -3242,6 +3263,9 @@
                 'login.secure': '\uD83D\uDD12 Encrypted & Secure Access',
                 'login.no-access-cta': '\uD83D\uDED2 No access yet? Buy here \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v68-badge': 'Update v68',
+                'modal.fix-v68-title-navfix': 'Follow-up Fix: Menu Button Now Shows on All Phones',
+                'modal.fix-v68-body-navfix': 'A follow-up to the previous fix. On some phones the menu button still did not appear because the view was locked to desktop mode when opened from a link. The app now detects your actual phone size, so the menu button always shows. If you still do not see it, close and reopen the app.',
                 'modal.fix-v67-badge': 'Update v67',
                 'modal.fix-v67-title-drawerfix': 'Fix: Side Menu Not Appearing on Some Phones',
                 'modal.fix-v67-body-drawerfix': 'Some phone users tapped the menu button but the side menu never appeared (an old cached stylesheet got stuck). Fixed — if it still happens, close and reopen the app.',
@@ -3405,7 +3429,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Ruang Saku tab now has a brief intro page for Rindu (AI finance buddy) + direct button to RuangSaku.com. Smoother mobile experience — one click and it opens in a browser tab.',
                 'modal.fix-v31-title-telegram': 'Telegram Button at Screen Corner',
                 'modal.fix-v31-body-telegram': 'Round Telegram button is now at the bottom-right corner of the app. One click jumps directly to the Affiliate Go Telegram group — for feature updates, tips, and Q&A with the community.',
-                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 67',
+                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 68',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Welcome to Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Your AI Assistant to explore 79++ photo & video generation features',
