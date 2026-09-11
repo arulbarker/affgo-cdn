@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '68';
+        const UPDATE_VERSION = '69';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -718,6 +718,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '69',
+                dateId: 'September 2026',
+                dateEn: 'September 2026',
+                badgeKey: 'modal.fix-v69-badge',
+                badgeText: 'Update v69',
+                gradient: 'linear-gradient(135deg,#ea580c,#c2410c)',
+                borderColor: '#ea580c',
+                icon: 'fa-shoe-prints',
+                iconColor: '#ea580c',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v69-title-povkaki',
+                        titleText: 'Fitur Baru: POV Kaki — Foto Sepatu Dipakai di Kaki',
+                        bodyKey: 'modal.fix-v69-body-povkaki',
+                        bodyText: 'Anggota baru POV Studio! Upload foto sepatu/sandal, AI membuat foto gaya "shoefie" — kamera menunduk melihat kaki yang memakai produkmu. Ada 8 tema background (jalanan, pantai, gym, dll), pilihan gaya pose, dan rasio 9:16 siap TikTok/Reels. Cocok untuk affiliate sepatu.'
+                    },
+                    {
+                        titleKey: 'modal.fix-v69-title-logodl',
+                        titleText: 'Tombol Download Logo Lebih Mudah Ditekan',
+                        bodyKey: 'modal.fix-v69-body-logodl',
+                        bodyText: 'Tombol Download di Logo Generator diperbesar sesuai standar sentuhan HP dan tombol Preview dibedakan warnanya, jadi tidak salah pencet saat menyimpan logo.'
+                    }
+                ]
+            },
             {
                 version: '68',
                 dateId: 'Agustus 2026',
@@ -14654,6 +14679,826 @@ FINAL OUTPUT: An Instagram-worthy, magazine-quality touring photo that looks lik
         updateFileInputs();
 
     })();
+
+    // --- POV KAKI TAB LOGIC ---
+    // Clone kerangka POV Tangan — shoefie generator (produk dipakai di kaki)
+    (function initPOVKaki() {
+            // DOM Elements
+            const imageInput = document.getElementById('povkaki-image-input');
+            const uploadArea = document.getElementById('povkaki-upload-area');
+            const uploadPlaceholder = document.getElementById('povkaki-upload-placeholder');
+            const previewContainer = document.getElementById('povkaki-preview-container');
+            const previewImage = document.getElementById('povkaki-preview-image');
+            const productDescription = document.getElementById('povkaki-product-description');
+            const generateBtn = document.getElementById('povkaki-generate-btn');
+            const loadingSection = document.getElementById('povkaki-loading-section');
+            const progressBar = document.getElementById('povkaki-progress-bar');
+            const resultsSection = document.getElementById('povkaki-results-section');
+            const resultCount = document.getElementById('povkaki-result-count');
+            const resultsGrid = document.getElementById('povkaki-results-grid');
+            const downloadAllBtn = document.getElementById('povkaki-download-all-btn');
+            const errorSection = document.getElementById('povkaki-error-section');
+            const errorMessage = document.getElementById('povkaki-error-message');
+            const retryBtn = document.getElementById('povkaki-retry-btn');
+            const povEmptyState = document.getElementById('povkaki-empty-state');
+
+            // Custom Background Elements
+            const bgInput = document.getElementById('povkaki-bg-input');
+            const bgUploadArea = document.getElementById('povkaki-bg-upload-area');
+            const bgPlaceholder = document.getElementById('povkaki-bg-placeholder');
+            const bgPreviewContainer = document.getElementById('povkaki-bg-preview-container');
+            const bgPreviewImage = document.getElementById('povkaki-bg-preview-image');
+            const bgRemoveBtn = document.getElementById('povkaki-bg-remove-btn');
+
+            let uploadedImageData = null;
+            let uploadedBackgroundData = null;
+            let backgroundStyleDescription = null;
+            let generatedImages = [];
+            let generatedImageParams = []; // Track parameters for each image
+            let selectedPovRatio = '9:16'; // Default vertikal — shoefie = konten TikTok/Reels
+            let selectedPose = 'random'; // Gaya pose kaki, default acak
+            let selectedThemeCategory = 'random'; // Kategori tema background, default acak semua
+            let currentThemesToUse = []; // Store current themes for regeneration
+            let stopPovKaki = false;
+            const povKakiStopBtn = document.getElementById('povkaki-stop-btn');
+            if (povKakiStopBtn) povKakiStopBtn.addEventListener('click', () => { stopPovKaki = true; });
+
+            // Count selection (1-10), default 4
+            let selectedCount = 4;
+            const countSelectionPovKaki = document.getElementById('povkaki-count-selection-grid');
+            if (countSelectionPovKaki) {
+                countSelectionPovKaki.addEventListener('click', (e) => {
+                    const btn = e.target.closest('button[data-count]');
+                    if (!btn) return;
+                    countSelectionPovKaki.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    selectedCount = parseInt(btn.dataset.count, 10);
+                });
+            }
+
+            // Gaya pose kaki — frasa disuntik ke prompt final
+            const povKakiPoses = {
+                standing: 'standing still, looking straight down at own feet, both shoes fully visible in frame',
+                sitting: 'sitting relaxed with legs stretched forward, feet raised slightly into frame',
+                walking: 'captured mid-step while walking, one foot forward in natural motion'
+            };
+            function pickPovKakiPose() {
+                if (selectedPose !== 'random' && povKakiPoses[selectedPose]) return povKakiPoses[selectedPose];
+                const keys = Object.keys(povKakiPoses);
+                return povKakiPoses[keys[Math.floor(Math.random() * keys.length)]];
+            }
+
+            // POV Kaki Themes per kategori - dipilih acak (shuffle) tiap generate supaya tidak monoton
+            const povKakiBase = 'First-person POV looking down at own feet wearing the product';
+            const povThemeCategories = {
+                street: [
+                    povKakiBase + ', standing on an asphalt road with painted white arrow markings, urban daylight, candid street style, realistic 4k photo',
+                    povKakiBase + ', on zebra crossing stripes with city traffic blurred ahead, bright afternoon sun, streetwear editorial look, realistic 4k photo',
+                    povKakiBase + ', on wet pavement after rain with neon shop sign reflections, moody evening light, cinematic street photography, realistic 4k photo',
+                    povKakiBase + ', on a graffiti-painted sidewalk with colorful spray art, golden hour glow, urban youth vibe, realistic 4k photo',
+                    povKakiBase + ', on an old cobblestone street with scattered dry leaves, soft morning light, vintage street aesthetic, realistic 4k photo',
+                    povKakiBase + ', standing beside a skateboard on smooth concrete with skatepark blur, energetic afternoon light, realistic 4k photo'
+                ],
+                urban: [
+                    povKakiBase + ', on concrete stairs with strong diagonal shadows, brutalist architecture, dramatic midday sun, realistic 4k photo',
+                    povKakiBase + ', on a rooftop floor with city skyline edge visible below, golden hour warm tones, realistic 4k photo',
+                    povKakiBase + ', on industrial metal stairs with grid texture, cool tone lighting, edgy urban look, realistic 4k photo',
+                    povKakiBase + ', on a subway platform behind the yellow safety line, fluorescent lighting, metropolitan commuter vibe, realistic 4k photo',
+                    povKakiBase + ', on a pedestrian bridge with steel railing shadows, late afternoon backlight, realistic 4k photo',
+                    povKakiBase + ', on terrazzo steps of a modern building entrance, clean architectural lines, bright even light, realistic 4k photo'
+                ],
+                beach: [
+                    povKakiBase + ', on white beach sand with gentle foamy waves touching the shore, tropical daylight, realistic 4k photo',
+                    povKakiBase + ', on a wooden beach boardwalk with sea visible between planks, breezy summer mood, realistic 4k photo',
+                    povKakiBase + ', on a green grass meadow with small wildflowers, soft morning dew, fresh natural tones, realistic 4k photo',
+                    povKakiBase + ', on a forest hiking trail with roots and fallen leaves, dappled sunlight through trees, adventure vibe, realistic 4k photo',
+                    povKakiBase + ', on smooth river rocks beside clear shallow water, crisp outdoor light, realistic 4k photo',
+                    povKakiBase + ', standing at a cliff viewpoint with valley scenery far below, golden sunrise, epic travel mood, realistic 4k photo'
+                ],
+                cafe: [
+                    povKakiBase + ', on warm herringbone wooden cafe floor beside a table leg, cozy ambient light, realistic 4k photo',
+                    povKakiBase + ', on classic black-and-white checkered tiles of a retro diner, playful vintage tone, realistic 4k photo',
+                    povKakiBase + ', on polished concrete floor of an industrial coffee shop, soft window light, realistic 4k photo',
+                    povKakiBase + ', on a patterned Moroccan tile floor with a plant pot at frame edge, artistic bohemian style, realistic 4k photo',
+                    povKakiBase + ', on light oak library floor with a stack of books beside the feet, quiet study atmosphere, realistic 4k photo',
+                    povKakiBase + ', on a soft rug beside a cafe sofa corner, warm evening interior glow, realistic 4k photo'
+                ],
+                sporty: [
+                    povKakiBase + ', on a rubber gym floor beside dumbbells, bright training lights, fitness motivation vibe, realistic 4k photo',
+                    povKakiBase + ', on an outdoor running track with red lanes and white lines, morning sun, athletic energy, realistic 4k photo',
+                    povKakiBase + ', on painted basketball court asphalt near the center line, bright afternoon, realistic 4k photo',
+                    povKakiBase + ', on a treadmill belt in a modern gym with LED accent lighting, realistic 4k photo',
+                    povKakiBase + ', on a yoga mat in a bright airy studio, calm minimal wellness mood, realistic 4k photo',
+                    povKakiBase + ', on artificial turf field beside a white boundary line, stadium daylight, soccer training feel, realistic 4k photo'
+                ],
+                minimal: [
+                    povKakiBase + ', on seamless white studio floor with soft natural shadow, clean e-commerce photography, realistic 4k photo',
+                    povKakiBase + ', on light grey concrete with a single beam of window light, scandinavian minimalism, realistic 4k photo',
+                    povKakiBase + ', on warm beige linen backdrop floor, soft even lighting, neutral tone editorial, realistic 4k photo',
+                    povKakiBase + ', on glossy white marble with subtle veins, premium clean look, realistic 4k photo',
+                    povKakiBase + ', on a pastel color-block paper backdrop floor, studio softbox lighting, modern catalog style, realistic 4k photo',
+                    povKakiBase + ', on matte black studio floor with rim lighting on the shoes, high contrast minimal product shot, realistic 4k photo'
+                ],
+                luxury: [
+                    povKakiBase + ', on black marble floor with gold veins, dramatic spotlight, premium night aesthetic, realistic 4k photo',
+                    povKakiBase + ', on deep red velvet carpet, cinematic warm light, exclusive event vibe, realistic 4k photo',
+                    povKakiBase + ', on dark walnut herringbone parquet of a luxury suite, warm lamp glow, realistic 4k photo',
+                    povKakiBase + ', on polished obsidian tiles with soft reflections and city light bokeh, penthouse evening mood, realistic 4k photo',
+                    povKakiBase + ', on a marble hotel lobby floor with brass inlay lines, elegant ambient lighting, realistic 4k photo',
+                    povKakiBase + ', on a dark leather-textured floor mat with jewelry-like glints, moody editorial style, realistic 4k photo'
+                ],
+                home: [
+                    povKakiBase + ', on warm wooden home floor beside a knit blanket edge and a coffee mug, soft sunrise window light, realistic 4k photo',
+                    povKakiBase + ', on a fluffy cream rug with fairy light bokeh in the background, cozy evening vibe, realistic 4k photo',
+                    povKakiBase + ', on terracotta tiles with indoor plants at frame edge, homey afternoon warmth, realistic 4k photo',
+                    povKakiBase + ', on light parquet beside a sofa and soft cushion, calm weekend morning, realistic 4k photo',
+                    povKakiBase + ', on a woven natural fiber mat with dried pampas decoration, boho home aesthetic, realistic 4k photo',
+                    povKakiBase + ', on smooth grey home tiles, quiet domestic moment, soft daylight, realistic 4k photo'
+                ]
+            };
+            const povThemes = Object.values(povThemeCategories).flat();
+
+            function shufflePovThemes(arr) {
+                const copy = [...arr];
+                for (let i = copy.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [copy[i], copy[j]] = [copy[j], copy[i]];
+                }
+                return copy;
+            }
+
+            // Event Listeners - Using Try-On pattern
+            // Main product image upload
+            if (uploadArea && imageInput) {
+                uploadArea.addEventListener('click', () => imageInput.click());
+                uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.style.borderColor = '#764ba2'; });
+                uploadArea.addEventListener('dragleave', () => uploadArea.style.borderColor = '');
+                uploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    uploadArea.style.borderColor = '';
+                    if (e.dataTransfer.files[0]) processImage(e.dataTransfer.files[0]);
+                });
+                imageInput.addEventListener('change', (e) => { if (e.target.files[0]) processImage(e.target.files[0]); });
+            }
+
+            // Background image upload
+            if (bgUploadArea && bgInput) {
+                bgUploadArea.addEventListener('click', () => bgInput.click());
+                bgUploadArea.addEventListener('dragover', (e) => { e.preventDefault(); bgUploadArea.style.borderColor = '#764ba2'; });
+                bgUploadArea.addEventListener('dragleave', () => bgUploadArea.style.borderColor = '');
+                bgUploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    bgUploadArea.style.borderColor = '';
+                    if (e.dataTransfer.files[0]) processBgImage(e.dataTransfer.files[0]);
+                });
+                bgInput.addEventListener('change', (e) => { if (e.target.files[0]) processBgImage(e.target.files[0]); });
+            }
+
+            bgRemoveBtn.addEventListener('click', removeBackgroundImage);
+            generateBtn.addEventListener('click', startGeneration);
+            retryBtn.addEventListener('click', resetForm);
+
+            // Ratio selection event listener
+            const ratioSelection = document.getElementById('povkaki-ratio-selection');
+            if (ratioSelection) {
+                ratioSelection.addEventListener('click', (e) => {
+                    const button = e.target.closest('.ratio-btn-pov');
+                    if (button) {
+                        document.querySelectorAll('#povkaki-ratio-selection .ratio-btn-pov').forEach(btn => btn.classList.remove('selected'));
+                        button.classList.add('selected');
+                        selectedPovRatio = button.dataset.ratio;
+                    }
+                });
+            }
+
+            // Pose selection event listener (pengganti jumlah tangan di POV Tangan)
+            const poseSelection = document.getElementById('povkaki-pose-selection');
+            if (poseSelection) {
+                poseSelection.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const button = e.target.closest('button[data-pose]');
+                    if (button) {
+                        poseSelection.querySelectorAll('button[data-pose]').forEach(btn => btn.classList.remove('selected'));
+                        button.classList.add('selected');
+                        selectedPose = button.dataset.pose;
+                    }
+                });
+            }
+
+            // Theme category selection event listener
+            const themeCatSelection = document.getElementById('povkaki-theme-selection');
+            if (themeCatSelection) {
+                themeCatSelection.addEventListener('click', (e) => {
+                    const button = e.target.closest('.theme-cat-btn-pov');
+                    if (button) {
+                        themeCatSelection.querySelectorAll('.theme-cat-btn-pov').forEach(btn => btn.classList.remove('selected'));
+                        button.classList.add('selected');
+                        selectedThemeCategory = button.dataset.themeCat;
+                    }
+                });
+            }
+
+            function processImage(file) {
+                if (file.size > 10 * 1024 * 1024) {
+                    showError('Ukuran file terlalu besar. Maksimal 10MB.');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    uploadedImageData = e.target.result;
+                    previewImage.src = uploadedImageData;
+                    uploadPlaceholder.classList.add('hidden');
+                    previewContainer.classList.remove('hidden');
+                    uploadArea.classList.add('has-image');
+                    generateBtn.disabled = false;
+                    hideError();
+                };
+                reader.readAsDataURL(file);
+            }
+
+            // Custom Background Handlers
+            async function processBgImage(file) {
+                if (file.size > 10 * 1024 * 1024) {
+                    showError('Ukuran file background terlalu besar. Maksimal 10MB.');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    uploadedBackgroundData = e.target.result;
+                    bgPreviewImage.src = uploadedBackgroundData;
+                    bgPlaceholder.classList.add('hidden');
+                    bgPreviewContainer.classList.remove('hidden');
+                    bgUploadArea.classList.add('has-image');
+
+                    // No need to analyze, we'll use the image directly
+                    backgroundStyleDescription = 'custom'; // Flag that custom bg is present
+                };
+                reader.readAsDataURL(file);
+            }
+
+            function removeBackgroundImage(e) {
+                e.stopPropagation();
+                uploadedBackgroundData = null;
+                backgroundStyleDescription = null;
+                bgPreviewImage.src = '';
+                bgPlaceholder.classList.remove('hidden');
+                bgPreviewContainer.classList.add('hidden');
+                bgUploadArea.classList.remove('has-image');
+                bgInput.value = '';
+            }
+
+
+            // Retry mechanism sama seperti POV Tangan
+            async function generateImageWithRetry(payload, retries = 3, delay = 1000) {
+                for (let i = 0; i < retries; i++) {
+                    try {
+                        const apiKey = "";
+                        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${apiKey}`;
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        const responseText = await response.text();
+
+                        if (!response.ok) {
+                            let errorMsg = response.statusText;
+                            try {
+                                errorMsg = JSON.parse(responseText).error?.message || errorMsg;
+                            } catch(e) {
+                                if(responseText) errorMsg = responseText;
+                            }
+                            throw new Error(`API Error: ${errorMsg}`);
+                        }
+
+                        try {
+                            return JSON.parse(responseText);
+                        } catch (e) {
+                            throw new Error("Invalid JSON response.");
+                        }
+                    } catch (error) {
+                        console.error(`Attempt ${i + 1} failed:`, error);
+                        if (i === retries - 1) return null;
+                        await new Promise(res => setTimeout(res, delay * Math.pow(2, i)));
+                    }
+                }
+                return null;
+            }
+
+            async function runPovKakiGeneration(themesToUse, productDesc, base64Image) {
+                generatedImages = new Array(selectedCount).fill(null);
+                generatedImageParams = new Array(selectedCount).fill(null);
+
+                // Pre-create placeholder cards
+                resultsGrid.innerHTML = '';
+                for (let i = 0; i < selectedCount; i++) {
+                    const card = document.createElement('div');
+                    card.id = `povkaki-card-${i}`;
+                    card.className = 'result-card';
+                    card.innerHTML = `<div class="flex flex-col items-center justify-center h-full min-h-[200px]"><div class="loader !border-l-purple-500"></div></div>`;
+                    resultsGrid.appendChild(card);
+                }
+                if (povEmptyState) povEmptyState.classList.add('hidden');
+                resultsSection.classList.remove('hidden');
+                resultCount.textContent = '...';
+                downloadAllBtn.classList.add('hidden');
+
+                if (window.innerWidth < 1024) {
+                    setTimeout(() => resultsGrid.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+                }
+
+                await Promise.allSettled(
+                    Array.from({ length: selectedCount }, (_, i) => generateSinglePovKaki(i, themesToUse, productDesc, base64Image))
+                );
+            }
+
+            async function startGeneration() {
+                if (generateBtn.disabled) return;
+                if (!uploadedImageData) {
+                    showError('Silakan upload foto produk terlebih dahulu.');
+                    return;
+                }
+
+                stopPovKaki = false;
+                hideError();
+                loadingSection.classList.add('hidden');
+                generateBtn.disabled = true;
+                generateBtn.classList.add('hidden');
+                if (povKakiStopBtn) povKakiStopBtn.classList.remove('hidden');
+                currentThemesToUse = [];
+
+                const productDesc = productDescription.value.trim();
+                const base64Image = uploadedImageData.split(',')[1];
+
+                let themesToUse;
+                if (backgroundStyleDescription && uploadedBackgroundData) {
+                    themesToUse = shufflePovThemes([
+                        'first-person POV looking straight down at own feet', 'high angle looking down at feet',
+                        'slightly tilted look-down perspective on feet', 'top-down view of feet at 45 degrees',
+                        'standing POV perspective over own shoes', 'walking POV angle looking down',
+                        'close-up POV angle on the shoes', 'wide look-down perspective showing floor around feet',
+                        'diagonal overhead angle on feet', 'natural first-person feet perspective',
+                        'dramatic top-down angle on footwear', 'relaxed look-down view of own feet'
+                    ]);
+                } else {
+                    const themePool = povThemeCategories[selectedThemeCategory] || povThemes;
+                    let shuffledThemes = shufflePovThemes(themePool);
+                    while (shuffledThemes.length < selectedCount) {
+                        shuffledThemes = shuffledThemes.concat(shufflePovThemes(themePool));
+                    }
+                    themesToUse = shuffledThemes;
+                }
+                currentThemesToUse = [...themesToUse];
+
+                try {
+                    // First attempt
+                    await runPovKakiGeneration(themesToUse, productDesc, base64Image);
+
+                    let successCount = generatedImages.filter(img => img).length;
+
+                    // Auto-retry once if all failed and not stopped
+                    if (successCount === 0 && !stopPovKaki) {
+                        await runPovKakiGeneration(themesToUse, productDesc, base64Image);
+                    }
+
+                    renderSuccessfulPovKakiResults();
+                } finally {
+                    generateBtn.disabled = false;
+                    generateBtn.classList.remove('hidden');
+                    if (povKakiStopBtn) povKakiStopBtn.classList.add('hidden');
+                }
+            }
+
+            function renderSuccessfulPovKakiResults() {
+                const successfulImages = [];
+                const successfulParams = [];
+                for (let i = 0; i < generatedImages.length; i++) {
+                    if (generatedImages[i]) {
+                        successfulImages.push(generatedImages[i]);
+                        successfulParams.push(generatedImageParams[i]);
+                    }
+                }
+
+                generatedImages = successfulImages;
+                generatedImageParams = successfulParams;
+                currentThemesToUse = successfulParams.map(p => p?.theme || '');
+
+                resultsGrid.innerHTML = '';
+
+                if (successfulImages.length === 0) {
+                    resultsSection.classList.add('hidden');
+                    if (povEmptyState) povEmptyState.classList.remove('hidden');
+                    showError('Tidak ada gambar yang berhasil digenerate. Silakan coba lagi.');
+                    return;
+                }
+
+                successfulImages.forEach((imageUrl, idx) => {
+                    const params = successfulParams[idx];
+                    const safeTheme = (params?.theme || '').replace(/"/g, '&quot;');
+                    const card = document.createElement('div');
+                    card.className = 'result-card';
+                    card.innerHTML = `
+                        <img src="${imageUrl}" alt="POV Kaki ${idx + 1}" />
+                        <div class="result-card-actions">
+                            <button class="btn-preview" data-action="preview" data-image-url="${imageUrl}" title="Preview" aria-label="Preview">
+                                <i class="fas fa-search-plus"></i>
+                            </button>
+                            <button class="btn-edit" data-action="edit" data-index="${idx}" data-theme="${safeTheme}" title="Edit" aria-label="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn-regenerate" data-action="regenerate" data-index="${idx}" title="Regenerate" aria-label="Regenerate">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                            <button class="btn-download" data-action="download" data-image-url="${imageUrl}" data-filename="pov-kaki-${idx + 1}.jpg" title="Download" aria-label="Download">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        <div class="image-counter">#${idx + 1}</div>
+                    `;
+                    resultsGrid.appendChild(card);
+                });
+
+                resultCount.textContent = successfulImages.length;
+                downloadAllBtn.classList.remove('hidden');
+
+                if (window.innerWidth < 1024) {
+                    resultsGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+
+            async function generateSinglePovKaki(index, themesToUse, productDesc, base64Image) {
+                if (stopPovKaki) return;
+                const card = document.getElementById(`povkaki-card-${index}`);
+                if (!card) return;
+
+                const theme = themesToUse[index];
+                const poseText = pickPovKakiPose();
+                let prompt = '';
+                let payloadParts = [];
+
+                if (backgroundStyleDescription && uploadedBackgroundData) {
+                    const base64Background = uploadedBackgroundData.split(',')[1];
+
+                    prompt = `Create a composite product photography image by combining these elements:
+
+IMAGE 1 (Background Environment): Use this as the base scene/location
+IMAGE 2 (Product): The footwear product to be worn on the feet
+
+Task: Show a first-person POV looking down at own feet WEARING the product from IMAGE 2, in the environment from IMAGE 1.
+
+Requirements:
+- Camera angle: ${theme}
+- Pose: ${poseText}${productDesc ? `\n- Product is: ${productDesc}` : ''}
+- The feet MUST be wearing the product from IMAGE 2, product clearly visible on both feet
+- No hands in frame — this is a feet POV shot
+- The background/environment MUST be from IMAGE 1 (same location, same setting)
+- Blend lighting and colors so feet and product fit naturally in the environment
+- Make it look like a real photo taken in that location
+- Legs and feet should match the scene lighting
+- Professional 4K quality, realistic composition
+
+IMPORTANT: Use the EXACT environment/location from IMAGE 1 as the background. Do not create a different background.`;
+
+                    payloadParts = [
+                        { text: prompt },
+                        { inlineData: { mimeType: "image/jpeg", data: base64Background } },
+                        { inlineData: { mimeType: "image/jpeg", data: base64Image } }
+                    ];
+                } else {
+                    prompt = `First-person POV product photography: own feet WEARING the footwear product. `;
+                    if (productDesc) {
+                        prompt += `Background setting: ${productDesc}. `;
+                    } else {
+                        prompt += `${theme}. `;
+                    }
+                    prompt += `Pose: ${poseText}. Product clearly visible on both feet, no hands in frame, professional 4K quality, realistic lighting and composition.`;
+
+                    payloadParts = [
+                        { text: prompt },
+                        { inlineData: { mimeType: "image/jpeg", data: base64Image } }
+                    ];
+                }
+
+                const payload = {
+                    contents: [{ parts: payloadParts }],
+                    generationConfig: {
+                        responseModalities: ['IMAGE'],
+                        imageConfig: { aspectRatio: selectedPovRatio }
+                    }
+                };
+
+                const result = await generateImageWithRetry(payload);
+                const base64Data = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
+
+                if (base64Data) {
+                    const imageUrl = `data:image/png;base64,${base64Data}`;
+                    generatedImages[index] = imageUrl;
+                    generatedImageParams[index] = {
+                        theme,
+                        productData: uploadedImageData,
+                        backgroundData: uploadedBackgroundData,
+                        backgroundDesc: backgroundStyleDescription,
+                        productDesc,
+                        ratio: selectedPovRatio,
+                        pose: poseText
+                    };
+                    card.innerHTML = `<img src="${imageUrl}" alt="POV Kaki" style="width:100%;height:100%;object-fit:cover;">`;
+                } else {
+                    card.innerHTML = '';
+                }
+            }
+
+            // Function to handle edit POV Kaki
+            function handleEditPovKaki(index, currentTheme) {
+                const modal = document.createElement('div');
+                modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+                modal.innerHTML = `
+                    <div class="bg-white rounded-xl p-6 max-w-2xl w-full">
+                        <h3 class="text-xl font-bold mb-4 text-gray-800">
+                            <i class="fas fa-edit text-purple-500 mr-2"></i>Edit POV Theme/Angle
+                        </h3>
+                        <div class="mb-4">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Theme/Camera Angle:</label>
+                            <textarea id="edit-povkaki-input" rows="4" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none resize-none" placeholder="Contoh: POV kaki di jalan aesthetic Jepang, look-down di lantai marmer mall, etc...">${currentTheme}</textarea>
+                            <p class="text-xs text-gray-500 mt-2">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                Deskripsi angle/perspektif dan background yang diinginkan
+                            </p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="this.closest('.fixed').remove()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                                Batal
+                            </button>
+                            <button id="confirm-edit-povkaki-btn" class="flex-1 bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                                <i class="fas fa-check mr-2"></i>Generate Ulang
+                            </button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+
+                const confirmBtn = modal.querySelector('#confirm-edit-povkaki-btn');
+                const themeInput = modal.querySelector('#edit-povkaki-input');
+
+                confirmBtn.addEventListener('click', async () => {
+                    const newTheme = themeInput.value.trim();
+                    if (!newTheme) return;
+
+                    modal.remove();
+
+                    // Update the theme for this image
+                    generatedImageParams[index].theme = newTheme;
+                    currentThemesToUse[index] = newTheme;
+
+                    await handleRegeneratePovKaki(index);
+                });
+            }
+
+            // Function to handle regenerate POV Kaki
+            async function handleRegeneratePovKaki(index) {
+                const resultCards = resultsGrid.querySelectorAll('.result-card');
+                const targetCard = resultCards[index];
+                if (!targetCard) return;
+
+                const params = generatedImageParams[index];
+                if (!params) return;
+
+                // Show loading state
+                targetCard.innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-full min-h-[200px]">
+                        <div class="loader !border-l-purple-500"></div>
+                        <p class="mt-4 text-sm text-gray-600">Regenerating...</p>
+                    </div>
+                `;
+
+                try {
+                    const base64Product = params.productData.split(',')[1];
+                    const poseText = params.pose || pickPovKakiPose();
+                    let prompt = '';
+                    let payloadParts = [];
+
+                    if (params.backgroundDesc && params.backgroundData) {
+                        const base64Background = params.backgroundData.split(',')[1];
+                        prompt = `Create a composite product photography image by combining these elements:
+
+IMAGE 1 (Background Environment): Use this as the base scene/location
+IMAGE 2 (Product): The footwear product to be worn on the feet
+
+Task: Show a first-person POV looking down at own feet WEARING the product from IMAGE 2, in the environment from IMAGE 1.
+
+Requirements:
+- Camera angle: ${params.theme}
+- Pose: ${poseText}${params.productDesc ? `\n- Product is: ${params.productDesc}` : ''}
+- The feet MUST be wearing the product from IMAGE 2, product clearly visible on both feet
+- No hands in frame — this is a feet POV shot
+- The background/environment MUST be from IMAGE 1 (same location, same setting)
+- Blend lighting and colors so feet and product fit naturally in the environment
+- Make it look like a real photo taken in that location
+- Legs and feet should match the scene lighting
+- Professional 4K quality, realistic composition
+
+IMPORTANT: Use the EXACT environment/location from IMAGE 1 as the background. Do not create a different background.`;
+
+                        payloadParts = [
+                            { text: prompt },
+                            { inlineData: { mimeType: "image/jpeg", data: base64Background } },
+                            { inlineData: { mimeType: "image/jpeg", data: base64Product } }
+                        ];
+                    } else {
+                        prompt = `First-person POV product photography: own feet WEARING the footwear product. `;
+
+                        if (params.productDesc) {
+                            prompt += `Background setting: ${params.productDesc}. `;
+                        } else {
+                            prompt += `${params.theme}. `;
+                        }
+
+                        prompt += `Pose: ${poseText}. Product clearly visible on both feet, no hands in frame, professional 4K quality, realistic lighting and composition.`;
+
+                        payloadParts = [
+                            { text: prompt },
+                            { inlineData: { mimeType: "image/jpeg", data: base64Product } }
+                        ];
+                    }
+
+                    const payload = {
+                        contents: [{ parts: payloadParts }],
+                        generationConfig: {
+                            responseModalities: ['IMAGE'],
+                            imageConfig: { aspectRatio: params.ratio }
+                        }
+                    };
+
+                    const result = await generateImageWithRetry(payload);
+                    const base64Data = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
+
+                    if (base64Data) {
+                        const imageUrl = `data:image/png;base64,${base64Data}`;
+
+                        // Update stored image
+                        generatedImages[index] = imageUrl;
+
+                        // Redisplay the card
+                        const safeTheme = params.theme.replace(/"/g, '&quot;');
+                        targetCard.innerHTML = `
+                            <img src="${imageUrl}" alt="POV Kaki ${index + 1}" />
+                            <div class="result-card-actions">
+                                <button class="btn-preview" data-action="preview" data-image-url="${imageUrl}" title="Preview" aria-label="Preview">
+                                    <i class="fas fa-search-plus"></i>
+                                </button>
+                                <button class="btn-edit" data-action="edit" data-index="${index}" data-theme="${safeTheme}" title="Edit" aria-label="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-regenerate" data-action="regenerate" data-index="${index}" title="Regenerate" aria-label="Regenerate">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
+                                <button class="btn-download" data-action="download" data-image-url="${imageUrl}" data-filename="pov-kaki-${index + 1}.jpg" title="Download" aria-label="Download">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                            <div class="image-counter">#${index + 1}</div>
+                        `;
+                    } else {
+                        throw new Error('Failed to generate image');
+                    }
+                } catch (error) {
+                    console.error('Regenerate error:', error);
+                    targetCard.innerHTML = `
+                        <div class="flex flex-col items-center justify-center h-full min-h-[200px] text-red-600">
+                            <i class="fas fa-exclamation-triangle text-3xl mb-2"></i>
+                            <p class="text-sm">Gagal regenerate</p>
+                            <button onclick="location.reload()" class="mt-2 text-xs bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600">
+                                Refresh
+                            </button>
+                        </div>
+                    `;
+                }
+            }
+
+            // Event handling for action buttons (works on desktop & mobile)
+            resultsGrid.addEventListener('click', async (e) => {
+                e.stopPropagation();
+
+                const actionIcon = e.target.closest('[data-action]');
+                if (!actionIcon) return;
+
+                const action = actionIcon.dataset.action;
+                const imageUrl = actionIcon.dataset.imageUrl;
+                const index = actionIcon.dataset.index;
+                const theme = actionIcon.dataset.theme;
+
+                if (action === 'preview') {
+                    showPreviewModal(imageUrl);
+                } else if (action === 'edit') {
+                    handleEditPovKaki(parseInt(index), theme);
+                } else if (action === 'regenerate') {
+                    await handleRegeneratePovKaki(parseInt(index));
+                } else if (action === 'download') {
+                    const filename = actionIcon.dataset.filename;
+                    if (window.downloadDataURINew) {
+                        await window.downloadDataURINew(imageUrl, filename);
+                    }
+                }
+            });
+
+            // Download all button event handlers (works on desktop & mobile like Umrah)
+            if (downloadAllBtn) {
+                downloadAllBtn.addEventListener('click', async () => {
+                    if (generatedImages.length === 0) return;
+
+                    downloadAllBtn.disabled = true;
+                    downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+
+                    for (let i = 0; i < generatedImages.length; i++) {
+                        if (window.downloadDataURINew) {
+                            await window.downloadDataURINew(generatedImages[i], `pov-kaki-${i + 1}.jpg`);
+                            // Small delay between downloads for better UX
+                            await new Promise(resolve => setTimeout(resolve, 500));
+                        }
+                    }
+
+                    downloadAllBtn.disabled = false;
+                    downloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download Semua';
+                });
+            }
+
+            function showPreviewModal(imageUrl) {
+                const modal = document.createElement('div');
+                modal.className = 'image-preview-modal';
+                modal.innerHTML = `
+                    <div class="preview-modal-overlay"></div>
+                    <div class="preview-modal-content">
+                        <button class="preview-close-btn" aria-label="Close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <img src="${imageUrl}" alt="Preview" class="preview-modal-image">
+                    </div>
+                `;
+                document.body.appendChild(modal);
+
+                // Close modal handlers
+                const closeBtn = modal.querySelector('.preview-close-btn');
+                const overlay = modal.querySelector('.preview-modal-overlay');
+
+                const closeModal = () => {
+                    modal.classList.add('closing');
+                    setTimeout(() => modal.remove(), 300);
+                };
+
+                closeBtn.addEventListener('click', closeModal);
+                overlay.addEventListener('click', closeModal);
+
+                // ESC key to close
+                const handleEsc = (e) => {
+                    if (e.key === 'Escape') {
+                        closeModal();
+                        document.removeEventListener('keydown', handleEsc);
+                    }
+                };
+                document.addEventListener('keydown', handleEsc);
+
+                // Touch feedback for mobile
+                closeBtn.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.9)';
+                }, { passive: true });
+                closeBtn.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                }, { passive: true });
+
+                // Animate in
+                setTimeout(() => modal.classList.add('show'), 10);
+            }
+
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorSection.classList.remove('hidden');
+            }
+
+            function hideError() {
+                errorSection.classList.add('hidden');
+            }
+
+            function resetForm() {
+                uploadedImageData = null;
+                uploadedBackgroundData = null;
+                backgroundStyleDescription = null;
+                generatedImages = [];
+                uploadPlaceholder.classList.remove('hidden');
+                previewContainer.classList.add('hidden');
+                uploadArea.classList.remove('has-image');
+                bgPlaceholder.classList.remove('hidden');
+                bgPreviewContainer.classList.add('hidden');
+                bgUploadArea.classList.remove('has-image');
+                productDescription.value = '';
+                generateBtn.disabled = true;
+                resultsSection.classList.add('hidden');
+                resultsGrid.innerHTML = '';
+                if (povEmptyState) povEmptyState.classList.remove('hidden');
+                hideError();
+            }
+        })();
 
     // --- POV TANGAN TAB LOGIC ---
     // Direct initialization like Try-On (no lazy loading)
@@ -37191,11 +38036,11 @@ The script's tone and content must be tailored to the chosen script type.`;
                         <span class="logo-variation-badge">V${index}</span>
                     </div>
                     <div class="mt-3 flex gap-2">
-                        <button class="logo-action-btn flex-1 text-sm" data-action="logo-preview" data-image="${logoImage}">
-                            <i class="fas fa-eye mr-1"></i> Preview
+                        <button class="logo-action-btn secondary flex-1 text-sm" data-action="logo-preview" data-image="${logoImage}">
+                            <i class="fas fa-eye"></i> Preview
                         </button>
                         <button class="logo-action-btn flex-1 text-sm" data-action="logo-download" data-image="${logoImage}" data-filename="${filename}">
-                            <i class="fas fa-download mr-1"></i> Download
+                            <i class="fas fa-download"></i> Download
                         </button>
                     </div>
                     <p class="text-xs text-center text-gray-500 mt-2">Style: ${styleString.split(',')[0]}</p>

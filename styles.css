@@ -1826,6 +1826,214 @@
             font-weight: 600;
         }
 
+        /* --- STYLES FOR TAB: POV KAKI --- */
+        #content-pov-kaki {
+            font-family: 'Inter', sans-serif;
+            min-height: calc(100vh - 200px);
+        }
+        #content-pov-kaki .card {
+            background: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 1.5rem;
+            color: #1f2937;
+        }
+        #content-pov-kaki .theme-cat-btn-pov {
+            background-color: white;
+            border: 2px solid #cbd5e1;
+            padding: 0.65rem 0.5rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        #content-pov-kaki .theme-cat-btn-pov:hover {
+            border-color: #ea580c;
+            background-color: #fff7ed;
+        }
+        #content-pov-kaki .theme-cat-btn-pov.selected {
+            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+            color: white;
+            border-color: #ea580c;
+            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+        }
+        #content-pov-kaki .theme-cat-btn-pov * {
+            pointer-events: none;
+        }
+        #content-pov-kaki .upload-area {
+            border: 3px dashed #ea580c;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        #content-pov-kaki .upload-area:hover {
+            border-color: #c2410c;
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(234, 88, 12, 0.3);
+        }
+        #content-pov-kaki .upload-area.has-image {
+            padding: 0;
+            border-style: solid;
+            border-width: 3px;
+        }
+        #content-pov-kaki .preview-image {
+            width: 100%;
+            height: auto;
+            max-height: 260px;
+            object-fit: contain;
+            border-radius: 0.75rem;
+        }
+        #content-pov-kaki .btn-generate {
+            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(234, 88, 12, 0.4);
+        }
+        #content-pov-kaki .btn-generate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(234, 88, 12, 0.6);
+        }
+        #content-pov-kaki .btn-generate:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+        #content-pov-kaki .ratio-btn-pov {
+            background-color: white;
+            border: 2px solid #cbd5e1;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #content-pov-kaki .ratio-btn-pov:hover {
+            border-color: #ea580c;
+            background-color: #fff7ed;
+        }
+        #content-pov-kaki .ratio-btn-pov.selected {
+            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+            color: white;
+            border-color: #ea580c;
+            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+        }
+        #content-pov-kaki .hand-count-btn-pov {
+            background-color: white;
+            border: 2px solid #cbd5e1;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        #content-pov-kaki .hand-count-btn-pov:hover {
+            border-color: #ea580c;
+            background-color: #fff7ed;
+            transform: translateY(-2px);
+        }
+        #content-pov-kaki .hand-count-btn-pov.selected {
+            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+            color: white;
+            border-color: #ea580c;
+            box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+        }
+        #content-pov-kaki .hand-count-btn-pov * {
+            pointer-events: none;
+        }
+        #content-pov-kaki .pov-loader {
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid #ea580c;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+        #content-pov-kaki .result-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.5rem;
+        }
+        @media (max-width: 639px) {
+            #content-pov-kaki .result-grid { grid-template-columns: 1fr; }
+        }
+        #content-pov-kaki .result-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        #content-pov-kaki .result-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(234, 88, 12, 0.3);
+        }
+        #content-pov-kaki .result-card img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+        #content-pov-kaki .download-btn-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+            padding: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        #content-pov-kaki .result-card:hover .download-btn-overlay {
+            opacity: 1;
+        }
+        #content-pov-kaki .download-icon {
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        #content-pov-kaki .download-icon:hover {
+            transform: scale(1.2);
+        }
+        #content-pov-kaki .image-counter {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(234, 88, 12, 0.9);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
         /* --- STYLES FOR TAB: POV SELFIE --- */
         #content-pov-selfie {
             font-family: 'Inter', sans-serif;
@@ -1941,7 +2149,8 @@
         #content-pov-tangan .result-card-actions,
         #content-pov-selfie .result-card-actions,
         #content-mirror-selfie .result-card-actions,
-        #content-walking-pad .result-card-actions {
+        #content-walking-pad .result-card-actions,
+        #content-pov-kaki .result-card-actions {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
@@ -1952,7 +2161,8 @@
         #content-pov-tangan .result-card-actions button,
         #content-pov-selfie .result-card-actions button,
         #content-mirror-selfie .result-card-actions button,
-        #content-walking-pad .result-card-actions button {
+        #content-walking-pad .result-card-actions button,
+        #content-pov-kaki .result-card-actions button {
             width: 44px;
             height: 44px;
             border-radius: 9999px;
@@ -1968,19 +2178,21 @@
         #content-pov-tangan .result-card-actions button:hover,
         #content-pov-selfie .result-card-actions button:hover,
         #content-mirror-selfie .result-card-actions button:hover,
-        #content-walking-pad .result-card-actions button:hover {
+        #content-walking-pad .result-card-actions button:hover,
+        #content-pov-kaki .result-card-actions button:hover {
             transform: scale(1.1);
         }
         #content-pov-tangan .result-card-actions button *,
         #content-pov-selfie .result-card-actions button *,
         #content-mirror-selfie .result-card-actions button *,
-        #content-walking-pad .result-card-actions button * {
+        #content-walking-pad .result-card-actions button *,
+        #content-pov-kaki .result-card-actions button * {
             pointer-events: none;
         }
-        #content-pov-tangan .btn-preview, #content-pov-selfie .btn-preview, #content-mirror-selfie .btn-preview, #content-walking-pad .btn-preview { background: #3b82f6; }
-        #content-pov-tangan .btn-edit, #content-pov-selfie .btn-edit, #content-mirror-selfie .btn-edit, #content-walking-pad .btn-edit { background: #a855f7; }
-        #content-pov-tangan .btn-regenerate, #content-pov-selfie .btn-regenerate, #content-mirror-selfie .btn-regenerate, #content-walking-pad .btn-regenerate { background: #22c55e; }
-        #content-pov-tangan .btn-download, #content-pov-selfie .btn-download, #content-mirror-selfie .btn-download, #content-walking-pad .btn-download { background: #0891b2; }
+        #content-pov-tangan .btn-preview, #content-pov-selfie .btn-preview, #content-mirror-selfie .btn-preview, #content-walking-pad .btn-preview, #content-pov-kaki .btn-preview { background: #3b82f6; }
+        #content-pov-tangan .btn-edit, #content-pov-selfie .btn-edit, #content-mirror-selfie .btn-edit, #content-walking-pad .btn-edit, #content-pov-kaki .btn-edit { background: #a855f7; }
+        #content-pov-tangan .btn-regenerate, #content-pov-selfie .btn-regenerate, #content-mirror-selfie .btn-regenerate, #content-walking-pad .btn-regenerate, #content-pov-kaki .btn-regenerate { background: #22c55e; }
+        #content-pov-tangan .btn-download, #content-pov-selfie .btn-download, #content-mirror-selfie .btn-download, #content-walking-pad .btn-download, #content-pov-kaki .btn-download { background: #0891b2; }
         #content-mirror-selfie .result-card, #content-walking-pad .result-card {
             background: white;
             border-radius: 1rem;
@@ -5826,6 +6038,11 @@
             background: linear-gradient(135deg, var(--logo-primary), var(--logo-secondary));
             color: white;
             padding: 0.5rem 1rem;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
             border-radius: 0.5rem;
             font-weight: 600;
             transition: all 0.3s ease;
@@ -5834,6 +6051,17 @@
             -webkit-tap-highlight-color: transparent;
             user-select: none;
             touch-action: manipulation;
+        }
+
+        /* Preview = aksi sekunder: outline putih supaya jelas beda dari Download (primary) */
+        .logo-action-btn.secondary {
+            background: white;
+            color: var(--logo-dark);
+            border: 2px solid var(--logo-primary);
+        }
+
+        .logo-action-btn.secondary:hover {
+            background: var(--logo-light);
         }
 
         .logo-action-btn * {

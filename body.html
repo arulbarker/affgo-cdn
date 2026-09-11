@@ -10,7 +10,7 @@
         <!-- Floating badge top-right -->
         <div style="position:absolute;top:16px;right:16px;background:linear-gradient(135deg,#ea580c,#c2410c);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(234,88,12,0.4);z-index:1;">90+ FITUR &#x26A1;</div>
         <!-- Floating version badge top-left (auto-sync dari UPDATE_VERSION via JS) -->
-        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V68</div>
+        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V69</div>
         <div class="login-box">
             <!-- AG Logo badge -->
             <div style="background:linear-gradient(135deg,#16a34a,#15803d);width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:1.35rem;font-weight:900;color:white;box-shadow:0 6px 18px rgba(22,163,74,0.4);">AG</div>
@@ -54,7 +54,7 @@
         <button type="button" id="mobile-drawer-toggle" aria-label="Buka menu" aria-expanded="false">
             <i class="fas fa-bars"></i>
         </button>
-        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V68</span></h1>
+        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V69</span></h1>
     </div>
 
     <div class="app-container">
@@ -66,7 +66,7 @@
                 </h1>
                 <p class="text-xs text-gray-500 mt-1">by Arul CG</p>
                 <div class="mt-2">
-                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V68</span>
+                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V69</span>
                 </div>
                 <div class="lang-dropdown mt-2" id="lang-dropdown-desktop">
                     <button type="button" class="lang-dd-btn" aria-haspopup="listbox" aria-expanded="false">
@@ -173,6 +173,10 @@
                     <button data-tab="walking-pad" class="main-tab-btn hidden">
                         <i class="fas fa-walking"></i>
                         <span class="btn-text">POV Walking Pad</span>
+                    </button>
+                    <button data-tab="pov-kaki" class="main-tab-btn hidden">
+                        <i class="fas fa-shoe-prints"></i>
+                        <span class="btn-text">POV Kaki</span>
                     </button>
                     <button data-tab="pose-fashion" class="main-tab-btn">
                         <i class="fas fa-user-tie"></i>
@@ -17448,6 +17452,328 @@
             </div>
         </div>
 
+        <!-- TAB: POV KAKI -->
+        <div id="content-pov-kaki" class="main-content-panel hidden">
+            <div class="hub-strip">
+                <button type="button" class="hub-pill" data-goto="pov-tangan" data-i18n="hub.pov-tangan">POV Tangan</button>
+                <button type="button" class="hub-pill" data-goto="pov-selfie" data-i18n="hub.pov-selfie">POV Selfie</button>
+                <button type="button" class="hub-pill" data-goto="mirror-selfie" data-i18n="hub.pov-mirror">Mirror Selfie</button>
+                <button type="button" class="hub-pill" data-goto="walking-pad" data-i18n="hub.pov-walkpad">POV Walking Pad</button>
+                <button type="button" class="hub-pill active" data-goto="pov-kaki" data-i18n="hub.pov-kaki">POV Kaki</button>
+            </div>
+            <div class="container mx-auto p-4 md:p-8 max-w-6xl">
+                <header class="text-center mb-8">
+                    <h1 class="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-amber-600 to-orange-500">
+                        <i class="fas fa-shoe-prints mr-3 text-orange-600"></i><span data-i18n="povkaki.h1">POV Kaki Generator</span>
+                    </h1>
+                    <p class="text-lg text-gray-500 mt-3 max-w-3xl mx-auto" data-i18n="povkaki.subtitle">
+                        Buat foto POV kaki memakai produk (sepatu, sandal, kaos kaki) dengan background keren — cocok untuk affiliate sepatu
+                    </p>
+                    <p class="text-sm text-gray-400 mt-2" data-i18n="povkaki.hint">
+                        Upload foto produk → AI membuat foto kaki memakai produk Anda!
+                    </p>
+                </header>
+
+                <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Input Column -->
+                    <div class="lg:col-span-1 space-y-6">
+                        <!-- Step 1: Upload Foto Produk -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-600 to-amber-600 text-white font-bold text-sm shadow-lg">1</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="povkaki.upload-title">Upload Foto Produk</h2>
+                            </div>
+                            <div id="povkaki-upload-area" class="upload-area cursor-pointer">
+                                <div id="povkaki-upload-placeholder" style="display: block;">
+                                    <i class="fas fa-images text-5xl text-orange-500 mb-3"></i>
+                                    <p class="text-base font-semibold text-gray-700 mb-2" data-i18n="povkaki.upload-hint">
+                                        Klik atau drag foto produk Anda di sini
+                                    </p>
+                                    <p class="text-xs text-gray-500" data-i18n="povkaki.format">
+                                        Format: JPG, PNG, WEBP (Max 10MB)
+                                    </p>
+                                </div>
+                                <div id="povkaki-preview-container" class="hidden">
+                                    <img id="povkaki-preview-image" alt="Preview" class="preview-image" />
+                                </div>
+                            </div>
+                            <input
+                                type="file"
+                                id="povkaki-image-input"
+                                accept="image/*"
+                                class="hidden"
+                            />
+                        </div>
+
+                        <!-- Step 2: Tema Background -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-600 to-amber-600 text-white font-bold text-sm shadow-lg">2</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="povkaki.theme-title">Tema Background</h2>
+                            </div>
+                            <div id="povkaki-theme-selection" class="grid grid-cols-2 gap-2">
+                                <button type="button" data-theme-cat="random" class="theme-cat-btn-pov selected col-span-2">
+                                    <i class="fas fa-random mr-2"></i><span data-i18n="povkaki.theme-random">Acak (Semua Tema)</span>
+                                </button>
+                                <button type="button" data-theme-cat="street" class="theme-cat-btn-pov">
+                                    <i class="fas fa-road mr-2"></i><span data-i18n="povkaki.theme-street">Jalanan &amp; Street</span>
+                                </button>
+                                <button type="button" data-theme-cat="urban" class="theme-cat-btn-pov">
+                                    <i class="fas fa-city mr-2"></i><span data-i18n="povkaki.theme-urban">Tangga &amp; Urban</span>
+                                </button>
+                                <button type="button" data-theme-cat="beach" class="theme-cat-btn-pov">
+                                    <i class="fas fa-umbrella-beach mr-2"></i><span data-i18n="povkaki.theme-beach">Pantai &amp; Alam</span>
+                                </button>
+                                <button type="button" data-theme-cat="cafe" class="theme-cat-btn-pov">
+                                    <i class="fas fa-mug-hot mr-2"></i><span data-i18n="povkaki.theme-cafe">Cafe &amp; Indoor</span>
+                                </button>
+                                <button type="button" data-theme-cat="sporty" class="theme-cat-btn-pov">
+                                    <i class="fas fa-dumbbell mr-2"></i><span data-i18n="povkaki.theme-sporty">Gym &amp; Sporty</span>
+                                </button>
+                                <button type="button" data-theme-cat="minimal" class="theme-cat-btn-pov">
+                                    <i class="fas fa-circle-notch mr-2"></i><span data-i18n="povkaki.theme-minimal">Minimalis Studio</span>
+                                </button>
+                                <button type="button" data-theme-cat="luxury" class="theme-cat-btn-pov">
+                                    <i class="fas fa-gem mr-2"></i><span data-i18n="povkaki.theme-luxury">Dark &amp; Luxury</span>
+                                </button>
+                                <button type="button" data-theme-cat="home" class="theme-cat-btn-pov">
+                                    <i class="fas fa-couch mr-2"></i><span data-i18n="povkaki.theme-home">Cozy Home</span>
+                                </button>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-3" data-i18n-html="povkaki.theme-hint">
+                                <i class="fas fa-lightbulb mr-1"></i>
+                                Pilih kategori tema background. Acak = campuran semua tema, setiap generate hasilnya berbeda-beda.
+                            </p>
+                        </div>
+
+                        <!-- Step 3: Background Custom (Opsional) -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-600 to-amber-600 text-white font-bold text-sm shadow-lg">3</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="povkaki.bg-title">Background Custom (Opsional)</h2>
+                            </div>
+                            <div id="povkaki-bg-upload-area" class="upload-area cursor-pointer" style="min-height: 120px; padding: 1.5rem;">
+                                <div id="povkaki-bg-placeholder" style="display: block;">
+                                    <i class="fas fa-map-marker-alt text-3xl text-orange-500 mb-2"></i>
+                                    <p class="text-sm font-semibold text-gray-700 mb-1" data-i18n="povkaki.bg-upload">
+                                        Upload foto lokasi/background (Opsional)
+                                    </p>
+                                    <p class="text-xs text-gray-500" data-i18n="povkaki.bg-hint">
+                                        Kaki + produk akan ditempatkan di lokasi ini
+                                    </p>
+                                </div>
+                                <div id="povkaki-bg-preview-container" class="hidden relative">
+                                    <img id="povkaki-bg-preview-image" alt="Background Preview" class="preview-image" />
+                                    <button id="povkaki-bg-remove-btn" class="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center transition-all">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <input
+                                type="file"
+                                id="povkaki-bg-input"
+                                accept="image/*"
+                                class="hidden"
+                            />
+                            <p class="text-xs text-gray-500 mt-2" data-i18n-html="povkaki.bg-tip">
+                                <i class="fas fa-magic mr-1"></i>
+                                Tips: Upload foto lokasi apapun (jalan, taman, mall, tangga, dll). Kaki yang memakai produk akan digabungkan ke lokasi tersebut
+                            </p>
+                        </div>
+
+                        <!-- Step 4: Deskripsi Background (Opsional) -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-600 to-amber-600 text-white font-bold text-sm shadow-lg">4</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="povkaki.desc-title">Deskripsi Background (Opsional)</h2>
+                            </div>
+                            <textarea
+                                id="povkaki-product-description"
+                                data-i18n-placeholder="povkaki.desc-placeholder"
+                                placeholder="Contoh: Jalan aesthetic Jepang saat sore, Lantai marmer mall mewah, Trotoar dengan daun musim gugur, dll..."
+                                class="w-full p-4 border-2 border-orange-200 rounded-xl focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all"
+                                rows="3"
+                            ></textarea>
+                            <p class="text-xs text-gray-500 mt-2" data-i18n-html="povkaki.desc-tip">
+                                <i class="fas fa-lightbulb mr-1"></i>
+                                Tips: Deskripsikan background/setting yang Anda inginkan. Kosongkan untuk mendapatkan berbagai aesthetic background otomatis.
+                            </p>
+                        </div>
+
+                        <!-- Step 5: Gaya Pose -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-600 to-amber-600 text-white font-bold text-sm shadow-lg">5</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="povkaki.pose-title">Gaya Pose</h2>
+                            </div>
+                            <div id="povkaki-pose-selection" class="grid grid-cols-2 gap-3">
+                                <button type="button" data-pose="random" class="hand-count-btn-pov selected">
+                                    <i class="fas fa-random mr-2"></i><span data-i18n="povkaki.pose-random">Acak</span>
+                                </button>
+                                <button type="button" data-pose="standing" class="hand-count-btn-pov">
+                                    <i class="fas fa-male mr-2"></i><span data-i18n="povkaki.pose-standing">Berdiri Menunduk</span>
+                                </button>
+                                <button type="button" data-pose="sitting" class="hand-count-btn-pov">
+                                    <i class="fas fa-chair mr-2"></i><span data-i18n="povkaki.pose-sitting">Duduk Santai</span>
+                                </button>
+                                <button type="button" data-pose="walking" class="hand-count-btn-pov">
+                                    <i class="fas fa-walking mr-2"></i><span data-i18n="povkaki.pose-walking">Jalan (Mid-Step)</span>
+                                </button>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2" data-i18n-html="povkaki.pose-hint">
+                                <i class="fas fa-lightbulb mr-1"></i>
+                                Pilih gaya pose kaki. Acak = tiap foto posenya berbeda-beda.
+                            </p>
+                        </div>
+
+                        <!-- Step 6: Rasio Aspek -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-600 to-amber-600 text-white font-bold text-sm shadow-lg">6</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="povkaki.ratio-title">Rasio Aspek</h2>
+                            </div>
+                            <div id="povkaki-ratio-selection" class="grid grid-cols-2 gap-3">
+                                <button type="button" data-ratio="1:1" class="ratio-btn-pov">
+                                    <i class="fas fa-square mr-2"></i>1:1
+                                </button>
+                                <button type="button" data-ratio="16:9" class="ratio-btn-pov">
+                                    <i class="fas fa-tv mr-2"></i>16:9
+                                </button>
+                                <button type="button" data-ratio="3:4" class="ratio-btn-pov">
+                                    <i class="fas fa-portrait mr-2"></i>3:4
+                                </button>
+                                <button type="button" data-ratio="9:16" class="ratio-btn-pov selected">
+                                    <i class="fas fa-mobile-alt mr-2"></i>9:16
+                                </button>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2" data-i18n-html="povkaki.ratio-hint">
+                                <i class="fas fa-lightbulb mr-1"></i>
+                                Pilih rasio aspek untuk semua foto POV yang akan di-generate. 9:16 paling pas untuk TikTok/Reels.
+                            </p>
+                        </div>
+
+                        <!-- Step 7: Jumlah Generate -->
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-orange-600 to-amber-600 text-white font-bold text-sm shadow-lg">7</div>
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="povkaki.count-label">Jumlah Generate</h2>
+                            </div>
+                            <div id="povkaki-count-selection-grid" class="count-btn-grid theme-amber">
+                                <button type="button" data-count="1">1</button>
+                                <button type="button" data-count="2">2</button>
+                                <button type="button" data-count="3">3</button>
+                                <button type="button" data-count="4" class="selected">4</button>
+                                <button type="button" data-count="5">5</button>
+                                <button type="button" data-count="6">6</button>
+                                <button type="button" data-count="7">7</button>
+                                <button type="button" data-count="8">8</button>
+                                <button type="button" data-count="9">9</button>
+                                <button type="button" data-count="10">10</button>
+                            </div>
+                        </div>
+
+                        <!-- Generate Button -->
+                        <button
+                            id="povkaki-generate-btn"
+                            class="btn-generate w-full disabled:opacity-50"
+                            disabled
+                        >
+                            <i class="fas fa-magic mr-3"></i>
+                            <span data-i18n="povkaki.generate-btn">Generate Foto POV Kaki</span>
+                        </button>
+                        <button
+                            id="povkaki-stop-btn"
+                            class="hidden btn-generate w-full"
+                            style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);"
+                        >
+                            <i class="fas fa-stop-circle mr-3"></i>
+                            <span data-i18n="common.stop-gen">Stop Generate</span>
+                        </button>
+                    </div>
+
+                    <!-- Output Column -->
+                    <div class="lg:col-span-2">
+                        <div class="card p-6 bg-white rounded-2xl shadow-lg">
+                            <div class="flex flex-wrap justify-between items-center gap-3 mb-6">
+                                <h2 class="text-xl font-bold text-gray-800">
+                                    <i class="fas fa-images mr-2 text-orange-500"></i>
+                                    <span data-i18n="povkaki.results-title">Hasil POV Kaki</span> (<span id="povkaki-result-count">0</span> <span data-i18n="common.photo-unit">foto</span>)
+                                </h2>
+                                <button
+                                    id="povkaki-download-all-btn"
+                                    class="hidden min-h-[44px] bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white font-semibold py-2.5 px-5 rounded-lg transition-all flex items-center gap-2 text-sm shadow-md hover:shadow-lg"
+                                >
+                                    <i class="fas fa-download"></i>
+                                    <span data-i18n="common.download-all">Download Semua</span>
+                                </button>
+                            </div>
+                            <div id="povkaki-empty-state" class="text-center py-16 text-gray-400">
+                                <i class="fas fa-shoe-prints text-6xl mb-4 opacity-50"></i>
+                                <p class="text-lg" data-i18n="povkaki.empty-title">Hasil foto POV akan muncul di sini</p>
+                                <p class="text-sm mt-2" data-i18n="povkaki.empty-hint">Upload foto produk lalu klik Generate</p>
+                            </div>
+                            <div id="povkaki-results-section" class="hidden">
+                                <div id="povkaki-results-grid" class="result-grid">
+                                    <!-- Results will be inserted here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Loading Section -->
+                        <div id="povkaki-loading-section" class="hidden text-center py-12">
+                            <div class="card p-6 bg-white rounded-2xl shadow-lg inline-block">
+                                <div class="flex flex-col items-center">
+                                    <div class="pov-loader mb-6"></div>
+                                    <h3 class="text-2xl font-bold text-gray-800 mb-2" data-i18n="povkaki.loading-title">
+                                        Sedang Membuat Foto POV Kaki...
+                                    </h3>
+                                    <p class="text-gray-600 mb-4" data-i18n="common.loading-hint">
+                                        Mohon tunggu, AI sedang menghasilkan foto...
+                                    </p>
+                                    <div class="w-full max-w-md bg-gray-200 rounded-full h-3">
+                                        <div
+                                            id="povkaki-progress-bar"
+                                            class="bg-gradient-to-r from-orange-600 to-amber-600 h-3 rounded-full transition-all duration-300"
+                                            style="width: 0%"
+                                        ></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Error Section -->
+                        <div id="povkaki-error-section" class="hidden mt-6">
+                            <div class="card p-6 rounded-2xl bg-red-50 border-2 border-red-300">
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-triangle text-red-500 text-3xl mr-4 mt-1"></i>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-red-800 mb-2" data-i18n="common.error-title">Terjadi Kesalahan</h3>
+                                        <p id="povkaki-error-message" class="text-red-700"></p>
+                                        <button
+                                            id="povkaki-retry-btn"
+                                            class="mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg transition-all"
+                                        >
+                                            <i class="fas fa-redo mr-2"></i><span data-i18n="common.retry">Coba Lagi</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tips Box -->
+                        <div class="mt-6 bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-200 rounded-xl p-5">
+                            <h4 class="font-bold text-amber-800 mb-2"><i class="fas fa-star mr-2"></i><span data-i18n="povkaki.tips-title">Tips Hasil Terbaik</span></h4>
+                            <ul class="text-sm text-amber-700 space-y-1">
+                                <li data-i18n-html="povkaki.tip1"><i class="fas fa-check mr-2"></i>Gunakan foto produk dengan background polos agar produk terdeteksi jelas</li>
+                                <li data-i18n-html="povkaki.tip2"><i class="fas fa-check mr-2"></i>Rasio 9:16 + tema Jalanan paling cocok untuk konten TikTok/Reels sepatu</li>
+                                <li data-i18n-html="povkaki.tip3"><i class="fas fa-check mr-2"></i>Upload background custom untuk lokasi yang spesifik (toko, event, mall, dll)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+
         <!-- TAB 14: POV TANGAN -->
         <div id="content-pov-tangan" class="main-content-panel hidden">
             <div class="hub-strip">
@@ -17455,6 +17781,7 @@
                 <button type="button" class="hub-pill" data-goto="pov-selfie" data-i18n="hub.pov-selfie">POV Selfie</button>
                 <button type="button" class="hub-pill" data-goto="mirror-selfie" data-i18n="hub.pov-mirror">Mirror Selfie</button>
                 <button type="button" class="hub-pill" data-goto="walking-pad" data-i18n="hub.pov-walkpad">POV Walking Pad</button>
+                <button type="button" class="hub-pill" data-goto="pov-kaki" data-i18n="hub.pov-kaki">POV Kaki</button>
             </div>
             <div class="container mx-auto p-4 md:p-8 max-w-6xl">
                 <header class="text-center mb-8">
@@ -18082,6 +18409,7 @@
             <button type="button" class="hub-pill active" data-goto="pov-selfie" data-i18n="hub.pov-selfie">POV Selfie</button>
             <button type="button" class="hub-pill" data-goto="mirror-selfie" data-i18n="hub.pov-mirror">Mirror Selfie</button>
             <button type="button" class="hub-pill" data-goto="walking-pad" data-i18n="hub.pov-walkpad">POV Walking Pad</button>
+            <button type="button" class="hub-pill" data-goto="pov-kaki" data-i18n="hub.pov-kaki">POV Kaki</button>
         </div>
         <div class="container mx-auto p-4 md:p-8 max-w-6xl">
             <header class="text-center mb-8">
@@ -18329,6 +18657,7 @@
             <button type="button" class="hub-pill" data-goto="pov-selfie" data-i18n="hub.pov-selfie">POV Selfie</button>
             <button type="button" class="hub-pill active" data-goto="mirror-selfie" data-i18n="hub.pov-mirror">Mirror Selfie</button>
             <button type="button" class="hub-pill" data-goto="walking-pad" data-i18n="hub.pov-walkpad">POV Walking Pad</button>
+            <button type="button" class="hub-pill" data-goto="pov-kaki" data-i18n="hub.pov-kaki">POV Kaki</button>
         </div>
         <div class="container mx-auto max-w-7xl">
             <header class="text-center mb-8">
@@ -19523,6 +19852,7 @@
                 <button type="button" class="hub-pill" data-goto="pov-selfie" data-i18n="hub.pov-selfie">POV Selfie</button>
                 <button type="button" class="hub-pill" data-goto="mirror-selfie" data-i18n="hub.pov-mirror">Mirror Selfie</button>
                 <button type="button" class="hub-pill active" data-goto="walking-pad" data-i18n="hub.pov-walkpad">POV Walking Pad</button>
+                <button type="button" class="hub-pill" data-goto="pov-kaki" data-i18n="hub.pov-kaki">POV Kaki</button>
             </div>
             <div class="container mx-auto max-w-7xl">
                 <header class="text-center mb-10">
@@ -20127,7 +20457,7 @@
     <button id="update-info-btn" class="text-white rounded-full w-16 h-16 flex items-center justify-center shadow-xl relative" style="background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);">
         <div class="flex flex-col items-center leading-none pointer-events-none">
             <i class="fas fa-bolt text-sm"></i>
-            <span class="text-xs font-bold mt-0.5">V68</span>
+            <span class="text-xs font-bold mt-0.5">V69</span>
         </div>
         <span class="update-notif-dot"></span>
     </button>
