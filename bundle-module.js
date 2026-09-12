@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '69';
+        const UPDATE_VERSION = '70';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -718,6 +718,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '70',
+                dateId: 'September 2026',
+                dateEn: 'September 2026',
+                badgeKey: 'modal.fix-v70-badge',
+                badgeText: 'Update v70',
+                gradient: 'linear-gradient(135deg,#0891b2,#0e7490)',
+                borderColor: '#0891b2',
+                icon: 'fa-download',
+                iconColor: '#0891b2',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v70-title-fbdl',
+                        titleText: 'Perbaikan: Tombol Download Feed Branding',
+                        bodyKey: 'modal.fix-v70-body-fbdl',
+                        bodyText: 'Tombol unduh di tiap kartu hasil Feed Branding sebelumnya tidak merespons saat ditekan. Sudah diperbaiki — keenam post feed kini bisa diunduh satu per satu.'
+                    },
+                    {
+                        titleKey: 'modal.fix-v70-title-adfix',
+                        titleText: 'Satu Klik Saja Setelah Iklan',
+                        bodyKey: 'modal.fix-v70-body-adfix',
+                        bodyText: 'Sebelumnya setelah menonton iklan, tombol Generate/Download sering harus ditekan sekali lagi baru jalan. Sekarang begitu iklan selesai, aksinya langsung berjalan otomatis — berlaku di semua fitur.'
+                    }
+                ]
+            },
             {
                 version: '69',
                 dateId: 'September 2026',

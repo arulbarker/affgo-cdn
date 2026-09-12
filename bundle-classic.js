@@ -482,6 +482,11 @@
                 'login.secure': '\uD83D\uDD12 Akses Terenkripsi & Aman',
                 'login.no-access-cta': '\uD83D\uDED2 Belum punya akses? Beli di sini \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v70-badge': 'Update v70',
+                'modal.fix-v70-title-fbdl': 'Perbaikan: Tombol Download Feed Branding',
+                'modal.fix-v70-body-fbdl': 'Tombol unduh di tiap kartu hasil Feed Branding sebelumnya tidak merespons saat ditekan. Sudah diperbaiki — keenam post feed kini bisa diunduh satu per satu.',
+                'modal.fix-v70-title-adfix': 'Satu Klik Saja Setelah Iklan',
+                'modal.fix-v70-body-adfix': 'Sebelumnya setelah menonton iklan, tombol Generate/Download sering harus ditekan sekali lagi baru jalan. Sekarang begitu iklan selesai, aksinya langsung berjalan otomatis — berlaku di semua fitur.',
                 'modal.fix-v69-badge': 'Update v69',
                 'modal.fix-v69-title-povkaki': 'Fitur Baru: POV Kaki — Foto Sepatu Dipakai di Kaki',
                 'modal.fix-v69-body-povkaki': 'Anggota baru POV Studio! Upload foto sepatu/sandal, AI membuat foto gaya "shoefie" — kamera menunduk melihat kaki yang memakai produkmu. Ada 8 tema background (jalanan, pantai, gym, dll), pilihan gaya pose, dan rasio 9:16 siap TikTok/Reels. Cocok untuk affiliate sepatu.',
@@ -653,7 +658,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Tab Ruang Saku sekarang punya halaman penjelasan singkat fitur Rindu (AI keuangan) + tombol langsung ke RuangSaku.com. Lebih nyaman dipakai di HP — tinggal klik dan terbuka di tab browser.',
                 'modal.fix-v31-title-telegram': 'Tombol Telegram di Pojok Layar',
                 'modal.fix-v31-body-telegram': 'Tombol bundar Telegram sekarang ada di pojok kanan bawah aplikasi. Sekali klik langsung join grup Telegram Affiliate Go — tempat update fitur, tips, dan tanya jawab dengan komunitas.',
-                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 69',
+                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 70',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Selamat Datang di Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Asisten AI Anda untuk menjelajahi 79++ fitur photo & video generation',
@@ -3312,6 +3317,11 @@
                 'login.secure': '\uD83D\uDD12 Encrypted & Secure Access',
                 'login.no-access-cta': '\uD83D\uDED2 No access yet? Buy here \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v70-badge': 'Update v70',
+                'modal.fix-v70-title-fbdl': 'Fix: Feed Branding Download Button',
+                'modal.fix-v70-body-fbdl': 'The download button on each Feed Branding result card previously did not respond when tapped. Fixed — all 6 feed posts can now be downloaded individually.',
+                'modal.fix-v70-title-adfix': 'Just One Click After Ads',
+                'modal.fix-v70-body-adfix': 'Previously, after watching an ad you often had to press Generate/Download once more before it worked. Now the action runs automatically as soon as the ad finishes — across all features.',
                 'modal.fix-v69-badge': 'Update v69',
                 'modal.fix-v69-title-povkaki': 'New Feature: Feet POV — Shoes Worn on Feet',
                 'modal.fix-v69-body-povkaki': 'A new POV Studio member! Upload a shoe/sandal photo and AI creates "shoefie" style photos — looking down at feet wearing your product. 8 background themes (street, beach, gym, etc), pose styles, and 9:16 ratio ready for TikTok/Reels. Perfect for shoe affiliates.',
@@ -3483,7 +3493,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Ruang Saku tab now has a brief intro page for Rindu (AI finance buddy) + direct button to RuangSaku.com. Smoother mobile experience — one click and it opens in a browser tab.',
                 'modal.fix-v31-title-telegram': 'Telegram Button at Screen Corner',
                 'modal.fix-v31-body-telegram': 'Round Telegram button is now at the bottom-right corner of the app. One click jumps directly to the Affiliate Go Telegram group — for feature updates, tips, and Q&A with the community.',
-                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 69',
+                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 70',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Welcome to Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Your AI Assistant to explore 79++ photo & video generation features',
@@ -7717,14 +7727,14 @@
             target.addEventListener("click", function (e) {
                 if (window.isAdFree) return;
                 if (!__adsConfigured()) return; // failsafe: placeholder URL = sistem iklan off
+                if (target.dataset.adBypass === "1") {
+                    delete target.dataset.adBypass;
+                    return; // fire ulang setelah ad — biarkan handler asli jalan
+                }
                 if (__adInProgress) {
                     e.preventDefault();
                     e.stopImmediatePropagation();
                     return;
-                }
-                if (target.dataset.adBypass === "1") {
-                    delete target.dataset.adBypass;
-                    return; // fire ulang setelah ad — biarkan handler asli jalan
                 }
 
                 const now = Date.now();
@@ -7776,13 +7786,13 @@
                     const btn = e.target.closest('[data-action="download"], [data-action$="-download"]');
                     if (!btn) return;
 
+                    if (btn.dataset.adBypass === "1") {
+                        delete btn.dataset.adBypass;
+                        return;
+                    }
                     if (__adInProgress) {
                         e.preventDefault();
                         e.stopImmediatePropagation();
-                        return;
-                    }
-                    if (btn.dataset.adBypass === "1") {
-                        delete btn.dataset.adBypass;
                         return;
                     }
                     const now = Date.now();
@@ -8292,11 +8302,16 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
                     await generateSingleFb(index);
                 }
 
-                resultsGrid.addEventListener('click', (e) => {
+                resultsGrid.addEventListener('click', async (e) => {
                     const pv = e.target.closest('[data-action="fb-preview"]');
                     if (pv) { fbShowPreview(pv.dataset.imageUrl); return; }
                     const rg = e.target.closest('[data-action="fb-regen"]');
-                    if (rg) { fbRegenOne(parseInt(rg.dataset.index, 10)); }
+                    if (rg) { fbRegenOne(parseInt(rg.dataset.index, 10)); return; }
+                    const dl = e.target.closest('[data-action="download"]');
+                    if (dl) {
+                        if (window.downloadDataURINew) await window.downloadDataURINew(dl.dataset.imageUrl, dl.dataset.filename);
+                        else if (window.downloadImage) await window.downloadImage(dl.dataset.imageUrl, dl.dataset.filename);
+                    }
                 });
 
                 function fbRoleLabel(key) {
