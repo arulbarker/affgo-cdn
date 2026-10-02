@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '70';
+        const UPDATE_VERSION = '71';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -718,6 +718,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '71',
+                dateId: 'Oktober 2026',
+                dateEn: 'October 2026',
+                badgeKey: 'modal.fix-v71-badge',
+                badgeText: 'Update v71',
+                gradient: 'linear-gradient(135deg,#7c3aed,#6d28d9)',
+                borderColor: '#7c3aed',
+                icon: 'fa-shield-alt',
+                iconColor: '#7c3aed',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v71-title-upscale',
+                        titleText: 'Upscale Lebih Aman & Stabil',
+                        bodyKey: 'modal.fix-v71-body-upscale',
+                        bodyText: 'Proses Upscale kini berjalan lewat server khusus yang lebih aman. Kuota hanya terpotong saat upscale berhasil, dan otomatis dikembalikan kalau proses gagal.'
+                    }
+                ]
+            },
             {
                 version: '70',
                 dateId: 'September 2026',
@@ -18597,10 +18616,7 @@ PENTING:
 
     // ==================== UPSCALE (paid feature, ESRGAN via fal.ai) ====================
     (function() {
-        // FAL_KEY: API key dari fal.ai dashboard. Repo private, tapi tetap WAJIB
-        // set spending cap di fal.ai dashboard supaya damage ter-cap kalau leak.
-        const FAL_KEY = "33808e5d-5e98-4bb9-b3ae-a964eae1a07d:d92050667a4f58031330817634085869";
-        const FAL_ESRGAN_ENDPOINT = "https://queue.fal.run/fal-ai/esrgan";
+        const UPSCALE_PROXY_URL = "https://affgo-upscale-proxy.mursalinasrul.workers.dev";
 
         const uploadBox = document.getElementById('upscale-upload-box');
         const fileInput = document.getElementById('upscale-input');
@@ -18720,111 +18736,28 @@ PENTING:
             });
         }
 
-        async function consumeQuota() {
+        async function callUpscaleProxy(imageDataUri, scale) {
             const email = localStorage.getItem('affiliatego_email');
             const token = localStorage.getItem('affiliatego_token');
             if (!email || !token) return { ok: false, reason: 'not_logged_in' };
             try {
-                const url = SCRIPT_URL + '?action=use_upscale'
-                    + '&email=' + encodeURIComponent(email)
-                    + '&token=' + encodeURIComponent(token)
-                    + '&app_secret=' + encodeURIComponent(APP_SECRET)
-                    + '&product=' + encodeURIComponent(PRODUCT_ID);
-                const res = await fetch(url);
-                const data = await res.json();
-                if (data.status === 'SUKSES') return { ok: true };
-                if (data.quota_exhausted) return { ok: false, reason: 'exhausted' };
-                return { ok: false, reason: 'other', message: data.message };
+                const res = await fetch(UPSCALE_PROXY_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: email,
+                        token: token,
+                        app_secret: APP_SECRET,
+                        product: PRODUCT_ID,
+                        image: imageDataUri,
+                        scale: scale
+                    })
+                });
+                return await res.json().catch(function() { return { ok: false, reason: 'other' }; });
             } catch (err) {
-                console.error('Upscale quota check failed:', err);
+                console.error('Upscale proxy failed:', err);
                 return { ok: false, reason: 'network' };
             }
-        }
-
-        async function refundQuota() {
-            const email = localStorage.getItem('affiliatego_email');
-            const token = localStorage.getItem('affiliatego_token');
-            if (!email || !token) return;
-            try {
-                const url = SCRIPT_URL + '?action=refund_upscale'
-                    + '&email=' + encodeURIComponent(email)
-                    + '&token=' + encodeURIComponent(token)
-                    + '&app_secret=' + encodeURIComponent(APP_SECRET)
-                    + '&product=' + encodeURIComponent(PRODUCT_ID);
-                await fetch(url);
-            } catch (err) {
-                console.error('Upscale refund failed:', err);
-            }
-        }
-
-        async function callFalEsrgan(imageDataUri, scale) {
-            if (!FAL_KEY || FAL_KEY === "YOUR_FAL_KEY_HERE") {
-                throw new Error('FAL_KEY belum di-set');
-            }
-            const headers = {
-                'Content-Type': 'application/json',
-                'Authorization': 'Key ' + FAL_KEY
-            };
-            const submitRes = await fetch(FAL_ESRGAN_ENDPOINT, {
-                method: 'POST',
-                headers: headers,
-                body: JSON.stringify({
-                    image_url: imageDataUri,
-                    scale: scale,
-                    model: 'RealESRGAN_x4plus',
-                    output_format: 'jpeg'
-                })
-            });
-            if (!submitRes.ok) {
-                const errText = await submitRes.text().catch(function() { return ''; });
-                throw new Error('Submit gagal: HTTP ' + submitRes.status + ' ' + errText.slice(0, 200));
-            }
-            const submitData = await submitRes.json();
-            console.log('[Upscale] Submit response:', submitData);
-            const requestId = submitData.request_id;
-            if (!requestId) throw new Error('Tidak ada request_id di response submit');
-
-            // Pakai status_url & response_url dari submit response kalau ada (lebih reliable),
-            // fallback ke URL pattern manual.
-            const statusUrl = submitData.status_url || (FAL_ESRGAN_ENDPOINT + '/requests/' + requestId + '/status');
-            const finalUrl = submitData.response_url || (FAL_ESRGAN_ENDPOINT + '/requests/' + requestId);
-            const authHeaders = { 'Authorization': 'Key ' + FAL_KEY };
-            const maxPolls = 80; // 80 x 1.5s = 120 detik max (cover cold start + queue + 4K)
-            let lastStatus = 'UNKNOWN';
-            let lastError = null;
-            for (let i = 0; i < maxPolls; i++) {
-                await new Promise(function(r) { setTimeout(r, 1500); });
-                let statusData = null;
-                try {
-                    const statusRes = await fetch(statusUrl, { headers: authHeaders });
-                    if (!statusRes.ok) {
-                        lastError = 'HTTP ' + statusRes.status;
-                        if (i % 5 === 0) console.log('[Upscale] Poll #' + i + ' failed:', lastError);
-                        continue;
-                    }
-                    statusData = await statusRes.json();
-                } catch (netErr) {
-                    lastError = netErr.message;
-                    if (i % 5 === 0) console.log('[Upscale] Poll #' + i + ' network error:', lastError);
-                    continue;
-                }
-                lastStatus = statusData.status || 'UNKNOWN';
-                if (i % 3 === 0) console.log('[Upscale] Poll #' + i + ' status:', lastStatus);
-                if (lastStatus === 'COMPLETED') {
-                    const finalRes = await fetch(finalUrl, { headers: authHeaders });
-                    if (!finalRes.ok) throw new Error('Fetch result gagal: HTTP ' + finalRes.status);
-                    const finalData = await finalRes.json();
-                    console.log('[Upscale] Final response:', finalData);
-                    const imageUrl = finalData.image && finalData.image.url;
-                    if (!imageUrl) throw new Error('Tidak ada image.url di response final');
-                    return imageUrl;
-                }
-                if (lastStatus === 'FAILED' || lastStatus === 'ERROR') {
-                    throw new Error('Upscale gagal di server fal.ai');
-                }
-                // IN_QUEUE atau IN_PROGRESS atau status lain → continue polling
-            }
-            throw new Error('Timeout setelah 120 detik. Last status: ' + lastStatus + (lastError ? ' (last error: ' + lastError + ')' : ''));
         }
 
         if (generateBtn) {
@@ -18836,35 +18769,30 @@ PENTING:
                 resultDiv.classList.add('hidden');
                 loadingDiv.classList.remove('hidden');
 
-                const consume = await consumeQuota();
-                if (!consume.ok) {
-                    loadingDiv.classList.add('hidden');
-                    emptyState.classList.remove('hidden');
-                    generateBtn.disabled = false;
-                    if (consume.reason === 'exhausted') {
-                        showBuyPopup();
-                    } else if (consume.reason === 'not_logged_in') {
-                        alert('Silakan login terlebih dahulu.');
-                    } else if (consume.reason === 'network') {
-                        alert('Gagal connect ke server. Cek koneksi internet.');
-                    } else {
-                        alert(consume.message || 'Gagal menggunakan kuota.');
-                    }
-                    return;
-                }
-
                 try {
-                    const upscaledUrl = await callFalEsrgan(sourceImageData, selectedScale);
-                    resultUrl = upscaledUrl;
-                    resultImg.src = upscaledUrl;
-                    loadingDiv.classList.add('hidden');
-                    resultDiv.classList.remove('hidden');
-                } catch (err) {
-                    console.error('Upscale error:', err);
-                    await refundQuota();
+                    const result = await callUpscaleProxy(sourceImageData, selectedScale);
+                    if (result.ok && result.image_url) {
+                        resultUrl = result.image_url;
+                        resultImg.src = result.image_url;
+                        loadingDiv.classList.add('hidden');
+                        resultDiv.classList.remove('hidden');
+                        return;
+                    }
                     loadingDiv.classList.add('hidden');
                     emptyState.classList.remove('hidden');
-                    alert('Gagal upscale: ' + err.message + '\n\nKuota dikembalikan, coba lagi.');
+                    if (result.reason === 'exhausted') {
+                        showBuyPopup();
+                    } else if (result.reason === 'not_logged_in') {
+                        alert(window.tr3('Silakan login terlebih dahulu.', 'Please log in first.', 'Sila log masuk terlebih dahulu.'));
+                    } else if (result.reason === 'network') {
+                        alert(window.tr3('Gagal connect ke server. Cek koneksi internet.', 'Failed to connect to server. Check your internet connection.', 'Gagal menyambung ke pelayan. Semak sambungan internet.'));
+                    } else if (result.reason === 'upscale_failed') {
+                        alert(result.refunded
+                            ? window.tr3('Gagal upscale. Kuota dikembalikan, coba lagi.', 'Upscale failed. Your quota was refunded, please try again.', 'Upscale gagal. Kuota dikembalikan, cuba lagi.')
+                            : window.tr3('Gagal upscale. Coba lagi nanti.', 'Upscale failed. Please try again later.', 'Upscale gagal. Cuba lagi nanti.'));
+                    } else {
+                        alert(result.message || window.tr3('Gagal menggunakan kuota.', 'Failed to use quota.', 'Gagal menggunakan kuota.'));
+                    }
                 } finally {
                     generateBtn.disabled = false;
                 }
