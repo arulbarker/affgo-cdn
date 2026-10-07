@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '72';
+        const UPDATE_VERSION = '73';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -718,6 +718,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '73',
+                dateId: 'Oktober 2026',
+                dateEn: 'October 2026',
+                badgeKey: 'modal.fix-v73-badge',
+                badgeText: 'Update v73',
+                gradient: 'linear-gradient(135deg,#2563eb,#1d4ed8)',
+                borderColor: '#2563eb',
+                icon: 'fa-mobile-screen-button',
+                iconColor: '#2563eb',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v73-title-a2hs',
+                        titleText: 'Pasang AffGo di Layar Utama HP',
+                        bodyKey: 'modal.fix-v73-body-a2hs',
+                        bodyText: 'Pengguna HP kini melihat banner "Pasang di layar utama" plus tombol di menu samping. Ikuti panduan singkat Android/iPhone, lalu AffGo terbuka sekali ketuk dari ikon di layar utama dengan tampilan lebih besar dan lega.'
+                    }
+                ]
+            },
             {
                 version: '72',
                 dateId: 'Oktober 2026',

@@ -54,6 +54,7 @@
             sidebar.addEventListener('click', function(e) {
                 if (e.target.closest('.main-tab-btn') && !e.target.closest('.fav-star-btn')) setDrawer(false);
             });
+            window.closeMobileDrawer = function() { setDrawer(false); };
         })();
         
 ;
@@ -131,6 +132,12 @@
                 // ===== Popup Bebas Iklan saat login (sekali per device) =====
                 'adfree-popup.headline': 'Coba pengalaman tanpa iklan',
                 'adfree-popup.skip': 'Lain Kali',
+
+                // ===== Pasang di Layar Utama (A2HS, mobile) =====
+                'a2hs.banner-title': 'Pasang AffGo di layar utama',
+                'a2hs.banner-sub': 'Tampilan lebih besar & lega, buka sekali ketuk',
+                'a2hs.banner-btn': 'Pasang',
+                'a2hs.drawer-btn': 'Pasang di Layar Utama',
 
                 // ===== AdBlock Detection Overlay =====
                 'adblock.title': 'AdBlock Terdeteksi',
@@ -482,6 +489,9 @@
                 'login.secure': '\uD83D\uDD12 Akses Terenkripsi & Aman',
                 'login.no-access-cta': '\uD83D\uDED2 Belum punya akses? Beli di sini \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v73-badge': 'Update v73',
+                'modal.fix-v73-title-a2hs': 'Pasang AffGo di Layar Utama HP',
+                'modal.fix-v73-body-a2hs': 'Pengguna HP kini melihat banner "Pasang di layar utama" plus tombol di menu samping. Ikuti panduan singkat Android/iPhone, lalu AffGo terbuka sekali ketuk dari ikon di layar utama dengan tampilan lebih besar dan lega.',
                 'modal.fix-v72-badge': 'Update v72',
                 'modal.fix-v72-title-login': 'Login Lebih Cepat & Stabil',
                 'modal.fix-v72-body-login': 'Sistem login pindah ke server baru yang jauh lebih cepat. Tidak ada lagi antrean atau pesan "gagal koneksi" saat banyak pengguna masuk bersamaan. Sesi yang sedang aktif tetap tersimpan, tidak perlu login ulang.',
@@ -664,7 +674,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Tab Ruang Saku sekarang punya halaman penjelasan singkat fitur Rindu (AI keuangan) + tombol langsung ke RuangSaku.com. Lebih nyaman dipakai di HP — tinggal klik dan terbuka di tab browser.',
                 'modal.fix-v31-title-telegram': 'Tombol Telegram di Pojok Layar',
                 'modal.fix-v31-body-telegram': 'Tombol bundar Telegram sekarang ada di pojok kanan bawah aplikasi. Sekali klik langsung join grup Telegram Affiliate Go — tempat update fitur, tips, dan tanya jawab dengan komunitas.',
-                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 72',
+                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 73',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Selamat Datang di Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Asisten AI Anda untuk menjelajahi 79++ fitur photo & video generation',
@@ -2973,6 +2983,12 @@
                 'adfree-popup.headline': 'Try the ad-free experience',
                 'adfree-popup.skip': 'Maybe Later',
 
+                // ===== Add to Home Screen (A2HS, mobile) =====
+                'a2hs.banner-title': 'Add AffGo to your home screen',
+                'a2hs.banner-sub': 'Bigger, roomier view, opens with one tap',
+                'a2hs.banner-btn': 'Add',
+                'a2hs.drawer-btn': 'Add to Home Screen',
+
                 // ===== AdBlock Detection Overlay =====
                 'adblock.title': 'AdBlock Detected',
                 'adblock.desc': 'This app is free thanks to ads. Please disable AdBlock to continue, or get permanent ad-free access with Bebas Iklan.',
@@ -3323,6 +3339,9 @@
                 'login.secure': '\uD83D\uDD12 Encrypted & Secure Access',
                 'login.no-access-cta': '\uD83D\uDED2 No access yet? Buy here \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v73-badge': 'Update v73',
+                'modal.fix-v73-title-a2hs': 'Add AffGo to Your Phone Home Screen',
+                'modal.fix-v73-body-a2hs': 'Mobile users now see an "Add to home screen" banner plus a button in the side menu. Follow the short Android/iPhone guide, and AffGo opens with one tap from the home screen icon in a bigger, roomier view.',
                 'modal.fix-v72-badge': 'Update v72',
                 'modal.fix-v72-title-login': 'Faster & More Reliable Login',
                 'modal.fix-v72-body-login': 'Login now runs on a new, much faster server. No more queues or "connection failed" messages when many users sign in at once. Active sessions are preserved, so there is no need to log in again.',
@@ -3505,7 +3524,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Ruang Saku tab now has a brief intro page for Rindu (AI finance buddy) + direct button to RuangSaku.com. Smoother mobile experience — one click and it opens in a browser tab.',
                 'modal.fix-v31-title-telegram': 'Telegram Button at Screen Corner',
                 'modal.fix-v31-body-telegram': 'Round Telegram button is now at the bottom-right corner of the app. One click jumps directly to the Affiliate Go Telegram group — for feature updates, tips, and Q&A with the community.',
-                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 72',
+                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 73',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Welcome to Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Your AI Assistant to explore 79++ photo & video generation features',
@@ -5846,6 +5865,9 @@
                 'lang.ms': 'Melayu',
                 'bebas-iklan.btn': 'Buang Iklan',
                 'nav.telegram': 'Sertai Telegram',
+                'a2hs.banner-title': 'Pasang AffGo di skrin utama',
+                'a2hs.banner-sub': 'Paparan lebih besar & lapang, buka sekali ketik',
+                'a2hs.drawer-btn': 'Pasang di Skrin Utama',
                 'bebas-iklan.feature-1': 'Tanpa iklan semasa Generate / Muat Turun',
                 'bebas-iklan.feature-2': 'Akses penuh tanpa gangguan 1 bulan',
                 'bebas-iklan.feature-3': 'Auto-aktif selepas pembayaran (log masuk semula)',
@@ -8690,6 +8712,127 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
         }
         window.showAdFreePromoIfEligible = showAdFreePromoIfEligible;
         // ==================== END POPUP BEBAS IKLAN LOGIN ====================
+
+        // ==================== PASANG DI LAYAR UTAMA (A2HS) ====================
+        // App hidup di iframe Canvas → tidak bisa pasang manifest/service worker
+        // sendiri. Yang bisa: pandu user "Tambahkan ke layar utama" lewat menu
+        // browser. Banner hanya tampil di mobile, bukan dari ikon home screen,
+        // dan disembunyikan 7 hari setelah ditutup.
+        (function() {
+            var DISMISS_KEY = 'a2hs_dismissed_at';
+            var DISMISS_DAYS = 7;
+
+            function isStandalone() {
+                try {
+                    if (window.navigator.standalone === true) return true;
+                    return !!(window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+                } catch (e) { return false; }
+            }
+            function detectPlatform() {
+                var ua = navigator.userAgent || '';
+                if (/iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) return 'ios';
+                if (/Android/i.test(ua)) return 'android';
+                return 'other';
+            }
+            function isMobileViewport() { return window.innerWidth <= 768; }
+            function dismissedRecently() {
+                try {
+                    var t = parseInt(localStorage.getItem(DISMISS_KEY) || '0', 10);
+                    return t > 0 && (Date.now() - t) < DISMISS_DAYS * 86400000;
+                } catch (e) { return false; }
+            }
+
+            function stepsFor(platform) {
+                var tr = window.tr3;
+                if (platform === 'ios') {
+                    return [
+                        tr('Buka link AffGo ini di Safari (bukan browser dalam TikTok/Instagram)', 'Open this AffGo link in Safari (not the TikTok/Instagram in-app browser)', 'Buka pautan AffGo ini di Safari (bukan pelayar dalam TikTok/Instagram)'),
+                        tr('Ketuk tombol Bagikan (kotak dengan panah ke atas) di bar bawah', 'Tap the Share button (box with an up arrow) in the bottom bar', 'Ketik butang Kongsi (kotak dengan anak panah ke atas) di bar bawah'),
+                        tr('Gulir ke bawah, pilih "Tambah ke Layar Utama"', 'Scroll down and choose "Add to Home Screen"', 'Tatal ke bawah, pilih "Tambah ke Skrin Utama"'),
+                        tr('Ketuk "Tambah". Ikon AffGo muncul di layar utama', 'Tap "Add". The AffGo icon appears on your home screen', 'Ketik "Tambah". Ikon AffGo muncul di skrin utama')
+                    ];
+                }
+                return [
+                    tr('Buka link AffGo ini di Chrome (bukan browser dalam TikTok/Instagram)', 'Open this AffGo link in Chrome (not the TikTok/Instagram in-app browser)', 'Buka pautan AffGo ini di Chrome (bukan pelayar dalam TikTok/Instagram)'),
+                    tr('Ketuk menu titik tiga di pojok kanan atas', 'Tap the three-dot menu in the top-right corner', 'Ketik menu tiga titik di penjuru kanan atas'),
+                    tr('Pilih "Tambahkan ke layar utama" atau "Instal aplikasi"', 'Choose "Add to Home screen" or "Install app"', 'Pilih "Tambah ke skrin utama" atau "Pasang aplikasi"'),
+                    tr('Ketuk "Tambahkan". Ikon AffGo muncul di layar utama', 'Tap "Add". The AffGo icon appears on your home screen', 'Ketik "Tambah". Ikon AffGo muncul di skrin utama')
+                ];
+            }
+
+            function renderSteps(platform) {
+                var steps = stepsFor(platform);
+                var html = '';
+                for (var i = 0; i < steps.length; i++) {
+                    html += '<li><span class="a2hs-num">' + (i + 1) + '</span><span>' + steps[i] + '</span></li>';
+                }
+                return html;
+            }
+
+            function showGuide() {
+                if (typeof window.showUniversalModal !== 'function') return;
+                var tr = window.tr3;
+                var platform = detectPlatform();
+                var active = platform === 'ios' ? 'ios' : 'android';
+                var title = tr('Pasang AffGo di Layar Utama', 'Add AffGo to Home Screen', 'Pasang AffGo di Skrin Utama');
+                var html =
+                    '<div class="text-center">' +
+                        '<div class="text-5xl mb-3" style="color:#2563eb;"><i class="fas fa-mobile-screen-button"></i></div>' +
+                        '<div class="a2hs-benefit"><i class="fas fa-expand mr-2"></i>' +
+                            tr('Dibuka dari ikon layar utama, tampilan AffGo jadi lebih besar dan lega. Tidak perlu cari link lagi, cukup sekali ketuk.',
+                               'Opened from the home screen icon, AffGo looks bigger and roomier. No more hunting for the link, just one tap.',
+                               'Dibuka dari ikon skrin utama, paparan AffGo jadi lebih besar dan lapang. Tak perlu cari pautan lagi, cukup sekali ketik.') +
+                        '</div>' +
+                        '<div class="a2hs-platform-tabs">' +
+                            '<button type="button" class="a2hs-platform-tab' + (active === 'android' ? ' active' : '') + '" data-a2hs-platform="android"><i class="fab fa-android mr-1"></i>Android</button>' +
+                            '<button type="button" class="a2hs-platform-tab' + (active === 'ios' ? ' active' : '') + '" data-a2hs-platform="ios"><i class="fab fa-apple mr-1"></i>iPhone</button>' +
+                        '</div>' +
+                        '<ol class="a2hs-steps" id="a2hs-steps">' + renderSteps(active) + '</ol>' +
+                        '<p class="a2hs-note"><i class="fas fa-circle-info mr-1"></i>' +
+                            tr('Ikon di layar utama membuka AffGo lewat browser HP kamu. Tidak ada yang diunduh ke memori HP.',
+                               'The home screen icon opens AffGo through your phone browser. Nothing is downloaded to your phone storage.',
+                               'Ikon di skrin utama membuka AffGo melalui pelayar telefon anda. Tiada apa yang dimuat turun ke storan telefon.') +
+                        '</p>' +
+                    '</div>';
+                window.showUniversalModal(title, html);
+                setTimeout(function() {
+                    var tabs = document.querySelectorAll('.a2hs-platform-tab');
+                    for (var i = 0; i < tabs.length; i++) {
+                        tabs[i].addEventListener('click', function() {
+                            for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
+                            this.classList.add('active');
+                            var ol = document.getElementById('a2hs-steps');
+                            if (ol) ol.innerHTML = renderSteps(this.getAttribute('data-a2hs-platform'));
+                        });
+                    }
+                }, 50);
+            }
+
+            function refreshBanner() {
+                var banner = document.getElementById('a2hs-banner');
+                if (!banner) return;
+                var show = isMobileViewport() && !isStandalone() && !dismissedRecently() && detectPlatform() !== 'other';
+                banner.classList.toggle('a2hs-visible', show);
+            }
+
+            var bannerBtn = document.getElementById('a2hs-banner-btn');
+            var closeBtn = document.getElementById('a2hs-banner-close');
+            var drawerBtn = document.getElementById('a2hs-drawer-btn');
+            if (bannerBtn) bannerBtn.addEventListener('click', showGuide);
+            if (drawerBtn) drawerBtn.addEventListener('click', function() {
+                var sidebar = document.querySelector('aside.sidebar');
+                if (sidebar && sidebar.classList.contains('drawer-open') && typeof window.closeMobileDrawer === 'function') window.closeMobileDrawer();
+                showGuide();
+            });
+            if (closeBtn) closeBtn.addEventListener('click', function() {
+                try { localStorage.setItem(DISMISS_KEY, String(Date.now())); } catch (e) {}
+                refreshBanner();
+            });
+            window.addEventListener('resize', refreshBanner);
+            window.showA2hsGuide = showGuide;
+            refreshBanner();
+        })();
+        // ==================== END A2HS ====================
 
         // Fungsi 2: Buka Aplikasi (Unlock Main App)
         function bukaAplikasi(nama) {

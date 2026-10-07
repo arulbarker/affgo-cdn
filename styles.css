@@ -10449,6 +10449,94 @@
         .hilangkan-iklan-btn:active { transform: translateY(0); }
         .hilangkan-iklan-btn.is-hidden { display: none !important; }
         /* ===== END HILANGKAN IKLAN ===== */
+
+        /* ===== PASANG DI LAYAR UTAMA (A2HS) — mobile only ===== */
+        .a2hs-banner { display: none; }
+        .a2hs-drawer-btn { display: none; }
+        @media (max-width: 768px) {
+            .a2hs-banner.a2hs-visible {
+                display: flex;
+                align-items: center;
+                gap: 0.6rem;
+                padding: 0.5rem 0.6rem 0.5rem 0.85rem;
+                background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%);
+                border-bottom: 1px solid #bfdbfe;
+                position: sticky;
+                top: 56px;
+                z-index: 1090;
+            }
+            .a2hs-icon { color: #2563eb; font-size: 1.35rem; flex-shrink: 0; }
+            .a2hs-text { display: flex; flex-direction: column; min-width: 0; flex: 1; line-height: 1.25; }
+            .a2hs-text strong { font-size: 0.85rem; color: #1e3a8a; }
+            .a2hs-text span { font-size: 0.75rem; color: #1d4ed8; }
+            .a2hs-btn {
+                flex-shrink: 0;
+                min-height: 40px;
+                padding: 0 0.9rem;
+                border: none;
+                border-radius: 999px;
+                background: linear-gradient(135deg, #2563eb, #1d4ed8);
+                color: #fff;
+                font-weight: 700;
+                font-size: 0.8rem;
+                box-shadow: 0 3px 10px rgba(37, 99, 235, 0.3);
+                -webkit-tap-highlight-color: transparent;
+            }
+            .a2hs-close {
+                flex-shrink: 0;
+                width: 40px;
+                min-height: 40px;
+                border: none;
+                background: transparent;
+                color: #64748b;
+                font-size: 1rem;
+                -webkit-tap-highlight-color: transparent;
+            }
+            .a2hs-drawer-btn {
+                width: 100%;
+                margin-top: 0.5rem;
+                padding: 0.55rem 0.75rem;
+                background: linear-gradient(135deg, #2563eb, #1d4ed8);
+                color: white;
+                font-weight: 700;
+                font-size: 0.78rem;
+                border-radius: 0.5rem;
+                border: none;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+                min-height: 44px;
+                -webkit-tap-highlight-color: transparent;
+            }
+        }
+        .a2hs-platform-tabs { display: flex; gap: 0.4rem; justify-content: center; margin-bottom: 0.9rem; }
+        .a2hs-platform-tab {
+            min-height: 40px;
+            padding: 0 1rem;
+            border-radius: 999px;
+            border: 1px solid #cbd5e1;
+            background: #fff;
+            color: #334155;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        .a2hs-platform-tab.active { background: #2563eb; border-color: #2563eb; color: #fff; }
+        .a2hs-steps { list-style: none; padding: 0; margin: 0 0 0.9rem; display: flex; flex-direction: column; gap: 0.55rem; text-align: left; }
+        .a2hs-steps li { display: flex; gap: 0.6rem; align-items: flex-start; font-size: 0.9rem; color: #334155; }
+        .a2hs-steps .a2hs-num {
+            flex-shrink: 0;
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            background: #dbeafe; color: #1d4ed8;
+            font-weight: 700; font-size: 0.8rem;
+            display: inline-flex; align-items: center; justify-content: center;
+        }
+        .a2hs-benefit { background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; border-radius: 0.75rem; padding: 0.7rem 0.85rem; font-size: 0.85rem; margin-bottom: 0.9rem; text-align: left; }
+        .a2hs-note { font-size: 0.78rem; color: #64748b; text-align: left; }
+        /* ===== END A2HS ===== */
         /* ===== END BEBAS IKLAN ===== */
 
         /* ==================== ADBLOCK DETECTION OVERLAY ==================== */
@@ -10897,6 +10985,17 @@
         html.dark .sidebar-search-wrap i { color: #64748b; }
         html.dark .menu-category { border-top-color: #334155; }
         html.dark #favorites-category { border-color: #713f12; background: linear-gradient(180deg, #1c1917 0%, rgba(69, 26, 3, 0.3) 100%); }
+        html.dark .a2hs-banner.a2hs-visible { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); border-bottom-color: #1e40af; }
+        html.dark .a2hs-text strong { color: #dbeafe; }
+        html.dark .a2hs-text span { color: #93c5fd; }
+        html.dark .a2hs-icon { color: #93c5fd; }
+        html.dark .a2hs-close { color: #94a3b8; }
+        html.dark .a2hs-platform-tab { background: #1e293b; border-color: #475569; color: #cbd5e1; }
+        html.dark .a2hs-platform-tab.active { background: #2563eb; border-color: #2563eb; color: #fff; }
+        html.dark .a2hs-steps li { color: #cbd5e1; }
+        html.dark .a2hs-steps .a2hs-num { background: #1e3a8a; color: #bfdbfe; }
+        html.dark .a2hs-benefit { background: #052e16; border-color: #166534; color: #bbf7d0; }
+        html.dark .a2hs-note { color: #94a3b8; }
         /* ===== END DARK MODE ===== */
 
     
