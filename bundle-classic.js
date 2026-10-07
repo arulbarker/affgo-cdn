@@ -482,6 +482,9 @@
                 'login.secure': '\uD83D\uDD12 Akses Terenkripsi & Aman',
                 'login.no-access-cta': '\uD83D\uDED2 Belum punya akses? Beli di sini \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v72-badge': 'Update v72',
+                'modal.fix-v72-title-login': 'Login Lebih Cepat & Stabil',
+                'modal.fix-v72-body-login': 'Sistem login pindah ke server baru yang jauh lebih cepat. Tidak ada lagi antrean atau pesan "gagal koneksi" saat banyak pengguna masuk bersamaan. Sesi yang sedang aktif tetap tersimpan, tidak perlu login ulang.',
                 'modal.fix-v71-badge': 'Update v71',
                 'modal.fix-v71-title-upscale': 'Upscale Lebih Aman & Stabil',
                 'modal.fix-v71-body-upscale': 'Proses Upscale kini berjalan lewat server khusus yang lebih aman. Kuota hanya terpotong saat upscale berhasil, dan otomatis dikembalikan kalau proses gagal.',
@@ -661,7 +664,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Tab Ruang Saku sekarang punya halaman penjelasan singkat fitur Rindu (AI keuangan) + tombol langsung ke RuangSaku.com. Lebih nyaman dipakai di HP — tinggal klik dan terbuka di tab browser.',
                 'modal.fix-v31-title-telegram': 'Tombol Telegram di Pojok Layar',
                 'modal.fix-v31-body-telegram': 'Tombol bundar Telegram sekarang ada di pojok kanan bawah aplikasi. Sekali klik langsung join grup Telegram Affiliate Go — tempat update fitur, tips, dan tanya jawab dengan komunitas.',
-                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 71',
+                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 72',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Selamat Datang di Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Asisten AI Anda untuk menjelajahi 79++ fitur photo & video generation',
@@ -3320,6 +3323,9 @@
                 'login.secure': '\uD83D\uDD12 Encrypted & Secure Access',
                 'login.no-access-cta': '\uD83D\uDED2 No access yet? Buy here \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v72-badge': 'Update v72',
+                'modal.fix-v72-title-login': 'Faster & More Reliable Login',
+                'modal.fix-v72-body-login': 'Login now runs on a new, much faster server. No more queues or "connection failed" messages when many users sign in at once. Active sessions are preserved, so there is no need to log in again.',
                 'modal.fix-v71-badge': 'Update v71',
                 'modal.fix-v71-title-upscale': 'Safer & More Stable Upscale',
                 'modal.fix-v71-body-upscale': 'Upscale now runs through a dedicated, more secure server. Your quota is only used when the upscale succeeds, and is automatically refunded if it fails.',
@@ -3499,7 +3505,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Ruang Saku tab now has a brief intro page for Rindu (AI finance buddy) + direct button to RuangSaku.com. Smoother mobile experience — one click and it opens in a browser tab.',
                 'modal.fix-v31-title-telegram': 'Telegram Button at Screen Corner',
                 'modal.fix-v31-body-telegram': 'Round Telegram button is now at the bottom-right corner of the app. One click jumps directly to the Affiliate Go Telegram group — for feature updates, tips, and Q&A with the community.',
-                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 71',
+                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 72',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Welcome to Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Your AI Assistant to explore 79++ photo & video generation features',
@@ -7569,7 +7575,7 @@
 
         // ⚠️ PENTING: GANTI URL INI DENGAN URL DEPLOY GOOGLE APPS SCRIPT ANDA ⚠️
         // PASTE URL GOOGLE APPS SCRIPT ANDA DI BAWAH INI:
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzPixa15u3SyndcKTcusIpxChqepUsgGfxTm1_nIaD1RHo-3TpLRbkHmesm-p2QkgWjEA/exec";
+        const SCRIPT_URL = "https://affgo-auth.mursalinasrul.workers.dev/";
         const APP_SECRET = "TKD-2025-s3cr3t-k3y-9xKm2pQr7nVw4L";
         // ID produk harus cocok persis dengan key di PRODUCTS object di appscript.txt (GAS).
         // Tanpa ini, server fallback cari email di SEMUA sheet → email VocaLive/TikDance dll. bisa login ke AffGo.

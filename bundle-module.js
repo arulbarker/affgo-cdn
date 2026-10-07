@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '71';
+        const UPDATE_VERSION = '72';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -718,6 +718,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '72',
+                dateId: 'Oktober 2026',
+                dateEn: 'October 2026',
+                badgeKey: 'modal.fix-v72-badge',
+                badgeText: 'Update v72',
+                gradient: 'linear-gradient(135deg,#16a34a,#15803d)',
+                borderColor: '#16a34a',
+                icon: 'fa-bolt',
+                iconColor: '#16a34a',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v72-title-login',
+                        titleText: 'Login Lebih Cepat & Stabil',
+                        bodyKey: 'modal.fix-v72-body-login',
+                        bodyText: 'Sistem login pindah ke server baru yang jauh lebih cepat. Tidak ada lagi antrean atau pesan "gagal koneksi" saat banyak pengguna masuk bersamaan. Sesi yang sedang aktif tetap tersimpan, tidak perlu login ulang.'
+                    }
+                ]
+            },
             {
                 version: '71',
                 dateId: 'Oktober 2026',
