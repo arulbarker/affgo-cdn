@@ -8746,8 +8746,8 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
                 var tr = window.tr3;
                 if (platform === 'ios') {
                     return [
-                        tr('Buka link AffGo ini di Safari (bukan browser dalam TikTok/Instagram)', 'Open this AffGo link in Safari (not the TikTok/Instagram in-app browser)', 'Buka pautan AffGo ini di Safari (bukan pelayar dalam TikTok/Instagram)'),
-                        tr('Ketuk tombol Bagikan (kotak dengan panah ke atas) di bar bawah', 'Tap the Share button (box with an up arrow) in the bottom bar', 'Ketik butang Kongsi (kotak dengan anak panah ke atas) di bar bawah'),
+                        tr('Buka link AffGo ini di Safari atau Chrome (bukan browser dalam TikTok/Instagram)', 'Open this AffGo link in Safari or Chrome (not the TikTok/Instagram in-app browser)', 'Buka pautan AffGo ini di Safari atau Chrome (bukan pelayar dalam TikTok/Instagram)'),
+                        tr('Ketuk tombol Bagikan (kotak dengan panah ke atas): Safari di bar bawah, Chrome di bar atas', 'Tap the Share button (box with an up arrow): Safari in the bottom bar, Chrome in the top bar', 'Ketik butang Kongsi (kotak dengan anak panah ke atas): Safari di bar bawah, Chrome di bar atas'),
                         tr('Gulir ke bawah, pilih "Tambah ke Layar Utama"', 'Scroll down and choose "Add to Home Screen"', 'Tatal ke bawah, pilih "Tambah ke Skrin Utama"'),
                         tr('Ketuk "Tambah". Ikon AffGo muncul di layar utama', 'Tap "Add". The AffGo icon appears on your home screen', 'Ketik "Tambah". Ikon AffGo muncul di skrin utama')
                     ];
