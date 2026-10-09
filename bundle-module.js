@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '73';
+        const UPDATE_VERSION = '74';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -718,6 +718,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '74',
+                dateId: 'Oktober 2026',
+                dateEn: 'October 2026',
+                badgeKey: 'modal.fix-v74-badge',
+                badgeText: 'Update v74',
+                gradient: 'linear-gradient(135deg,#059669,#047857)',
+                borderColor: '#059669',
+                icon: 'fa-store',
+                iconColor: '#059669',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v74-title-etalase',
+                        titleText: 'Menu Promo Kini Jadi Etalase',
+                        bodyKey: 'modal.fix-v74-body-etalase',
+                        bodyText: 'Menu Promo di sidebar berganti nama jadi Etalase. Satu tombol langsung membuka etalase Lynk.id kami, berisi semua software, eCourse, dan tools AI dari developer AffGo dengan produk dan harga terbaru. Info Program Affiliate (komisi Rp50.000 per penjualan) tetap ada di halaman yang sama.'
+                    }
+                ]
+            },
             {
                 version: '73',
                 dateId: 'Oktober 2026',

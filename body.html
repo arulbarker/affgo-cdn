@@ -10,7 +10,7 @@
         <!-- Floating badge top-right -->
         <div style="position:absolute;top:16px;right:16px;background:linear-gradient(135deg,#ea580c,#c2410c);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(234,88,12,0.4);z-index:1;">90+ FITUR &#x26A1;</div>
         <!-- Floating version badge top-left (auto-sync dari UPDATE_VERSION via JS) -->
-        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V73</div>
+        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V74</div>
         <div class="login-box">
             <!-- AG Logo badge -->
             <div style="background:linear-gradient(135deg,#16a34a,#15803d);width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:1.35rem;font-weight:900;color:white;box-shadow:0 6px 18px rgba(22,163,74,0.4);">AG</div>
@@ -54,7 +54,7 @@
         <button type="button" id="mobile-drawer-toggle" aria-label="Buka menu" aria-expanded="false">
             <i class="fas fa-bars"></i>
         </button>
-        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V73</span></h1>
+        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V74</span></h1>
     </div>
     <div id="a2hs-banner" class="a2hs-banner" role="region" aria-label="Pasang di layar utama">
         <i class="fas fa-mobile-screen-button a2hs-icon"></i>
@@ -75,7 +75,7 @@
                 </h1>
                 <p class="text-xs text-gray-500 mt-1">by Arul CG</p>
                 <div class="mt-2">
-                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V73</span>
+                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V74</span>
                 </div>
                 <div class="lang-dropdown mt-2" id="lang-dropdown-desktop">
                     <button type="button" class="lang-dd-btn" aria-haspopup="listbox" aria-expanded="false">
@@ -121,11 +121,10 @@
                     <div id="favorites-container"></div>
                 </div>
 
-                <!-- ADS (promo produk digital sendiri — id tetap "ruangsaku" demi kompatibilitas favorit) -->
+                <!-- ETALASE (etalase Lynk.id produk digital sendiri — id tetap "ruangsaku" demi kompatibilitas favorit) -->
                 <button data-tab="ruangsaku" class="main-tab-btn" style="margin-bottom: 1rem;">
-                    <i class="fas fa-bullhorn"></i>
-                    <span class="btn-text">Ads</span>
-                    <span class="ads-badge">ADS</span>
+                    <i class="fas fa-store"></i>
+                    <span class="btn-text">Etalase</span>
                 </button>
 
                 <!-- UPSCALE Tab (paid feature, quota-based — ESRGAN 2K/4K) -->
@@ -12302,223 +12301,53 @@
             <iframe src="https://pixlr.com/id/remove-background/" class="w-full h-[85vh] border-0 rounded-lg shadow-lg" title="Hapus Background" allow="camera; microphone"></iframe>
         </div>
 
-        <!-- TAB: ADS (promo produk digital sendiri — eCourse Vibe Coding + KILATVIDEO. id "ruangsaku" dipertahankan demi kompatibilitas favorit) -->
+        <!-- TAB: ETALASE (tombol ke etalase Lynk.id lynk.id/arullagi — semua produk dikelola di Lynk.id, tanpa kartu hardcoded. id "ruangsaku" dipertahankan demi kompatibilitas favorit) -->
         <div id="content-ruangsaku" class="main-content-panel hidden">
             <div class="max-w-5xl mx-auto p-4 sm:p-6">
 
                 <!-- Hero -->
                 <div class="text-center mb-8 sm:mb-10">
                     <div class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-100 to-emerald-100 text-green-700 rounded-full text-xs sm:text-sm font-semibold mb-4 border border-green-200">
-                        <i class="fas fa-bullhorn"></i>
-                        <span data-i18n="ads.badge">Produk digital dari developer AffiliateGo</span>
+                        <i class="fas fa-store"></i>
+                        <span data-i18n="ads.badge">Etalase produk digital developer AffiliateGo</span>
                     </div>
                     <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-3 leading-tight" data-i18n="ads.hero-title">
-                        Level up skill &amp; kontenmu
+                        Lihat semua produk kami
                     </h1>
-                    <p class="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto" data-i18n="ads.hero-desc">
-                        Dua produk andalan untuk bantu kamu menghasilkan dari AI &#8212; dibuat oleh developer yang sama dengan aplikasi ini.
+                    <p class="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto mb-6" data-i18n="ads.hero-desc">
+                        Software, eCourse, dan tools AI lain dari developer yang sama dengan aplikasi ini &#8212; semuanya ada di etalase Lynk.id kami, selalu update dengan produk &amp; harga terbaru.
                     </p>
+                    <a id="ads-store-cta" href="https://lynk.id/arullagi" target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center gap-2 w-full sm:w-auto justify-center px-8 py-4 min-h-[44px] bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white text-base sm:text-lg font-bold rounded-2xl shadow-lg transition-all transform hover:scale-105 active:scale-95">
+                        <i class="fas fa-store"></i>
+                        <span data-i18n="ads.store-cta">Buka Etalase Lynk.id</span>
+                        <i class="fas fa-arrow-up-right-from-square text-sm"></i>
+                    </a>
                 </div>
 
-                <!-- Banner Program Affiliate AffiliateGO -->
-                <div class="mb-8 p-6 sm:p-8 bg-gradient-to-br from-green-600 to-emerald-700 rounded-2xl shadow-xl text-center text-white">
-                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-white/20 rounded-full text-xs font-bold mb-4">
+                <!-- Program Affiliate AffiliateGO — kartu ringkas sekunder di bawah CTA etalase (terlihat, tapi tidak menyaingi tombol utama) -->
+                <div id="ads-aff-card" class="max-w-3xl mx-auto mb-8 p-4 sm:p-5 bg-green-50 border border-green-200 rounded-2xl flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+                    <div class="flex-shrink-0 w-12 h-12 rounded-full bg-green-600 text-white flex items-center justify-center text-xl">
                         <i class="fas fa-hand-holding-usd"></i>
-                        <span data-i18n="ads.aff-badge">PROGRAM AFFILIATE</span>
                     </div>
-                    <h2 class="text-2xl sm:text-3xl font-bold mb-3 leading-tight" data-i18n="ads.aff-title">
-                        Dapat Rp50.000 per Penjualan Aplikasi Ini!
-                    </h2>
-                    <p class="text-sm sm:text-base text-green-50 max-w-2xl mx-auto mb-6" data-i18n="ads.aff-desc">
-                        Jadi affiliate Affiliate GO dan hasilkan komisi Rp50.000 untuk setiap penjualan aplikasi lewat link kamu. Tonton tutorial cara jadi affiliate di bawah ini.
-                    </p>
+                    <div class="flex-1 min-w-0">
+                        <div class="text-xs font-bold text-green-700 mb-1" data-i18n="ads.aff-badge">PROGRAM AFFILIATE</div>
+                        <h2 class="text-base sm:text-lg font-bold text-gray-900 leading-snug" data-i18n="ads.aff-title">
+                            Dapat Rp50.000 per Penjualan Aplikasi Ini!
+                        </h2>
+                        <p class="text-sm text-gray-600 mt-1" data-i18n="ads.aff-desc">
+                            Jadi affiliate Affiliate GO dan hasilkan komisi Rp50.000 untuk setiap penjualan aplikasi lewat link kamu. Tonton tutorial cara jadi affiliate di bawah ini.
+                        </p>
+                    </div>
                     <a href="https://www.youtube.com/watch?v=JdHzm_taFuQ" target="_blank" rel="noopener noreferrer"
-                       class="inline-flex items-center gap-2 justify-center px-6 py-4 bg-white text-green-700 hover:bg-green-50 text-base font-bold rounded-2xl shadow-lg transition-all transform hover:scale-105 active:scale-95">
+                       class="flex-shrink-0 inline-flex items-center gap-2 justify-center w-full sm:w-auto px-5 py-3 min-h-[44px] bg-white text-green-700 hover:bg-green-100 border border-green-300 text-sm font-bold rounded-xl transition-all">
                         <i class="fab fa-youtube text-red-600"></i>
                         <span data-i18n="ads.aff-cta">Tonton Tutorial Jadi Affiliate</span>
                     </a>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-
-                    <!-- Card 1: eCourse Vibe Coding & Monetisasi -->
-                    <div class="flex flex-col p-6 bg-white rounded-2xl shadow-lg border-2 border-green-200 hover:shadow-xl transition-all">
-                        <div class="inline-flex self-start items-center gap-2 px-3 py-1.5 bg-orange-100 text-orange-700 rounded-full text-xs font-bold mb-4">
-                            <i class="fas fa-fire"></i>
-                            <span data-i18n="ads.course-badge">HARGA FOUNDING MEMBER TERBATAS</span>
-                        </div>
-                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2" data-i18n="ads.course-title">eCourse Vibe Coding &amp; Monetisasi</h2>
-                        <p class="text-sm sm:text-base text-gray-600 mb-4" data-i18n="ads.course-desc">
-                            Bongkar rahasia Rp 1 juta/minggu dari AI: bikin aplikasi Google Apps Script pakai AI, lalu jual. Nggak perlu bisa coding, nggak perlu modal.
-                        </p>
-                        <ul class="space-y-2 text-sm text-gray-700 mb-5">
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.course-f1">6 modul video dari nol sampai punya produk &#8212; akses selamanya</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.course-f2">Template prompt Claude + magic prompt + CLAUDE.md siap pakai</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.course-f3">Panduan monetisasi &amp; jualan app di Lynk.id</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.course-f4">Grup support WhatsApp + update gratis selamanya</span></li>
-                        </ul>
-                        <div class="mt-auto">
-                            <a href="https://wahanainovasipintar.myscalev.com/vibecoding-gas" target="_blank" rel="noopener noreferrer"
-                               class="inline-flex items-center gap-2 w-full justify-center px-6 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-base font-bold rounded-2xl shadow-lg transition-all transform hover:scale-105 active:scale-95">
-                                <i class="fas fa-rocket"></i>
-                                <span data-i18n="ads.course-cta">Ambil eCourse Sekarang</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Card 2: KILATVIDEO -->
-                    <div class="flex flex-col p-6 bg-white rounded-2xl shadow-lg border-2 border-green-200 hover:shadow-xl transition-all">
-                        <div class="inline-flex self-start items-center gap-2 px-3 py-1.5 bg-yellow-100 text-yellow-700 rounded-full text-xs font-bold mb-4">
-                            <i class="fas fa-bolt"></i>
-                            <span data-i18n="ads.kilat-badge">HARGA LAUNCHING</span>
-                        </div>
-                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2" data-i18n="ads.kilat-title">KILATVIDEO &#8212; AI Auto Content Creator</h2>
-                        <p class="text-sm sm:text-base text-gray-600 mb-4" data-i18n="ads.kilat-desc">
-                            Ubah video random di HP jadi konten viral otomatis. AI yang pilih, edit, kasih caption &amp; musik, lalu auto-upload ke sosmed.
-                        </p>
-                        <ul class="space-y-2 text-sm text-gray-700 mb-5">
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.kilat-f1">AI auto-edit &#8212; tanpa skill editing sama sekali</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.kilat-f2">Caption sesuai niche: 4 preset + 20 slot template custom</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.kilat-f3">Auto schedule upload ke sosmed &#8212; bangun tidur konten tayang</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.kilat-f4">Lifetime + update selamanya + bonus versi Telegram saat rilis</span></li>
-                        </ul>
-                        <div class="mt-auto">
-                            <a href="https://lynk.id/arullagi/d25knw5wm1d3" target="_blank" rel="noopener noreferrer"
-                               class="inline-flex items-center gap-2 w-full justify-center px-6 py-4 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white text-base font-bold rounded-2xl shadow-lg transition-all transform hover:scale-105 active:scale-95">
-                                <i class="fas fa-bolt"></i>
-                                <span data-i18n="ads.kilat-cta">Ambil KILATVIDEO</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Card 3: YT24 -->
-                    <div class="flex flex-col p-6 bg-white rounded-2xl shadow-lg border-2 border-green-200 hover:shadow-xl transition-all">
-                        <div class="inline-flex self-start items-center gap-2 px-3 py-1.5 bg-red-100 text-red-700 rounded-full text-xs font-bold mb-4">
-                            <i class="fas fa-video"></i>
-                            <span data-i18n="ads.yt24-badge">LIFETIME &#8212; SEKALI BAYAR</span>
-                        </div>
-                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2" data-i18n="ads.yt24-title">YT24 &#8212; YouTube Live 24 Jam</h2>
-                        <p class="text-sm sm:text-base text-gray-600 mb-4" data-i18n="ads.yt24-desc">
-                            Bikin channel YouTube live 24 jam nonstop &#8212; cocok untuk musik lofi, murotal, suara hujan, ASMR. Multi-stream 10+ channel sekaligus.
-                        </p>
-                        <ul class="space-y-2 text-sm text-gray-700 mb-5">
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.yt24-f1">Multi-channel: 10+ YouTube Live sekaligus dari 1 software</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.yt24-f2">Dual format &#8212; horizontal (Live) &amp; vertikal (Shorts)</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.yt24-f3">RDP/VPS friendly &#8212; live 24 jam tanpa laptop nyala</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.yt24-f4">Lifetime + update selamanya + grup support</span></li>
-                        </ul>
-                        <div class="mt-auto">
-                            <a href="https://lynk.id/arullagi/gBe6qO8" target="_blank" rel="noopener noreferrer"
-                               class="inline-flex items-center gap-2 w-full justify-center px-6 py-4 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white text-base font-bold rounded-2xl shadow-lg transition-all transform hover:scale-105 active:scale-95">
-                                <i class="fas fa-video"></i>
-                                <span data-i18n="ads.yt24-cta">Ambil YT24</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Card 4: Vocalive AI -->
-                    <div class="flex flex-col p-6 bg-white rounded-2xl shadow-lg border-2 border-green-200 hover:shadow-xl transition-all">
-                        <div class="inline-flex self-start items-center gap-2 px-3 py-1.5 bg-purple-100 text-purple-700 rounded-full text-xs font-bold mb-4">
-                            <i class="fas fa-robot"></i>
-                            <span data-i18n="ads.vocalive-badge">AI SELLER LIVE 24 JAM</span>
-                        </div>
-                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2" data-i18n="ads.vocalive-title">Vocalive AI &#8212; AI Live Jualan</h2>
-                        <p class="text-sm sm:text-base text-gray-600 mb-4" data-i18n="ads.vocalive-desc">
-                            AI seller yang balas komentar penonton TikTok Live pakai suara natural &amp; jualan otomatis 24 jam &#8212; tanpa gaji host bulanan.
-                        </p>
-                        <ul class="space-y-2 text-sm text-gray-700 mb-5">
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.vocalive-f1">Balas komentar real-time dengan suara manusia natural</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.vocalive-f2">AI paham database produkmu &#8212; jawab pembeli akurat</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.vocalive-f3">Cukup 1 Gemini API Key &#8212; tanpa OBS/software tambahan</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.vocalive-f4">TikTok aktif sekarang &#8212; Shopee &amp; platform lain menyusul</span></li>
-                        </ul>
-                        <div class="mt-auto">
-                            <a href="https://lynk.id/arullagi/6k6z5p6oglxr" target="_blank" rel="noopener noreferrer"
-                               class="inline-flex items-center gap-2 w-full justify-center px-6 py-4 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-base font-bold rounded-2xl shadow-lg transition-all transform hover:scale-105 active:scale-95">
-                                <i class="fas fa-robot"></i>
-                                <span data-i18n="ads.vocalive-cta">Ambil Vocalive AI</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Card 5: PK Simulator -->
-                    <div class="flex flex-col p-6 bg-white rounded-2xl shadow-lg border-2 border-green-200 hover:shadow-xl transition-all">
-                        <div class="inline-flex self-start items-center gap-2 px-3 py-1.5 bg-cyan-100 text-cyan-700 rounded-full text-xs font-bold mb-4">
-                            <i class="fas fa-circle-nodes"></i>
-                            <span data-i18n="ads.pk-badge">PK SIMULATOR 24 JAM</span>
-                        </div>
-                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2" data-i18n="ads.pk-title">TikTok Live PK Simulator</h2>
-                        <p class="text-sm sm:text-base text-gray-600 mb-4" data-i18n="ads.pk-desc">
-                            Live TikTok otomatis tanpa perlu bicara &#8212; visual bubble memukau &amp; simulasi PK yang memancing penonton kirim gift 24 jam.
-                        </p>
-                        <ul class="space-y-2 text-sm text-gray-700 mb-5">
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.pk-f1">Visual bubble bikin penonton betah &amp; ketagihan kirim gift</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.pk-f2">Sistem PK &amp; skor otomatis Tim A vs Tim B</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.pk-f3">Ringan &amp; anti-lag &#8212; jalan di laptop biasa</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.pk-f4">Set &amp; forget &#8212; live via PC atau HP shoot ke monitor</span></li>
-                        </ul>
-                        <div class="mt-auto">
-                            <a href="https://lynk.id/arullagi/4dpp52g519kr" target="_blank" rel="noopener noreferrer"
-                               class="inline-flex items-center gap-2 w-full justify-center px-6 py-4 bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white text-base font-bold rounded-2xl shadow-lg transition-all transform hover:scale-105 active:scale-95">
-                                <i class="fas fa-circle-nodes"></i>
-                                <span data-i18n="ads.pk-cta">Ambil PK Simulator</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Card 6: TikDance AI -->
-                    <div class="flex flex-col p-6 bg-white rounded-2xl shadow-lg border-2 border-green-200 hover:shadow-xl transition-all">
-                        <div class="inline-flex self-start items-center gap-2 px-3 py-1.5 bg-pink-100 text-pink-700 rounded-full text-xs font-bold mb-4">
-                            <i class="fas fa-music"></i>
-                            <span data-i18n="ads.tikdance-badge">AI JOGET AUTO-GIFT 24 JAM</span>
-                        </div>
-                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2" data-i18n="ads.tikdance-title">TikDance AI &#8212; AI Joget TikTok</h2>
-                        <p class="text-sm sm:text-base text-gray-600 mb-4" data-i18n="ads.tikdance-desc">
-                            Karakter AI otomatis berjoget tiap kali penonton kirim gift &#8212; live TikTok 24 jam nonstop tanpa tampil di depan kamera.
-                        </p>
-                        <ul class="space-y-2 text-sm text-gray-700 mb-5">
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.tikdance-f1">AI menari otomatis saat gift masuk &#8212; reaksi di bawah 1 detik</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.tikdance-f2">Karakter bisa dikustom &#8212; anime, robot, hewan lucu</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.tikdance-f3">Jalan 24/7 di background &#8212; hemat gaji host jutaan/bulan</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.tikdance-f4">Live via PC atau HP shoot ke monitor</span></li>
-                        </ul>
-                        <div class="mt-auto">
-                            <a href="https://lynk.id/arullagi/g4w8k4zmr0zg" target="_blank" rel="noopener noreferrer"
-                               class="inline-flex items-center gap-2 w-full justify-center px-6 py-4 bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white text-base font-bold rounded-2xl shadow-lg transition-all transform hover:scale-105 active:scale-95">
-                                <i class="fas fa-music"></i>
-                                <span data-i18n="ads.tikdance-cta">Ambil TikDance AI</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Card 7: GPT Storyboard UGC -->
-                    <div class="flex flex-col p-6 bg-white rounded-2xl shadow-lg border-2 border-green-200 hover:shadow-xl transition-all">
-                        <div class="inline-flex self-start items-center gap-2 px-3 py-1.5 bg-indigo-100 text-indigo-700 rounded-full text-xs font-bold mb-4">
-                            <i class="fas fa-clapperboard"></i>
-                            <span data-i18n="ads.storyboard-badge">GPT STORYBOARD UGC</span>
-                        </div>
-                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2" data-i18n="ads.storyboard-title">AI Pembuat Storyboard UGC</h2>
-                        <p class="text-sm sm:text-base text-gray-600 mb-4" data-i18n="ads.storyboard-desc">
-                            GPT khusus yang bikin storyboard video UGC affiliate dari 1 produk &#8212; tanpa rekam muka, tanpa skill edit. Cocok TikTok Shop, Shopee, Tokopedia.
-                        </p>
-                        <ul class="space-y-2 text-sm text-gray-700 mb-5">
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.storyboard-f1">Input produk &#8594; storyboard 6-8 scene siap jadi video</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.storyboard-f2">Framework UGC konversi tinggi: hook, problem, solusi, CTA</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.storyboard-f3">Bonus tutorial image-to-video (Kling, Runway, CapCut AI)</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-check text-green-600 mt-0.5"></i><span data-i18n="ads.storyboard-f4">Lifetime &#8212; buat konten unlimited semua produk</span></li>
-                        </ul>
-                        <div class="mt-auto">
-                            <a href="https://lynk.id/arullagi/py9p7qpn67or" target="_blank" rel="noopener noreferrer"
-                               class="inline-flex items-center gap-2 w-full justify-center px-6 py-4 bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white text-base font-bold rounded-2xl shadow-lg transition-all transform hover:scale-105 active:scale-95">
-                                <i class="fas fa-clapperboard"></i>
-                                <span data-i18n="ads.storyboard-cta">Ambil GPT Storyboard</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
                 <p class="text-center text-xs text-gray-500" data-i18n="ads.disclaimer">
-                    Cek detail &amp; harga terbaru langsung di halaman produk. Angka penghasilan pada materi adalah simulasi hitungan, bukan janji hasil.
+                    Etalase terbuka di tab baru. Cek detail &amp; harga terbaru langsung di halaman produk. Angka penghasilan pada materi adalah simulasi hitungan, bukan janji hasil.
                 </p>
             </div>
         </div>
@@ -20470,7 +20299,7 @@
     <button id="update-info-btn" class="text-white rounded-full w-16 h-16 flex items-center justify-center shadow-xl relative" style="background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);">
         <div class="flex flex-col items-center leading-none pointer-events-none">
             <i class="fas fa-bolt text-sm"></i>
-            <span class="text-xs font-bold mt-0.5">V73</span>
+            <span class="text-xs font-bold mt-0.5">V74</span>
         </div>
         <span class="update-notif-dot"></span>
     </button>
