@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '74';
+        const UPDATE_VERSION = '75';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -718,6 +718,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '75',
+                dateId: 'Oktober 2026',
+                dateEn: 'October 2026',
+                badgeKey: 'modal.fix-v75-badge',
+                badgeText: 'Update v75',
+                gradient: 'linear-gradient(135deg,#ea580c,#c2410c)',
+                borderColor: '#ea580c',
+                icon: 'fa-shield-halved',
+                iconColor: '#ea580c',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v75-title-harga',
+                        titleText: 'Bebas Iklan Kini Cuma Rp 10.000/Bulan',
+                        bodyKey: 'modal.fix-v75-body-harga',
+                        bodyText: 'Harga Bebas Iklan turun jadi Rp 10.000 per bulan. Generate dan download tanpa iklan jadi lebih hemat. Ada pertanyaan soal pembayaran atau aktivasi? Sekarang ada tombol Tanya Admin via WhatsApp langsung di menu Hilangkan Iklan.'
+                    }
+                ]
+            },
             {
                 version: '74',
                 dateId: 'Oktober 2026',

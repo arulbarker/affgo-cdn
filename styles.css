@@ -10337,6 +10337,13 @@
             margin-bottom: 14px;
             line-height: 1;
         }
+        .ad-lock-price-old {
+            font-size: 15px;
+            font-weight: 600;
+            color: #9ca3af;
+            text-decoration: line-through;
+            margin-right: 8px;
+        }
         .ad-lock-price-unit {
             font-size: 13px;
             font-weight: 500;

@@ -126,11 +126,15 @@
                 'bebas-iklan.feature-1': 'Tanpa iklan saat Generate / Download',
                 'bebas-iklan.feature-2': 'Akses penuh tanpa interupsi 1 bulan',
                 'bebas-iklan.feature-3': 'Auto-aktif setelah pembayaran (login ulang)',
-                'bebas-iklan.cta': 'Beli Sekarang — Rp 14.000 / bulan',
+                'bebas-iklan.cta': 'Beli Sekarang — Rp 10.000 / bulan',
                 'bebas-iklan.note': 'Setelah bayar, login ulang dengan email yang sama',
+                'bebas-iklan.wa-admin': 'Tanya Admin via WhatsApp',
+                'bebas-iklan.price-drop-badge': 'HARGA TURUN!',
+                'bebas-iklan.per-month': '/ bulan',
 
                 // ===== Popup Bebas Iklan saat login (sekali per device) =====
                 'adfree-popup.headline': 'Coba pengalaman tanpa iklan',
+                'adfree-popup.headline-10k': 'Bebas Iklan sekarang lebih murah!',
                 'adfree-popup.skip': 'Lain Kali',
 
                 // ===== Pasang di Layar Utama (A2HS, mobile) =====
@@ -145,7 +149,7 @@
                 'adblock.howto-label': 'Cara matikan:',
                 'adblock.howto-text': 'Klik ikon AdBlock di toolbar browser → pilih "Disable on this site" / "Pause on this site" → refresh halaman.',
                 'adblock.recheck': 'Saya Sudah Matikan — Cek Ulang',
-                'adblock.buy': 'Beli Bebas Iklan Rp 14.000/bln',
+                'adblock.buy': 'Beli Bebas Iklan Rp 10.000/bln',
 
                 'nav.beranda': 'Beranda',
                 'nav.ruangsaku': 'Etalase',
@@ -434,6 +438,9 @@
                 'login.secure': '\uD83D\uDD12 Akses Terenkripsi & Aman',
                 'login.no-access-cta': '\uD83D\uDED2 Belum punya akses? Beli di sini \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v75-badge': 'Update v75',
+                'modal.fix-v75-title-harga': 'Bebas Iklan Kini Cuma Rp 10.000/Bulan',
+                'modal.fix-v75-body-harga': 'Harga Bebas Iklan turun jadi Rp 10.000 per bulan. Generate dan download tanpa iklan jadi lebih hemat. Ada pertanyaan soal pembayaran atau aktivasi? Sekarang ada tombol Tanya Admin via WhatsApp langsung di menu Hilangkan Iklan.',
                 'modal.fix-v74-badge': 'Update v74',
                 'modal.fix-v74-title-etalase': 'Menu Promo Kini Jadi Etalase',
                 'modal.fix-v74-body-etalase': 'Menu Promo di sidebar berganti nama jadi Etalase. Satu tombol langsung membuka etalase Lynk.id kami, berisi semua software, eCourse, dan tools AI dari developer AffGo dengan produk dan harga terbaru. Info Program Affiliate (komisi Rp50.000 per penjualan) tetap ada di halaman yang sama.',
@@ -622,7 +629,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Tab Ruang Saku sekarang punya halaman penjelasan singkat fitur Rindu (AI keuangan) + tombol langsung ke RuangSaku.com. Lebih nyaman dipakai di HP — tinggal klik dan terbuka di tab browser.',
                 'modal.fix-v31-title-telegram': 'Tombol Telegram di Pojok Layar',
                 'modal.fix-v31-body-telegram': 'Tombol bundar Telegram sekarang ada di pojok kanan bawah aplikasi. Sekali klik langsung join grup Telegram Affiliate Go — tempat update fitur, tips, dan tanya jawab dengan komunitas.',
-                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 74',
+                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 75',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Selamat Datang di Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Asisten AI Anda untuk menjelajahi 79++ fitur photo & video generation',
@@ -2924,11 +2931,15 @@
                 'bebas-iklan.feature-1': 'No ads when generating or downloading',
                 'bebas-iklan.feature-2': 'Full uninterrupted access for 1 month',
                 'bebas-iklan.feature-3': 'Auto-activates after payment (re-login)',
-                'bebas-iklan.cta': 'Buy Now — Rp 14,000 / month',
+                'bebas-iklan.cta': 'Buy Now — Rp 10,000 / month',
                 'bebas-iklan.note': 'After payment, log in again with the same email',
+                'bebas-iklan.wa-admin': 'Ask Admin on WhatsApp',
+                'bebas-iklan.price-drop-badge': 'PRICE DROP!',
+                'bebas-iklan.per-month': '/ month',
 
                 // ===== Login ad-free popup (once per device) =====
                 'adfree-popup.headline': 'Try the ad-free experience',
+                'adfree-popup.headline-10k': 'Ad-Free is now cheaper!',
                 'adfree-popup.skip': 'Maybe Later',
 
                 // ===== Add to Home Screen (A2HS, mobile) =====
@@ -2943,7 +2954,7 @@
                 'adblock.howto-label': 'How to disable:',
                 'adblock.howto-text': 'Click the AdBlock icon in your browser toolbar → choose "Disable on this site" / "Pause on this site" → refresh the page.',
                 'adblock.recheck': "I've Disabled It — Re-check",
-                'adblock.buy': 'Buy Ad-Free Rp 14,000/month',
+                'adblock.buy': 'Buy Ad-Free Rp 10,000/month',
 
                 'nav.beranda': 'Home',
                 'nav.ruangsaku': 'Store',
@@ -3232,6 +3243,9 @@
                 'login.secure': '\uD83D\uDD12 Encrypted & Secure Access',
                 'login.no-access-cta': '\uD83D\uDED2 No access yet? Buy here \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v75-badge': 'Update v75',
+                'modal.fix-v75-title-harga': 'Ad-Free Is Now Only Rp 10,000/Month',
+                'modal.fix-v75-body-harga': 'Ad-Free now costs only Rp 10,000 per month, so generating and downloading without ads costs less. Questions about payment or activation? There is now an Ask Admin on WhatsApp button right in the Remove Ads menu.',
                 'modal.fix-v74-badge': 'Update v74',
                 'modal.fix-v74-title-etalase': 'Promo Menu Is Now the Store',
                 'modal.fix-v74-body-etalase': 'The Promo menu in the sidebar is now called Store. One button opens our Lynk.id store with all the software, eCourses, and AI tools from the AffGo developer, always showing the latest products and prices. The Affiliate Program info (Rp50,000 commission per sale) is still on the same page.',
@@ -3420,7 +3434,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Ruang Saku tab now has a brief intro page for Rindu (AI finance buddy) + direct button to RuangSaku.com. Smoother mobile experience — one click and it opens in a browser tab.',
                 'modal.fix-v31-title-telegram': 'Telegram Button at Screen Corner',
                 'modal.fix-v31-body-telegram': 'Round Telegram button is now at the bottom-right corner of the app. One click jumps directly to the Affiliate Go Telegram group — for feature updates, tips, and Q&A with the community.',
-                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 74',
+                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 75',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Welcome to Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Your AI Assistant to explore 79++ photo & video generation features',
@@ -5769,6 +5783,8 @@
                 'bebas-iklan.feature-3': 'Auto-aktif selepas pembayaran (log masuk semula)',
                 'bebas-iklan.note': 'Selepas bayar, log masuk semula dengan emel yang sama',
                 'adfree-popup.headline': 'Cuba pengalaman tanpa iklan',
+                'adfree-popup.headline-10k': 'Bebas Iklan kini lebih murah!',
+                'bebas-iklan.wa-admin': 'Tanya Admin melalui WhatsApp',
                 'adblock.title': 'AdBlock Dikesan',
                 'adblock.desc': 'Aplikasi ini percuma kerana iklan. Matikan AdBlock dahulu untuk terus menggunakan aplikasi, atau dapatkan akses tanpa iklan kekal dengan Bebas Iklan.',
                 'adblock.howto-text': 'Klik ikon AdBlock di toolbar pelayar → pilih "Disable on this site" / "Pause on this site" → segar semula halaman.',
@@ -7515,6 +7531,34 @@
         // [v33+] Lynk.id paid feature: "fitur favorit tab affgo" (lifetime). Saat user
         // klik bintang dan flag belum aktif → buka link ini di tab baru.
         const LYNK_FAVORIT_FEATURE_URL = "https://lynk.id/arullagi/rm306vzjzjx0";
+        const ADMIN_WA_NUMBER = "6285157914468";
+        const BEBAS_IKLAN_OLD_PRICE = "Rp 14.000";
+
+        function __adminWaUrl() {
+            const msg = window.tr3
+                ? window.tr3('Halo Admin AffGo, saya mau tanya soal Bebas Iklan.', 'Hi AffGo Admin, I have a question about Ad-Free.', 'Hai Admin AffGo, saya ingin bertanya tentang Bebas Iklan.')
+                : 'Halo Admin AffGo, saya mau tanya soal Bebas Iklan.';
+            return "https://wa.me/" + ADMIN_WA_NUMBER + "?text=" + encodeURIComponent(msg);
+        }
+
+        function __adminWaButtonHtml() {
+            return '<a href="' + __adminWaUrl() + '" target="_blank" rel="noopener noreferrer" ' +
+                'class="adfree-wa-admin-btn mt-3 inline-flex items-center justify-center gap-2 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl shadow-md active:scale-[0.98] transition-all min-h-[44px]">' +
+                '<i class="fab fa-whatsapp text-xl"></i><span data-i18n="bebas-iklan.wa-admin">Tanya Admin via WhatsApp</span>' +
+            '</a>';
+        }
+
+        function __priceDropHtml() {
+            return '<div class="adfree-price-drop mb-4 rounded-xl border-2 border-orange-300 bg-orange-50 px-4 py-3">' +
+                '<div class="inline-block mb-1 rounded-full bg-red-600 px-3 py-1 text-xs font-extrabold tracking-wide text-white animate-pulse">🔥 <span data-i18n="bebas-iklan.price-drop-badge">HARGA TURUN!</span></div>' +
+                '<div class="flex items-baseline justify-center gap-2 flex-wrap">' +
+                    '<span class="text-base text-gray-500 line-through">' + BEBAS_IKLAN_OLD_PRICE + '</span>' +
+                    '<span class="text-3xl font-black text-orange-700">Rp 10.000</span>' +
+                    '<span class="text-sm font-semibold text-gray-600" data-i18n="bebas-iklan.per-month">/ bulan</span>' +
+                '</div>' +
+            '</div>';
+        }
+
         const AD_LOCK_DURATION_MS = 10000; // overlay countdown 10 detik
         const AD_COOLDOWN_MS = 5000;       // jeda min antar trigger iklan
         // POC: hanya tab Membuat Model dulu — kalau OK, baru rollout ke semua tab.
@@ -7571,7 +7615,7 @@
                             '<div class="ad-lock-pitch-emoji">💎</div>' +
                             '<div class="ad-lock-pitch-text">' + T.pitch + '</div>' +
                             '<div class="ad-lock-pitch-sub">' + T.pitchSub + '</div>' +
-                            '<div class="ad-lock-price">Rp 14.000<span class="ad-lock-price-unit">' + T.perMo + '</span></div>' +
+                            '<div class="ad-lock-price"><span class="ad-lock-price-old">' + BEBAS_IKLAN_OLD_PRICE + '</span>Rp 10.000<span class="ad-lock-price-unit">' + T.perMo + '</span></div>' +
                             '<button type="button" id="ad-lock-cta">' + T.cta + '</button>' +
                         '</div>' +
                     '</div>';
@@ -7640,7 +7684,7 @@
                 const txt = lang === "id" ? "✓ Bebas Iklan Aktif" : "✓ Ad-Free Active";
                 badge.innerHTML = '<div class="ad-free-active-badge">' + txt + '</div>';
             } else if (__lynkConfigured()) {
-                const txt = lang === "id" ? "🚫 Bebas Iklan Rp 14.000/bln" : "🚫 Go Ad-Free";
+                const txt = lang === "id" ? "🚫 Bebas Iklan Rp 10.000/bln" : "🚫 Go Ad-Free";
                 badge.innerHTML = '<button type="button" class="ad-free-cta-btn">' + txt + '</button>';
                 const btn = badge.querySelector("button");
                 if (btn) {
@@ -8317,6 +8361,7 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
                     '<div class="text-center">' +
                         '<div class="text-5xl mb-3" style="filter: drop-shadow(0 4px 12px rgba(234, 88, 12, 0.4));">🛡️</div>' +
                         '<p class="text-base font-semibold text-gray-700 mb-4" data-i18n="bebas-iklan.modal-headline">Buang semua iklan dari aplikasi</p>' +
+                        __priceDropHtml() +
                         '<ul class="text-left space-y-2 mb-5 max-w-sm mx-auto">' +
                             '<li class="flex items-start gap-2 text-sm text-gray-700"><i class="fas fa-check-circle text-green-600 mt-1"></i><span data-i18n="bebas-iklan.feature-1">Tanpa iklan saat Generate / Download</span></li>' +
                             '<li class="flex items-start gap-2 text-sm text-gray-700"><i class="fas fa-check-circle text-green-600 mt-1"></i><span data-i18n="bebas-iklan.feature-2">Akses penuh tanpa interupsi 1 bulan</span></li>' +
@@ -8324,8 +8369,9 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
                         '</ul>' +
                         '<a href="' + LYNK_BEBAS_IKLAN_URL + '" target="_blank" rel="noopener noreferrer" ' +
                             'class="inline-flex items-center justify-center gap-2 w-full bg-gradient-to-r from-orange-600 to-orange-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all">' +
-                            '<i class="fas fa-shield-halved"></i><span data-i18n="bebas-iklan.cta">Beli Sekarang — Rp 14.000 / bulan</span>' +
+                            '<i class="fas fa-shield-halved"></i><span data-i18n="bebas-iklan.cta">Beli Sekarang — Rp 10.000 / bulan</span>' +
                         '</a>' +
+                        __adminWaButtonHtml() +
                         '<p class="text-xs text-gray-500 mt-3" data-i18n="bebas-iklan.note">Setelah bayar, login ulang dengan email yang sama</p>' +
                     '</div>';
                 if (window.showUniversalModal) window.showUniversalModal(title, html);
@@ -8395,7 +8441,7 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
                                 '<i class="fas fa-rotate-right"></i> <span data-i18n="adblock.recheck">Saya Sudah Matikan — Cek Ulang</span>' +
                             '</button>' +
                             '<a href="' + LYNK_BEBAS_IKLAN_URL + '" target="_blank" rel="noopener" class="adblock-btn-buy">' +
-                                '<i class="fas fa-shield-halved"></i> <span data-i18n="adblock.buy">Beli Bebas Iklan Rp 14.000/bln</span>' +
+                                '<i class="fas fa-shield-halved"></i> <span data-i18n="adblock.buy">Beli Bebas Iklan Rp 10.000/bln</span>' +
                             '</a>' +
                         '</div>' +
                     '</div>'
@@ -8565,13 +8611,13 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
         // backdrop, "Lain Kali") otomatis tercakup tanpa hook tambahan.
         function showAdFreePromoIfEligible(nama) {
             if (window.isAdFree === true) return;
-            try { if (localStorage.getItem('adfree_promo_seen') === '1') return; } catch (e) { return; }
+            try { if (localStorage.getItem('adfree_promo_seen_10k') === '1') return; } catch (e) { return; }
             if (typeof window.showUniversalModal !== 'function') return;
             // Failsafe: kalau Adsterra tidak terkonfigurasi (AD_URL placeholder),
             // ad gating mati → popup ini juga skip (tidak relevan).
             if (typeof __adsConfigured === 'function' && !__adsConfigured()) return;
 
-            try { localStorage.setItem('adfree_promo_seen', '1'); } catch (e) {}
+            try { localStorage.setItem('adfree_promo_seen_10k', '1'); } catch (e) {}
 
             const isEN = (localStorage.getItem('app_language') || 'id') === 'en';
             const safeName = String(nama || 'User').replace(/[<>&"']/g, function(c) {
@@ -8586,7 +8632,8 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
                 '<div class="text-center">' +
                     '<p class="text-base font-medium text-gray-800 mb-3">' + greeting + '</p>' +
                     '<div class="text-5xl mb-3" style="filter: drop-shadow(0 4px 12px rgba(234, 88, 12, 0.4));">🛡️</div>' +
-                    '<p class="text-base font-semibold text-gray-700 mb-4" data-i18n="adfree-popup.headline">Coba pengalaman tanpa iklan</p>' +
+                    '<p class="text-base font-semibold text-gray-700 mb-4" data-i18n="adfree-popup.headline-10k">Bebas Iklan sekarang lebih murah!</p>' +
+                    __priceDropHtml() +
                     '<ul class="text-left space-y-2 mb-5 max-w-sm mx-auto">' +
                         '<li class="flex items-start gap-2 text-sm text-gray-700"><i class="fas fa-check-circle text-green-600 mt-1"></i><span data-i18n="bebas-iklan.feature-1">Tanpa iklan saat Generate / Download</span></li>' +
                         '<li class="flex items-start gap-2 text-sm text-gray-700"><i class="fas fa-check-circle text-green-600 mt-1"></i><span data-i18n="bebas-iklan.feature-2">Akses penuh tanpa interupsi 1 bulan</span></li>' +
@@ -8594,8 +8641,9 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
                     '</ul>' +
                     '<a href="' + LYNK_BEBAS_IKLAN_URL + '" target="_blank" rel="noopener noreferrer" ' +
                         'class="inline-flex items-center justify-center gap-2 w-full bg-gradient-to-r from-orange-600 to-orange-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all min-h-[44px]">' +
-                        '<i class="fas fa-shield-halved"></i><span data-i18n="bebas-iklan.cta">Beli Sekarang — Rp 14.000 / bulan</span>' +
+                        '<i class="fas fa-shield-halved"></i><span data-i18n="bebas-iklan.cta">Beli Sekarang — Rp 10.000 / bulan</span>' +
                     '</a>' +
+                    __adminWaButtonHtml() +
                     '<button type="button" id="adfree-popup-skip-btn" class="mt-3 w-full text-sm font-semibold text-gray-500 hover:text-gray-700 py-2 min-h-[44px]" data-i18n="adfree-popup.skip">Lain Kali</button>' +
                     '<p class="text-xs text-gray-500 mt-3" data-i18n="bebas-iklan.note">Setelah bayar, login ulang dengan email yang sama</p>' +
                 '</div>';
