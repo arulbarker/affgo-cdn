@@ -128,7 +128,7 @@
                 'bebas-iklan.feature-3': 'Auto-aktif setelah pembayaran (login ulang)',
                 'bebas-iklan.cta': 'Beli Sekarang — Rp 10.000 / bulan',
                 'bebas-iklan.note': 'Setelah bayar, login ulang dengan email yang sama',
-                'bebas-iklan.wa-admin': 'Tanya Admin via WhatsApp',
+                'bebas-iklan.wa-admin': 'Hubungi Admin via WhatsApp',
                 'bebas-iklan.price-drop-badge': 'HARGA TURUN!',
                 'bebas-iklan.per-month': '/ bulan',
 
@@ -430,6 +430,7 @@
                 'favorites.title': 'Favorit',
                 'favorites.sheet-title': 'Tab Favorit',
                 'nav.telegram': 'Gabung Telegram',
+                'nav.wa-admin': 'Hubungi Admin',
                 'nav.search-ph': 'Cari fitur...',
                 'favorites.empty-mobile': 'Belum ada tab favorit. Tap bintang kecil di pojok tombol bawah untuk menandai favorit.',
                 'login.title': 'Affiliate GO', 'login.subtitle': 'Foto Studio by Arul CG',
@@ -438,6 +439,9 @@
                 'login.secure': '\uD83D\uDD12 Akses Terenkripsi & Aman',
                 'login.no-access-cta': '\uD83D\uDED2 Belum punya akses? Beli di sini \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v76-badge': 'Update v76',
+                'modal.fix-v76-title-admin': 'Tombol Hubungi Admin di Menu',
+                'modal.fix-v76-body-admin': 'Ada pertanyaan apa pun soal AffGo? Sekarang ada tombol Hubungi Admin di menu samping (di HP ada di dalam menu \u2630). Sekali ketuk langsung terhubung ke WhatsApp admin untuk bantuan.',
                 'modal.fix-v75-badge': 'Update v75',
                 'modal.fix-v75-title-harga': 'Bebas Iklan Kini Cuma Rp 10.000/Bulan',
                 'modal.fix-v75-body-harga': 'Harga Bebas Iklan turun jadi Rp 10.000 per bulan. Generate dan download tanpa iklan jadi lebih hemat. Ada pertanyaan soal pembayaran atau aktivasi? Sekarang ada tombol Tanya Admin via WhatsApp langsung di menu Hilangkan Iklan.',
@@ -629,7 +633,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Tab Ruang Saku sekarang punya halaman penjelasan singkat fitur Rindu (AI keuangan) + tombol langsung ke RuangSaku.com. Lebih nyaman dipakai di HP — tinggal klik dan terbuka di tab browser.',
                 'modal.fix-v31-title-telegram': 'Tombol Telegram di Pojok Layar',
                 'modal.fix-v31-body-telegram': 'Tombol bundar Telegram sekarang ada di pojok kanan bawah aplikasi. Sekali klik langsung join grup Telegram Affiliate Go — tempat update fitur, tips, dan tanya jawab dengan komunitas.',
-                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 75',
+                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 76',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Selamat Datang di Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Asisten AI Anda untuk menjelajahi 79++ fitur photo & video generation',
@@ -2933,7 +2937,7 @@
                 'bebas-iklan.feature-3': 'Auto-activates after payment (re-login)',
                 'bebas-iklan.cta': 'Buy Now — Rp 10,000 / month',
                 'bebas-iklan.note': 'After payment, log in again with the same email',
-                'bebas-iklan.wa-admin': 'Ask Admin on WhatsApp',
+                'bebas-iklan.wa-admin': 'Contact Admin on WhatsApp',
                 'bebas-iklan.price-drop-badge': 'PRICE DROP!',
                 'bebas-iklan.per-month': '/ month',
 
@@ -3235,6 +3239,7 @@
                 'favorites.title': 'Favorites',
                 'favorites.sheet-title': 'Favorite Tabs',
                 'nav.telegram': 'Join Telegram',
+                'nav.wa-admin': 'Contact Admin',
                 'nav.search-ph': 'Search features...',
                 'favorites.empty-mobile': 'No favorite tabs yet. Tap the small star on the corner of any bottom button to mark it as favorite.',
                 'login.title': 'Affiliate GO', 'login.subtitle': 'Photo Studio by Arul CG',
@@ -3243,6 +3248,9 @@
                 'login.secure': '\uD83D\uDD12 Encrypted & Secure Access',
                 'login.no-access-cta': '\uD83D\uDED2 No access yet? Buy here \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v76-badge': 'Update v76',
+                'modal.fix-v76-title-admin': 'Contact Admin Button in the Menu',
+                'modal.fix-v76-body-admin': 'Have any question about AffGo? There is now a Contact Admin button in the side menu (on mobile, inside the \u2630 menu). One tap connects you to the admin on WhatsApp for help.',
                 'modal.fix-v75-badge': 'Update v75',
                 'modal.fix-v75-title-harga': 'Ad-Free Is Now Only Rp 10,000/Month',
                 'modal.fix-v75-body-harga': 'Ad-Free now costs only Rp 10,000 per month, so generating and downloading without ads costs less. Questions about payment or activation? There is now an Ask Admin on WhatsApp button right in the Remove Ads menu.',
@@ -3434,7 +3442,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Ruang Saku tab now has a brief intro page for Rindu (AI finance buddy) + direct button to RuangSaku.com. Smoother mobile experience — one click and it opens in a browser tab.',
                 'modal.fix-v31-title-telegram': 'Telegram Button at Screen Corner',
                 'modal.fix-v31-body-telegram': 'Round Telegram button is now at the bottom-right corner of the app. One click jumps directly to the Affiliate Go Telegram group — for feature updates, tips, and Q&A with the community.',
-                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 75',
+                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 76',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Welcome to Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Your AI Assistant to explore 79++ photo & video generation features',
@@ -5784,7 +5792,7 @@
                 'bebas-iklan.note': 'Selepas bayar, log masuk semula dengan emel yang sama',
                 'adfree-popup.headline': 'Cuba pengalaman tanpa iklan',
                 'adfree-popup.headline-10k': 'Bebas Iklan kini lebih murah!',
-                'bebas-iklan.wa-admin': 'Tanya Admin melalui WhatsApp',
+                'bebas-iklan.wa-admin': 'Hubungi Admin melalui WhatsApp',
                 'adblock.title': 'AdBlock Dikesan',
                 'adblock.desc': 'Aplikasi ini percuma kerana iklan. Matikan AdBlock dahulu untuk terus menggunakan aplikasi, atau dapatkan akses tanpa iklan kekal dengan Bebas Iklan.',
                 'adblock.howto-text': 'Klik ikon AdBlock di toolbar pelayar → pilih "Disable on this site" / "Pause on this site" → segar semula halaman.',
@@ -7536,17 +7544,22 @@
 
         function __adminWaUrl() {
             const msg = window.tr3
-                ? window.tr3('Halo Admin AffGo, saya mau tanya soal Bebas Iklan.', 'Hi AffGo Admin, I have a question about Ad-Free.', 'Hai Admin AffGo, saya ingin bertanya tentang Bebas Iklan.')
-                : 'Halo Admin AffGo, saya mau tanya soal Bebas Iklan.';
+                ? window.tr3('Halo Admin AffGo, saya mau bertanya.', 'Hi AffGo Admin, I have a question.', 'Hai Admin AffGo, saya ingin bertanya.')
+                : 'Halo Admin AffGo, saya mau bertanya.';
             return "https://wa.me/" + ADMIN_WA_NUMBER + "?text=" + encodeURIComponent(msg);
         }
 
         function __adminWaButtonHtml() {
             return '<a href="' + __adminWaUrl() + '" target="_blank" rel="noopener noreferrer" ' +
                 'class="adfree-wa-admin-btn mt-3 inline-flex items-center justify-center gap-2 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl shadow-md active:scale-[0.98] transition-all min-h-[44px]">' +
-                '<i class="fab fa-whatsapp text-xl"></i><span data-i18n="bebas-iklan.wa-admin">Tanya Admin via WhatsApp</span>' +
+                '<i class="fab fa-whatsapp text-xl"></i><span data-i18n="bebas-iklan.wa-admin">Hubungi Admin via WhatsApp</span>' +
             '</a>';
         }
+
+        (function() {
+            const link = document.getElementById('sidebar-wa-admin-link');
+            if (link) link.addEventListener('click', function() { link.href = __adminWaUrl(); });
+        })();
 
         function __priceDropHtml() {
             return '<div class="adfree-price-drop mb-4 rounded-xl border-2 border-orange-300 bg-orange-50 px-4 py-3">' +

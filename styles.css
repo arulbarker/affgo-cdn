@@ -7753,6 +7753,21 @@
         body.drawer-lock { overflow: hidden; }
         .mobile-header { display: none; }
         .sidebar-telegram-link { display: none; }
+        .sidebar-wa-admin-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            min-height: 44px;
+            border-radius: 0.75rem;
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+        .sidebar-wa-admin-link .fa-whatsapp { font-size: 1.25rem; }
 
         @media (max-width: 768px) {
             /* Sidebar jadi drawer off-canvas.

@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '75';
+        const UPDATE_VERSION = '76';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -718,6 +718,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '76',
+                dateId: 'Oktober 2026',
+                dateEn: 'October 2026',
+                badgeKey: 'modal.fix-v76-badge',
+                badgeText: 'Update v76',
+                gradient: 'linear-gradient(135deg,#16a34a,#15803d)',
+                borderColor: '#16a34a',
+                icon: 'fa-headset',
+                iconColor: '#16a34a',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v76-title-admin',
+                        titleText: 'Tombol Hubungi Admin di Menu',
+                        bodyKey: 'modal.fix-v76-body-admin',
+                        bodyText: 'Ada pertanyaan apa pun soal AffGo? Sekarang ada tombol Hubungi Admin di menu samping (di HP ada di dalam menu \u2630). Sekali ketuk langsung terhubung ke WhatsApp admin untuk bantuan.'
+                    }
+                ]
+            },
             {
                 version: '75',
                 dateId: 'Oktober 2026',
