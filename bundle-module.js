@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '76';
+        const UPDATE_VERSION = '77';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -718,6 +718,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '77',
+                dateId: 'Oktober 2026',
+                dateEn: 'October 2026',
+                badgeKey: 'modal.fix-v77-badge',
+                badgeText: 'Update v77',
+                gradient: 'linear-gradient(135deg,#16a34a,#15803d)',
+                borderColor: '#16a34a',
+                icon: 'fa-mobile-screen-button',
+                iconColor: '#16a34a',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v77-title-nama',
+                        titleText: 'Nama Panjang Tidak Lagi Menutupi Menu di HP',
+                        bodyKey: 'modal.fix-v77-body-nama',
+                        bodyText: 'Di HP, nama akun yang panjang kini otomatis dipotong rapi (\u2026) sehingga tidak lagi menutupi tombol menu \u2630. Menu samping selalu bisa dibuka dan tombol Logout tetap terlihat.'
+                    }
+                ]
+            },
             {
                 version: '76',
                 dateId: 'Oktober 2026',

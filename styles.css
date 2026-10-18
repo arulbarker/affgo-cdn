@@ -10432,9 +10432,27 @@
                 top: 0.6rem;
                 right: 3.5rem;
                 z-index: 1101;
+                max-width: calc(100vw - 7.5rem);
+                padding: 6px 10px;
+                gap: 8px;
             }
+            .user-info-badge > span:first-child {
+                min-width: 0;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+            .user-info-badge .logout-btn-small { flex-shrink: 0; }
             #ad-free-status-badge { top: 64px; right: 8px; }
         }
+        html.force-mobile-nav .user-info-badge { max-width: calc(100vw - 7.5rem); }
+        html.force-mobile-nav .user-info-badge > span:first-child {
+            min-width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        html.force-mobile-nav .user-info-badge .logout-btn-small { flex-shrink: 0; }
         @media (max-width: 640px) {
             #ad-free-status-badge { top: 64px; right: 8px; }
             .ad-free-active-badge, .ad-free-cta-btn { font-size: 11px; padding: 6px 10px; }
