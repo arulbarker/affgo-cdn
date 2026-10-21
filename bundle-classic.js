@@ -17,6 +17,337 @@
     
 ;
 
+        // ===== RIWAYAT HASIL + PESAN GAGAL GENERATE =====
+        // Satu pengamat fetch untuk semua tab: setiap respons Gemini yang berisi gambar
+        // disimpan ke IndexedDB (riwayat lintas fitur, tahan reload), dan setiap kegagalan
+        // dicatat jenisnya supaya pesan gagal menyebut penyebab yang sebenarnya.
+        (function () {
+            var RIWAYAT_MAX = 40;
+            var DB_NAME = 'affgo_riwayat';
+            var STORE = 'items';
+            var SEEN_KEY = 'riwayat_seen_ts';
+            var FAIL_WINDOW_MS = 180000;
+            var lastFail = null;
+
+            var FAIL_TEXT = {
+                quota: ['Batas pemakaian akun Google ini sedang habis. Tunggu beberapa menit lalu coba lagi, atau gunakan akun Google lain.',
+                        'This Google account has hit its usage limit for now. Wait a few minutes and try again, or use another Google account.',
+                        'Had penggunaan akaun Google ini sedang habis. Tunggu beberapa minit kemudian cuba lagi, atau guna akaun Google lain.'],
+                safety: ['Gambar ditolak filter keamanan Google. Coba foto lain atau ubah tema/deskripsinya, lalu generate ulang.',
+                         'The image was blocked by Google\'s safety filter. Try another photo or change the theme/description, then generate again.',
+                         'Imej ditolak oleh penapis keselamatan Google. Cuba foto lain atau ubah tema/penerangannya, kemudian jana semula.'],
+                busy: ['Server Google sedang sibuk. Tunggu sebentar lalu coba lagi.',
+                       'Google\'s server is busy right now. Wait a moment and try again.',
+                       'Pelayan Google sedang sibuk. Tunggu sebentar kemudian cuba lagi.'],
+                network: ['Koneksi internet terputus saat membuat gambar. Periksa koneksi lalu coba lagi.',
+                          'The internet connection dropped while creating the image. Check your connection and try again.',
+                          'Sambungan internet terputus semasa menjana imej. Semak sambungan kemudian cuba lagi.'],
+                bad: ['Permintaan ditolak Google, biasanya karena foto terlalu besar atau formatnya tidak didukung. Coba foto lain (JPG/PNG) yang lebih kecil.',
+                      'Google rejected the request, usually because the photo is too large or in an unsupported format. Try a smaller JPG/PNG photo.',
+                      'Permintaan ditolak Google, biasanya kerana foto terlalu besar atau formatnya tidak disokong. Cuba foto lain (JPG/PNG) yang lebih kecil.'],
+                auth: ['Akses ke Google AI ditolak. Buka ulang aplikasi dari link resminya, atau gunakan akun Google lain.',
+                       'Access to Google AI was denied. Reopen the app from its official link, or use another Google account.',
+                       'Akses ke Google AI ditolak. Buka semula aplikasi dari pautan rasminya, atau guna akaun Google lain.'],
+                noimage: ['Google tidak mengirim gambar kali ini. Coba generate ulang; kalau tetap gagal, ganti foto atau temanya.',
+                          'Google did not return an image this time. Try generating again; if it keeps failing, change the photo or theme.',
+                          'Google tidak menghantar imej kali ini. Cuba jana semula; jika masih gagal, tukar foto atau temanya.'],
+                unknown: ['Gagal membuat gambar. Coba lagi sebentar; kalau terus gagal, akun Google ini mungkin sudah mencapai batas, gunakan akun Google lain.',
+                          'Failed to create the image. Try again shortly; if it keeps failing, this Google account may have reached its limit, use another Google account.',
+                          'Gagal menjana imej. Cuba lagi sebentar; jika terus gagal, akaun Google ini mungkin sudah mencapai had, guna akaun Google lain.']
+            };
+
+            function markFail(kind) { lastFail = { kind: kind, at: Date.now() }; }
+
+            window.__genFailText = function () {
+                var tr = window.tr3 || function (a) { return a; };
+                var kind = (lastFail && Date.now() - lastFail.at < FAIL_WINDOW_MS) ? lastFail.kind : 'unknown';
+                if (navigator.onLine === false) kind = 'network';
+                var t = FAIL_TEXT[kind] || FAIL_TEXT.unknown;
+                return tr(t[0], t[1], t[2]);
+            };
+
+            // ---------- IndexedDB ----------
+            var dbPromise = null;
+            function openDb() {
+                if (dbPromise) return dbPromise;
+                dbPromise = new Promise(function (resolve, reject) {
+                    if (!window.indexedDB) { reject(new Error('no-indexeddb')); return; }
+                    var req;
+                    try { req = window.indexedDB.open(DB_NAME, 1); } catch (e) { reject(e); return; }
+                    req.onupgradeneeded = function () {
+                        if (!req.result.objectStoreNames.contains(STORE)) req.result.createObjectStore(STORE, { keyPath: 'id', autoIncrement: true });
+                    };
+                    req.onsuccess = function () { resolve(req.result); };
+                    req.onerror = function () { reject(req.error); };
+                });
+                return dbPromise;
+            }
+            function withStore(mode, fn) {
+                return openDb().then(function (db) {
+                    return new Promise(function (resolve, reject) {
+                        var t = db.transaction(STORE, mode);
+                        var out = fn(t.objectStore(STORE));
+                        t.oncomplete = function () { resolve(out && 'result' in out ? out.result : undefined); };
+                        t.onabort = t.onerror = function () { reject(t.error); };
+                    });
+                });
+            }
+            function listAll() {
+                return withStore('readonly', function (s) { return s.getAll(); }).then(function (items) {
+                    return (items || []).sort(function (a, b) { return b.id - a.id; });
+                });
+            }
+
+            function b64ToBlob(b64, mime) {
+                var bin = atob(b64), len = bin.length, bytes = new Uint8Array(len);
+                for (var i = 0; i < len; i++) bytes[i] = bin.charCodeAt(i);
+                return new Blob([bytes], { type: mime });
+            }
+
+            function activeTabInfo() {
+                var btn = document.querySelector('.main-tab-btn.active');
+                var tab = btn ? btn.getAttribute('data-tab') : '';
+                if (!tab) {
+                    var panel = document.querySelector('.main-content-panel:not(.hidden)');
+                    tab = panel ? panel.id.replace(/^content-/, '') : '';
+                }
+                var label = '';
+                if (btn) {
+                    var t = btn.querySelector('.btn-text');
+                    label = ((t ? t.textContent : btn.textContent) || '').trim();
+                }
+                return { tab: tab || 'affgo', label: label || tab || 'AffGo' };
+            }
+
+            function saveImage(b64, mime) {
+                var info = activeTabInfo();
+                setTimeout(function () {
+                    var blob;
+                    try { blob = b64ToBlob(b64, mime); } catch (e) { return; }
+                    withStore('readwrite', function (s) {
+                        s.add({ ts: Date.now(), tab: info.tab, label: info.label, mime: mime, blob: blob });
+                        var keysReq = s.getAllKeys();
+                        keysReq.onsuccess = function () {
+                            var keys = keysReq.result || [];
+                            for (var i = 0; i < keys.length - RIWAYAT_MAX; i++) s.delete(keys[i]);
+                        };
+                    }).then(function () {
+                        refreshBadge();
+                        if (isOpen()) render();
+                    }, function () {
+                        // Penyimpanan penuh: buang separuh riwayat tertua supaya berikutnya muat.
+                        withStore('readwrite', function (s) {
+                            var keysReq = s.getAllKeys();
+                            keysReq.onsuccess = function () {
+                                var keys = keysReq.result || [];
+                                for (var i = 0; i < Math.ceil(keys.length / 2); i++) s.delete(keys[i]);
+                            };
+                        }).catch(function () {});
+                    });
+                }, 0);
+            }
+
+            // ---------- Pengamat fetch Gemini ----------
+            function inspect(res, wantsImage) {
+                if (!res.ok) {
+                    var s = res.status;
+                    markFail(s === 429 ? 'quota' : (s === 401 || s === 403) ? 'auth' : s >= 500 ? 'busy' : 'bad');
+                    return;
+                }
+                if (!wantsImage) return;
+                res.json().then(function (data) {
+                    var found = 0;
+                    var blocked = !!(data && data.promptFeedback && data.promptFeedback.blockReason);
+                    var cands = (data && data.candidates) || [];
+                    for (var i = 0; i < cands.length; i++) {
+                        var c = cands[i] || {};
+                        if (/SAFETY|PROHIBITED|BLOCKLIST|SPII/.test(c.finishReason || '')) blocked = true;
+                        var parts = (c.content && c.content.parts) || [];
+                        for (var j = 0; j < parts.length; j++) {
+                            var d = parts[j] && (parts[j].inlineData || parts[j].inline_data);
+                            var mime = d && (d.mimeType || d.mime_type || '');
+                            if (d && d.data && /^image\//.test(mime)) { found++; saveImage(d.data, mime); }
+                        }
+                    }
+                    if (!found) markFail(blocked ? 'safety' : 'noimage');
+                }).catch(function () {});
+            }
+
+            var origFetch = window.fetch;
+            if (typeof origFetch === 'function' && !origFetch.__affgoObserved) {
+                var observedFetch = function (input) {
+                    var url = typeof input === 'string' ? input : (input && input.url) || '';
+                    var p = origFetch.apply(window, arguments);
+                    if (url.indexOf('generativelanguage.googleapis.com') === -1) return p;
+                    var wantsImage = /image/i.test(url.split('?')[0]);
+                    return p.then(function (res) {
+                        try { inspect(res.clone(), wantsImage); } catch (e) {}
+                        return res;
+                    }, function (err) {
+                        if (!err || err.name !== 'AbortError') markFail('network');
+                        throw err;
+                    });
+                };
+                observedFetch.__affgoObserved = true;
+                window.fetch = observedFetch;
+            }
+
+            // ---------- UI ----------
+            var modal = document.getElementById('riwayat-modal');
+            var grid = document.getElementById('riwayat-results-grid');
+            var emptyEl = document.getElementById('riwayat-empty');
+            var emptyText = document.getElementById('riwayat-empty-text');
+            var foot = document.getElementById('riwayat-foot');
+            var preview = document.getElementById('riwayat-preview');
+            var previewImg = document.getElementById('riwayat-preview-img');
+            var badge = document.getElementById('riwayat-badge');
+            var openBtn = document.getElementById('sidebar-riwayat-btn');
+            if (!modal || !grid || !openBtn) return;
+            var objectUrls = [];
+
+            function isOpen() { return !!modal && !modal.classList.contains('hidden'); }
+            function getSeen() {
+                try { return parseInt(localStorage.getItem(SEEN_KEY) || '0', 10) || 0; } catch (e) { return 0; }
+            }
+            function revokeAll() {
+                for (var i = 0; i < objectUrls.length; i++) URL.revokeObjectURL(objectUrls[i]);
+                objectUrls = [];
+            }
+
+            function refreshBadge() {
+                if (!badge) return;
+                listAll().then(function (items) {
+                    var seen = getSeen(), fresh = 0;
+                    for (var i = 0; i < items.length; i++) if (items[i].ts > seen) fresh++;
+                    badge.textContent = fresh > 9 ? '9+' : String(fresh);
+                    badge.classList.toggle('hidden', fresh === 0 || isOpen());
+                }).catch(function () { badge.classList.add('hidden'); });
+            }
+
+            function formatTime(ts) {
+                var lang = 'id';
+                try { lang = localStorage.getItem('app_language') || 'id'; } catch (e) {}
+                var locale = lang === 'en' ? 'en-US' : lang === 'ms' ? 'ms-MY' : 'id-ID';
+                try {
+                    return new Date(ts).toLocaleString(locale, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+                } catch (e) { return new Date(ts).toLocaleString(); }
+            }
+
+            function actionButton(cls, icon, label, attrs) {
+                return '<button type="button" class="riwayat-act ' + cls + '" ' + attrs + ' title="' + label + '" aria-label="' + label + '"><i class="fas ' + icon + '"></i></button>';
+            }
+
+            function render() {
+                var tr = window.tr3;
+                listAll().then(function (items) {
+                    revokeAll();
+                    grid.innerHTML = '';
+                    emptyText.textContent = tr('Belum ada hasil. Hasil generate dari fitur apa pun akan muncul di sini otomatis.',
+                        'No results yet. Images you generate in any feature will show up here automatically.',
+                        'Belum ada hasil. Hasil jana daripada mana-mana ciri akan muncul di sini secara automatik.');
+                    emptyEl.classList.toggle('hidden', items.length > 0);
+                    foot.classList.toggle('hidden', items.length === 0);
+                    for (var i = 0; i < items.length; i++) {
+                        var it = items[i];
+                        var url = URL.createObjectURL(it.blob);
+                        objectUrls.push(url);
+                        var card = document.createElement('div');
+                        card.className = 'riwayat-card';
+                        card.setAttribute('data-id', it.id);
+                        card.innerHTML =
+                            '<div class="riwayat-thumb"><img alt="" loading="lazy"></div>' +
+                            '<div class="riwayat-meta"><span class="riwayat-label"></span><span class="riwayat-time"></span></div>' +
+                            '<div class="riwayat-actions">' +
+                                actionButton('riwayat-act-preview', 'fa-eye', tr('Lihat', 'Preview', 'Lihat'), 'data-riwayat="preview"') +
+                                actionButton('riwayat-act-download', 'fa-download', tr('Download', 'Download', 'Muat turun'), 'data-action="download"') +
+                                actionButton('riwayat-act-delete', 'fa-trash', tr('Hapus', 'Delete', 'Padam'), 'data-riwayat="delete"') +
+                            '</div>';
+                        card.querySelector('img').src = url;
+                        card.querySelector('.riwayat-label').textContent = it.label;
+                        card.querySelector('.riwayat-time').textContent = formatTime(it.ts);
+                        grid.appendChild(card);
+                    }
+                }).catch(function () {
+                    revokeAll();
+                    grid.innerHTML = '';
+                    emptyText.textContent = tr('Browser ini tidak mengizinkan penyimpanan riwayat. Download hasil langsung dari tiap fitur ya.',
+                        'This browser does not allow saving history. Please download results directly from each feature.',
+                        'Pelayar ini tidak membenarkan penyimpanan sejarah. Sila muat turun hasil terus daripada setiap ciri.');
+                    emptyEl.classList.remove('hidden');
+                    foot.classList.add('hidden');
+                });
+            }
+
+            function getItem(id) {
+                return withStore('readonly', function (s) { return s.get(id); });
+            }
+
+            function downloadItem(id) {
+                getItem(id).then(function (it) {
+                    if (!it || typeof window.downloadImage !== 'function') return;
+                    var ext = (it.mime.split('/')[1] || 'png').replace('jpeg', 'jpg');
+                    var reader = new FileReader();
+                    reader.onload = function () { window.downloadImage(reader.result, 'affgo-' + it.tab + '-' + it.id + '.' + ext); };
+                    reader.readAsDataURL(it.blob);
+                }).catch(function () {});
+            }
+
+            function openRiwayat() {
+                var sidebar = document.querySelector('aside.sidebar');
+                if (sidebar && sidebar.classList.contains('drawer-open') && typeof window.closeMobileDrawer === 'function') window.closeMobileDrawer();
+                try { localStorage.setItem(SEEN_KEY, String(Date.now())); } catch (e) {}
+                modal.classList.remove('hidden');
+                if (badge) badge.classList.add('hidden');
+                if (window._i18nApplyNow) window._i18nApplyNow();
+                render();
+            }
+            function closeRiwayat() {
+                modal.classList.add('hidden');
+                preview.classList.add('hidden');
+                previewImg.removeAttribute('src');
+                revokeAll();
+                grid.innerHTML = '';
+                refreshBadge();
+            }
+
+            openBtn.addEventListener('click', openRiwayat);
+            document.getElementById('riwayat-close-btn').addEventListener('click', closeRiwayat);
+            document.getElementById('riwayat-preview-close').addEventListener('click', function () { preview.classList.add('hidden'); });
+            preview.addEventListener('click', function (e) { if (e.target === preview) preview.classList.add('hidden'); });
+            modal.addEventListener('click', function (e) { if (e.target === modal) closeRiwayat(); });
+            document.addEventListener('keydown', function (e) {
+                if (e.key !== 'Escape' || !isOpen()) return;
+                if (!preview.classList.contains('hidden')) preview.classList.add('hidden');
+                else closeRiwayat();
+            });
+
+            grid.addEventListener('click', function (e) {
+                var card = e.target.closest('.riwayat-card');
+                if (!card) return;
+                var id = Number(card.getAttribute('data-id'));
+                var btn = e.target.closest('button');
+                if (!btn) {
+                    if (e.target.closest('.riwayat-thumb')) { previewImg.src = card.querySelector('img').src; preview.classList.remove('hidden'); }
+                    return;
+                }
+                if (btn.getAttribute('data-action') === 'download') downloadItem(id);
+                else if (btn.getAttribute('data-riwayat') === 'preview') { previewImg.src = card.querySelector('img').src; preview.classList.remove('hidden'); }
+                else if (btn.getAttribute('data-riwayat') === 'delete') {
+                    withStore('readwrite', function (s) { s.delete(id); }).then(render).catch(function () {});
+                }
+            });
+
+            document.getElementById('riwayat-clear-btn').addEventListener('click', function () {
+                if (!window.confirm(window.tr3('Hapus semua riwayat hasil di perangkat ini?', 'Delete all result history on this device?', 'Padam semua sejarah hasil pada peranti ini?'))) return;
+                withStore('readwrite', function (s) { s.clear(); }).then(render).catch(function () {});
+            });
+
+            refreshBadge();
+        })();
+        // ==================== END RIWAYAT HASIL ====================
+        
+;
+
         // Guard CSS stale (runtime CDN): bootstrap shell inject <style> fresh SETELAH
         // <link styles.css@main> yang bisa stale (cache edge/browser, pra-V66 punya
         // rule legacy .sidebar display:none / .btn-text display:none). Kalau style
@@ -431,6 +762,11 @@
                 'favorites.sheet-title': 'Tab Favorit',
                 'nav.telegram': 'Gabung Telegram',
                 'nav.wa-admin': 'Hubungi Admin',
+                'nav.riwayat': 'Riwayat Hasil',
+                'riwayat.title': 'Riwayat Hasil',
+                'riwayat.info': 'Hasil generate tersimpan otomatis di perangkat ini (40 terbaru) dan tetap aman walau aplikasi dimuat ulang.',
+                'riwayat.empty': 'Belum ada hasil. Hasil generate dari fitur apa pun akan muncul di sini otomatis.',
+                'riwayat.clear': 'Hapus Semua',
                 'nav.search-ph': 'Cari fitur...',
                 'favorites.empty-mobile': 'Belum ada tab favorit. Tap bintang kecil di pojok tombol bawah untuk menandai favorit.',
                 'login.title': 'Affiliate GO', 'login.subtitle': 'Foto Studio by Arul CG',
@@ -439,6 +775,11 @@
                 'login.secure': '\uD83D\uDD12 Akses Terenkripsi & Aman',
                 'login.no-access-cta': '\uD83D\uDED2 Belum punya akses? Beli di sini \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v78-badge': 'Update v78',
+                'modal.fix-v78-title-riwayat': 'Riwayat Hasil: Foto Tidak Hilang Lagi',
+                'modal.fix-v78-body-riwayat': 'Semua foto hasil generate dari fitur apa pun kini tersimpan otomatis di perangkatmu (40 terbaru) dan tetap ada walau aplikasi dimuat ulang. Buka lewat tombol ungu Riwayat Hasil di atas menu untuk lihat, download, atau hapus.',
+                'modal.fix-v78-title-error': 'Pesan Gagal yang Lebih Jelas',
+                'modal.fix-v78-body-error': 'Kalau generate gagal, aplikasi kini menyebut penyebab sebenarnya: kuota akun habis, foto ditolak filter keamanan, server Google sibuk, atau koneksi terputus, lengkap dengan saran langkah berikutnya.',
                 'modal.fix-v77-badge': 'Update v77',
                 'modal.fix-v77-title-nama': 'Nama Panjang Tidak Lagi Menutupi Menu di HP',
                 'modal.fix-v77-body-nama': 'Di HP, nama akun yang panjang kini otomatis dipotong rapi (\u2026) sehingga tidak lagi menutupi tombol menu \u2630. Menu samping selalu bisa dibuka dan tombol Logout tetap terlihat.',
@@ -636,7 +977,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Tab Ruang Saku sekarang punya halaman penjelasan singkat fitur Rindu (AI keuangan) + tombol langsung ke RuangSaku.com. Lebih nyaman dipakai di HP — tinggal klik dan terbuka di tab browser.',
                 'modal.fix-v31-title-telegram': 'Tombol Telegram di Pojok Layar',
                 'modal.fix-v31-body-telegram': 'Tombol bundar Telegram sekarang ada di pojok kanan bawah aplikasi. Sekali klik langsung join grup Telegram Affiliate Go — tempat update fitur, tips, dan tanya jawab dengan komunitas.',
-                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 77',
+                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 78',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Selamat Datang di Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Asisten AI Anda untuk menjelajahi 79++ fitur photo & video generation',
@@ -935,7 +1276,7 @@
                 'pf.desc-hint': 'Kosongkan untuk pose fashion bervariasi otomatis',
                 'pf.desc-placeholder': 'Contoh: confident standing with arms crossed, sitting elegantly on a chair...',
                 'pf.quick-title': 'Pose Cepat',
-                'pf.quick-count': '(50 pilihan)',
+                'pf.quick-count': '(51 pilihan)',
                 'pf.quick-hint': 'Klik untuk pilih hingga 10 pose \u2014 hasil mengikuti pose yang dipilih',
                 'pf.selected-unit': 'pose dipilih',
                 'pf.random-btn': 'Random \u2014 pose acak otomatis',
@@ -3243,6 +3584,11 @@
                 'favorites.sheet-title': 'Favorite Tabs',
                 'nav.telegram': 'Join Telegram',
                 'nav.wa-admin': 'Contact Admin',
+                'nav.riwayat': 'Result History',
+                'riwayat.title': 'Result History',
+                'riwayat.info': 'Generated images are saved automatically on this device (latest 40) and stay safe even if the app reloads.',
+                'riwayat.empty': 'No results yet. Images you generate in any feature will show up here automatically.',
+                'riwayat.clear': 'Delete All',
                 'nav.search-ph': 'Search features...',
                 'favorites.empty-mobile': 'No favorite tabs yet. Tap the small star on the corner of any bottom button to mark it as favorite.',
                 'login.title': 'Affiliate GO', 'login.subtitle': 'Photo Studio by Arul CG',
@@ -3251,6 +3597,11 @@
                 'login.secure': '\uD83D\uDD12 Encrypted & Secure Access',
                 'login.no-access-cta': '\uD83D\uDED2 No access yet? Buy here \u2192',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v78-badge': 'Update v78',
+                'modal.fix-v78-title-riwayat': 'Result History: Your Photos No Longer Disappear',
+                'modal.fix-v78-body-riwayat': 'Every photo you generate in any feature is now saved automatically on your device (latest 40) and stays there even if the app reloads. Open it from the purple Result History button above the menu to view, download, or delete.',
+                'modal.fix-v78-title-error': 'Clearer Failure Messages',
+                'modal.fix-v78-body-error': 'When a generation fails, the app now tells you the real cause: account quota used up, photo blocked by the safety filter, Google server busy, or connection dropped, together with what to do next.',
                 'modal.fix-v77-badge': 'Update v77',
                 'modal.fix-v77-title-nama': 'Long Names No Longer Cover the Menu on Mobile',
                 'modal.fix-v77-body-nama': 'On mobile, long account names are now neatly shortened (\u2026) so they no longer cover the \u2630 menu button. The side menu can always be opened and the Logout button stays visible.',
@@ -3448,7 +3799,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Ruang Saku tab now has a brief intro page for Rindu (AI finance buddy) + direct button to RuangSaku.com. Smoother mobile experience — one click and it opens in a browser tab.',
                 'modal.fix-v31-title-telegram': 'Telegram Button at Screen Corner',
                 'modal.fix-v31-body-telegram': 'Round Telegram button is now at the bottom-right corner of the app. One click jumps directly to the Affiliate Go Telegram group — for feature updates, tips, and Q&A with the community.',
-                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 77',
+                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 78',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Welcome to Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Your AI Assistant to explore 79++ photo & video generation features',
@@ -3747,7 +4098,7 @@
                 'pf.desc-hint': 'Leave empty for automatic variety of fashion poses',
                 'pf.desc-placeholder': 'Example: confident standing with arms crossed, sitting elegantly on a chair...',
                 'pf.quick-title': 'Quick Poses',
-                'pf.quick-count': '(50 options)',
+                'pf.quick-count': '(51 options)',
                 'pf.quick-hint': 'Click to select up to 10 poses \u2014 results follow the selected poses',
                 'pf.selected-unit': 'poses selected',
                 'pf.random-btn': 'Random \u2014 automatic pose shuffle',
@@ -5789,6 +6140,9 @@
                 'lang.ms': 'Melayu',
                 'bebas-iklan.btn': 'Buang Iklan',
                 'nav.telegram': 'Sertai Telegram',
+                'riwayat.info': 'Hasil jana disimpan secara automatik pada peranti ini (40 terkini) dan kekal selamat walaupun aplikasi dimuat semula.',
+                'riwayat.empty': 'Belum ada hasil. Hasil jana daripada mana-mana ciri akan muncul di sini secara automatik.',
+                'riwayat.clear': 'Padam Semua',
                 'a2hs.banner-title': 'Pasang AffGo di skrin utama',
                 'a2hs.banner-sub': 'Paparan lebih besar & lapang, buka sekali ketik',
                 'a2hs.drawer-btn': 'Pasang di Skrin Utama',
@@ -7959,6 +8313,7 @@
             if (__rmGenBtn) __attachAdGate(__rmGenBtn);  // Riset Pasar & Ide
             const __ffGenBtn = document.getElementById("ff-generate-btn");
             if (__ffGenBtn) __attachAdGate(__ffGenBtn);  // Simulasi Anggaran
+            __attachAdGateToTab("riwayat");                          // Riwayat Hasil (download per kartu, grid riwayat-results-grid)
         }
 
         // Pasang gerbang setelah DOM siap.
@@ -8346,7 +8701,7 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
 
                     const successCount = fbGenerated.filter(Boolean).length;
                     if (successCount === 0) {
-                        alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                        alert(window.__genFailText());
                     }
                     generateBtn.disabled = false;
                 });

@@ -10,7 +10,7 @@
         <!-- Floating badge top-right -->
         <div style="position:absolute;top:16px;right:16px;background:linear-gradient(135deg,#ea580c,#c2410c);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(234,88,12,0.4);z-index:1;">90+ FITUR &#x26A1;</div>
         <!-- Floating version badge top-left (auto-sync dari UPDATE_VERSION via JS) -->
-        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V77</div>
+        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V78</div>
         <div class="login-box">
             <!-- AG Logo badge -->
             <div style="background:linear-gradient(135deg,#16a34a,#15803d);width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:1.35rem;font-weight:900;color:white;box-shadow:0 6px 18px rgba(22,163,74,0.4);">AG</div>
@@ -54,7 +54,7 @@
         <button type="button" id="mobile-drawer-toggle" aria-label="Buka menu" aria-expanded="false">
             <i class="fas fa-bars"></i>
         </button>
-        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V77</span></h1>
+        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V78</span></h1>
     </div>
     <div id="a2hs-banner" class="a2hs-banner" role="region" aria-label="Pasang di layar utama">
         <i class="fas fa-mobile-screen-button a2hs-icon"></i>
@@ -75,7 +75,7 @@
                 </h1>
                 <p class="text-xs text-gray-500 mt-1">by Arul CG</p>
                 <div class="mt-2">
-                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V77</span>
+                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V78</span>
                 </div>
                 <div class="lang-dropdown mt-2" id="lang-dropdown-desktop">
                     <button type="button" class="lang-dd-btn" aria-haspopup="listbox" aria-expanded="false">
@@ -105,6 +105,12 @@
                 <i class="fas fa-magnifying-glass"></i>
                 <input type="search" id="sidebar-search" data-i18n-placeholder="nav.search-ph" placeholder="Cari fitur..." autocomplete="off">
             </div>
+
+            <button type="button" id="sidebar-riwayat-btn" class="sidebar-riwayat-btn">
+                <i class="fas fa-clock-rotate-left"></i>
+                <span data-i18n="nav.riwayat">Riwayat Hasil</span>
+                <span id="riwayat-badge" class="riwayat-badge hidden">0</span>
+            </button>
 
             <nav class="flex flex-col gap-1">
                 <!-- BERANDA Tab -->
@@ -605,6 +611,28 @@
         </aside>
 
         <div id="sidebar-overlay"></div>
+
+        <div id="riwayat-modal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="riwayat-title">
+            <div class="riwayat-panel">
+                <div class="riwayat-head">
+                    <h2 id="riwayat-title"><i class="fas fa-clock-rotate-left"></i><span data-i18n="riwayat.title">Riwayat Hasil</span></h2>
+                    <button type="button" id="riwayat-close-btn" class="riwayat-close" aria-label="Tutup"><i class="fas fa-xmark"></i></button>
+                </div>
+                <div class="riwayat-info" data-i18n="riwayat.info">Hasil generate tersimpan otomatis di perangkat ini (40 terbaru) dan tetap aman walau aplikasi dimuat ulang.</div>
+                <div class="riwayat-body">
+                    <div id="riwayat-empty" class="riwayat-empty"><i class="fas fa-images"></i><span id="riwayat-empty-text" data-i18n="riwayat.empty">Belum ada hasil. Hasil generate dari fitur apa pun akan muncul di sini otomatis.</span></div>
+                    <div id="riwayat-results-grid"></div>
+                </div>
+                <div id="riwayat-foot" class="riwayat-foot hidden">
+                    <button type="button" id="riwayat-clear-btn" class="riwayat-clear"><i class="fas fa-trash mr-1"></i><span data-i18n="riwayat.clear">Hapus Semua</span></button>
+                </div>
+                <div id="riwayat-preview" class="hidden">
+                    <button type="button" id="riwayat-preview-close" class="riwayat-close" aria-label="Tutup"><i class="fas fa-xmark"></i></button>
+                    <img id="riwayat-preview-img" alt="">
+                </div>
+            </div>
+        </div>
+        
         
         
         
@@ -3211,7 +3239,7 @@
                         <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-5">
                             <h3 class="font-bold text-gray-800 mb-1 flex items-center gap-2 text-sm uppercase tracking-wide">
                                 <i class="fas fa-bolt text-cyan-500"></i> <span data-i18n="pf.quick-title">Pose Cepat</span>
-                                <span class="text-xs font-normal text-gray-400 normal-case" data-i18n="pf.quick-count">(50 pilihan)</span>
+                                <span class="text-xs font-normal text-gray-400 normal-case" data-i18n="pf.quick-count">(51 pilihan)</span>
                             </h3>
                             <p class="text-xs text-gray-400 mb-1" data-i18n="pf.quick-hint">Klik untuk pilih hingga 10 pose — hasil mengikuti pose yang dipilih</p>
                             <p class="text-xs font-semibold text-cyan-600 mb-2"><span id="pose-selected-count">0</span>/10 <span data-i18n="pf.selected-unit">pose dipilih</span></p>
@@ -20303,7 +20331,7 @@
     <button id="update-info-btn" class="text-white rounded-full w-16 h-16 flex items-center justify-center shadow-xl relative" style="background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);">
         <div class="flex flex-col items-center leading-none pointer-events-none">
             <i class="fas fa-bolt text-sm"></i>
-            <span class="text-xs font-bold mt-0.5">V77</span>
+            <span class="text-xs font-bold mt-0.5">V78</span>
         </div>
         <span class="update-notif-dot"></span>
     </button>

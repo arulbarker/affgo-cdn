@@ -10577,6 +10577,121 @@
         .a2hs-benefit { background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; border-radius: 0.75rem; padding: 0.7rem 0.85rem; font-size: 0.85rem; margin-bottom: 0.9rem; text-align: left; }
         .a2hs-note { font-size: 0.78rem; color: #64748b; text-align: left; }
         /* ===== END A2HS ===== */
+
+        /* ===== RIWAYAT HASIL ===== */
+        .sidebar-riwayat-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            min-height: 44px;
+            border: none;
+            border-radius: 0.75rem;
+            background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: left;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .sidebar-riwayat-btn .fa-clock-rotate-left { font-size: 1.1rem; }
+        .riwayat-badge {
+            margin-left: auto;
+            min-width: 22px;
+            height: 22px;
+            padding: 0 6px;
+            border-radius: 999px;
+            background: #fde047;
+            color: #422006;
+            font-size: 0.75rem;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .riwayat-badge.hidden { display: none; }
+        #riwayat-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 1300;
+            background: rgba(15, 23, 42, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        #riwayat-modal.hidden { display: none; }
+        .riwayat-panel {
+            position: relative;
+            width: 100%;
+            max-width: 960px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+        }
+        .riwayat-head { display: flex; align-items: center; gap: 0.6rem; padding: 0.9rem 1rem; border-bottom: 1px solid #e2e8f0; }
+        .riwayat-head h2 { flex: 1; font-size: 1.1rem; font-weight: 800; color: #1e293b; display: flex; align-items: center; gap: 0.5rem; }
+        .riwayat-head h2 i { color: #7c3aed; }
+        .riwayat-close {
+            width: 44px; height: 44px;
+            border: none; border-radius: 999px;
+            background: #f1f5f9; color: #475569;
+            font-size: 1.1rem; cursor: pointer;
+        }
+        .riwayat-info { padding: 0.65rem 1rem; font-size: 0.85rem; color: #475569; background: #f5f3ff; border-bottom: 1px solid #ede9fe; }
+        .riwayat-body { flex: 1; overflow-y: auto; padding: 1rem; }
+        #riwayat-results-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+        @media (min-width: 640px) { #riwayat-results-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+        @media (min-width: 1024px) { #riwayat-results-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+        .riwayat-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 1rem; overflow: hidden; box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06); display: flex; flex-direction: column; }
+        .riwayat-thumb { position: relative; background: #f8fafc; aspect-ratio: 1 / 1; overflow: hidden; cursor: zoom-in; }
+        .riwayat-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+        .riwayat-meta { padding: 0.45rem 0.6rem 0; display: flex; flex-direction: column; min-width: 0; }
+        .riwayat-label { font-size: 0.8rem; font-weight: 700; color: #334155; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .riwayat-time { font-size: 0.72rem; color: #94a3b8; }
+        .riwayat-actions { display: flex; gap: 0.4rem; justify-content: center; padding: 0.5rem; }
+        .riwayat-act {
+            width: 44px; height: 44px;
+            border: none; border-radius: 999px;
+            color: #ffffff; font-size: 0.95rem;
+            display: inline-flex; align-items: center; justify-content: center;
+            cursor: pointer; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
+        }
+        .riwayat-act-preview { background: #3b82f6; }
+        .riwayat-act-download { background: #0891b2; }
+        .riwayat-act-delete { background: #ef4444; }
+        .riwayat-empty { text-align: center; padding: 2.5rem 1rem; color: #64748b; font-size: 0.95rem; }
+        .riwayat-empty i { display: block; font-size: 2.5rem; color: #c4b5fd; margin-bottom: 0.75rem; }
+        .riwayat-empty.hidden { display: none; }
+        .riwayat-foot { padding: 0.75rem 1rem; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; }
+        .riwayat-foot.hidden { display: none; }
+        .riwayat-clear {
+            min-height: 44px; padding: 0 1rem;
+            border: 1px solid #fecaca; border-radius: 0.75rem;
+            background: #fef2f2; color: #b91c1c;
+            font-weight: 700; font-size: 0.85rem; cursor: pointer;
+        }
+        #riwayat-preview {
+            position: absolute; inset: 0;
+            background: rgba(2, 6, 23, 0.92);
+            display: flex; align-items: center; justify-content: center;
+            padding: 3.5rem 1rem 1rem;
+        }
+        #riwayat-preview.hidden { display: none; }
+        #riwayat-preview img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 0.5rem; }
+        #riwayat-preview .riwayat-close { position: absolute; top: 0.6rem; right: 0.6rem; background: rgba(255, 255, 255, 0.15); color: #ffffff; }
+        @media (max-width: 640px) {
+            #riwayat-modal { padding: 0; }
+            .riwayat-panel { max-height: 100%; height: 100%; border-radius: 0; }
+        }
+        /* ===== END RIWAYAT HASIL ===== */
         /* ===== END BEBAS IKLAN ===== */
 
         /* ==================== ADBLOCK DETECTION OVERLAY ==================== */
@@ -11036,6 +11151,16 @@
         html.dark .a2hs-steps .a2hs-num { background: #1e3a8a; color: #bfdbfe; }
         html.dark .a2hs-benefit { background: #052e16; border-color: #166534; color: #bbf7d0; }
         html.dark .a2hs-note { color: #94a3b8; }
+        html.dark .riwayat-panel { background: #0f172a; }
+        html.dark .riwayat-head, html.dark .riwayat-foot { border-color: #334155; }
+        html.dark .riwayat-head h2 { color: #e2e8f0; }
+        html.dark .riwayat-close { background: #1e293b; color: #cbd5e1; }
+        html.dark .riwayat-info { background: #1e1b4b; border-color: #312e81; color: #c4b5fd; }
+        html.dark .riwayat-card { background: #1e293b; border-color: #334155; }
+        html.dark .riwayat-thumb { background: #0f172a; }
+        html.dark .riwayat-label { color: #e2e8f0; }
+        html.dark .riwayat-time, html.dark .riwayat-empty { color: #94a3b8; }
+        html.dark .riwayat-clear { background: #450a0a; border-color: #7f1d1d; color: #fecaca; }
         /* ===== END DARK MODE ===== */
 
     

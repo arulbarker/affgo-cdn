@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '77';
+        const UPDATE_VERSION = '78';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -718,6 +718,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '78',
+                dateId: 'Oktober 2026',
+                dateEn: 'October 2026',
+                badgeKey: 'modal.fix-v78-badge',
+                badgeText: 'Update v78',
+                gradient: 'linear-gradient(135deg,#7c3aed,#4f46e5)',
+                borderColor: '#7c3aed',
+                icon: 'fa-clock-rotate-left',
+                iconColor: '#7c3aed',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v78-title-riwayat',
+                        titleText: 'Riwayat Hasil: Foto Tidak Hilang Lagi',
+                        bodyKey: 'modal.fix-v78-body-riwayat',
+                        bodyText: 'Semua foto hasil generate dari fitur apa pun kini tersimpan otomatis di perangkatmu (40 terbaru) dan tetap ada walau aplikasi dimuat ulang. Buka lewat tombol ungu Riwayat Hasil di atas menu untuk lihat, download, atau hapus.'
+                    },
+                    {
+                        titleKey: 'modal.fix-v78-title-error',
+                        titleText: 'Pesan Gagal yang Lebih Jelas',
+                        bodyKey: 'modal.fix-v78-body-error',
+                        bodyText: 'Kalau generate gagal, aplikasi kini menyebut penyebab sebenarnya: kuota akun habis, foto ditolak filter keamanan, server Google sibuk, atau koneksi terputus, lengkap dengan saran langkah berikutnya.'
+                    }
+                ]
+            },
             {
                 version: '77',
                 dateId: 'Oktober 2026',
@@ -2228,7 +2253,7 @@ Jawab pertanyaan user dengan helpful dan informatif!`;
             showLoading(false);
             if (successCount === 0) {
                 resultContent.classList.add('hidden');
-                showError('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                showError(window.__genFailText());
             }
         });
         
@@ -2372,7 +2397,7 @@ Jawab pertanyaan user dengan helpful dan informatif!`;
 
             generateBtn.disabled = false;
             generateBtn.innerHTML = `<span>Buat Foto Halu</span>`;
-            if (successCount === 0) alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+            if (successCount === 0) alert(window.__genFailText());
         });
 
         async function analyzeAndGetPrompts() {
@@ -2732,7 +2757,7 @@ Jawab pertanyaan user dengan helpful dan informatif!`;
             updateBrollButtonState();
 
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
                 return;
             }
 
@@ -3666,7 +3691,7 @@ Output ONLY the video prompt, nothing else.`;
             updateHrgButtonState();
 
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
                 return;
             }
 
@@ -4556,7 +4581,7 @@ Output ONLY the video prompt, nothing else.`;
             if (successCount === 0) {
                 if (tryonPlaceholder) tryonPlaceholder.classList.remove('hidden');
                 if (tryonResultsGrid) tryonResultsGrid.classList.add('hidden');
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
                 return;
             }
 
@@ -5010,7 +5035,7 @@ IMPORTANT: Generate a brand new photo of this person in the specified pose. Keep
         function renderResults() {
             const successful = generatedImages.filter(Boolean);
             if (successful.length === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
                 if (emptyState)    emptyState.classList.remove('hidden');
                 if (resultsHeader) resultsHeader.classList.add('hidden');
                 return;
@@ -5585,7 +5610,7 @@ The result MUST fool even professional photographers - it should be IMPOSSIBLE t
                 }
 
                 if (successCount === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                 }
 
                 generateBtn.disabled = false;
@@ -6225,7 +6250,7 @@ The result MUST fool even professional photographers - it should be IMPOSSIBLE t
                 }, 300);
             } else {
                 placeholderResult.classList.remove('hidden');
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             }
         });
 
@@ -7032,7 +7057,7 @@ TECHNICAL QUALITY:
                 }, 300);
             } else {
                 placeholderResult.classList.remove('hidden');
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             }
         });
 
@@ -7671,7 +7696,7 @@ TECHNICAL QUALITY:
                 }
 
                 if (successCount === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                 }
             });
         }
@@ -8292,7 +8317,7 @@ TECHNICAL QUALITY:
                 if (loadingDiv) loadingDiv.classList.add('hidden');
 
                 if (successCount === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                     if (emptyState) emptyState.classList.remove('hidden');
                 } else {
                     if (resultsHeader) resultsHeader.classList.remove('hidden');
@@ -9389,7 +9414,7 @@ Aspect ratio ${o.ratio}.`;
                     if (loadingDiv) loadingDiv.classList.add('hidden');
 
                     if (successCount === 0) {
-                        alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                        alert(window.__genFailText());
                     } else {
                         if (resultsHeader) resultsHeader.classList.remove('hidden');
                         if (resultsCount) resultsCount.textContent = successCount;
@@ -9899,7 +9924,7 @@ PENTING: Adaptasi elemen dari referensi agar cocok dengan struktur ruangan asli 
             generateBtn.innerHTML = '<i class="fas fa-magic mr-2"></i>Generate Stories';
 
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             }
         });
 
@@ -10208,7 +10233,7 @@ Generate a ${angle.prompt} of the exact same subject.`;
                 generateBtn.disabled = false;
 
                 if (successCount === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                 } else {
                     resultsHeader.classList.remove('hidden');
                 }
@@ -10589,7 +10614,7 @@ Generate a photo of the subject from Image 1 with the visual style of Image 2 ap
                 checkReadyToGenerate();
 
                 if (successCount === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                 } else {
                     resultsHeader.classList.remove('hidden');
                 }
@@ -10933,7 +10958,7 @@ Generate a photo of the subject from Image 1 with the visual style of Image 2 ap
                 }
 
                 if (successCount === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                     loading.classList.add('hidden');
                     placeholder.classList.remove('hidden');
                     generateBtn.disabled = false;
@@ -11409,7 +11434,7 @@ PENTING: Buat thumbnail yang akan memaksimalkan klik dan engagement. Teks "${tit
                 }
 
                 if (successCount === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                     loading.classList.add('hidden');
                     placeholder.classList.remove('hidden');
                     generateBtn.disabled = false;
@@ -11860,7 +11885,7 @@ Create a professional faceless personal branding VERTICAL cover photo (9:16) tha
                 }
 
                 if (successCount === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                     loading.classList.add('hidden');
                     placeholder.classList.remove('hidden');
                     generateBtn.disabled = false;
@@ -12473,7 +12498,7 @@ Generate a professionally restored photograph that clearly demonstrates signific
                 if (loadingDiv) loadingDiv.classList.add('hidden');
 
                 if (successCount === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                     if (emptyState) emptyState.classList.remove('hidden');
                 } else {
                     if (resultsHeader) resultsHeader.classList.remove('hidden');
@@ -13679,7 +13704,7 @@ Overall style: clean and aesthetic composition, white sticker outline aesthetic,
             generateBtn.innerHTML = originalBtnHTML;
 
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             } else {
                 downloadAllBtn.classList.remove('hidden');
             }
@@ -14125,7 +14150,7 @@ Overall style: clean and aesthetic composition, white sticker outline aesthetic,
                 if (successCount === 0) {
                     resultsContainer.classList.add('hidden');
                     resultsPlaceholder.classList.remove('hidden');
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                 }
             }
 
@@ -18064,7 +18089,7 @@ PENTING:
 
                     if (successCount === 0) {
                         if (emptyState) emptyState.classList.remove('hidden');
-                        alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                        alert(window.__genFailText());
                         return;
                     }
 
@@ -18674,7 +18699,7 @@ PENTING:
 
                 if (successCount === 0) {
                     if (emptyState) emptyState.classList.remove('hidden');
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                     return;
                 }
 
@@ -19321,7 +19346,7 @@ IMPORTANT:
 
                 const finalSuccessSketch = generatedImages.filter(Boolean).length;
                 if (finalSuccessSketch === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                     if (emptyState) emptyState.classList.remove('hidden');
                 } else {
                     if (resultsHeader) resultsHeader.classList.remove('hidden');
@@ -19715,7 +19740,7 @@ IMPORTANT:
                 if (loading) loading.classList.add('hidden');
 
                 if (successCount === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                     if (emptyState) emptyState.classList.remove('hidden');
                 } else {
                     if (resultsHeader) resultsHeader.classList.remove('hidden');
@@ -20564,7 +20589,7 @@ Pastikan identitas ${peopleCount > 1 ? 'SETIAP ORANG' : 'subjek'} TETAP SAMA PER
             if (loading) loading.classList.add('hidden');
 
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             } else {
                 if (resultsHeader) resultsHeader.classList.remove('hidden');
                 if (resultsCount) resultsCount.textContent = generatedImages.length;
@@ -21287,7 +21312,7 @@ Style: ultra-realistic candid stadium photography, smartphone snapshot quality, 
 
             if (wtLoadingEl) wtLoadingEl.classList.add('hidden');
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             } else {
                 if (wtResultsHeader) wtResultsHeader.classList.remove('hidden');
                 if (wtResultsCountEl) wtResultsCountEl.textContent = wtGeneratedImages.length;
@@ -21627,7 +21652,7 @@ Style: ultra-realistic, 8K, cinematic lighting, sharp focus on the subject. ${PO
 
             if (podLoadingEl) podLoadingEl.classList.add('hidden');
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             } else {
                 if (podResultsHeader) podResultsHeader.classList.remove('hidden');
                 if (podResultsCountEl) podResultsCountEl.textContent = podGeneratedImages.filter(Boolean).length;
@@ -22086,7 +22111,7 @@ Style: ultra-realistic, 8K, cinematic lighting, sharp focus. ${WC_NEGATIVE_PROMP
 
             if (wcLoadingEl) wcLoadingEl.classList.add('hidden');
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             } else {
                 if (wcResultsHeader) wcResultsHeader.classList.remove('hidden');
                 if (wcResultsCountEl) wcResultsCountEl.textContent = wcGeneratedImages.filter(Boolean).length;
@@ -22542,7 +22567,7 @@ Style: ultra-realistic, 8K, fitness lifestyle photography, dramatic gym lighting
 
             if (loadingEl) loadingEl.classList.add('hidden');
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             } else {
                 if (resultsHeader) resultsHeader.classList.remove('hidden');
                 if (resultsCount) resultsCount.textContent = ppGeneratedImages.length;
@@ -22768,7 +22793,7 @@ Style: ultra-realistic, 8K, fitness lifestyle photography, dramatic gym lighting
                 generateBtn.innerHTML = '<i class="fas fa-envelope-open-text mr-3 text-xl relative z-10"></i><span class="relative z-10">Generate Kartu Lebaran</span>';
 
                 if (successCount === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                 } else {
                     if (resultsHeader) resultsHeader.classList.remove('hidden');
                     if (resultsCount) resultsCount.textContent = successCount;
@@ -23673,7 +23698,7 @@ IMPORTANT:
             if (loading) loading.classList.add('hidden');
 
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             } else {
                 if (resultsHeader) resultsHeader.classList.remove('hidden');
                 if (resultsCount) resultsCount.textContent = successCount;
@@ -25087,7 +25112,7 @@ OUTPUT: A stunning, photorealistic image showing the "after" state that demonstr
             reviewGenerateBtn.innerHTML = originalBtnHTML;
 
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             }
         });
 
@@ -26011,7 +26036,7 @@ OUTPUT: Satu prompt image-to-video lengkap dalam Bahasa Indonesia yang natural.`
             skincareGenerateBtn.innerHTML = originalBtnHTML;
 
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             }
         });
 
@@ -26846,7 +26871,7 @@ OUTPUT: Satu prompt image-to-video lengkap dalam Bahasa Indonesia yang natural.`
             if (successCount === 0) {
                 foodResultsSection.classList.add('hidden');
                 if (frEmptyState) frEmptyState.classList.remove('hidden');
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             }
         });
 
@@ -27389,7 +27414,7 @@ OUTPUT: Satu prompt image-to-video lengkap dalam Bahasa Indonesia yang natural.`
             adsGenerateBtn.innerHTML = originalBtnHTML;
 
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             }
         });
 
@@ -28331,7 +28356,7 @@ Respond ONLY with a valid JSON array of ${selectedCount} objects, in sequential 
             }
 
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             } else if (window.innerWidth < 1024) {
                 setTimeout(() => {
                     resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -28633,7 +28658,7 @@ Respond ONLY with a valid JSON array of ${selectedCount} objects, in sequential 
             }
 
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             }
 
             generateBtn.disabled = false;
@@ -28992,7 +29017,7 @@ The final result should be a complete photo booth image ready to print or share,
             }
 
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             }
 
             photoBoothGenerateBtn.disabled = false;
@@ -29553,7 +29578,7 @@ Overall style: realistic photography of the person (face unchanged from referenc
             generateBtn.innerHTML = originalBtnHTML;
 
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             } else {
                 downloadAllBtn.classList.remove('hidden');
             }
@@ -29873,7 +29898,7 @@ The result should be a natural-looking photo where only the facial expression ha
             if (successCount === 0) {
                 expressionResultsContainer.classList.add('hidden');
                 expressionResultsPlaceholder.classList.remove('hidden');
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             }
         }
 
@@ -30338,7 +30363,7 @@ Generate a stunning, professional caricature that the subject would be proud to 
             karikaturGenerateBtn.innerHTML = originalBtnHTML;
 
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             } else {
                 karikaturDownloadAllBtn.classList.remove('hidden');
             }
@@ -30744,7 +30769,7 @@ Cinematic composition, vibrant color contrast between subject and interface, tre
             generateBtn.innerHTML = originalBtnHTML;
 
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             } else {
                 downloadAllBtn.classList.remove('hidden');
             }
@@ -31542,7 +31567,7 @@ Generate a stunning, professionally enhanced photo that maintains the person's a
             beautyGenerateBtn.innerHTML = originalBtnHTML;
 
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             } else {
                 beautyDownloadAllBtn.classList.remove('hidden');
             }
@@ -31868,7 +31893,7 @@ Generate a stunning, professionally enhanced photo that maintains the person's a
             if (successCount === 0) {
                 islamiResultsPlaceholder.classList.remove('hidden');
                 islamiResultsContainer.classList.add('hidden');
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
                 return;
             }
 
@@ -32463,7 +32488,7 @@ CRITICAL: Photo must look natural, professional, and appealing for affiliate mar
             });
 
             if (generatedImages.filter(Boolean).length === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
                 bannerResultsPlaceholder.classList.remove('hidden');
                 bannerResultsContainer.classList.add('hidden');
             } else {
@@ -32986,7 +33011,7 @@ CRITICAL: Banner harus PROFESSIONAL, eye-catching, dan optimized untuk ${selecte
             if (successCount === 0) {
                 bgremoverResultsContainer.classList.add('hidden');
                 bgremoverResultsPlaceholder.classList.remove('hidden');
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             } else {
                 bgremoverDownloadAllBtn.classList.remove('hidden');
             }
@@ -33400,7 +33425,7 @@ The result MUST show complete background replacement with professional quality s
             if (successCount === 0) {
                 if (resultsContainer) resultsContainer.classList.add('hidden');
                 if (resultsPlaceholder) resultsPlaceholder.classList.remove('hidden');
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             } else {
                 extenderDownloadAllBtn.classList.remove('hidden');
             }
@@ -33765,7 +33790,7 @@ Important: This should look like ONE cohesive photograph, not a composite. The e
             generateBtn.innerHTML = '<i class="fas fa-film mr-2"></i>Generate Story Board';
 
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             } else {
                 downloadAllBtn.classList.remove('hidden');
             }
@@ -34947,7 +34972,7 @@ Generate a single high-quality architectural photo for this timelapse frame.`;
             }
 
             if (!frameImage) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
                 generateBtn.disabled = false;
                 generateBtn.innerHTML = '<i class="fas fa-magic mr-2"></i>Generate Twibon';
                 return;
@@ -35652,7 +35677,7 @@ The final result must be a high-quality professional headshot suitable for Linke
             headshotGenerateBtn.innerHTML = originalBtnHTML;
 
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
             }
         }
 
@@ -36066,7 +36091,7 @@ The final result must be a high-quality professional headshot suitable for Linke
                 generateBtn.innerHTML = originalHTML;
 
                 if (successCount === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                 }
             });
         }
@@ -36596,7 +36621,7 @@ Generate foto maternity yang indah, bermakna, dan profesional.`;
                 successCount = drInteriorResults.filter(Boolean).length;
             }
 
-            if (successCount === 0) alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+            if (successCount === 0) alert(window.__genFailText());
 
             drInteriorGenerateBtn.disabled = false;
             drInteriorGenerateBtn.innerHTML = originalBtnHTML;
@@ -36793,7 +36818,7 @@ Generate foto maternity yang indah, bermakna, dan profesional.`;
                 successCount = drEksteriorResults.filter(Boolean).length;
             }
 
-            if (successCount === 0) alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+            if (successCount === 0) alert(window.__genFailText());
 
             drEksteriorGenerateBtn.disabled = false;
             drEksteriorGenerateBtn.innerHTML = originalBtnHTML;
@@ -37006,7 +37031,7 @@ Generate foto maternity yang indah, bermakna, dan profesional.`;
                 successCount = stiResults.filter(Boolean).length;
             }
 
-            if (successCount === 0) alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+            if (successCount === 0) alert(window.__genFailText());
 
             stiGenerateBtn.disabled = false;
             stiGenerateBtn.innerHTML = originalBtnHTML;
@@ -38009,7 +38034,7 @@ The script's tone and content must be tailored to the chosen script type.`;
                 }
 
                 if (successCount === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                     logoResultsPlaceholder.classList.remove('hidden');
                     logoResultsContainer.classList.add('hidden');
                     logoGenerateBtn.disabled = false;
@@ -38979,7 +39004,7 @@ OUTPUT: High-quality logo design, clean background, professional presentation, P
             } catch (error) {
                 console.error('Brand Kit Generation Error:', error);
                 if (error.message === 'logo_limit_reached') {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                 } else {
                     alert('Failed to generate brand kit. Please try again.');
                 }
@@ -41206,7 +41231,7 @@ Be specific to ${data.campaignType} industry. Fokus pada insights yang actionabl
             if (loading) loading.classList.add('hidden');
 
             if (successCount === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
                 if (placeholder) placeholder.classList.remove('hidden');
             } else {
                 if (resultsCount) resultsCount.textContent = successCount;
@@ -41726,7 +41751,7 @@ CRITICAL: Keep the person's face and identity EXACTLY the same from the PERSON i
                 generatedMascots = generatedMascots.filter(Boolean);
 
                 if (generatedMascots.length === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                     mascotResultsPlaceholder.classList.remove('hidden');
                     mascotResultsContainer.classList.add('hidden');
                 } else {
@@ -43577,7 +43602,7 @@ Generate a complete, print-ready poster yang eye-catching, professional, dan ses
             });
             const finalSuccessPosters = generatedPosters.filter(Boolean).length;
             if (finalSuccessPosters === 0) {
-                alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                alert(window.__genFailText());
                 placeholder.classList.remove('hidden');
                 resultsGrid.classList.add('hidden');
             } else {
@@ -44072,7 +44097,7 @@ Generate a complete, print-ready poster yang eye-catching, professional, dan ses
                 }
 
                 if (successCount === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                     generateBtn.disabled = false;
                     generateBtn.innerHTML = `<i class="fas fa-magic mr-2"></i><span>${selectedMode === 'watermark' ? 'Hapus Watermark Sekarang' : 'Hapus Object Sekarang'}</span>`;
                     return;
@@ -44937,7 +44962,7 @@ ${caption.text}
 
                 const finalSuccessComp = generatedComparisons.filter(Boolean).length;
                 if (finalSuccessComp === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                     if (emptyState) emptyState.classList.remove('hidden');
                 } else {
                     if (resultsSection) resultsSection.classList.remove('hidden');
@@ -45321,7 +45346,7 @@ Generate comparison image yang SANGAT PROFESSIONAL dan ENGAGING!`;
                 generateBtn.innerHTML = originalHTML;
 
                 if (successCount === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                 }
             });
         }
@@ -45701,7 +45726,7 @@ Generate unboxing scene yang SANGAT PROFESSIONAL dan ENGAGING - seperti unboxing
                 generateBtn.innerHTML = originalHTML;
 
                 if (successCount === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                 }
             });
         }
@@ -46994,7 +47019,7 @@ Generate testimonial card yang CONVINCING dan PROFESSIONAL - perfect untuk websi
                 generateBtn.innerHTML = originalHTML;
 
                 if (successCount === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                 }
             });
         }
@@ -47387,7 +47412,7 @@ Generate size guide yang SANGAT HELPFUL dan PROFESSIONAL - perfect untuk e-comme
                 generateBtn.innerHTML = originalHTML;
 
                 if (successCount === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                 }
             });
         }
@@ -47817,7 +47842,7 @@ Generate frame ${index} dengan PERFECT CONTINUITY untuk sequential video - siap 
                 generateBtn.innerHTML = originalHTML;
 
                 if (successCount === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                 }
             });
         }
@@ -48320,7 +48345,7 @@ Generate modified vehicle yang STUNNING dan REALISTIC - perfect untuk visualisas
 
                     if (successCount === 0) {
                         if (placeholder) placeholder.classList.remove('hidden');
-                        alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                        alert(window.__genFailText());
                     } else {
                         if (resultsHeader) resultsHeader.classList.remove('hidden');
                         if (resultsCount) resultsCount.textContent = successCount;
@@ -49377,7 +49402,7 @@ This photo will be used as a consistent model reference for various product phot
 
                 const finalSuccessFtg = ftgImages.filter(Boolean).length;
                 if (finalSuccessFtg === 0) {
-                    alert('Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain');
+                    alert(window.__genFailText());
                     if (ftgResultsPlaceholder) ftgResultsPlaceholder.classList.remove('hidden');
                     if (ftgResultsContainer) ftgResultsContainer.classList.add('hidden');
                 } else if (ftgDownloadAllBtn) {
