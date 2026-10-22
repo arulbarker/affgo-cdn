@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const email = localStorage.getItem('affiliatego_email');
             const token = localStorage.getItem('affiliatego_token');
             if (!email || !token) return; // belum login → skip
-            if (typeof SCRIPT_URL !== 'string' || typeof APP_SECRET !== 'string') return;
+            if (typeof authFetch !== 'function' || typeof APP_SECRET !== 'string') return;
 
             cloudSyncInFlight = true;
             // Fresh-read dari localStorage di fetch time (bukan dari closure di
@@ -223,14 +223,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // CUMULATIVE state terbaru, bukan snapshot lama.
             const favs = getFavs();
 
-            const url = SCRIPT_URL +
+            const query =
                 '?action=set_favorites' +
                 '&email=' + encodeURIComponent(email) +
                 '&token=' + encodeURIComponent(token) +
                 '&app_secret=' + encodeURIComponent(APP_SECRET) +
                 '&product=' + encodeURIComponent(PRODUCT_ID) +
                 '&favorites=' + encodeURIComponent(JSON.stringify(favs));
-            fetch(url).then(r => r.json()).then(function(data) {
+            authFetch(query, 15000).then(r => r.json()).then(function(data) {
                 if (data && data.feature_inactive) {
                     // Server bilang fitur tidak aktif → sync flag lokal supaya popup muncul
                     // di toggle berikutnya. Jangan rollback localStorage favs (UI sudah optimistic).
@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '78';
+        const UPDATE_VERSION = '79';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -718,6 +718,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '79',
+                dateId: 'Oktober 2026',
+                dateEn: 'October 2026',
+                badgeKey: 'modal.fix-v79-badge',
+                badgeText: 'Update v79',
+                gradient: 'linear-gradient(135deg,#0891b2,#0e7490)',
+                borderColor: '#0891b2',
+                icon: 'fa-wifi',
+                iconColor: '#0891b2',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v79-title-login',
+                        titleText: 'Login Lebih Stabil di Semua Jaringan',
+                        bodyKey: 'modal.fix-v79-body-login',
+                        bodyText: 'Server login kini memakai alamat sendiri dan otomatis pindah ke jalur cadangan kalau WiFi atau operator memblokir salah satunya. Fitur Upscale ikut memakai jalur cadangan yang sama.'
+                    },
+                    {
+                        titleKey: 'modal.fix-v79-title-hint',
+                        titleText: 'Petunjuk Jelas Saat Gagal Masuk',
+                        bodyKey: 'modal.fix-v79-body-hint',
+                        bodyText: 'Kalau masih gagal masuk, layar login kini menyebut langkahnya: ganti jaringan (WiFi atau data seluler), matikan VPN/penghemat data, atau buka di Chrome/Safari bila dibuka dari dalam TikTok/Instagram.'
+                    }
+                ]
+            },
             {
                 version: '78',
                 dateId: 'Oktober 2026',
@@ -18755,7 +18780,8 @@ PENTING:
 
     // ==================== UPSCALE (paid feature, ESRGAN via fal.ai) ====================
     (function() {
-        const UPSCALE_PROXY_URL = "https://affgo-upscale-proxy.mursalinasrul.workers.dev";
+        // Domain sendiri dulu; workers.dev cadangan (diblokir sebagian jaringan).
+        const UPSCALE_PROXY_URLS = ["https://upscale.affiliatego.id", "https://affgo-upscale-proxy.mursalinasrul.workers.dev"];
 
         const uploadBox = document.getElementById('upscale-upload-box');
         const fileInput = document.getElementById('upscale-input');
@@ -18879,24 +18905,29 @@ PENTING:
             const email = localStorage.getItem('affiliatego_email');
             const token = localStorage.getItem('affiliatego_token');
             if (!email || !token) return { ok: false, reason: 'not_logged_in' };
-            try {
-                const res = await fetch(UPSCALE_PROXY_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        email: email,
-                        token: token,
-                        app_secret: APP_SECRET,
-                        product: PRODUCT_ID,
-                        image: imageDataUri,
-                        scale: scale
-                    })
-                });
-                return await res.json().catch(function() { return { ok: false, reason: 'other' }; });
-            } catch (err) {
-                console.error('Upscale proxy failed:', err);
-                return { ok: false, reason: 'network' };
+            const body = JSON.stringify({
+                email: email,
+                token: token,
+                app_secret: APP_SECRET,
+                product: PRODUCT_ID,
+                image: imageDataUri,
+                scale: scale
+            });
+            // Pindah ke alamat cadangan HANYA kalau request gagal terkirim (fetch throw) —
+            // kalau server sudah membalas, jangan kirim ulang (kuota sudah dipotong).
+            for (let i = 0; i < UPSCALE_PROXY_URLS.length; i++) {
+                try {
+                    const res = await fetch(UPSCALE_PROXY_URLS[i], {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: body
+                    });
+                    return await res.json().catch(function() { return { ok: false, reason: 'other' }; });
+                } catch (err) {
+                    console.error('Upscale proxy failed:', UPSCALE_PROXY_URLS[i], err);
+                }
             }
+            return { ok: false, reason: 'network' };
         }
 
         if (generateBtn) {

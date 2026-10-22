@@ -774,7 +774,13 @@
                 'login.btn': '\u26A1 MASUK SEKARANG', 'login.verifying': 'Sedang memverifikasi...',
                 'login.secure': '\uD83D\uDD12 Akses Terenkripsi & Aman',
                 'login.no-access-cta': '\uD83D\uDED2 Belum punya akses? Beli di sini \u2192',
+                'login.inapp-hint': '\u26A0\uFE0F Kamu membuka dari aplikasi TikTok/Instagram/Facebook/WhatsApp. Kalau gagal masuk, ketuk menu \u22EE lalu pilih "Buka di Chrome/Safari".',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v79-badge': 'Update v79',
+                'modal.fix-v79-title-login': 'Login Lebih Stabil di Semua Jaringan',
+                'modal.fix-v79-body-login': 'Server login kini memakai alamat sendiri dan otomatis pindah ke jalur cadangan kalau WiFi atau operator memblokir salah satunya. Fitur Upscale ikut memakai jalur cadangan yang sama.',
+                'modal.fix-v79-title-hint': 'Petunjuk Jelas Saat Gagal Masuk',
+                'modal.fix-v79-body-hint': 'Kalau masih gagal masuk, layar login kini menyebut langkahnya: ganti jaringan (WiFi atau data seluler), matikan VPN/penghemat data, atau buka di Chrome/Safari bila dibuka dari dalam TikTok/Instagram.',
                 'modal.fix-v78-badge': 'Update v78',
                 'modal.fix-v78-title-riwayat': 'Riwayat Hasil: Foto Tidak Hilang Lagi',
                 'modal.fix-v78-body-riwayat': 'Semua foto hasil generate dari fitur apa pun kini tersimpan otomatis di perangkatmu (40 terbaru) dan tetap ada walau aplikasi dimuat ulang. Buka lewat tombol ungu Riwayat Hasil di atas menu untuk lihat, download, atau hapus.',
@@ -977,7 +983,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Tab Ruang Saku sekarang punya halaman penjelasan singkat fitur Rindu (AI keuangan) + tombol langsung ke RuangSaku.com. Lebih nyaman dipakai di HP — tinggal klik dan terbuka di tab browser.',
                 'modal.fix-v31-title-telegram': 'Tombol Telegram di Pojok Layar',
                 'modal.fix-v31-body-telegram': 'Tombol bundar Telegram sekarang ada di pojok kanan bawah aplikasi. Sekali klik langsung join grup Telegram Affiliate Go — tempat update fitur, tips, dan tanya jawab dengan komunitas.',
-                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 78',
+                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 79',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Selamat Datang di Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Asisten AI Anda untuk menjelajahi 79++ fitur photo & video generation',
@@ -3596,7 +3602,13 @@
                 'login.btn': '\u26A1 LOGIN NOW', 'login.verifying': 'Verifying...',
                 'login.secure': '\uD83D\uDD12 Encrypted & Secure Access',
                 'login.no-access-cta': '\uD83D\uDED2 No access yet? Buy here \u2192',
+                'login.inapp-hint': '\u26A0\uFE0F You opened this inside TikTok/Instagram/Facebook/WhatsApp. If login fails, tap the \u22EE menu and choose "Open in Chrome/Safari".',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v79-badge': 'Update v79',
+                'modal.fix-v79-title-login': 'More Reliable Login on Every Network',
+                'modal.fix-v79-body-login': 'The login server now uses our own address and automatically switches to a backup route when a Wi-Fi network or carrier blocks one of them. Upscale uses the same backup route.',
+                'modal.fix-v79-title-hint': 'Clear Guidance When Login Fails',
+                'modal.fix-v79-body-hint': 'If login still fails, the login screen now tells you what to do: switch network (Wi-Fi or mobile data), turn off VPN/data saver, or open it in Chrome/Safari when opened inside TikTok/Instagram.',
                 'modal.fix-v78-badge': 'Update v78',
                 'modal.fix-v78-title-riwayat': 'Result History: Your Photos No Longer Disappear',
                 'modal.fix-v78-body-riwayat': 'Every photo you generate in any feature is now saved automatically on your device (latest 40) and stays there even if the app reloads. Open it from the purple Result History button above the menu to view, download, or delete.',
@@ -3799,7 +3811,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Ruang Saku tab now has a brief intro page for Rindu (AI finance buddy) + direct button to RuangSaku.com. Smoother mobile experience — one click and it opens in a browser tab.',
                 'modal.fix-v31-title-telegram': 'Telegram Button at Screen Corner',
                 'modal.fix-v31-body-telegram': 'Round Telegram button is now at the bottom-right corner of the app. One click jumps directly to the Affiliate Go Telegram group — for feature updates, tips, and Q&A with the community.',
-                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 78',
+                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 79',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Welcome to Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Your AI Assistant to explore 79++ photo & video generation features',
@@ -6094,6 +6106,7 @@
                 'wp.count-label': 'Number of Generations',
             }
             ,ms: {
+                'login.inapp-hint': '\u26A0\uFE0F Anda membuka dari aplikasi TikTok/Instagram/Facebook/WhatsApp. Jika gagal log masuk, ketik menu \u22EE dan pilih "Buka di Chrome/Safari".',
                 'feedbranding.subtitle': 'Muat naik 1 foto produk, isi nama jenama, dan dapatkan 6 reka bentuk feed yang seragam untuk penjenamaan anda.',
                 'feedbranding.upload-hint': 'Klik untuk memuat naik foto produk',
                 'feedbranding.brandname': 'Nama Jenama',
@@ -7883,7 +7896,16 @@
 
         // ⚠️ PENTING: GANTI URL INI DENGAN URL DEPLOY GOOGLE APPS SCRIPT ANDA ⚠️
         // PASTE URL GOOGLE APPS SCRIPT ANDA DI BAWAH INI:
-        const SCRIPT_URL = "https://affgo-auth.mursalinasrul.workers.dev/";
+        // Domain sendiri dulu; *.workers.dev diblokir sebagian jaringan (WiFi/operator tertentu).
+        // authFetch() pindah ke alamat berikutnya kalau gagal & mengingat yang berhasil.
+        const AUTH_BASES = ["https://auth.affiliatego.id/", "https://affgo-auth.mursalinasrul.workers.dev/"];
+        let SCRIPT_URL = (function() {
+            try {
+                const saved = localStorage.getItem("affgo_auth_base");
+                if (AUTH_BASES.indexOf(saved) !== -1) return saved;
+            } catch (e) {}
+            return AUTH_BASES[0];
+        })();
         const APP_SECRET = "TKD-2025-s3cr3t-k3y-9xKm2pQr7nVw4L";
         // ID produk harus cocok persis dengan key di PRODUCTS object di appscript.txt (GAS).
         // Tanpa ini, server fallback cari email di SEMUA sheet → email VocaLive/TikDance dll. bisa login ke AffGo.
@@ -8879,18 +8901,32 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
             return fetch(url, { signal: controller.signal }).finally(function() { clearTimeout(timer); });
         }
 
-        // Auto-retry khusus cold start GAS: percobaan pertama "membangunkan" server yang
-        // tidur (sering timeout), percobaan kedua kena instance yang sudah panas → cepat.
-        // Retry HANYA saat fetch gagal/timeout (bukan saat server balas), jeda 800ms.
-        // URL login pakai token yang sudah di-generate di luar (idempoten kalau di-retry).
-        function fetchWithTimeoutRetry(url, timeoutMs, retries) {
-            return fetchWithTimeout(url, timeoutMs).catch(function(err) {
-                if (retries > 0) {
-                    return new Promise(function(resolve) { setTimeout(resolve, 800); })
-                        .then(function() { return fetchWithTimeoutRetry(url, timeoutMs, retries - 1); });
-                }
-                throw err;
-            });
+        // Panggil server login dengan cadangan alamat: alamat terakhir yang berhasil dulu,
+        // lalu sisanya. Pindah alamat HANYA saat fetch gagal/timeout/HTTP error (bukan saat
+        // server balas JSON) — query login pakai token yang sudah di-generate (idempoten).
+        (function() {
+            const hint = document.getElementById("inapp-browser-hint");
+            if (hint && /Instagram|FBAN|FBAV|FB_IAB|TikTok|musical_ly|BytedanceWebview|WhatsApp|Line\//i.test(navigator.userAgent || "")) {
+                hint.style.display = "block";
+            }
+        })();
+
+        function authFetch(query, timeoutMs) {
+            const order = [SCRIPT_URL].concat(AUTH_BASES.filter(function(b) { return b !== SCRIPT_URL; }));
+            function attempt(i) {
+                return fetchWithTimeout(order[i] + query, timeoutMs).then(function(res) {
+                    if (!res.ok) throw new Error("HTTP " + res.status);
+                    if (order[i] !== SCRIPT_URL) {
+                        SCRIPT_URL = order[i];
+                        try { localStorage.setItem("affgo_auth_base", SCRIPT_URL); } catch (e) {}
+                    }
+                    return res;
+                }).catch(function(err) {
+                    if (i + 1 < order.length) return attempt(i + 1);
+                    throw err;
+                });
+            }
+            return attempt(0);
         }
 
         // ==================== LOGIN FUNCTIONS ====================
@@ -8924,9 +8960,8 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
             // Generate Token Baru
             const newToken = generateToken();
 
-            // Panggil Google Apps Script (Action: login) — timeout 15s + 1x auto-retry.
-            // Retry menutup cold start: request pertama bangunkan GAS, kedua kena yang panas.
-            fetchWithTimeoutRetry(SCRIPT_URL + "?action=login&email=" + encodeURIComponent(email) + "&token=" + encodeURIComponent(newToken) + "&app_secret=" + encodeURIComponent(APP_SECRET) + "&product=" + encodeURIComponent(PRODUCT_ID), 15000, 1)
+            // Panggil server login (Action: login) — timeout 12s per alamat, cadangan otomatis.
+            authFetch("?action=login&email=" + encodeURIComponent(email) + "&token=" + encodeURIComponent(newToken) + "&app_secret=" + encodeURIComponent(APP_SECRET) + "&product=" + encodeURIComponent(PRODUCT_ID), 12000)
                 .then(res => res.json())
                 .then(data => {
                     loading.style.display = "none";
@@ -8967,12 +9002,12 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
                     // sudah re-enabled di atas jadi user tinggal klik lagi.
                     // SyntaxError = server merespons tapi bukan JSON (GAS overload
                     // mengembalikan halaman HTML error) — bukan masalah internet user.
-                    if (err && err.name === "AbortError") {
-                        error.innerText = "❌ Server lambat merespons. Coba klik MASUK lagi ya.";
-                    } else if (err instanceof SyntaxError) {
-                        error.innerText = "❌ Server sedang sibuk. Tunggu sebentar lalu coba lagi.";
+                    if (err instanceof SyntaxError) {
+                        error.innerText = window.tr3("\u274C Server sedang sibuk. Tunggu sebentar lalu coba lagi.", "\u274C The server is busy. Please wait a moment and try again.", "\u274C Pelayan sedang sibuk. Tunggu sebentar dan cuba lagi.");
+                    } else if (err && err.name === "AbortError") {
+                        error.innerText = window.tr3("\u274C Server lambat merespons. Coba klik MASUK lagi, atau ganti jaringan (WiFi \u2194 data seluler).", "\u274C The server is slow to respond. Tap LOGIN again, or switch network (Wi-Fi \u2194 mobile data).", "\u274C Pelayan lambat memberi respons. Tekan MASUK sekali lagi, atau tukar rangkaian (WiFi \u2194 data mudah alih).");
                     } else {
-                        error.innerText = "❌ Gagal koneksi ke server. Periksa koneksi internet Anda.";
+                        error.innerText = window.tr3("\u274C Tidak bisa terhubung ke server login. Coba ganti jaringan (WiFi \u2194 data seluler), matikan VPN/penghemat data, lalu buka lewat Chrome atau Safari.", "\u274C Cannot reach the login server. Try to switch network (Wi-Fi \u2194 mobile data), turn off VPN/data saver, then open it in Chrome or Safari.", "\u274C Tidak dapat menyambung ke pelayan log masuk. Cuba tukar rangkaian (WiFi \u2194 data mudah alih), matikan VPN/penjimat data, kemudian buka melalui Chrome atau Safari.");
                     }
                     console.error("Login error:", err);
                 });
@@ -9191,9 +9226,9 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
 
             if (!email || !token) return;
 
-            // Panggil Google Apps Script (Action: cek) — timeout 30s (< interval 60s) supaya
-            // request yang menggantung tidak menumpuk & memperparah beban GAS.
-            fetchWithTimeout(SCRIPT_URL + "?action=cek&email=" + encodeURIComponent(email) + "&token=" + encodeURIComponent(token) + "&app_secret=" + encodeURIComponent(APP_SECRET) + "&product=" + encodeURIComponent(PRODUCT_ID), 30000)
+            // Panggil server login (Action: cek) — 2 alamat x 20s (< interval 60s) supaya
+            // request yang menggantung tidak menumpuk.
+            authFetch("?action=cek&email=" + encodeURIComponent(email) + "&token=" + encodeURIComponent(token) + "&app_secret=" + encodeURIComponent(APP_SECRET) + "&product=" + encodeURIComponent(PRODUCT_ID), 20000)
                 .then(res => res.json())
                 .then(data => {
                     if (data.status === "INVALID") {
@@ -9228,9 +9263,9 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
                 // Tampilkan loading
                 document.getElementById('loadingMsg').style.display = "block";
 
-                // Verifikasi token ke server — timeout 15s + 1x auto-retry (cold start).
+                // Verifikasi token ke server — timeout 12s per alamat, cadangan otomatis.
                 // Kalau tetap gagal, .catch di bawah menyembunyikan loading & buka app (offline).
-                fetchWithTimeoutRetry(SCRIPT_URL + "?action=cek&email=" + encodeURIComponent(email) + "&token=" + encodeURIComponent(token) + "&app_secret=" + encodeURIComponent(APP_SECRET) + "&product=" + encodeURIComponent(PRODUCT_ID), 15000, 1)
+                authFetch("?action=cek&email=" + encodeURIComponent(email) + "&token=" + encodeURIComponent(token) + "&app_secret=" + encodeURIComponent(APP_SECRET) + "&product=" + encodeURIComponent(PRODUCT_ID), 12000)
                     .then(res => res.json())
                     .then(data => {
                         document.getElementById('loadingMsg').style.display = "none";
