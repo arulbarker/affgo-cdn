@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '79';
+        const UPDATE_VERSION = '80';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -718,6 +718,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '80',
+                dateId: 'Oktober 2026',
+                dateEn: 'October 2026',
+                badgeKey: 'modal.fix-v80-badge',
+                badgeText: 'Update v80',
+                gradient: 'linear-gradient(135deg,#7c3aed,#6d28d9)',
+                borderColor: '#7c3aed',
+                icon: 'fa-language',
+                iconColor: '#7c3aed',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v80-title-lang',
+                        titleText: 'Tombol Generate Tetap Ikut Bahasa Pilihanmu',
+                        bodyKey: 'modal.fix-v80-body-lang',
+                        bodyText: 'Di 10 fitur (New Born, Affiliate, Halu Idol, Voice Over, Stiker, dan lainnya), tulisan tombol Generate tidak lagi berubah ke bahasa Indonesia setelah selesai membuat foto. Tulisan saat proses juga ikut bahasa English dan Melayu.'
+                    }
+                ]
+            },
             {
                 version: '79',
                 dateId: 'Oktober 2026',
@@ -2395,8 +2414,9 @@ Jawab pertanyaan user dengan helpful dan informatif!`;
         
         generateBtn.addEventListener('click', async () => {
             if (!uploadedImageBase64 || !uploadedIdolImageBase64) return;
+            const haluOrigBtnHtml = generateBtn.innerHTML;
             generateBtn.disabled = true;
-            generateBtn.innerHTML = `<div class="loader"></div><span class="ml-2">Mencari Ide...</span>`;
+            generateBtn.innerHTML = `<div class="loader"></div><span class="ml-2">${window.tr3('Mencari Ide...', 'Finding ideas...', 'Mencari Idea...')}</span>`;
 
             let attempts = 0;
             const MAX_ATTEMPTS = 3;
@@ -2406,7 +2426,7 @@ Jawab pertanyaan user dengan helpful dan informatif!`;
                 attempts++;
                 try {
                     const bRollIdeas = await analyzeAndGetPrompts();
-                    generateBtn.innerHTML = `<div class="loader"></div><span class="ml-2">Membuat Foto...</span>`;
+                    generateBtn.innerHTML = `<div class="loader"></div><span class="ml-2">${window.tr3('Membuat Foto...', 'Creating photos...', 'Membuat Foto...')}</span>`;
                     createDynamicCards(bRollIdeas);
                     const generationPromises = bRollIdeas.map((idea, index) => generateSingleBroll(index + 1, idea.title, idea.prompt));
                     await Promise.allSettled(generationPromises);
@@ -2421,7 +2441,7 @@ Jawab pertanyaan user dengan helpful dan informatif!`;
             }
 
             generateBtn.disabled = false;
-            generateBtn.innerHTML = `<span>Buat Foto Halu</span>`;
+            generateBtn.innerHTML = haluOrigBtnHtml;
             if (successCount === 0) alert(window.__genFailText());
         });
 
@@ -2754,8 +2774,9 @@ Jawab pertanyaan user dengan helpful dan informatif!`;
 
         if(brollGenerateBtn) brollGenerateBtn.addEventListener('click', async () => {
             if (brollGenerateBtn.disabled) return;
+            const brollOrigBtnHtml = brollGenerateBtn.innerHTML;
             brollGenerateBtn.disabled = true;
-            brollGenerateBtn.innerHTML = `<div class="loader"></div><span class="ml-2">Menganalisa...</span>`;
+            brollGenerateBtn.innerHTML = `<div class="loader"></div><span class="ml-2">${window.tr3('Menganalisa...', 'Analyzing...', 'Menganalisis...')}</span>`;
             if (brollResultsHeader) brollResultsHeader.classList.add('hidden');
 
             let successCount = 0;
@@ -2766,7 +2787,7 @@ Jawab pertanyaan user dengan helpful dan informatif!`;
                 generatedBrollImages = [];
                 try {
                     const ideas = await analyzeAndGetPrompts();
-                    brollGenerateBtn.innerHTML = `<div class="loader"></div><span class="ml-2">Membuat Visual...</span>`;
+                    brollGenerateBtn.innerHTML = `<div class="loader"></div><span class="ml-2">${window.tr3('Membuat Visual...', 'Creating visuals...', 'Membuat Visual...')}</span>`;
                     createBrollDynamicCards(ideas);
                     await Promise.allSettled(ideas.map((idea, i) => generateSingleBroll(i + 1, idea.title, idea.prompt)));
                     successCount = generatedBrollImages.length;
@@ -2778,7 +2799,7 @@ Jawab pertanyaan user dengan helpful dan informatif!`;
             }
 
             brollGenerateBtn.disabled = false;
-            brollGenerateBtn.innerHTML = `<span>Buat Pose Produk</span>`;
+            brollGenerateBtn.innerHTML = brollOrigBtnHtml;
             updateBrollButtonState();
 
             if (successCount === 0) {
@@ -3688,8 +3709,9 @@ Output ONLY the video prompt, nothing else.`;
 
         if(hrgGenerateBtn) hrgGenerateBtn.addEventListener('click', async () => {
             if (hrgGenerateBtn.disabled) return;
+            const hrgOrigBtnHtml = hrgGenerateBtn.innerHTML;
             hrgGenerateBtn.disabled = true;
-            hrgGenerateBtn.innerHTML = `<div class="loader"></div><span class="ml-2">Menganalisa...</span>`;
+            hrgGenerateBtn.innerHTML = `<div class="loader"></div><span class="ml-2">${window.tr3('Menganalisa...', 'Analyzing...', 'Menganalisis...')}</span>`;
             if (hrgResultsHeader) hrgResultsHeader.classList.add('hidden');
 
             let successCount = 0;
@@ -3700,7 +3722,7 @@ Output ONLY the video prompt, nothing else.`;
                 generatedHrgImages = [];
                 try {
                     const ideas = await analyzeAndGetPrompts();
-                    hrgGenerateBtn.innerHTML = `<div class="loader"></div><span class="ml-2">Membuat Visual...</span>`;
+                    hrgGenerateBtn.innerHTML = `<div class="loader"></div><span class="ml-2">${window.tr3('Membuat Visual...', 'Creating visuals...', 'Membuat Visual...')}</span>`;
                     createHrgDynamicCards(ideas);
                     await Promise.allSettled(ideas.map((idea, i) => generateSingleHrg(i + 1, idea.title, idea.prompt)));
                     successCount = generatedHrgImages.length;
@@ -3712,7 +3734,7 @@ Output ONLY the video prompt, nothing else.`;
             }
 
             hrgGenerateBtn.disabled = false;
-            hrgGenerateBtn.innerHTML = `<span>Buat Pose Produk</span>`;
+            hrgGenerateBtn.innerHTML = hrgOrigBtnHtml;
             updateHrgButtonState();
 
             if (successCount === 0) {
@@ -7680,8 +7702,9 @@ TECHNICAL QUALITY:
                 }
                 showError('');
                 loadingIndicator.classList.remove('hidden');
+                const nbOrigBtnHtml = generateButton.innerHTML;
                 generateButton.disabled = true;
-                generateButton.textContent = 'Memproses...';
+                generateButton.textContent = window.tr3('Memproses...', 'Processing...', 'Memproses...');
 
                 const MAX_ATTEMPTS = 3;
                 let attempts = 0;
@@ -7712,7 +7735,7 @@ TECHNICAL QUALITY:
                 });
                 loadingIndicator.classList.add('hidden');
                 generateButton.disabled = false;
-                generateButton.textContent = 'Generate Foto Ajaib';
+                generateButton.innerHTML = nbOrigBtnHtml;
 
                 if (generatedImages.filter(Boolean).length > 0 && resultsHeader) {
                     resultsHeader.classList.remove('hidden');
@@ -9909,6 +9932,7 @@ PENTING: Adaptasi elemen dari referensi agar cocok dengan struktur ruangan asli 
             }
 
             generatedImages = [];
+            const suOrigBtnHtml = generateBtn.innerHTML;
             generateBtn.disabled = true;
             generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Generating Stories...';
             loader.classList.add('hidden');
@@ -9946,7 +9970,7 @@ PENTING: Adaptasi elemen dari referensi agar cocok dengan struktur ruangan asli 
             }
 
             generateBtn.disabled = false;
-            generateBtn.innerHTML = '<i class="fas fa-magic mr-2"></i>Generate Stories';
+            generateBtn.innerHTML = suOrigBtnHtml;
 
             if (successCount === 0) {
                 alert(window.__genFailText());
@@ -13181,15 +13205,18 @@ This is NOT an AI render - this is a REAL professional wedding photograph with n
                 }
             });
 
+            let voOrigBtnHtml = null;
             function setLoadingState(isLoading) {
                 generateBtn.disabled = isLoading;
                 if (isLoading) {
                     resultContainer.classList.remove('hidden'); loaderContainer.classList.remove('hidden');
                     audioContainer.classList.add('hidden'); errorMessage.classList.add('hidden');
-                    generateBtn.innerHTML = 'Membuat...';
+                    if (voOrigBtnHtml === null) voOrigBtnHtml = generateBtn.innerHTML;
+                    generateBtn.innerHTML = window.tr3('Membuat...', 'Creating...', 'Membuat...');
                 } else {
                     loaderContainer.classList.add('hidden');
-                    generateBtn.innerHTML = 'Buat Voice Over';
+                    if (voOrigBtnHtml !== null) generateBtn.innerHTML = voOrigBtnHtml;
+                    voOrigBtnHtml = null;
                 }
             }
             function showError(message) {
@@ -13360,9 +13387,16 @@ This is NOT an AI render - this is a REAL professional wedding photograph with n
                 }
             }
 
+            let stkOrigBtnHtml = null;
             function setLoadingState(isLoading) {
                 generateButton.disabled = isLoading;
-                generateButton.textContent = isLoading ? 'Membuat...' : 'Buat Stiker!';
+                if (isLoading) {
+                    if (stkOrigBtnHtml === null) stkOrigBtnHtml = generateButton.innerHTML;
+                    generateButton.textContent = window.tr3('Membuat...', 'Creating...', 'Membuat...');
+                } else {
+                    if (stkOrigBtnHtml !== null) generateButton.innerHTML = stkOrigBtnHtml;
+                    stkOrigBtnHtml = null;
+                }
                 loadingSpinner.classList.toggle('hidden', !isLoading);
                 if(isLoading) {
                     resultContainer.classList.add('hidden'); stickerWrapper.classList.add('hidden');
@@ -18696,8 +18730,9 @@ PENTING:
                 loadingDiv.classList.remove('hidden');
                 resultsHeader.classList.remove('hidden');
                 downloadAllBtn.classList.add('hidden');
+                const wpOrigBtnHtml = generateBtn.innerHTML;
                 generateBtn.disabled = true;
-                generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Menganalisa model...';
+                generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>' + window.tr3('Menganalisa model...', 'Analyzing model...', 'Menganalisis model...');
                 progressBar.style.width = '0%';
                 progressText.textContent = '0 / ' + selectedCount;
 
@@ -18719,7 +18754,7 @@ PENTING:
 
                 loadingDiv.classList.add('hidden');
                 generateBtn.disabled = false;
-                generateBtn.innerHTML = '<i class="fas fa-walking mr-3 text-xl"></i>Generate Foto Walking Pad';
+                generateBtn.innerHTML = wpOrigBtnHtml;
                 updateGenerateBtn();
 
                 if (successCount === 0) {
@@ -22785,6 +22820,7 @@ Style: ultra-realistic, 8K, fitness lifestyle photography, dramatic gym lighting
                 if (resultsHeader) resultsHeader.classList.add('hidden');
                 if (loading) loading.classList.remove('hidden');
                 if (downloadAllBtn) downloadAllBtn.classList.add('hidden');
+                const klOrigBtnHtml = generateBtn.innerHTML;
                 generateBtn.disabled = true;
                 generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i><span>Generating...</span>';
 
@@ -22821,7 +22857,7 @@ Style: ultra-realistic, 8K, fitness lifestyle photography, dramatic gym lighting
 
                 if (loading) loading.classList.add('hidden');
                 generateBtn.disabled = false;
-                generateBtn.innerHTML = '<i class="fas fa-envelope-open-text mr-3 text-xl relative z-10"></i><span class="relative z-10">Generate Kartu Lebaran</span>';
+                generateBtn.innerHTML = klOrigBtnHtml;
 
                 if (successCount === 0) {
                     alert(window.__genFailText());

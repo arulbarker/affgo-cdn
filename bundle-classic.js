@@ -776,6 +776,9 @@
                 'login.no-access-cta': '\uD83D\uDED2 Belum punya akses? Beli di sini \u2192',
                 'login.inapp-hint': '\u26A0\uFE0F Kamu membuka dari aplikasi TikTok/Instagram/Facebook/WhatsApp. Kalau gagal masuk, ketuk menu \u22EE lalu pilih "Buka di Chrome/Safari".',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v80-badge': 'Update v80',
+                'modal.fix-v80-title-lang': 'Tombol Generate Tetap Ikut Bahasa Pilihanmu',
+                'modal.fix-v80-body-lang': 'Di 10 fitur (New Born, Affiliate, Halu Idol, Voice Over, Stiker, dan lainnya), tulisan tombol Generate tidak lagi berubah ke bahasa Indonesia setelah selesai membuat foto. Tulisan saat proses juga ikut bahasa English dan Melayu.',
                 'modal.fix-v79-badge': 'Update v79',
                 'modal.fix-v79-title-login': 'Login Lebih Stabil di Semua Jaringan',
                 'modal.fix-v79-body-login': 'Server login kini memakai alamat sendiri dan otomatis pindah ke jalur cadangan kalau WiFi atau operator memblokir salah satunya. Fitur Upscale ikut memakai jalur cadangan yang sama.',
@@ -983,7 +986,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Tab Ruang Saku sekarang punya halaman penjelasan singkat fitur Rindu (AI keuangan) + tombol langsung ke RuangSaku.com. Lebih nyaman dipakai di HP — tinggal klik dan terbuka di tab browser.',
                 'modal.fix-v31-title-telegram': 'Tombol Telegram di Pojok Layar',
                 'modal.fix-v31-body-telegram': 'Tombol bundar Telegram sekarang ada di pojok kanan bawah aplikasi. Sekali klik langsung join grup Telegram Affiliate Go — tempat update fitur, tips, dan tanya jawab dengan komunitas.',
-                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 79',
+                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 80',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Selamat Datang di Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Asisten AI Anda untuk menjelajahi 79++ fitur photo & video generation',
@@ -3604,6 +3607,9 @@
                 'login.no-access-cta': '\uD83D\uDED2 No access yet? Buy here \u2192',
                 'login.inapp-hint': '\u26A0\uFE0F You opened this inside TikTok/Instagram/Facebook/WhatsApp. If login fails, tap the \u22EE menu and choose "Open in Chrome/Safari".',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v80-badge': 'Update v80',
+                'modal.fix-v80-title-lang': 'Generate Buttons Now Stay in Your Language',
+                'modal.fix-v80-body-lang': 'In 10 features (New Born, Affiliate, Halu Idol, Voice Over, Stickers, and more), the Generate button label no longer switches back to Indonesian after your photos are done. The in-progress text now follows English and Malay too.',
                 'modal.fix-v79-badge': 'Update v79',
                 'modal.fix-v79-title-login': 'More Reliable Login on Every Network',
                 'modal.fix-v79-body-login': 'The login server now uses our own address and automatically switches to a backup route when a Wi-Fi network or carrier blocks one of them. Upscale uses the same backup route.',
@@ -3811,7 +3817,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Ruang Saku tab now has a brief intro page for Rindu (AI finance buddy) + direct button to RuangSaku.com. Smoother mobile experience — one click and it opens in a browser tab.',
                 'modal.fix-v31-title-telegram': 'Telegram Button at Screen Corner',
                 'modal.fix-v31-body-telegram': 'Round Telegram button is now at the bottom-right corner of the app. One click jumps directly to the Affiliate Go Telegram group — for feature updates, tips, and Q&A with the community.',
-                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 79',
+                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 80',
                 'ui.logout': 'Logout',
                 'beranda.title': 'Welcome to Affiliate Go Foto Studio',
                 'beranda.subtitle': 'Your AI Assistant to explore 79++ photo & video generation features',
@@ -7980,21 +7986,16 @@
                 try { window.open(AD_URL, "_blank", "noopener"); } catch (e) {}
 
                 // 2. Bangun overlay
-                const lang = (localStorage.getItem("app_language") || "en").toLowerCase();
-                const T = lang === "id" ? {
-                    title: "Mohon Tunggu", sec: "Detik",
-                    sub: "Iklan sudah terbuka di tab baru. Aksi akan dilanjutkan otomatis...",
-                    pitch: "Capek nunggu iklan terus?",
-                    pitchSub: "Berlangganan Bebas Iklan",
-                    cta: "🚀 Berlangganan Sekarang",
-                    perMo: "/bln"
-                } : {
-                    title: "Please Wait", sec: "Sec",
-                    sub: "An ad has opened in a new tab. Action will resume automatically...",
-                    pitch: "Tired of ads?",
-                    pitchSub: "Subscribe to Ad-Free",
-                    cta: "🚀 Subscribe Now",
-                    perMo: "/mo"
+                const tr = window.tr3 || function(idText) { return idText; };
+                const T = {
+                    title: tr("Mohon Tunggu", "Please Wait", "Sila Tunggu"),
+                    sec: tr("Detik", "Sec", "Saat"),
+                    sub: tr("Iklan sudah terbuka di tab baru. Aksi akan dilanjutkan otomatis...", "An ad has opened in a new tab. Action will resume automatically...", "Iklan telah dibuka di tab baharu. Tindakan akan diteruskan secara automatik..."),
+                    back: tr("Cara kembali ke AffGo: tekan tombol Kembali di HP atau tutup tab iklan. Di iPhone, ketuk ◀ di pojok kiri atas.", "To get back to AffGo: press your phone's Back button or close the ad tab. On iPhone, tap ◀ in the top-left corner.", "Cara kembali ke AffGo: tekan butang Kembali di telefon atau tutup tab iklan. Di iPhone, ketik ◀ di penjuru kiri atas."),
+                    pitch: tr("Capek nunggu iklan terus?", "Tired of ads?", "Penat tunggu iklan?"),
+                    pitchSub: tr("Berlangganan Bebas Iklan", "Subscribe to Ad-Free", "Langgan Bebas Iklan"),
+                    cta: "🚀 " + tr("Berlangganan Sekarang", "Subscribe Now", "Langgan Sekarang"),
+                    perMo: tr("/bln", "/mo")
                 };
 
                 const totalSec = Math.max(1, Math.round(AD_LOCK_DURATION_MS / 1000));
@@ -8004,6 +8005,7 @@
                     '<div class="ad-lock-card">' +
                         '<div class="ad-lock-title">⏱ ' + T.title + ' <span class="ad-lock-counter" id="ad-lock-counter">' + totalSec + '</span> ' + T.sec + '</div>' +
                         '<div class="ad-lock-subtitle">' + T.sub + '</div>' +
+                        '<div class="ad-lock-back-hint"><i class="fas fa-arrow-left"></i><span>' + T.back + '</span></div>' +
                         '<div class="ad-lock-progress"><div class="ad-lock-progress-fill" id="ad-lock-progress-fill"></div></div>' +
                         '<div class="ad-lock-divider"></div>' +
                         '<div class="ad-lock-pitch">' +
