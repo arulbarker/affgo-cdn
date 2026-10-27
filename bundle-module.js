@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '80';
+        const UPDATE_VERSION = '81';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -718,6 +718,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '81',
+                dateId: 'Oktober 2026',
+                dateEn: 'October 2026',
+                badgeKey: 'modal.fix-v81-badge',
+                badgeText: 'Update v81',
+                gradient: 'linear-gradient(135deg,#0891b2,#0e7490)',
+                borderColor: '#0891b2',
+                icon: 'fa-globe',
+                iconColor: '#0891b2',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v81-title-home',
+                        titleText: 'Halaman Depan Ikut Bahasa Pilihanmu',
+                        bodyKey: 'modal.fix-v81-body-home',
+                        bodyText: 'Saat memilih English atau Melayu, sapaan di halaman depan, label jumlah fitur di layar masuk, dan kotak info di panel Update Terbaru kini ikut berganti bahasa. Jumlah fitur juga sudah seragam: 90+ fitur.'
+                    }
+                ]
+            },
             {
                 version: '80',
                 dateId: 'Oktober 2026',
@@ -1876,15 +1895,15 @@ document.addEventListener('DOMContentLoaded', () => {
             // Header badge
             '<div class="flex items-center justify-center gap-2 mb-3 p-3 rounded-xl" style="background:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 100%);border:2px solid #16a34a;">' +
             '<i class="fas fa-bolt" style="color:#16a34a;font-size:1.1rem;"></i>' +
-            '<span class="font-bold text-lg" style="color:#16a34a;">Versi ' + latest.version + '</span>' +
+            '<span class="font-bold text-lg" style="color:#16a34a;">' + window.tr3('Versi ', 'Version ', 'Versi ') + latest.version + '</span>' +
             '<span class="text-xs text-gray-500 ml-1">&#8212; ' + headerDate + '</span>' +
             '</div>' +
 
             // 90+ Fitur badge
             '<div class="flex items-center justify-center gap-2 mb-5 px-4 py-2 rounded-xl" style="background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);border:2px solid #f59e0b;">' +
             '<i class="fas fa-layer-group" style="color:#d97706;"></i>' +
-            '<span class="font-bold text-sm" style="color:#92400e;">90+ Fitur</span>' +
-            '<span class="text-xs" style="color:#b45309;">tersedia di aplikasi ini</span>' +
+            '<span class="font-bold text-sm" style="color:#92400e;">' + window.tr3('90+ Fitur', '90+ Features', '90+ Ciri') + '</span>' +
+            '<span class="text-xs" style="color:#b45309;">' + window.tr3('tersedia di aplikasi ini', 'available in this app', 'tersedia dalam aplikasi ini') + '</span>' +
             '</div>';
 
             // Loop releases — max 3 ditampilkan, urut tanggal terbaru di atas
