@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '81';
+        const UPDATE_VERSION = '82';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -718,6 +718,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '82',
+                dateId: 'Oktober 2026',
+                dateEn: 'October 2026',
+                badgeKey: 'modal.fix-v82-badge',
+                badgeText: 'Update v82',
+                gradient: 'linear-gradient(135deg,#d97706,#b45309)',
+                borderColor: '#d97706',
+                icon: 'fa-exclamation-triangle',
+                iconColor: '#d97706',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v82-title-fail',
+                        titleText: 'Pesan Jelas Saat Foto Gagal Dibuat',
+                        bodyKey: 'modal.fix-v82-body-fail',
+                        bodyText: 'Di Buat Model dan Headshot Profesional, kalau semua foto gagal dibuat, kini muncul pesan yang menjelaskan penyebab dan cara mengatasinya, bukan layar kosong. POV Tangan, POV Kaki, dan POV Selfie juga memakai pesan yang sama dan ikut bahasa pilihanmu.'
+                    }
+                ]
+            },
             {
                 version: '81',
                 dateId: 'Oktober 2026',
@@ -15351,7 +15370,7 @@ FINAL OUTPUT: An Instagram-worthy, magazine-quality touring photo that looks lik
                 if (successfulImages.length === 0) {
                     resultsSection.classList.add('hidden');
                     if (povEmptyState) povEmptyState.classList.remove('hidden');
-                    showError('Tidak ada gambar yang berhasil digenerate. Silakan coba lagi.');
+                    if (!stopPovKaki) showError(window.__genFailText());
                     return;
                 }
 
@@ -16160,7 +16179,7 @@ IMPORTANT: Use the EXACT environment/location from IMAGE 1 as the background. Do
                 if (successfulImages.length === 0) {
                     resultsSection.classList.add('hidden');
                     if (povEmptyState) povEmptyState.classList.remove('hidden');
-                    showError('Tidak ada gambar yang berhasil digenerate. Silakan coba lagi.');
+                    if (!stopPov) showError(window.__genFailText());
                     return;
                 }
 
@@ -16885,7 +16904,7 @@ Requirements:
                 if (successfulImages.length === 0) {
                     resultsSection.classList.add('hidden');
                     if (emptyState) emptyState.classList.remove('hidden');
-                    showError('Tidak ada gambar yang berhasil digenerate. Silakan coba lagi.');
+                    if (!stopSelfie) showError(window.__genFailText());
                     return;
                 }
 
@@ -35626,7 +35645,7 @@ Create a professional Twibon frame with clean green screen center now.`;
         // Generate button handler
         headshotGenerateBtn.addEventListener('click', async () => {
             if (!uploadedImageData) {
-                alert('Silakan unggah foto terlebih dahulu');
+                alert(window.tr3('Silakan unggah foto terlebih dahulu', 'Please upload a photo first', 'Sila muat naik foto terlebih dahulu'));
                 return;
             }
 
@@ -35723,7 +35742,7 @@ The final result must be a high-quality professional headshot suitable for Linke
         async function generateHeadshotSet(prompt) {
             const originalBtnHTML = headshotGenerateBtn.innerHTML;
             headshotGenerateBtn.disabled = true;
-            headshotGenerateBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Membuat Headshot...';
+            headshotGenerateBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>' + window.tr3('Membuat Headshot...', 'Creating Headshots...', 'Mencipta Headshot...');
 
             headshotResultsPlaceholder.classList.add('hidden');
             headshotResultsContainer.classList.remove('hidden');
@@ -35762,8 +35781,9 @@ The final result must be a high-quality professional headshot suitable for Linke
             headshotGenerateBtn.disabled = false;
             headshotGenerateBtn.innerHTML = originalBtnHTML;
 
+            if (headshotDownloadAllBtn) headshotDownloadAllBtn.classList.toggle('hidden', successCount === 0);
             if (successCount === 0) {
-                alert(window.__genFailText());
+                headshotResultsGrid.innerHTML = `<div class="gen-fail-box col-span-full flex items-start gap-3 p-4 rounded-xl border bg-amber-50 border-amber-200 text-amber-800 text-sm" role="alert"><i class="fas fa-exclamation-triangle mt-0.5"></i><span>${window.__genFailText()}</span></div>`;
             }
         }
 
@@ -48895,7 +48915,12 @@ Make it look like a real ${selectedSize.toLowerCase()} ${selectedColor.toLowerCa
         function renderSuccessfulResults(aspectClass) {
             resultsGrid.innerHTML = '';
             const successful = generatedImages.filter(img => img);
-            if (successful.length === 0) return;
+            if (successful.length === 0) {
+                if (!stopRequested) {
+                    resultsGrid.innerHTML = `<div class="gen-fail-box col-span-full flex items-start gap-3 p-4 rounded-xl border bg-amber-50 border-amber-200 text-amber-800 text-sm" role="alert"><i class="fas fa-exclamation-triangle mt-0.5"></i><span>${window.__genFailText()}</span></div>`;
+                }
+                return;
+            }
             successful.forEach((img, idx) => {
                 const card = document.createElement('div');
                 card.className = `relative group rounded-xl overflow-hidden bg-gradient-to-br from-violet-100 to-indigo-100 ${aspectClass}`;
