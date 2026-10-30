@@ -776,6 +776,9 @@
                 'login.no-access-cta': '\uD83D\uDED2 Belum punya akses? Beli di sini \u2192',
                 'login.inapp-hint': '\u26A0\uFE0F Kamu membuka dari aplikasi TikTok/Instagram/Facebook/WhatsApp. Kalau gagal masuk, ketuk menu \u22EE lalu pilih "Buka di Chrome/Safari".',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v83-badge': 'Update v83',
+                'modal.fix-v83-title-btn': 'Tombol Generate Tidak Dobel & Tidak Macet',
+                'modal.fix-v83-body-btn': 'Di Foto Produk Premium dan Sketsa ke Katalog, klik Generate berkali-kali kini hanya menjalankan satu proses, jadi kuota tidak terbuang untuk foto ganda. Di Feed Branding, tombol Generate tidak lagi macet mati kalau proses terhenti di tengah jalan.',
                 'modal.fix-v82-badge': 'Update v82',
                 'modal.fix-v82-title-fail': 'Pesan Jelas Saat Foto Gagal Dibuat',
                 'modal.fix-v82-body-fail': 'Di Buat Model dan Headshot Profesional, kalau semua foto gagal dibuat, kini muncul pesan yang menjelaskan penyebab dan cara mengatasinya, bukan layar kosong. POV Tangan, POV Kaki, dan POV Selfie juga memakai pesan yang sama dan ikut bahasa pilihanmu.',
@@ -992,7 +995,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Tab Ruang Saku sekarang punya halaman penjelasan singkat fitur Rindu (AI keuangan) + tombol langsung ke RuangSaku.com. Lebih nyaman dipakai di HP — tinggal klik dan terbuka di tab browser.',
                 'modal.fix-v31-title-telegram': 'Tombol Telegram di Pojok Layar',
                 'modal.fix-v31-body-telegram': 'Tombol bundar Telegram sekarang ada di pojok kanan bawah aplikasi. Sekali klik langsung join grup Telegram Affiliate Go — tempat update fitur, tips, dan tanya jawab dengan komunitas.',
-                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 82',
+                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 83',
                 'ui.logout': 'Logout',
                 'main.welcome-title': 'Selamat Datang',
                 'main.welcome-subtitle': 'Semua kebutuhan kreasi foto AI Anda dalam satu tempat.',
@@ -3616,6 +3619,9 @@
                 'login.no-access-cta': '\uD83D\uDED2 No access yet? Buy here \u2192',
                 'login.inapp-hint': '\u26A0\uFE0F You opened this inside TikTok/Instagram/Facebook/WhatsApp. If login fails, tap the \u22EE menu and choose "Open in Chrome/Safari".',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
+                'modal.fix-v83-badge': 'Update v83',
+                'modal.fix-v83-title-btn': 'Generate Button No Longer Doubles Up or Gets Stuck',
+                'modal.fix-v83-body-btn': 'In Premium Product Photo and Sketch to Catalog, tapping Generate several times now runs only one job, so your quota is not wasted on duplicate photos. In Feed Branding, the Generate button no longer stays stuck disabled if a run stops halfway.',
                 'modal.fix-v82-badge': 'Update v82',
                 'modal.fix-v82-title-fail': 'Clear Message When Photos Fail',
                 'modal.fix-v82-body-fail': 'In Create Model and Professional Headshot, if every photo fails to generate, you now see a message explaining the cause and what to do, instead of a blank screen. POV Hand, POV Feet, and POV Selfie use the same message and follow your chosen language.',
@@ -3832,7 +3838,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Ruang Saku tab now has a brief intro page for Rindu (AI finance buddy) + direct button to RuangSaku.com. Smoother mobile experience — one click and it opens in a browser tab.',
                 'modal.fix-v31-title-telegram': 'Telegram Button at Screen Corner',
                 'modal.fix-v31-body-telegram': 'Round Telegram button is now at the bottom-right corner of the app. One click jumps directly to the Affiliate Go Telegram group — for feature updates, tips, and Q&A with the community.',
-                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 82',
+                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 83',
                 'ui.logout': 'Logout',
                 'main.welcome-title': 'Welcome',
                 'main.welcome-subtitle': 'All your AI photo creation needs in one place.',
@@ -8721,33 +8727,41 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
 
                 generateBtn.addEventListener('click', async () => {
                     if (!fbProductImage || !brandNameEl.value.trim()) return;
+                    if (generateBtn.disabled) return;
                     generateBtn.disabled = true;
-                    fbGenerated = [];
-                    fbStyleAnchor = 'campaign-' + Math.floor(Math.random() * 999999);
+                    try {
+                        fbGenerated = [];
+                        fbStyleAnchor = 'campaign-' + Math.floor(Math.random() * 999999);
 
-                    if (fbMode !== 'standar') {
-                        const composing = window.tr3 ? window.tr3('Menyusun ide…', 'Composing ideas…', 'Menyusun idea…') : 'Menyusun ide…';
-                        generateBtn.innerHTML = `<div class="loader !w-4 !h-4 !border-2 mr-2"></div><span>${composing}</span>`;
-                    }
-                    fbActiveRoles = await fbResolveRoles();
-                    generateBtn.innerHTML = fbGenBtnHtml;
+                        if (fbMode !== 'standar') {
+                            const composing = window.tr3 ? window.tr3('Menyusun ide…', 'Composing ideas…', 'Menyusun idea…') : 'Menyusun ide…';
+                            generateBtn.innerHTML = `<div class="loader !w-4 !h-4 !border-2 mr-2"></div><span>${composing}</span>`;
+                        }
+                        fbActiveRoles = await fbResolveRoles();
+                        generateBtn.innerHTML = fbGenBtnHtml;
 
-                    if (downloadAllBtn) downloadAllBtn.classList.remove('hidden');
+                        if (downloadAllBtn) downloadAllBtn.classList.remove('hidden');
 
-                    const aspectClass = selectedFbRatio === '1:1' ? 'aspect-square' : (selectedFbRatio === '9:16' ? 'aspect-[9/16]' : 'aspect-[4/5]');
-                    resultsGrid.innerHTML = fbActiveRoles.map((r, i) => `
-                        <div id="fb-card-${i + 1}" class="card p-3 flex flex-col">
-                            <div class="text-xs font-semibold text-green-700 mb-2"${r.label ? '' : ` data-fb-role="feedbranding.role.${r.key}"`}>${r.label || fbRoleLabel(r.key)}</div>
-                            <div class="fb-card-body ${aspectClass} bg-gray-100 rounded-md flex items-center justify-center"><div class="loader"></div></div>
-                        </div>`).join('');
+                        const aspectClass = selectedFbRatio === '1:1' ? 'aspect-square' : (selectedFbRatio === '9:16' ? 'aspect-[9/16]' : 'aspect-[4/5]');
+                        resultsGrid.innerHTML = fbActiveRoles.map((r, i) => `
+                            <div id="fb-card-${i + 1}" class="card p-3 flex flex-col">
+                                <div class="text-xs font-semibold text-green-700 mb-2"${r.label ? '' : ` data-fb-role="feedbranding.role.${r.key}"`}>${r.label || fbRoleLabel(r.key)}</div>
+                                <div class="fb-card-body ${aspectClass} bg-gray-100 rounded-md flex items-center justify-center"><div class="loader"></div></div>
+                            </div>`).join('');
 
-                    await Promise.allSettled(fbActiveRoles.map((_, i) => generateSingleFb(i + 1)));
+                        await Promise.allSettled(fbActiveRoles.map((_, i) => generateSingleFb(i + 1)));
 
-                    const successCount = fbGenerated.filter(Boolean).length;
-                    if (successCount === 0) {
+                        const successCount = fbGenerated.filter(Boolean).length;
+                        if (successCount === 0) {
+                            alert(window.__genFailText());
+                        }
+                    } catch (err) {
+                        console.warn('[feedbranding] generate gagal:', err);
                         alert(window.__genFailText());
+                    } finally {
+                        generateBtn.innerHTML = fbGenBtnHtml;
+                        generateBtn.disabled = false;
                     }
-                    generateBtn.disabled = false;
                 });
 
                 downloadAllBtn.addEventListener('click', async () => {

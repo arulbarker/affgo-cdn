@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '82';
+        const UPDATE_VERSION = '83';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -718,6 +718,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '83',
+                dateId: 'Oktober 2026',
+                dateEn: 'October 2026',
+                badgeKey: 'modal.fix-v83-badge',
+                badgeText: 'Update v83',
+                gradient: 'linear-gradient(135deg,#0891b2,#0e7490)',
+                borderColor: '#0891b2',
+                icon: 'fa-hand-pointer',
+                iconColor: '#0891b2',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v83-title-btn',
+                        titleText: 'Tombol Generate Tidak Dobel & Tidak Macet',
+                        bodyKey: 'modal.fix-v83-body-btn',
+                        bodyText: 'Di Foto Produk Premium dan Sketsa ke Katalog, klik Generate berkali-kali kini hanya menjalankan satu proses, jadi kuota tidak terbuang untuk foto ganda. Di Feed Branding, tombol Generate tidak lagi macet mati kalau proses terhenti di tengah jalan.'
+                    }
+                ]
+            },
             {
                 version: '82',
                 dateId: 'Oktober 2026',
@@ -19356,13 +19375,28 @@ PENTING:
         }
 
         // Generate catalog photos
+        let sketchIsGenerating = false;
         if (generateBtn) {
             generateBtn.addEventListener('click', async () => {
                 if (!sketchImageData) {
-                    alert('Silakan upload sketsa terlebih dahulu');
+                    alert(window.tr3('Silakan upload sketsa terlebih dahulu', 'Please upload a sketch first', 'Sila muat naik lakaran terlebih dahulu'));
                     return;
                 }
+                if (sketchIsGenerating) return;
+                sketchIsGenerating = true;
+                generateBtn.disabled = true;
+                try {
+                    await runSketchGeneration();
+                } finally {
+                    sketchIsGenerating = false;
+                    generateBtn.disabled = !sketchImageData;
+                    if (loading) loading.classList.add('hidden');
+                    if (progressContainer) progressContainer.classList.add('hidden');
+                }
+            });
+        }
 
+        async function runSketchGeneration() {
                 // Hide empty state, show loading
                 if (emptyState) emptyState.classList.add('hidden');
                 if (loading) loading.classList.remove('hidden');
@@ -19456,7 +19490,6 @@ IMPORTANT:
                     if (resultsHeader) resultsHeader.classList.remove('hidden');
                     if (resultsCount) resultsCount.textContent = finalSuccessSketch;
                 }
-            });
         }
 
         // Generate single catalog photo
@@ -22625,6 +22658,21 @@ Style: ultra-realistic, 8K, fitness lifestyle photography, dramatic gym lighting
                 return;
             }
 
+            if (ppIsGenerating) return;
+            ppIsGenerating = true;
+            generateBtn.disabled = true;
+            try {
+                await runPPGeneration();
+            } finally {
+                ppIsGenerating = false;
+                generateBtn.disabled = !ppProductImage;
+                if (loadingEl) loadingEl.classList.add('hidden');
+            }
+        }
+
+        let ppIsGenerating = false;
+
+        async function runPPGeneration() {
             if (emptyState) emptyState.classList.add('hidden');
             if (loadingEl) loadingEl.classList.remove('hidden');
             if (resultsHeader) resultsHeader.classList.add('hidden');
