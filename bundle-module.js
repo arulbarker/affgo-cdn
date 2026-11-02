@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '83';
+        const UPDATE_VERSION = '85';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -718,6 +718,44 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '85',
+                dateId: 'November 2026',
+                dateEn: 'November 2026',
+                badgeKey: 'modal.fix-v85-badge',
+                badgeText: 'Update v85',
+                gradient: 'linear-gradient(135deg,#0ea5e9,#0369a1)',
+                borderColor: '#0ea5e9',
+                icon: 'fa-language',
+                iconColor: '#0ea5e9',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v85-title-english',
+                        titleText: 'Mode English Kini Rapi di 22 Fitur',
+                        bodyKey: 'modal.fix-v85-body-english',
+                        bodyText: 'Petunjuk, tips, dan pesan kosong yang dulu tampil campur Indonesia-Inggris saat bahasa English dipilih kini tampil dalam kalimat Inggris utuh. Contohnya di Sketsa ke Katalog, Unboxing, Testimonial, Banner, Restorasi Foto, dan Foto Makanan.'
+                    }
+                ]
+            },
+            {
+                version: '84',
+                dateId: 'November 2026',
+                dateEn: 'November 2026',
+                badgeKey: 'modal.fix-v84-badge',
+                badgeText: 'Update v84',
+                gradient: 'linear-gradient(135deg,#6366f1,#4338ca)',
+                borderColor: '#6366f1',
+                icon: 'fa-moon',
+                iconColor: '#6366f1',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v84-title-dark',
+                        titleText: 'Mode Gelap Kini Terbaca di Semua Fitur',
+                        bodyKey: 'modal.fix-v84-body-dark',
+                        bodyText: 'Judul dan tulisan yang dulu nyaris tidak terlihat di mode gelap kini jelas terbaca. Kartu yang tadinya tetap putih di belasan fitur ikut menjadi gelap, begitu juga kotak upload dan tombol pilihan tema. Tampilan mode terang tidak berubah.'
+                    }
+                ]
+            },
             {
                 version: '83',
                 dateId: 'Oktober 2026',
@@ -1967,7 +2005,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Footer
             html += '<div class="text-center pt-2 text-xs text-gray-400">' +
-            'Affiliate Go Foto Studio by Arul CG &#8212; Terima kasih sudah menggunakan!' +
+            'Affiliate Go Foto Studio by Arul CG &#8212; ' + window.tr3('Terima kasih sudah menggunakan!', 'Thank you for using it!', 'Terima kasih kerana menggunakannya!') +
             '</div>' +
             '</div>';
 
