@@ -11197,4 +11197,25 @@
         html.dark .main-content-panel h1.text-\[\#1e3a8a\] { color: #ffffff !important; }
         /* ===== END DARK MODE ===== */
 
+        /* ===== TARGET SENTUH 44px (MOBILE) =====
+           Tombol pilihan (tema/pose/rasio/opsi) di HP wajib minimal 44px tinggi.
+           Dibungkus :is() supaya satu selector salah tidak menggugurkan rule.
+           Blok ini paling akhir agar menang dari rule per-fitur yang lebih kecil. */
+        @media (max-width: 640px) {
+            :is(.pose-quick-btn, .theme-btn-broll, .theme-btn, .option-btn, .option-btn-sketsa,
+                .option-btn-timelapse, .option-btn-fotogenic, .option-btn-tattoo, .option-btn-desain,
+                .fotogenic-cat-btn, .category-filter-btn, .checkbox-btn-abtest, .vo-template-btn,
+                .hair-ratio-btn, .gender-btn, .gender-btn-model, .ratio-btn-model,
+                .ratio-btn-mockup, .ratio-btn-mini) {
+                min-height: 44px;
+            }
+            :is(.pose-quick-btn, .theme-btn, .option-btn-timelapse, .option-btn-tattoo,
+                .fotogenic-cat-btn, .checkbox-btn-abtest, .vo-template-btn,
+                .hair-ratio-btn, .gender-btn) {
+                padding-top: 0.8rem;
+                padding-bottom: 0.8rem;
+            }
+        }
+        /* ===== END TARGET SENTUH 44px ===== */
+
     

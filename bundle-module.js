@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '85';
+        const UPDATE_VERSION = '87';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -718,6 +718,44 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '87',
+                dateId: 'November 2026',
+                dateEn: 'November 2026',
+                badgeKey: 'modal.fix-v87-badge',
+                badgeText: 'Update v87',
+                gradient: 'linear-gradient(135deg,#16a34a,#15803d)',
+                borderColor: '#16a34a',
+                icon: 'fa-hand-pointer',
+                iconColor: '#16a34a',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v87-title-touch',
+                        titleText: 'Tombol Pilihan Lebih Mudah Disentuh di HP',
+                        bodyKey: 'modal.fix-v87-body-touch',
+                        bodyText: 'Lebih dari 250 tombol pilihan di HP (tema, pose, rasio, opsi) dulu terlalu kecil sehingga sering salah tekan. Sekarang semuanya minimal setinggi 44 piksel di 29 fitur, termasuk Pose Fashion, Foto Produk Affiliate, Foto Keluarga, Timelapse Renovasi, dan A/B Testing. Tampilan di komputer tidak berubah.'
+                    }
+                ]
+            },
+            {
+                version: '86',
+                dateId: 'November 2026',
+                dateEn: 'November 2026',
+                badgeKey: 'modal.fix-v86-badge',
+                badgeText: 'Update v86',
+                gradient: 'linear-gradient(135deg,#0891b2,#0e7490)',
+                borderColor: '#0891b2',
+                icon: 'fa-download',
+                iconColor: '#0891b2',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v86-title-download',
+                        titleText: 'Tombol Download Semua Ikut Bahasa Pilihanmu',
+                        bodyKey: 'modal.fix-v86-body-download',
+                        bodyText: 'Di sekitar 40 fitur, tulisan tombol Download Semua tidak lagi berubah ke bahasa lain setelah diklik. Tulisan saat proses (Mengunduh 1/4...) dan Selesai juga ikut bahasa Indonesia, English, atau Melayu. Judul hasil Headshot Profesional juga kini ikut bahasa.'
+                    }
+                ]
+            },
             {
                 version: '85',
                 dateId: 'November 2026',
@@ -2919,7 +2957,7 @@ Jawab pertanyaan user dengan helpful dan informatif!`;
                 if (generatedBrollImages.length === 0) return;
 
                 brollDownloadAllBtn.disabled = true;
-                brollDownloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                brollDownloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
 
                 for (let i = 0; i < generatedBrollImages.length; i++) {
                     const img = generatedBrollImages[i];
@@ -2930,7 +2968,7 @@ Jawab pertanyaan user dengan helpful dan informatif!`;
                 }
 
                 brollDownloadAllBtn.disabled = false;
-                brollDownloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download Semua';
+                brollDownloadAllBtn.innerHTML = `<i class="fas fa-download mr-2"></i>${window.tr3('Download Semua', 'Download All', 'Muat Turun Semua')}`;
             });
         }
 
@@ -3854,7 +3892,7 @@ Output ONLY the video prompt, nothing else.`;
                 if (generatedHrgImages.length === 0) return;
 
                 hrgDownloadAllBtn.disabled = true;
-                hrgDownloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                hrgDownloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
 
                 for (let i = 0; i < generatedHrgImages.length; i++) {
                     const img = generatedHrgImages[i];
@@ -3865,7 +3903,7 @@ Output ONLY the video prompt, nothing else.`;
                 }
 
                 hrgDownloadAllBtn.disabled = false;
-                hrgDownloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download Semua';
+                hrgDownloadAllBtn.innerHTML = `<i class="fas fa-download mr-2"></i>${window.tr3('Download Semua', 'Download All', 'Muat Turun Semua')}`;
             });
         }
 
@@ -4841,7 +4879,7 @@ CRITICAL: The model must be clearly wearing/using the product in the specified a
                     for (let i = 0; i < generatedImages.length; i++) {
                         const img = generatedImages[i];
                         if (!img) continue;
-                        tryonDownloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedImages.length}...</span>`;
+                        tryonDownloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedImages.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -4855,7 +4893,7 @@ CRITICAL: The model must be clearly wearing/using the product in the specified a
                         }
                     }
 
-                    tryonDownloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    tryonDownloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         tryonDownloadAllBtn.disabled = false;
                         tryonDownloadAllBtn.innerHTML = originalHTML;
@@ -5230,13 +5268,13 @@ IMPORTANT: Generate a brand new photo of this person in the specified pose. Keep
                 const valid = generatedImages.filter(Boolean);
                 if (!valid.length) return;
                 downloadAllBtn.disabled = true;
-                downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
                 for (const img of valid) {
                     if (window.downloadDataURINew) await window.downloadDataURINew(img.url, img.filename);
                     await new Promise(r => setTimeout(r, 500));
                 }
                 downloadAllBtn.disabled = false;
-                downloadAllBtn.innerHTML = '<i class="fas fa-download mr-1"></i>Download Semua';
+                downloadAllBtn.innerHTML = `<i class="fas fa-download mr-1"></i>${window.tr3('Download Semua', 'Download All', 'Muat Turun Semua')}`;
             });
         }
 
@@ -6754,7 +6792,7 @@ TECHNICAL QUALITY:
                 try {
                     for (let i = 0; i < generatedFoodImages.length; i++) {
                         const img = generatedFoodImages[i];
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedFoodImages.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedFoodImages.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -6768,7 +6806,7 @@ TECHNICAL QUALITY:
                         }
                     }
 
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -7491,7 +7529,7 @@ TECHNICAL QUALITY:
                 try {
                     for (let i = 0; i < generatedFoodImages.length; i++) {
                         const img = generatedFoodImages[i];
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedFoodImages.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedFoodImages.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -7505,7 +7543,7 @@ TECHNICAL QUALITY:
                         }
                     }
 
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -8188,7 +8226,7 @@ TECHNICAL QUALITY:
                 if (generatedImages.length === 0) return;
 
                 downloadAllBtn.disabled = true;
-                downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
 
                 for (let i = 0; i < generatedImages.length; i++) {
                     const img = generatedImages[i];
@@ -8205,7 +8243,7 @@ TECHNICAL QUALITY:
                 }
 
                 downloadAllBtn.disabled = false;
-                downloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download Semua';
+                downloadAllBtn.innerHTML = `<i class="fas fa-download mr-2"></i>${window.tr3('Download Semua', 'Download All', 'Muat Turun Semua')}`;
             });
 
             // Add mobile touch support
@@ -8641,7 +8679,7 @@ CRITICAL: This is a REAL professional child photograph, NOT an AI render. The ch
                     for (let i = 0; i < generatedImages.length; i++) {
                         const img = generatedImages[i];
                         if (!img) continue;  // Skip failed/empty slots
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedImages.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedImages.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -8655,7 +8693,7 @@ CRITICAL: This is a REAL professional child photograph, NOT an AI render. The ch
                         }
                     }
 
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -9769,7 +9807,7 @@ PENTING: Adaptasi elemen dari referensi agar cocok dengan struktur ruangan asli 
                         for (let i = 0; i < generatedImages.length; i++) {
                             const img = generatedImages[i];
                             if (!img) continue;  // Skip failed/empty slots
-                            downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedImages.length}...</span>`;
+                            downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedImages.length}...</span>`;
 
                             try {
                                 if (window.downloadDataURINew) {
@@ -9783,7 +9821,7 @@ PENTING: Adaptasi elemen dari referensi agar cocok dengan struktur ruangan asli 
                             }
                         }
 
-                        downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                        downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                         setTimeout(() => {
                             downloadAllBtn.disabled = false;
                             downloadAllBtn.innerHTML = originalHTML;
@@ -10116,7 +10154,7 @@ PENTING: Adaptasi elemen dari referensi agar cocok dengan struktur ruangan asli 
                     for (let i = 0; i < generatedImages.length; i++) {
                         const img = generatedImages[i];
                         if (!img) continue;  // Skip failed/empty slots
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedImages.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedImages.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -10131,7 +10169,7 @@ PENTING: Adaptasi elemen dari referensi agar cocok dengan struktur ruangan asli 
                         }
                     }
 
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -10419,7 +10457,7 @@ Generate a ${angle.prompt} of the exact same subject.`;
                 if (generatedImages.length === 0) return;
 
                 downloadAllBtn.disabled = true;
-                downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
 
                 for (let i = 0; i < generatedImages.length; i++) {
                     const img = generatedImages[i];
@@ -10435,7 +10473,7 @@ Generate a ${angle.prompt} of the exact same subject.`;
                 }
 
                 downloadAllBtn.disabled = false;
-                downloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download All';
+                downloadAllBtn.innerHTML = `<i class="fas fa-download mr-2"></i>${window.tr3('Download Semua', 'Download All', 'Muat Turun Semua')}`;
             });
 
             // Add mobile touch support
@@ -10833,7 +10871,7 @@ Generate a photo of the subject from Image 1 with the visual style of Image 2 ap
                 if (generatedImages.length === 0) return;
 
                 downloadAllBtn.disabled = true;
-                downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
 
                 for (let i = 0; i < generatedImages.length; i++) {
                     const img = generatedImages[i];
@@ -10849,7 +10887,7 @@ Generate a photo of the subject from Image 1 with the visual style of Image 2 ap
                 }
 
                 downloadAllBtn.disabled = false;
-                downloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download All';
+                downloadAllBtn.innerHTML = `<i class="fas fa-download mr-2"></i>${window.tr3('Download Semua', 'Download All', 'Muat Turun Semua')}`;
             });
 
             // Add mobile touch support
@@ -11290,7 +11328,7 @@ PENTING: Buat thumbnail yang akan memaksimalkan klik dan engagement. Teks "${tit
                 if (generatedImages.length === 0) return;
 
                 downloadAllBtn.disabled = true;
-                downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
 
                 for (let i = 0; i < generatedImages.length; i++) {
                     const img = generatedImages[i];
@@ -11306,7 +11344,7 @@ PENTING: Buat thumbnail yang akan memaksimalkan klik dan engagement. Teks "${tit
                 }
 
                 downloadAllBtn.disabled = false;
-                downloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download All';
+                downloadAllBtn.innerHTML = `<i class="fas fa-download mr-2"></i>${window.tr3('Download Semua', 'Download All', 'Muat Turun Semua')}`;
             });
 
             // Add mobile touch support
@@ -11798,7 +11836,7 @@ Create a professional faceless personal branding VERTICAL cover photo (9:16) tha
                 if (validImages.length === 0) return;
 
                 downloadAllBtn.disabled = true;
-                downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
 
                 for (let i = 0; i < validImages.length; i++) {
                     const img = validImages[i];
@@ -11813,7 +11851,7 @@ Create a professional faceless personal branding VERTICAL cover photo (9:16) tha
                 }
 
                 downloadAllBtn.disabled = false;
-                downloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download All';
+                downloadAllBtn.innerHTML = `<i class="fas fa-download mr-2"></i>${window.tr3('Download Semua', 'Download All', 'Muat Turun Semua')}`;
             });
 
             // Add mobile touch support
@@ -12266,7 +12304,7 @@ Generate a professionally restored photograph that clearly demonstrates signific
                 if (generatedImages.length === 0) return;
 
                 downloadAllBtn.disabled = true;
-                downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
 
                 for (let i = 0; i < generatedImages.length; i++) {
                     const img = generatedImages[i];
@@ -12282,7 +12320,7 @@ Generate a professionally restored photograph that clearly demonstrates signific
                 }
 
                 downloadAllBtn.disabled = false;
-                downloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download All';
+                downloadAllBtn.innerHTML = `<i class="fas fa-download mr-2"></i>${window.tr3('Download Semua', 'Download All', 'Muat Turun Semua')}`;
             });
         }
 
@@ -12810,7 +12848,7 @@ This is NOT an AI render - this is a REAL professional wedding photograph with n
                     for (let i = 0; i < generatedImages.length; i++) {
                         const img = generatedImages[i];
                         if (!img) continue;
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedImages.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedImages.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -12824,7 +12862,7 @@ This is NOT an AI render - this is a REAL professional wedding photograph with n
                         }
                     }
 
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -13948,7 +13986,7 @@ Overall style: clean and aesthetic composition, white sticker outline aesthetic,
                     for (let i = 0; i < generatedImages.length; i++) {
                         const img = generatedImages[i];
                         if (!img) continue;
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i>Downloading ${i + 1}/${generatedImages.length}...`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedImages.length}...`;
                         try {
                             if (window.downloadDataURINew) {
                                 await window.downloadDataURINew(img.url, img.filename);
@@ -13960,7 +13998,7 @@ Overall style: clean and aesthetic composition, white sticker outline aesthetic,
                             console.error(`Download ${i + 1} failed:`, err);
                         }
                     }
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-1"></i>Selesai!';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-1"></i>${window.tr3('Selesai!', 'Done!', 'Selesai!')}`;
                     setTimeout(() => { downloadAllBtn.disabled = false; downloadAllBtn.innerHTML = originalHTML; }, 2000);
                 } catch (err) {
                     downloadAllBtn.innerHTML = '<i class="fas fa-times mr-1"></i>Error';
@@ -14075,7 +14113,7 @@ Overall style: clean and aesthetic composition, white sticker outline aesthetic,
                 downloadAllBtn.addEventListener('click', async () => {
                     if (generatedImages.length === 0) return;
                     downloadAllBtn.disabled = true;
-                    downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
 
                     for (let i = 0; i < generatedImages.length; i++) {
                         const img = generatedImages[i];
@@ -14089,7 +14127,7 @@ Overall style: clean and aesthetic composition, white sticker outline aesthetic,
                     }
 
                     downloadAllBtn.disabled = false;
-                    downloadAllBtn.innerHTML = '<i class="fas fa-download"></i> Download Semua';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-download"></i> ${window.tr3('Download Semua', 'Download All', 'Muat Turun Semua')}`;
                 });
             }
 
@@ -14977,7 +15015,7 @@ FINAL OUTPUT: An Instagram-worthy, magazine-quality touring photo that looks lik
                     for (let i = 0; i < generatedImages.length; i++) {
                         const img = generatedImages[i];
                         if (!img) continue;
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedImages.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedImages.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -14991,7 +15029,7 @@ FINAL OUTPUT: An Instagram-worthy, magazine-quality touring photo that looks lik
                         }
                     }
 
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -15746,7 +15784,7 @@ IMPORTANT: Use the EXACT environment/location from IMAGE 1 as the background. Do
                     if (generatedImages.length === 0) return;
 
                     downloadAllBtn.disabled = true;
-                    downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
 
                     for (let i = 0; i < generatedImages.length; i++) {
                         if (window.downloadDataURINew) {
@@ -15757,7 +15795,7 @@ IMPORTANT: Use the EXACT environment/location from IMAGE 1 as the background. Do
                     }
 
                     downloadAllBtn.disabled = false;
-                    downloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download Semua';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-download mr-2"></i>${window.tr3('Download Semua', 'Download All', 'Muat Turun Semua')}`;
                 });
             }
 
@@ -16556,7 +16594,7 @@ IMPORTANT: Use the EXACT environment/location from IMAGE 1 as the background. Do
                     if (generatedImages.length === 0) return;
 
                     downloadAllBtn.disabled = true;
-                    downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
 
                     for (let i = 0; i < generatedImages.length; i++) {
                         if (window.downloadDataURINew) {
@@ -16567,7 +16605,7 @@ IMPORTANT: Use the EXACT environment/location from IMAGE 1 as the background. Do
                     }
 
                     downloadAllBtn.disabled = false;
-                    downloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download Semua';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-download mr-2"></i>${window.tr3('Download Semua', 'Download All', 'Muat Turun Semua')}`;
                 });
             }
 
@@ -17071,7 +17109,7 @@ Requirements:
                 downloadAllBtn.addEventListener('click', async () => {
                     if (generatedImages.length === 0) return;
                     downloadAllBtn.disabled = true;
-                    downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
                     for (let i = 0; i < generatedImages.length; i++) {
                         if (window.downloadDataURINew) {
                             await window.downloadDataURINew(generatedImages[i], `pov-selfie-${i + 1}.jpg`);
@@ -17079,7 +17117,7 @@ Requirements:
                         }
                     }
                     downloadAllBtn.disabled = false;
-                    downloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download Semua';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-download mr-2"></i>${window.tr3('Download Semua', 'Download All', 'Muat Turun Semua')}`;
                 });
             }
 
@@ -17750,7 +17788,7 @@ The design should be clearly visible and properly placed on the mockup surface.`
                     if (generatedMockups.length === 0) return;
 
                     downloadAllBtn.disabled = true;
-                    downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
 
                     for (let i = 0; i < generatedMockups.length; i++) {
                         if (window.downloadDataURINew) {
@@ -17761,7 +17799,7 @@ The design should be clearly visible and properly placed on the mockup surface.`
                     }
 
                     downloadAllBtn.disabled = false;
-                    downloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download Semua';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-download mr-2"></i>${window.tr3('Download Semua', 'Download All', 'Muat Turun Semua')}`;
                 });
             }
 
@@ -18404,7 +18442,7 @@ PENTING:
                     for (let i = 0; i < generatedImages.length; i++) {
                         const img = generatedImages[i];
                         if (!img) continue;
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedImages.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedImages.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -18418,7 +18456,7 @@ PENTING:
                         }
                     }
 
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -18889,7 +18927,7 @@ PENTING:
                 if (validImages.length === 0) return;
                 const originalHTML = downloadAllBtn.innerHTML;
                 downloadAllBtn.disabled = true;
-                downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
                 for (const img of validImages) {
                     if (window.downloadDataURINew) await window.downloadDataURINew(img.url, img.filename);
                     else if (window.downloadImage) await window.downloadImage(img.url, img.filename);
@@ -19629,7 +19667,7 @@ IMPORTANT:
                 try {
                     for (let i = 0; i < validSketchImages.length; i++) {
                         const img = validSketchImages[i];
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${validSketchImages.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${validSketchImages.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -19643,7 +19681,7 @@ IMPORTANT:
                         }
                     }
 
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -20103,7 +20141,7 @@ Pastikan semua elemen dekorasi terintegrasi dengan sempurna, lighting dramatis n
                     for (let i = 0; i < generatedImages.length; i++) {
                         const img = generatedImages[i];
                         if (!img) continue;
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedImages.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedImages.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -20117,7 +20155,7 @@ Pastikan semua elemen dekorasi terintegrasi dengan sempurna, lighting dramatis n
                         }
                     }
 
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -20892,7 +20930,7 @@ Pastikan identitas ${peopleCount > 1 ? 'SETIAP ORANG' : 'subjek'} TETAP SAMA PER
                     for (let i = 0; i < generatedImages.length; i++) {
                         const img = generatedImages[i];
                         if (!img) continue;
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedImages.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedImages.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -20906,7 +20944,7 @@ Pastikan identitas ${peopleCount > 1 ? 'SETIAP ORANG' : 'subjek'} TETAP SAMA PER
                         }
                     }
 
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -23092,7 +23130,7 @@ Style: photorealistic, high quality, warm festive Lebaran lighting, elegant deco
                 if (!validImages.length) return;
                 const originalHTML = downloadAllBtn.innerHTML;
                 downloadAllBtn.disabled = true;
-                downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading...</span>';
+                downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}</span>`;
                 try {
                     for (let i = 0; i < validImages.length; i++) {
                         try {
@@ -23101,7 +23139,7 @@ Style: photorealistic, high quality, warm festive Lebaran lighting, elegant deco
                             await new Promise(resolve => setTimeout(resolve, 500));
                         } catch (err) { console.error(`Download error ${i + 1}:`, err); }
                     }
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => { downloadAllBtn.disabled = false; downloadAllBtn.innerHTML = originalHTML; }, 2000);
                 } catch (err) {
                     downloadAllBtn.innerHTML = '<i class="fas fa-times mr-2"></i><span>Error</span>';
@@ -24068,7 +24106,7 @@ OUTPUT: Create a stunning, production-ready packaging design that a brand would 
                     for (let i = 0; i < generatedImages.length; i++) {
                         const img = generatedImages[i];
                         if (!img) continue;
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedImages.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedImages.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -24082,7 +24120,7 @@ OUTPUT: Create a stunning, production-ready packaging design that a brand would 
                         }
                     }
 
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -28638,7 +28676,7 @@ Respond ONLY with a valid JSON array of ${selectedCount} objects, in sequential 
                 if (generatedImages.length === 0) return;
 
                 umrahDownloadAllBtn.disabled = true;
-                umrahDownloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                umrahDownloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
 
                 for (let i = 0; i < generatedImages.length; i++) {
                     const img = generatedImages[i];
@@ -28651,7 +28689,7 @@ Respond ONLY with a valid JSON array of ${selectedCount} objects, in sequential 
                 }
 
                 umrahDownloadAllBtn.disabled = false;
-                umrahDownloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download Semua';
+                umrahDownloadAllBtn.innerHTML = `<i class="fas fa-download mr-2"></i>${window.tr3('Download Semua', 'Download All', 'Muat Turun Semua')}`;
             });
         }
 
@@ -28924,7 +28962,7 @@ Respond ONLY with a valid JSON array of ${selectedCount} objects, in sequential 
                 if (generatedImages.length === 0) return;
 
                 passportDownloadAllBtn.disabled = true;
-                passportDownloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                passportDownloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
 
                 for (let i = 0; i < generatedImages.length; i++) {
                     const img = generatedImages[i];
@@ -28937,7 +28975,7 @@ Respond ONLY with a valid JSON array of ${selectedCount} objects, in sequential 
                 }
 
                 passportDownloadAllBtn.disabled = false;
-                passportDownloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download Semua';
+                passportDownloadAllBtn.innerHTML = `<i class="fas fa-download mr-2"></i>${window.tr3('Download Semua', 'Download All', 'Muat Turun Semua')}`;
             });
         }
     })();
@@ -29309,7 +29347,7 @@ The final result should be a complete photo booth image ready to print or share,
                 if (generatedImages.length === 0) return;
 
                 photoBoothDownloadAllBtn.disabled = true;
-                photoBoothDownloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                photoBoothDownloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
 
                 for (let i = 0; i < generatedImages.length; i++) {
                     const img = generatedImages[i];
@@ -29322,7 +29360,7 @@ The final result should be a complete photo booth image ready to print or share,
                 }
 
                 photoBoothDownloadAllBtn.disabled = false;
-                photoBoothDownloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download Semua';
+                photoBoothDownloadAllBtn.innerHTML = `<i class="fas fa-download mr-2"></i>${window.tr3('Download Semua', 'Download All', 'Muat Turun Semua')}`;
             });
         }
     })();
@@ -29860,7 +29898,7 @@ Overall style: realistic photography of the person (face unchanged from referenc
                     for (let i = 0; i < generatedImages.length; i++) {
                         const img = generatedImages[i];
                         if (!img) continue;
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i>Downloading ${i + 1}/${generatedImages.length}...`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedImages.length}...`;
                         try {
                             if (window.downloadDataURINew) {
                                 await window.downloadDataURINew(img.url, img.filename);
@@ -29872,7 +29910,7 @@ Overall style: realistic photography of the person (face unchanged from referenc
                             console.error(`Download ${i + 1} failed:`, err);
                         }
                     }
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-1"></i>Selesai!';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-1"></i>${window.tr3('Selesai!', 'Done!', 'Selesai!')}`;
                     setTimeout(() => { downloadAllBtn.disabled = false; downloadAllBtn.innerHTML = originalHTML; }, 2000);
                 } catch (err) {
                     downloadAllBtn.innerHTML = '<i class="fas fa-times mr-1"></i>Error';
@@ -30181,7 +30219,7 @@ The result should be a natural-looking photo where only the facial expression ha
                 if (generatedImages.length === 0) return;
 
                 expressionDownloadAllBtn.disabled = true;
-                expressionDownloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                expressionDownloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
 
                 for (let i = 0; i < generatedImages.length; i++) {
                     const img = generatedImages[i];
@@ -30195,7 +30233,7 @@ The result should be a natural-looking photo where only the facial expression ha
                 }
 
                 expressionDownloadAllBtn.disabled = false;
-                expressionDownloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download Semua';
+                expressionDownloadAllBtn.innerHTML = `<i class="fas fa-download mr-2"></i>${window.tr3('Download Semua', 'Download All', 'Muat Turun Semua')}`;
             });
         }
     })();
@@ -30654,7 +30692,7 @@ Generate a stunning, professional caricature that the subject would be proud to 
                 try {
                     for (let i = 0; i < generatedImages.length; i++) {
                         const img = generatedImages[i];
-                        karikaturDownloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedImages.length}...</span>`;
+                        karikaturDownloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedImages.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -30668,7 +30706,7 @@ Generate a stunning, professional caricature that the subject would be proud to 
                         }
                     }
 
-                    karikaturDownloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    karikaturDownloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         karikaturDownloadAllBtn.disabled = false;
                         karikaturDownloadAllBtn.innerHTML = originalHTML;
@@ -31054,7 +31092,7 @@ Cinematic composition, vibrant color contrast between subject and interface, tre
                     for (let i = 0; i < generatedImages.length; i++) {
                         const img = generatedImages[i];
                         if (!img) continue;
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i>Downloading ${i + 1}/${generatedImages.length}...`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedImages.length}...`;
                         try {
                             if (window.downloadDataURINew) {
                                 await window.downloadDataURINew(img.url, img.filename);
@@ -31066,7 +31104,7 @@ Cinematic composition, vibrant color contrast between subject and interface, tre
                             console.error(`Download ${i + 1} failed:`, err);
                         }
                     }
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-1"></i>Selesai!';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-1"></i>${window.tr3('Selesai!', 'Done!', 'Selesai!')}`;
                     setTimeout(() => { downloadAllBtn.disabled = false; downloadAllBtn.innerHTML = originalHTML; }, 2000);
                 } catch (err) {
                     downloadAllBtn.innerHTML = '<i class="fas fa-times mr-1"></i>Error';
@@ -31860,7 +31898,7 @@ Generate a stunning, professionally enhanced photo that maintains the person's a
                 try {
                     for (let i = 0; i < generatedImages.length; i++) {
                         const img = generatedImages[i];
-                        beautyDownloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedImages.length}...</span>`;
+                        beautyDownloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedImages.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -31874,7 +31912,7 @@ Generate a stunning, professionally enhanced photo that maintains the person's a
                         }
                     }
 
-                    beautyDownloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    beautyDownloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         beautyDownloadAllBtn.disabled = false;
                         beautyDownloadAllBtn.innerHTML = originalHTML;
@@ -32470,7 +32508,7 @@ CRITICAL: Photo must look natural, professional, and appealing for affiliate mar
             try {
                 for (let i = 0; i < generatedImages.length; i++) {
                     const img = generatedImages[i];
-                    islamiDownloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedImages.length}...</span>`;
+                    islamiDownloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedImages.length}...</span>`;
 
                     try {
                         if (window.downloadDataURINew) {
@@ -32484,7 +32522,7 @@ CRITICAL: Photo must look natural, professional, and appealing for affiliate mar
                     }
                 }
 
-                islamiDownloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                islamiDownloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                 setTimeout(() => {
                     islamiDownloadAllBtn.disabled = false;
                     islamiDownloadAllBtn.innerHTML = originalHTML;
@@ -33001,7 +33039,7 @@ CRITICAL: Banner harus PROFESSIONAL, eye-catching, dan optimized untuk ${selecte
             try {
                 for (let i = 0; i < validBanners.length; i++) {
                     const img = validBanners[i];
-                    bannerDownloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${validBanners.length}...</span>`;
+                    bannerDownloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${validBanners.length}...</span>`;
 
                     try {
                         if (window.downloadDataURINew) {
@@ -33015,7 +33053,7 @@ CRITICAL: Banner harus PROFESSIONAL, eye-catching, dan optimized untuk ${selecte
                     }
                 }
 
-                bannerDownloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                bannerDownloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                 setTimeout(() => {
                     bannerDownloadAllBtn.disabled = false;
                     bannerDownloadAllBtn.innerHTML = originalHTML;
@@ -33423,7 +33461,7 @@ The result MUST show complete background replacement with professional quality s
 
             bgremoverDownloadAllBtn.disabled = true;
             const originalHTML = bgremoverDownloadAllBtn.innerHTML;
-            bgremoverDownloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading...</span>';
+            bgremoverDownloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}</span>`;
 
             for (let i = 0; i < generatedImages.length; i++) {
                 const img = generatedImages[i];
@@ -33436,7 +33474,7 @@ The result MUST show complete background replacement with professional quality s
                 await new Promise(resolve => setTimeout(resolve, 500));
             }
 
-            bgremoverDownloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+            bgremoverDownloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
             setTimeout(() => {
                 bgremoverDownloadAllBtn.disabled = false;
                 bgremoverDownloadAllBtn.innerHTML = originalHTML;
@@ -33781,7 +33819,7 @@ Important: This should look like ONE cohesive photograph, not a composite. The e
             try {
                 for (let i = 0; i < generatedImages.length; i++) {
                     const img = generatedImages[i];
-                    extenderDownloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedImages.length}...</span>`;
+                    extenderDownloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedImages.length}...</span>`;
 
                     try {
                         if (window.downloadDataURINew) {
@@ -33796,7 +33834,7 @@ Important: This should look like ONE cohesive photograph, not a composite. The e
                     }
                 }
 
-                extenderDownloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                extenderDownloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                 setTimeout(() => {
                     extenderDownloadAllBtn.disabled = false;
                     extenderDownloadAllBtn.innerHTML = originalHTML;
@@ -34300,7 +34338,7 @@ ${selectedVisualStyle === 'sketch' ?
             try {
                 for (let i = 0; i < generatedImages.length; i++) {
                     const img = generatedImages[i];
-                    downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedImages.length}...</span>`;
+                    downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedImages.length}...</span>`;
 
                     try {
                         if (window.downloadDataURINew) {
@@ -34315,7 +34353,7 @@ ${selectedVisualStyle === 'sketch' ?
                     }
                 }
 
-                downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                 setTimeout(() => {
                     downloadAllBtn.disabled = false;
                     downloadAllBtn.innerHTML = originalHTML;
@@ -34840,7 +34878,7 @@ Generate a single high-quality architectural photo for this timelapse frame.`;
             const validImages = generatedImages.filter(g => g);
             if (!validImages.length) return;
             downloadAllBtn.disabled = true;
-            downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Mengunduh semua...';
+            downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh semua...', 'Downloading all...', 'Memuat turun semua...')}`;
             for (let i = 0; i < validImages.length; i++) {
                 const img = validImages[i];
                 try {
@@ -34850,7 +34888,7 @@ Generate a single high-quality architectural photo for this timelapse frame.`;
                 } catch (err) { console.error('Download error:', err); }
             }
             downloadAllBtn.disabled = false;
-            downloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download Semua Frame';
+            downloadAllBtn.innerHTML = `<i class="fas fa-download mr-2"></i>${window.tr3('Download Semua Frame', 'Download All Frames', 'Muat Turun Semua Bingkai')}`;
         });
 
         // Tab initialization
@@ -35967,7 +36005,7 @@ The final result must be a high-quality professional headshot suitable for Linke
                 if (generatedImages.length === 0) return;
 
                 headshotDownloadAllBtn.disabled = true;
-                headshotDownloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                headshotDownloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
 
                 const validImages = generatedImages.filter(Boolean);
                 for (let i = 0; i < validImages.length; i++) {
@@ -35979,7 +36017,7 @@ The final result must be a high-quality professional headshot suitable for Linke
                 }
 
                 headshotDownloadAllBtn.disabled = false;
-                headshotDownloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download Semua';
+                headshotDownloadAllBtn.innerHTML = `<i class="fas fa-download mr-2"></i>${window.tr3('Download Semua', 'Download All', 'Muat Turun Semua')}`;
             });
         }
     })();
@@ -36504,7 +36542,7 @@ Generate foto maternity yang indah, bermakna, dan profesional.`;
                     for (let i = 0; i < generatedImages.length; i++) {
                         const img = generatedImages[i];
                         if (!img) continue;
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedImages.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedImages.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -36518,7 +36556,7 @@ Generate foto maternity yang indah, bermakna, dan profesional.`;
                         }
                     }
 
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -37911,7 +37949,7 @@ The script's tone and content must be tailored to the chosen script type.`;
 
                 // Download all carousel slides
                 openDownloadBtn.disabled = true;
-                openDownloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Mengunduh...';
+                openDownloadBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i> ${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
 
                 try {
                     for (let i = 0; i < carouselData.images.length; i++) {
@@ -37932,16 +37970,16 @@ The script's tone and content must be tailored to the chosen script type.`;
                     }
 
                     openDownloadBtn.disabled = false;
-                    openDownloadBtn.innerHTML = '<i class="fas fa-check mr-1"></i> Selesai!';
+                    openDownloadBtn.innerHTML = `<i class="fas fa-check mr-1"></i> ${window.tr3('Selesai!', 'Done!', 'Selesai!')}`;
                     setTimeout(() => {
-                        openDownloadBtn.innerHTML = '<i class="fas fa-download mr-1"></i> Unduh Semua Slide';
+                        openDownloadBtn.innerHTML = `<i class="fas fa-download mr-1"></i> ${window.tr3('Unduh Semua Slide', 'Download All Slides', 'Muat Turun Semua Slaid')}`;
                     }, 2000);
                 } catch (error) {
                     console.error('Download error:', error);
                     openDownloadBtn.disabled = false;
-                    openDownloadBtn.innerHTML = '<i class="fas fa-times mr-1"></i> Gagal!';
+                    openDownloadBtn.innerHTML = `<i class="fas fa-times mr-1"></i> ${window.tr3('Gagal!', 'Failed!', 'Gagal!')}`;
                     setTimeout(() => {
-                        openDownloadBtn.innerHTML = '<i class="fas fa-download mr-1"></i> Unduh Semua Slide';
+                        openDownloadBtn.innerHTML = `<i class="fas fa-download mr-1"></i> ${window.tr3('Unduh Semua Slide', 'Download All Slides', 'Muat Turun Semua Slaid')}`;
                     }, 2000);
                 }
             }
@@ -38414,7 +38452,7 @@ The script's tone and content must be tailored to the chosen script type.`;
 
                 logoDownloadAllBtn.disabled = true;
                 const originalHTML = logoDownloadAllBtn.innerHTML;
-                logoDownloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading...</span>';
+                logoDownloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}</span>`;
 
                 for (let i = 0; i < generatedLogos.length; i++) {
                     const logo = generatedLogos[i];
@@ -38427,7 +38465,7 @@ The script's tone and content must be tailored to the chosen script type.`;
                     await new Promise(resolve => setTimeout(resolve, 500));
                 }
 
-                logoDownloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                logoDownloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                 setTimeout(() => {
                     logoDownloadAllBtn.disabled = false;
                     logoDownloadAllBtn.innerHTML = originalHTML;
@@ -39219,7 +39257,7 @@ OUTPUT: High-quality logo design, clean background, professional presentation, P
                 try {
                     for (let i = 0; i < generatedLogos.length; i++) {
                         const logo = generatedLogos[i];
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedLogos.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedLogos.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -41734,7 +41772,7 @@ CRITICAL: Keep the person's face and identity EXACTLY the same from the PERSON i
                     for (let i = 0; i < generatedImages.length; i++) {
                         const img = generatedImages[i];
                         if (!img) continue;
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedImages.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedImages.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -41748,7 +41786,7 @@ CRITICAL: Keep the person's face and identity EXACTLY the same from the PERSON i
                         }
                     }
 
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -43901,7 +43939,7 @@ Generate a complete, print-ready poster yang eye-catching, professional, dan ses
             if (validPosters.length === 0) return;
 
             downloadAllBtn.disabled = true;
-            downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+            downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
 
             for (let i = 0; i < validPosters.length; i++) {
                 const poster = validPosters[i];
@@ -43914,7 +43952,7 @@ Generate a complete, print-ready poster yang eye-catching, professional, dan ses
             }
 
             downloadAllBtn.disabled = false;
-            downloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download Semua';
+            downloadAllBtn.innerHTML = `<i class="fas fa-download mr-2"></i>${window.tr3('Download Semua', 'Download All', 'Muat Turun Semua')}`;
         });
 
     })();
@@ -44534,7 +44572,7 @@ Generate a professionally cleaned image with all distractions removed.`;
                 if (generatedResults.length === 0) return;
 
                 downloadAllBtn.disabled = true;
-                downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Downloading...';
+                downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${window.tr3('Mengunduh...', 'Downloading...', 'Memuat turun...')}`;
 
                 for (let i = 0; i < generatedResults.length; i++) {
                     const result = generatedResults[i];
@@ -44547,7 +44585,7 @@ Generate a professionally cleaned image with all distractions removed.`;
                 }
 
                 downloadAllBtn.disabled = false;
-                downloadAllBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Download Semua';
+                downloadAllBtn.innerHTML = `<i class="fas fa-download mr-2"></i>${window.tr3('Download Semua', 'Download All', 'Muat Turun Semua')}`;
             });
         }
 
@@ -45309,7 +45347,7 @@ Generate comparison image yang SANGAT PROFESSIONAL dan ENGAGING!`;
                 try {
                     for (let i = 0; i < validComparisons.length; i++) {
                         const img = validComparisons[i];
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${validComparisons.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${validComparisons.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -45323,7 +45361,7 @@ Generate comparison image yang SANGAT PROFESSIONAL dan ENGAGING!`;
                         }
                     }
 
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -45695,7 +45733,7 @@ Generate unboxing scene yang SANGAT PROFESSIONAL dan ENGAGING - seperti unboxing
                 try {
                     for (let i = 0; i < generatedScenes.length; i++) {
                         const img = generatedScenes[i];
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedScenes.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedScenes.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -45709,7 +45747,7 @@ Generate unboxing scene yang SANGAT PROFESSIONAL dan ENGAGING - seperti unboxing
                         }
                     }
 
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -46084,7 +46122,7 @@ Generate before/after yang SANGAT CONVINCING dan PROFESSIONAL - perfect untuk sh
                 try {
                     for (let i = 0; i < generatedResults.length; i++) {
                         const img = generatedResults[i];
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedResults.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedResults.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -46098,7 +46136,7 @@ Generate before/after yang SANGAT CONVINCING dan PROFESSIONAL - perfect untuk sh
                         }
                     }
 
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -46496,7 +46534,7 @@ Generate mockup yang INSTAGRAM-WORTHY dan SALES-BOOSTING - perfect untuk e-comme
                 try {
                     for (let i = 0; i < generatedMockups.length; i++) {
                         const img = generatedMockups[i];
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedMockups.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedMockups.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -46510,7 +46548,7 @@ Generate mockup yang INSTAGRAM-WORTHY dan SALES-BOOSTING - perfect untuk e-comme
                         }
                     }
 
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -46989,7 +47027,7 @@ Generate testimonial card yang CONVINCING dan PROFESSIONAL - perfect untuk websi
                 try {
                     for (let i = 0; i < generatedTestimonials.length; i++) {
                         const img = generatedTestimonials[i];
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedTestimonials.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedTestimonials.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -47003,7 +47041,7 @@ Generate testimonial card yang CONVINCING dan PROFESSIONAL - perfect untuk websi
                         }
                     }
 
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -47385,7 +47423,7 @@ Generate size guide yang SANGAT HELPFUL dan PROFESSIONAL - perfect untuk e-comme
                 try {
                     for (let i = 0; i < generatedGuides.length; i++) {
                         const img = generatedGuides[i];
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedGuides.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedGuides.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -47399,7 +47437,7 @@ Generate size guide yang SANGAT HELPFUL dan PROFESSIONAL - perfect untuk e-comme
                         }
                     }
 
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -47802,7 +47840,7 @@ Generate frame ${index} dengan PERFECT CONTINUITY untuk sequential video - siap 
                 try {
                     for (let i = 0; i < generatedFrames.length; i++) {
                         const img = generatedFrames[i];
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedFrames.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedFrames.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -47816,7 +47854,7 @@ Generate frame ${index} dengan PERFECT CONTINUITY untuk sequential video - siap 
                         }
                     }
 
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -48261,7 +48299,7 @@ Generate modified vehicle yang STUNNING dan REALISTIC - perfect untuk visualisas
                 try {
                     for (let i = 0; i < generatedVehicles.length; i++) {
                         const img = generatedVehicles[i];
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedVehicles.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedVehicles.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -48275,7 +48313,7 @@ Generate modified vehicle yang STUNNING dan REALISTIC - perfect untuk visualisas
                         }
                     }
 
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -48694,7 +48732,7 @@ Make it look like a real ${selectedSize.toLowerCase()} ${selectedColor.toLowerCa
                     for (let i = 0; i < generatedImages.length; i++) {
                         const img = generatedImages[i];
                         if (!img) continue;
-                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>Downloading ${i + 1}/${generatedImages.length}...</span>`;
+                        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i><span>${window.tr3('Mengunduh', 'Downloading', 'Memuat turun')} ${i + 1}/${generatedImages.length}...</span>`;
 
                         try {
                             if (window.downloadDataURINew) {
@@ -49205,7 +49243,7 @@ This photo will be used as a consistent model reference for various product phot
                         }
                         await new Promise(r => setTimeout(r, 500));
                     }
-                    downloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    downloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => {
                         downloadAllBtn.disabled = false;
                         downloadAllBtn.innerHTML = originalHTML;
@@ -49709,7 +49747,7 @@ VARIASI ${index}: ${variationNotes[index] || 'Variasi standar dengan slight diff
                             await new Promise(r => setTimeout(r, 500));
                         } catch (err) { console.error(`Download err ${i + 1}:`, err); }
                     }
-                    ftgDownloadAllBtn.innerHTML = '<i class="fas fa-check mr-2"></i><span>Selesai!</span>';
+                    ftgDownloadAllBtn.innerHTML = `<i class="fas fa-check mr-2"></i><span>${window.tr3('Selesai!', 'Done!', 'Selesai!')}</span>`;
                     setTimeout(() => { ftgDownloadAllBtn.disabled = false; ftgDownloadAllBtn.innerHTML = originalHTML; }, 2000);
                 } catch (error) {
                     console.error('Download all error:', error);
