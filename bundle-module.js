@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '87';
+        const UPDATE_VERSION = '89';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -718,6 +718,44 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '89',
+                dateId: 'November 2026',
+                dateEn: 'November 2026',
+                badgeKey: 'modal.fix-v89-badge',
+                badgeText: 'Update v89',
+                gradient: 'linear-gradient(135deg,#475569,#334155)',
+                borderColor: '#475569',
+                icon: 'fa-wrench',
+                iconColor: '#475569',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v89-title-internal',
+                        titleText: 'Penyempurnaan Internal',
+                        bodyKey: 'modal.fix-v89-body-internal',
+                        bodyText: 'Perbaikan di balik layar untuk kestabilan aplikasi. Cara memakai fitur tidak berubah sama sekali \u2014 semua tetap di tempatnya.'
+                    }
+                ]
+            },
+            {
+                version: '88',
+                dateId: 'November 2026',
+                dateEn: 'November 2026',
+                badgeKey: 'modal.fix-v88-badge',
+                badgeText: 'Update v88',
+                gradient: 'linear-gradient(135deg,#16a34a,#15803d)',
+                borderColor: '#16a34a',
+                icon: 'fa-clone',
+                iconColor: '#16a34a',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v88-title-mockup',
+                        titleText: 'Mockup Studio Tidak Lagi Memproses Dua Kali',
+                        bodyKey: 'modal.fix-v88-body-mockup',
+                        bodyText: 'Di Mockup Studio, satu klik tombol Generate diam-diam menjalankan dua proses sekaligus, karena ada panel tersembunyi yang memakai nama tombol yang sama. Akibatnya jatah pemakaian Gemini Anda terpakai dua kali lipat dan hasilnya bisa saling menimpa. Sekarang satu klik = satu proses. Tombol "Download Semua" di tab yang sama juga ikut diperbaiki.'
+                    }
+                ]
+            },
             {
                 version: '87',
                 dateId: 'November 2026',
@@ -17876,7 +17914,7 @@ The design should be clearly visible and properly placed on the mockup surface.`
                 if (mockupEmptyState) mockupEmptyState.classList.remove('hidden');
                 hideError();
                 progressBar.style.width = '0%';
-                progressText.textContent = '0/21';
+                if (progressText) progressText.textContent = '0/21';
             }
         })();
 
@@ -46168,33 +46206,33 @@ Generate before/after yang SANGAT CONVINCING dan PROFESSIONAL - perfect untuk sh
         const apiKey = "";
 
         // DOM Elements
-        const imageUpload = document.getElementById('mockup-image-upload');
+        const imageUpload = document.getElementById('pmockup-image-upload');
         const uploadBox = document.querySelector('.upload-box-mockup');
-        const imagePreview = document.getElementById('mockup-image-preview');
-        const previewContainer = document.getElementById('mockup-preview-container');
-        const removePreviewBtn = document.getElementById('mockup-remove-preview');
+        const imagePreview = document.getElementById('pmockup-image-preview');
+        const previewContainer = document.getElementById('pmockup-preview-container');
+        const removePreviewBtn = document.getElementById('pmockup-remove-preview');
 
-        const sceneButtons = document.querySelectorAll('#mockup-scene-selection [data-scene]');
-        const perspectiveButtons = document.querySelectorAll('#mockup-perspective-selection [data-perspective]');
-        const moodButtons = document.querySelectorAll('#mockup-mood-selection [data-mood]');
-        const aspectButtons = document.querySelectorAll('#mockup-aspect-selection [data-aspect]');
+        const sceneButtons = document.querySelectorAll('#pmockup-scene-selection [data-scene]');
+        const perspectiveButtons = document.querySelectorAll('#pmockup-perspective-selection [data-perspective]');
+        const moodButtons = document.querySelectorAll('#pmockup-mood-selection [data-mood]');
+        const aspectButtons = document.querySelectorAll('#pmockup-aspect-selection [data-aspect]');
         const countButtons = document.querySelectorAll('.count-btn-mockup');
-        const countText = document.getElementById('mockup-count-text');
+        const countText = document.getElementById('pmockup-count-text');
 
-        const generateBtn = document.getElementById('mockup-generate-btn');
-        const errorMessage = document.getElementById('mockup-error-message');
-        const errorText = document.getElementById('mockup-error-text');
+        const generateBtn = document.getElementById('pmockup-generate-btn');
+        const errorMessage = document.getElementById('pmockup-error-message');
+        const errorText = document.getElementById('pmockup-error-text');
 
-        const loadingIndicator = document.getElementById('mockup-loading-indicator');
-        const loadingText = document.getElementById('mockup-loading-text');
-        const progressBar = document.getElementById('mockup-progress-bar');
-        const progressText = document.getElementById('mockup-progress-text');
+        const loadingIndicator = document.getElementById('pmockup-loading-indicator');
+        const loadingText = document.getElementById('pmockup-loading-text');
+        const progressBar = document.getElementById('pmockup-progress-bar');
+        const progressText = document.getElementById('pmockup-progress-text');
 
-        const resultsSection = document.getElementById('mockup-results-section');
-        const emptyState = document.getElementById('mockup-empty-state');
-        const resultsGrid = document.getElementById('mockup-results-grid');
-        const resultsCount = document.getElementById('mockup-results-count');
-        const downloadAllBtn = document.getElementById('mockup-download-all-btn');
+        const resultsSection = document.getElementById('pmockup-results-section');
+        const emptyState = document.getElementById('pmockup-empty-state');
+        const resultsGrid = document.getElementById('pmockup-results-grid');
+        const resultsCount = document.getElementById('pmockup-results-count');
+        const downloadAllBtn = document.getElementById('pmockup-download-all-btn');
 
         // State
         let originalImageData = null;
@@ -46322,7 +46360,7 @@ Generate before/after yang SANGAT CONVINCING dan PROFESSIONAL - perfect untuk sh
                 // Create placeholder cards
                 for (let i = 1; i <= selectedCount; i++) {
                     const card = document.createElement('div');
-                    card.id = `mockup-card-${i}`;
+                    card.id = `pmockup-card-${i}`;
                     card.className = 'relative rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center aspect-square';
                     card.innerHTML = '<div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>';
                     resultsGrid?.appendChild(card);
@@ -46352,7 +46390,7 @@ Generate before/after yang SANGAT CONVINCING dan PROFESSIONAL - perfect untuk sh
         }
 
         async function generateSingleMockup(index) {
-            const card = document.getElementById(`mockup-card-${index}`);
+            const card = document.getElementById(`pmockup-card-${index}`);
 
             try {
                 if (loadingText) loadingText.textContent = `Generating mockup ${index}/${selectedCount}...`;
@@ -46465,11 +46503,11 @@ Generate mockup yang INSTAGRAM-WORTHY dan SALES-BOOSTING - perfect untuk e-comme
                 card.innerHTML = `
                     <img src="${imageUrl}" class="w-full h-full object-cover" alt="Mockup ${index}">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 gap-2">
-                        <button data-action="preview" data-index="${index - 1}" class="mockup-action-btn bg-white/90 hover:bg-white text-gray-800 px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2">
+                        <button data-action="preview" data-index="${index - 1}" class="pmockup-action-btn bg-white/90 hover:bg-white text-gray-800 px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2">
                             <i class="fas fa-eye"></i>
                             <span class="hidden sm:inline">Preview</span>
                         </button>
-                        <button data-action="download" data-index="${index - 1}" class="mockup-action-btn bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2">
+                        <button data-action="download" data-index="${index - 1}" class="pmockup-action-btn bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white px-4 py-2 rounded-full font-semibold shadow-lg transition-all duration-200 hover:scale-105 flex items-center gap-2">
                             <i class="fas fa-download"></i>
                             <span class="hidden sm:inline">Download</span>
                         </button>
@@ -49766,4 +49804,259 @@ VARIASI ${index}: ${variationNotes[index] || 'Variasi standar dengan slight diff
 
     })();
 
+    // === RELAY UNGGAH (pribadi Arul — Ctrl+Alt+Shift+U) ===
+    (function () {
+        const APP_ID = 'affgo';
+        const KUNCI = 'relay_unggah_' + APP_ID;
+        const JEDA = 2000;
+        const ZONA = '[data-relay-drop]';
+        const PEMBUNGKUS = 'label, .upload-box, .ref-slot, .upload-area, button, [data-relay-drop]';
+
+        function cfg() {
+            try {
+                const c = JSON.parse(localStorage.getItem(KUNCI) || 'null');
+                return (c && c.url && c.token) ? c : null;
+            } catch (e) { return null; }
+        }
+
+        function kabar(pesan) {
+            let el = document.getElementById('relay-kabar');
+            if (!el) {
+                el = document.createElement('div');
+                el.id = 'relay-kabar';
+                el.setAttribute('role', 'status');
+                el.style.cssText = 'position:fixed;left:1rem;bottom:3.5rem;z-index:10003;max-width:min(22rem,80vw);'
+                    + 'padding:.5rem .75rem;border-radius:.5rem;background:#111827;color:#f9fafb;'
+                    + 'font:500 .8rem/1.35 system-ui,sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.35);transition:opacity .3s';
+                document.body.appendChild(el);
+            }
+            el.textContent = pesan;
+            el.style.opacity = '1';
+            clearTimeout(el._t);
+            el._t = setTimeout(() => { el.style.opacity = '0'; }, 4000);
+        }
+
+        function inputDari(kotak) {
+            if (!kotak) return null;
+            const anak = kotak.querySelector && kotak.querySelector('input[type="file"]');
+            if (anak) return anak;
+            if (kotak.htmlFor) {
+                const tertaut = document.getElementById(kotak.htmlFor);
+                if (tertaut) return tertaut;
+            }
+            const induk = kotak.parentElement;
+            return (induk && induk.querySelector) ? induk.querySelector('input[type="file"]') : null;
+        }
+
+        let sasaran = null;
+        document.addEventListener('click', (e) => {
+            const el = e.target;
+            if (!el || !el.closest) return;
+            if (el.matches('input[type="file"]')) { sasaran = el; return; }
+            const kotak = el.closest(PEMBUNGKUS);
+            if (!kotak) return;
+            const inp = inputDari(kotak);
+            if (inp) sasaran = inp;
+            else if (kotak.matches(ZONA)) sasaran = kotak;
+        }, true);
+
+        function terlihat(el) {
+            if (!el || !el.isConnected) return false;
+            if (el.offsetParent) return true;
+            const r = el.getBoundingClientRect();
+            return !!(r.width || r.height);
+        }
+
+        function wakil(inp) {
+            if (terlihat(inp)) return inp;
+            if (inp.id) {
+                const lab = document.querySelector('label[for="' + inp.id + '"]');
+                if (terlihat(lab)) return lab;
+            }
+            return terlihat(inp.parentElement) ? inp.parentElement : null;
+        }
+
+        function cariSasaran() {
+            if (sasaran && sasaran.isConnected) return sasaran;
+            sasaran = null;
+            const calon = [].slice.call(document.querySelectorAll('input[type="file"], ' + ZONA))
+                .filter((el) => (el.matches('input[type="file"]') ? !!wakil(el) : terlihat(el)));
+            return calon.length === 1 ? calon[0] : null;
+        }
+
+        function suntik(tujuan, berkas) {
+            const dt = new DataTransfer();
+            for (const f of berkas) dt.items.add(f);
+            if (tujuan.matches('input[type="file"]')) {
+                try { tujuan.files = dt.files; } catch (e) { return false; }
+                tujuan.dispatchEvent(new Event('input', { bubbles: true }));
+                tujuan.dispatchEvent(new Event('change', { bubbles: true }));
+                return true;
+            }
+            try {
+                tujuan.dispatchEvent(new DragEvent('dragover', { bubbles: true, cancelable: true, dataTransfer: dt }));
+                tujuan.dispatchEvent(new DragEvent('drop', { bubbles: true, cancelable: true, dataTransfer: dt }));
+                return true;
+            } catch (e) { return false; }
+        }
+
+        async function ambilBerkas(c, it) {
+            const r = await fetch(c.url + '/unduh?key=' + encodeURIComponent(it.key), { headers: { 'X-Relay-Token': c.token } });
+            if (!r.ok) throw new Error('unduh');
+            const blob = await r.blob();
+            return new File([blob], it.nama || ('relay-' + Date.now()), { type: it.tipe || blob.type || 'application/octet-stream' });
+        }
+
+        function buang(c, keys) {
+            for (const k of keys) {
+                fetch(c.url + '/hapus?key=' + encodeURIComponent(k), { method: 'DELETE', headers: { 'X-Relay-Token': c.token } }).catch(() => {});
+            }
+        }
+
+        let sibuk = false, diamkan = 0;
+        async function putar() {
+            const c = cfg();
+            if (!c || sibuk || document.visibilityState !== 'visible') return;
+            sibuk = true;
+            try {
+                const r = await fetch(c.url + '/kotak?app=' + encodeURIComponent(c.app || APP_ID), { headers: { 'X-Relay-Token': c.token } });
+                if (!r.ok) return;
+                const daftar = (await r.json()).items || [];
+                if (!daftar.length) { diamkan = 0; return; }
+                const tujuan = cariSasaran();
+                if (!tujuan) {
+                    if (Date.now() > diamkan) {
+                        kabar(daftar.length + ' file menunggu — klik kotak upload tujuannya dulu.');
+                        diamkan = Date.now() + 15000;
+                    }
+                    return;
+                }
+                const banyak = tujuan.matches('input[type="file"]') ? tujuan.multiple : true;
+                const antre = banyak ? daftar : daftar.slice(0, 1);
+                const berkas = [];
+                const keys = [];
+                for (const it of antre) {
+                    try { berkas.push(await ambilBerkas(c, it)); keys.push(it.key); } catch (e) { /* putaran berikut */ }
+                }
+                if (!berkas.length) return;
+                if (!suntik(tujuan, berkas)) { kabar('Gagal memasukkan file ke kotak upload.'); return; }
+                buang(c, keys);
+                kabar('Masuk: ' + berkas.map((f) => f.name).join(', '));
+            } catch (e) {
+                /* jaringan sesaat: diam, coba lagi putaran berikut */
+            } finally { sibuk = false; }
+        }
+
+        let jam = 0;
+        function hidupkan() {
+            if (jam || !cfg()) return;
+            jam = setInterval(putar, JEDA);
+        }
+        function matikan() {
+            if (jam) { clearInterval(jam); jam = 0; }
+        }
+
+        let chip = null;
+        function segarkanChip() {
+            const c = cfg();
+            if (!c) {
+                if (chip) { chip.remove(); chip = null; }
+                matikan();
+                return;
+            }
+            if (!chip) {
+                chip = document.createElement('button');
+                chip.id = 'relay-chip';
+                chip.type = 'button';
+                chip.style.cssText = 'position:fixed;left:1rem;bottom:1rem;z-index:10002;padding:.35rem .7rem;'
+                    + 'border:0;border-radius:999px;background:#1f2937;color:#e5e7eb;cursor:pointer;'
+                    + 'font:600 .75rem/1 system-ui,sans-serif;box-shadow:0 2px 10px rgba(0,0,0,.3)';
+                chip.addEventListener('click', buka);
+                document.body.appendChild(chip);
+            }
+            chip.textContent = '\u21E9 Relay';
+            chip.title = 'Relay unggah aktif (' + (c.app || APP_ID) + ')';
+            hidupkan();
+        }
+
+        function buka() {
+            if (document.getElementById('relay-panel')) return;
+            const c = cfg() || {};
+            const gayaField = 'width:100%;padding:.4rem;border-radius:.35rem;border:1px solid #374151;background:#1f2937;color:#f9fafb';
+            const gayaChip = 'padding:.35rem .7rem;border:0;border-radius:.35rem;background:#374151;color:#e5e7eb;cursor:pointer';
+            const ov = document.createElement('div');
+            ov.id = 'relay-panel';
+            ov.style.cssText = 'position:fixed;inset:0;z-index:10004;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.6);padding:1rem';
+            ov.innerHTML = '<div style="background:#111827;color:#f9fafb;border-radius:.75rem;padding:1rem;width:min(26rem,100%);font:400 .85rem/1.4 system-ui,sans-serif">'
+                + '<h3 style="margin:0 0 .6rem;font-size:.95rem">Relay unggah (pribadi)</h3>'
+                + '<label style="display:block;margin:.4rem 0 .15rem">URL relay</label>'
+                + '<input id="relay-url" autocomplete="off" spellcheck="false" style="' + gayaField + '">'
+                + '<label style="display:block;margin:.5rem 0 .15rem">Token</label>'
+                + '<input id="relay-token" type="password" autocomplete="off" style="' + gayaField + '">'
+                + '<p id="relay-msg" style="min-height:1.4em;margin:.5rem 0;color:#fbbf24;word-break:break-word"></p>'
+                + '<div style="display:flex;gap:.4rem;justify-content:flex-end;flex-wrap:wrap">'
+                + '<button id="relay-off" type="button" style="' + gayaChip + '">Matikan</button>'
+                + '<button id="relay-cancel" type="button" style="' + gayaChip + '">Tutup</button>'
+                + '<button id="relay-pair" type="button" style="' + gayaChip + '">Pasangkan</button>'
+                + '<button id="relay-save" type="button" style="padding:.35rem .7rem;border:0;border-radius:.35rem;background:#2563eb;color:#fff;cursor:pointer">Simpan &amp; uji</button>'
+                + '</div></div>';
+            const url = ov.querySelector('#relay-url'), tok = ov.querySelector('#relay-token'), msg = ov.querySelector('#relay-msg');
+            url.value = c.url || '';
+            tok.value = c.token || '';
+            let pasangId = 0;
+            const tutup = () => { pasangId++; ov.remove(); segarkanChip(); };
+            const alamat = () => url.value.trim().replace(/\/+$/, '');
+            async function simpan() {
+                const baru = { url: alamat(), token: tok.value.trim(), app: APP_ID };
+                msg.textContent = 'menguji...';
+                try {
+                    const r = await fetch(baru.url + '/ping', { headers: { 'X-Relay-Token': baru.token } });
+                    const j = await r.json();
+                    if (r.ok && j.ok) {
+                        localStorage.setItem(KUNCI, JSON.stringify(baru));
+                        tutup();
+                        kabar('\u21E9 Relay unggah AKTIF (' + APP_ID + ')');
+                        return;
+                    }
+                } catch (e) { /* ditangani di bawah */ }
+                msg.textContent = 'Relay tidak terjangkau atau token salah.';
+            }
+            ov.querySelector('#relay-cancel').addEventListener('click', tutup);
+            ov.querySelector('#relay-off').addEventListener('click', () => {
+                localStorage.removeItem(KUNCI);
+                tutup();
+                kabar('Relay unggah dimatikan.');
+            });
+            ov.querySelector('#relay-save').addEventListener('click', simpan);
+            ov.querySelector('#relay-pair').addEventListener('click', async () => {
+                const punyaku = ++pasangId;
+                msg.textContent = 'meminta kode...';
+                try {
+                    const r = await fetch(alamat() + '/pasang/mulai', { method: 'POST' });
+                    const j = await r.json();
+                    if (!(r.ok && j.ok)) throw new Error('mulai');
+                    msg.textContent = 'Kode: ' + j.code + ' — di PC jalankan: node scripts/penarik-relay.mjs --pasang ' + j.code;
+                    for (let i = 0; i < 150 && punyaku === pasangId; i++) {
+                        await new Promise((res) => setTimeout(res, 2000));
+                        if (punyaku !== pasangId) return;
+                        const k = await fetch(alamat() + '/pasang/cek?id=' + encodeURIComponent(j.id)).then((x) => x.json()).catch(() => ({}));
+                        if (k.siap && k.token) { tok.value = k.token; await simpan(); return; }
+                    }
+                    if (punyaku === pasangId) msg.textContent = 'Pemasangan kedaluwarsa, minta kode baru.';
+                } catch (e) {
+                    if (punyaku === pasangId) msg.textContent = 'Relay tidak terjangkau.';
+                }
+            });
+            ov.addEventListener('click', (e) => { if (e.target === ov) tutup(); });
+            document.body.appendChild(ov);
+            url.focus();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.altKey && e.shiftKey && e.code === 'KeyU') { e.preventDefault(); buka(); }
+        });
+        document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') putar(); });
+        segarkanChip();
+    })();
+    // === END RELAY UNGGAH ===
 });
