@@ -776,24 +776,9 @@
                 'login.no-access-cta': '\uD83D\uDED2 Belum punya akses? Beli di sini \u2192',
                 'login.inapp-hint': '\u26A0\uFE0F Kamu membuka dari aplikasi TikTok/Instagram/Facebook/WhatsApp. Kalau gagal masuk, ketuk menu \u22EE lalu pilih "Buka di Chrome/Safari".',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
-                'modal.fix-v87-badge': 'Update v87',
-                'modal.fix-v87-title-touch': 'Tombol Pilihan Lebih Mudah Disentuh di HP',
-                'modal.fix-v87-body-touch': 'Lebih dari 250 tombol pilihan di HP (tema, pose, rasio, opsi) dulu terlalu kecil sehingga sering salah tekan. Sekarang semuanya minimal setinggi 44 piksel di 29 fitur, termasuk Pose Fashion, Foto Produk Affiliate, Foto Keluarga, Timelapse Renovasi, dan A/B Testing. Tampilan di komputer tidak berubah.',
-                'modal.fix-v86-badge': 'Update v86',
-                'modal.fix-v86-title-download': 'Tombol Download Semua Ikut Bahasa Pilihanmu',
-                'modal.fix-v86-body-download': 'Di sekitar 40 fitur, tulisan tombol Download Semua tidak lagi berubah ke bahasa lain setelah diklik. Tulisan saat proses (Mengunduh 1/4...) dan Selesai juga ikut bahasa Indonesia, English, atau Melayu. Judul hasil Headshot Profesional juga kini ikut bahasa.',
-                'modal.fix-v85-badge': 'Update v85',
-                'modal.fix-v85-title-english': 'Mode English Kini Rapi di 22 Fitur',
-                'modal.fix-v85-body-english': 'Petunjuk, tips, dan pesan kosong yang dulu tampil campur Indonesia-Inggris saat bahasa English dipilih kini tampil dalam kalimat Inggris utuh. Contohnya di Sketsa ke Katalog, Unboxing, Testimonial, Banner, Restorasi Foto, dan Foto Makanan.',
-                'modal.fix-v84-badge': 'Update v84',
-                'modal.fix-v84-title-dark': 'Mode Gelap Kini Terbaca di Semua Fitur',
-                'modal.fix-v84-body-dark': 'Judul dan tulisan yang dulu nyaris tidak terlihat di mode gelap kini jelas terbaca. Kartu yang tadinya tetap putih di belasan fitur ikut menjadi gelap, begitu juga kotak upload dan tombol pilihan tema. Tampilan mode terang tidak berubah.',
-                'modal.fix-v83-badge': 'Update v83',
-                'modal.fix-v83-title-btn': 'Tombol Generate Tidak Dobel & Tidak Macet',
-                'modal.fix-v83-body-btn': 'Di Foto Produk Premium dan Sketsa ke Katalog, klik Generate berkali-kali kini hanya menjalankan satu proses, jadi kuota tidak terbuang untuk foto ganda. Di Feed Branding, tombol Generate tidak lagi macet mati kalau proses terhenti di tengah jalan.',
                 'modal.fix-v82-badge': 'Update v82',
-                'modal.fix-v82-title-fail': 'Pesan Jelas Saat Foto Gagal Dibuat',
-                'modal.fix-v82-body-fail': 'Di Buat Model dan Headshot Profesional, kalau semua foto gagal dibuat, kini muncul pesan yang menjelaskan penyebab dan cara mengatasinya, bukan layar kosong. POV Tangan, POV Kaki, dan POV Selfie juga memakai pesan yang sama dan ikut bahasa pilihanmu.',
+                'modal.fix-v82-title-internal': 'Penyempurnaan Internal',
+                'modal.fix-v82-body-internal': 'Perbaikan di balik layar untuk kestabilan aplikasi. Cara memakai fitur tidak berubah sama sekali \u2014 semua tetap di tempatnya.',
                 'modal.fix-v81-badge': 'Update v81',
                 'modal.fix-v81-title-home': 'Halaman Depan Ikut Bahasa Pilihanmu',
                 'modal.fix-v81-body-home': 'Saat memilih English atau Melayu, sapaan di halaman depan, label jumlah fitur di layar masuk, dan kotak info di panel Update Terbaru kini ikut berganti bahasa. Jumlah fitur juga sudah seragam: 90+ fitur.',
@@ -1007,7 +992,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Tab Ruang Saku sekarang punya halaman penjelasan singkat fitur Rindu (AI keuangan) + tombol langsung ke RuangSaku.com. Lebih nyaman dipakai di HP — tinggal klik dan terbuka di tab browser.',
                 'modal.fix-v31-title-telegram': 'Tombol Telegram di Pojok Layar',
                 'modal.fix-v31-body-telegram': 'Tombol bundar Telegram sekarang ada di pojok kanan bawah aplikasi. Sekali klik langsung join grup Telegram Affiliate Go — tempat update fitur, tips, dan tanya jawab dengan komunitas.',
-                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 87',
+                'modal.title-v27': '\u26a1 Update Terbaru \u2014 Versi 82',
                 'ui.logout': 'Logout',
                 'main.welcome-title': 'Selamat Datang',
                 'main.welcome-subtitle': 'Semua kebutuhan kreasi foto AI Anda dalam satu tempat.',
@@ -3631,24 +3616,9 @@
                 'login.no-access-cta': '\uD83D\uDED2 No access yet? Buy here \u2192',
                 'login.inapp-hint': '\u26A0\uFE0F You opened this inside TikTok/Instagram/Facebook/WhatsApp. If login fails, tap the \u22EE menu and choose "Open in Chrome/Safari".',
                 // Modal Update Terbaru — keys badge + body untuk versi current.
-                'modal.fix-v87-badge': 'Update v87',
-                'modal.fix-v87-title-touch': 'Option Buttons Are Easier to Tap on Phones',
-                'modal.fix-v87-body-touch': 'More than 250 option buttons on phones (themes, poses, ratios, options) used to be too small, so you often tapped the wrong one. They are now at least 44 pixels tall across 29 features, including Fashion Pose, Affiliate Product Photo, Family Photo, Renovation Timelapse, and A/B Testing. The desktop view is unchanged.',
-                'modal.fix-v86-badge': 'Update v86',
-                'modal.fix-v86-title-download': 'Download All Button Follows Your Language',
-                'modal.fix-v86-body-download': 'In about 40 features, the Download All button no longer switches to another language after you click it. The progress text (Downloading 1/4...) and Done also follow Indonesian, English, or Malay. The Professional Headshot results title now follows your language too.',
-                'modal.fix-v85-badge': 'Update v85',
-                'modal.fix-v85-title-english': 'English Mode Now Clean in 22 Features',
-                'modal.fix-v85-body-english': 'Hints, tips, and empty-state messages that used to show a mix of Indonesian and English when English was selected now appear as full English sentences. For example in Sketch to Catalog, Unboxing, Testimonial, Banner, Photo Restoration, and Food Photo.',
-                'modal.fix-v84-badge': 'Update v84',
-                'modal.fix-v84-title-dark': 'Dark Mode Is Now Readable Across All Features',
-                'modal.fix-v84-body-dark': 'Titles and labels that were nearly invisible in dark mode are now easy to read. Cards that stayed white in over a dozen features now turn dark, along with upload boxes and theme buttons. Light mode looks the same as before.',
-                'modal.fix-v83-badge': 'Update v83',
-                'modal.fix-v83-title-btn': 'Generate Button No Longer Doubles Up or Gets Stuck',
-                'modal.fix-v83-body-btn': 'In Premium Product Photo and Sketch to Catalog, tapping Generate several times now runs only one job, so your quota is not wasted on duplicate photos. In Feed Branding, the Generate button no longer stays stuck disabled if a run stops halfway.',
                 'modal.fix-v82-badge': 'Update v82',
-                'modal.fix-v82-title-fail': 'Clear Message When Photos Fail',
-                'modal.fix-v82-body-fail': 'In Create Model and Professional Headshot, if every photo fails to generate, you now see a message explaining the cause and what to do, instead of a blank screen. POV Hand, POV Feet, and POV Selfie use the same message and follow your chosen language.',
+                'modal.fix-v82-title-internal': 'Internal Improvements',
+                'modal.fix-v82-body-internal': 'Behind-the-scenes improvements for app stability. Nothing changes in how you use the features \u2014 everything stays where it was.',
                 'modal.fix-v81-badge': 'Update v81',
                 'modal.fix-v81-title-home': 'Home Screen Now Follows Your Language',
                 'modal.fix-v81-body-home': 'When you choose English or Malay, the home screen greeting, the feature count label on the login screen, and the info box in the Latest Update panel now switch language too. The feature count is now consistent: 90+ features.',
@@ -3862,7 +3832,7 @@
                 'modal.fix-v31-body-ruangsaku': 'Ruang Saku tab now has a brief intro page for Rindu (AI finance buddy) + direct button to RuangSaku.com. Smoother mobile experience — one click and it opens in a browser tab.',
                 'modal.fix-v31-title-telegram': 'Telegram Button at Screen Corner',
                 'modal.fix-v31-body-telegram': 'Round Telegram button is now at the bottom-right corner of the app. One click jumps directly to the Affiliate Go Telegram group — for feature updates, tips, and Q&A with the community.',
-                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 87',
+                'modal.title-v27': '\u26a1 Latest Update \u2014 Version 82',
                 'ui.logout': 'Logout',
                 'main.welcome-title': 'Welcome',
                 'main.welcome-subtitle': 'All your AI photo creation needs in one place.',
@@ -6607,7 +6577,6 @@
                 'pod.count-hint': 'Tiap hasil automatik dapat angle kamera berbeza.',
                 'pod.custom-prompt-label': 'Custom Prompt (pilihan)',
                 'pod.download-all': 'Muat Turun Semua',
-                'common.download-all': 'Muat Turun Semua',
                 'pod.empty-state': 'Muat naik foto karakter untuk mula',
                 'pod.step-ratio': 'Nisbah Gambar',
                 'pod.subtitle': 'Muat naik foto karakter, hasilkan foto seolah sedang podcast di depan mic dengan pelbagai angle & suasana',
@@ -7365,54 +7334,6 @@
             ["Mohon tunggu, AI sedang menghasilkan mockup...","Please wait, AI is generating mockups..."],
             ["Hasil Mockup","Mockup Results"],
             ["mockup)","mockups)"],
-
-            ["Dari belakang","From behind"],
-            ["Foto produk dengan tema agama dan budaya pilihan Anda akan muncul di sini","Product photos with your chosen religious and cultural theme will appear here"],
-            ["Pilih tema sesuai target market Anda. Tersedia 50 tema untuk 5 agama resmi di Indonesia.","Choose a theme that fits your target market. 50 themes are available for the 5 official religions in Indonesia."],
-            ["Banner akan muncul di sini setelah generate","Your banner will appear here after generating"],
-            ["Gunakan teks yang singkat dan jelas. Banner yang efektif memiliki headline yang menarik perhatian dan CTA yang kuat!","Keep the text short and clear. An effective banner has an eye-catching headline and a strong CTA!"],
-            ["Tulis Tema Custom Anda:","Write Your Custom Theme:"],
-            ["Deskripsikan tema fotografi makanan yang Anda inginkan dengan detail","Describe the food photography theme you want in detail"],
-            ["Deskripsikan tema fotografi makanan Ramadan yang Anda inginkan dengan detail","Describe the Ramadan food photography theme you want in detail"],
-            ["Pilih tema sesuai target konten Anda","Choose a theme that fits your content target"],
-            ["Upload background sendiri atau gunakan tema di atas","Upload your own background or use a theme above"],
-            ["Gunakan text besar, bold, dan kontras tinggi untuk readability maksimal","Use large, bold, high-contrast text for maximum readability"],
-            ["Gunakan colors dan style yang consistent di semua platform untuk brand recognition","Use consistent colors and style across all platforms for brand recognition"],
-            ["Text harus clear dan mudah dibaca di thumbnail kecil mobile device","Text must be clear and easy to read on small mobile thumbnails"],
-            ["Intensitas restorasi yang akan diterapkan","Restoration intensity to apply"],
-            ["Upload foto dengan resolusi setinggi mungkin untuk hasil restorasi yang lebih baik","Upload the highest resolution photo possible for better restoration results"],
-            ["Pilih restoration mode yang sesuai dengan kondisi foto untuk hasil optimal","Choose the restoration mode that matches the photo's condition for optimal results"],
-            ["Bandingkan kedua hasil untuk memilih yang paling sesuai dengan kebutuhan Anda","Compare both results to choose the one that best fits your needs"],
-            ["AI sedang mengevaluasi setiap variant...","AI is evaluating each variant..."],
-            ["AI sedang menganalisis data & membuat proyeksi...","AI is analyzing the data & building projections..."],
-            ["Ubah deskripsi scene untuk hasil yang lebih sesuai","Edit the scene description for a better-matching result"],
-            ["Deskripsi scene akan digunakan untuk generate gambar","The scene description will be used to generate the image"],
-            ["Perfect untuk profil profesional Anda","Perfect for your professional profile"],
-            ["Transform foto atau buat before-after scene untuk video content & presentation!","Transform photos or create before-after scenes for video content & presentations!"],
-            ["Download foto dan gunakan di Google Flow untuk membuat video transition","Download the photos and use them in Google Flow to create a video transition"],
-            ["Pilih mode di atas, lalu upload foto atau ketik prompt untuk generate before-after images!","Choose a mode above, then upload a photo or type a prompt to generate before-after images!"],
-            ["Gunakan gaya kasual seperti sedang mengobrol","Use a casual style, like chatting"],
-            ["Bicaralah seperti guru yang sedang mengajar","Speak like a teacher giving a lesson"],
-            ["Belum ada foto katalog yang dibuat","No catalog photos yet"],
-            ["Upload sketsa produk dan klik Generate untuk membuat foto katalog profesional!","Upload a product sketch and click Generate to create professional catalog photos!"],
-            ["Poster Anda akan muncul di sini","Your poster will appear here"],
-            ["Sapukan kuas pada area yang ingin dihapus. Area yang ditandai akan berwarna merah transparan.","Brush over the area you want to remove. Marked areas turn transparent red."],
-            ["AI akan otomatis mendeteksi dan menghapus objek yang mengganggu seperti:","AI will automatically detect and remove distracting objects such as:"],
-            ["Objek yang tidak diinginkan","Unwanted objects"],
-            ["AI akan mendeteksi dan menghapus semua jenis watermark dari foto:","AI will detect and remove all kinds of watermarks from the photo:"],
-            ["Copy dengan 1 klik","Copy with 1 click"],
-            ["Upload 2-3 produk dan pilih settings untuk generate comparisons","Upload 2-3 products and choose settings to generate comparisons"],
-            ["Pros & cons untuk setiap produk","Pros & cons for each product"],
-            ["Upload produk dan pilih settings untuk generate unboxing scenes","Upload a product and choose settings to generate unboxing scenes"],
-            ["Tampilkan produk dalam lifestyle scenes 3D yang realistis","Show your product in realistic 3D lifestyle scenes"],
-            ["AI akan generate mockup 3D dengan lifestyle scenes","AI will generate 3D mockups with lifestyle scenes"],
-            ["AI sedang membuat lifestyle mockup dengan 3D placement","AI is creating a lifestyle mockup with 3D placement"],
-            ["Upload produk dan pilih settings untuk generate lifestyle mockups","Upload a product and choose settings to generate lifestyle mockups"],
-            ["Perfect untuk showcase produk di lifestyle context","Perfect for showcasing products in a lifestyle context"],
-            ["Buat testimonial cards yang engaging dengan AI-generated content","Create engaging testimonial cards with AI-generated content"],
-            ["AI akan generate testimonial cards dengan rating & quotes","AI will generate testimonial cards with ratings & quotes"],
-            ["AI sedang membuat testimonial cards dengan quotes & ratings","AI is creating testimonial cards with quotes & ratings"],
-            ["Upload produk dan pilih settings untuk generate testimonial cards","Upload a product and choose settings to generate testimonial cards"],
 
             ["Akun Google ini sudah mencapai batas, silahkan gunakan akun Google lain","This Google account has reached its limit, please use another Google account"],
             ["Silakan unggah foto produk dan model terlebih dahulu.","Please upload product and model photos first."],
@@ -8800,41 +8721,33 @@ Brand: "${brand}"${slogan ? `, tagline "${slogan}"` : ''}.`;
 
                 generateBtn.addEventListener('click', async () => {
                     if (!fbProductImage || !brandNameEl.value.trim()) return;
-                    if (generateBtn.disabled) return;
                     generateBtn.disabled = true;
-                    try {
-                        fbGenerated = [];
-                        fbStyleAnchor = 'campaign-' + Math.floor(Math.random() * 999999);
+                    fbGenerated = [];
+                    fbStyleAnchor = 'campaign-' + Math.floor(Math.random() * 999999);
 
-                        if (fbMode !== 'standar') {
-                            const composing = window.tr3 ? window.tr3('Menyusun ide…', 'Composing ideas…', 'Menyusun idea…') : 'Menyusun ide…';
-                            generateBtn.innerHTML = `<div class="loader !w-4 !h-4 !border-2 mr-2"></div><span>${composing}</span>`;
-                        }
-                        fbActiveRoles = await fbResolveRoles();
-                        generateBtn.innerHTML = fbGenBtnHtml;
-
-                        if (downloadAllBtn) downloadAllBtn.classList.remove('hidden');
-
-                        const aspectClass = selectedFbRatio === '1:1' ? 'aspect-square' : (selectedFbRatio === '9:16' ? 'aspect-[9/16]' : 'aspect-[4/5]');
-                        resultsGrid.innerHTML = fbActiveRoles.map((r, i) => `
-                            <div id="fb-card-${i + 1}" class="card p-3 flex flex-col">
-                                <div class="text-xs font-semibold text-green-700 mb-2"${r.label ? '' : ` data-fb-role="feedbranding.role.${r.key}"`}>${r.label || fbRoleLabel(r.key)}</div>
-                                <div class="fb-card-body ${aspectClass} bg-gray-100 rounded-md flex items-center justify-center"><div class="loader"></div></div>
-                            </div>`).join('');
-
-                        await Promise.allSettled(fbActiveRoles.map((_, i) => generateSingleFb(i + 1)));
-
-                        const successCount = fbGenerated.filter(Boolean).length;
-                        if (successCount === 0) {
-                            alert(window.__genFailText());
-                        }
-                    } catch (err) {
-                        console.warn('[feedbranding] generate gagal:', err);
-                        alert(window.__genFailText());
-                    } finally {
-                        generateBtn.innerHTML = fbGenBtnHtml;
-                        generateBtn.disabled = false;
+                    if (fbMode !== 'standar') {
+                        const composing = window.tr3 ? window.tr3('Menyusun ide…', 'Composing ideas…', 'Menyusun idea…') : 'Menyusun ide…';
+                        generateBtn.innerHTML = `<div class="loader !w-4 !h-4 !border-2 mr-2"></div><span>${composing}</span>`;
                     }
+                    fbActiveRoles = await fbResolveRoles();
+                    generateBtn.innerHTML = fbGenBtnHtml;
+
+                    if (downloadAllBtn) downloadAllBtn.classList.remove('hidden');
+
+                    const aspectClass = selectedFbRatio === '1:1' ? 'aspect-square' : (selectedFbRatio === '9:16' ? 'aspect-[9/16]' : 'aspect-[4/5]');
+                    resultsGrid.innerHTML = fbActiveRoles.map((r, i) => `
+                        <div id="fb-card-${i + 1}" class="card p-3 flex flex-col">
+                            <div class="text-xs font-semibold text-green-700 mb-2"${r.label ? '' : ` data-fb-role="feedbranding.role.${r.key}"`}>${r.label || fbRoleLabel(r.key)}</div>
+                            <div class="fb-card-body ${aspectClass} bg-gray-100 rounded-md flex items-center justify-center"><div class="loader"></div></div>
+                        </div>`).join('');
+
+                    await Promise.allSettled(fbActiveRoles.map((_, i) => generateSingleFb(i + 1)));
+
+                    const successCount = fbGenerated.filter(Boolean).length;
+                    if (successCount === 0) {
+                        alert(window.__genFailText());
+                    }
+                    generateBtn.disabled = false;
                 });
 
                 downloadAllBtn.addEventListener('click', async () => {

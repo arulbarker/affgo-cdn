@@ -11176,46 +11176,6 @@
         html.dark .riwayat-label { color: #e2e8f0; }
         html.dark .riwayat-time, html.dark .riwayat-empty { color: #94a3b8; }
         html.dark .riwayat-clear { background: #450a0a; border-color: #7f1d1d; color: #fecaca; }
-        html.dark .main-content-panel [style*="gradient"]:is([style*="#f0fdf4" i], [style*="#ecfdf5" i], [style*="#faf5ff" i], [style*="#fdf4ff" i], [style*="#fffbeb" i], [style*="#fef3c7" i], [style*="#fef3f9" i], [style*="#fefce8" i], [style*="#e0f2fe" i], [style*="#fdf2f8" i], [style*="#eef2ff" i], [style*="#ccfbf1" i], [style*="#f0fdfa" i], [style*="#f0f9ff" i], [style*="#fce7f3" i], [style*="#f3e8ff" i], [style*="#fef2f2" i], [style*="#fae8ff" i], [style*="#ecfeff" i], [style*="#cffafe" i], [style*="#fff7ed" i]) { background: #0f172a !important; }
-        html.dark .main-content-panel .card[style*="gradient"] { background: #1e293b !important; }
-        html.dark .main-content-panel :is(input, textarea)[style*="background"] { background: #0f172a !important; color: #e2e8f0 !important; }
-        html.dark .main-content-panel :is(.upload-area, .product-upload-slot, .upload-bg-custom, .img-preview-container, .add-photo-btn, [class*="bg-"][class*="-50/"]) { background: #0f172a !important; }
-        html.dark #content-miniature div.rounded-2xl, html.dark #content-sticker main { background: #1e293b !important; }
-        html.dark #content-miniature textarea { background: #0f172a !important; color: #e2e8f0 !important; }
-        html.dark .option-btn-room:not(.selected):not(.active), html.dark .option-btn-profesi:not(.selected):not(.active) { background: #1e293b !important; }
-        html.dark .main-content-panel :is([style*="color: #78350f" i], [style*="color:#78350f" i], [style*="color: #92400e" i], [style*="color:#92400e" i], [style*="color: #b45309" i], [style*="color:#b45309" i], [style*="color: #a16207" i], [style*="color:#a16207" i]):not([style*="background"]) { color: #fcd34d !important; }
-        html.dark .main-content-panel :is([style*="color: #15803d" i], [style*="color:#15803d" i], [style*="color: #166534" i], [style*="color:#166534" i]):not([style*="background"]) { color: #86efac !important; }
-        html.dark .main-content-panel :is([style*="color: #be185d" i], [style*="color:#be185d" i], [style*="color: #db2777" i], [style*="color:#db2777" i]):not([style*="background"]) { color: #f9a8d4 !important; }
-        html.dark .main-content-panel :is([style*="color: #0e7490" i], [style*="color:#0e7490" i]):not([style*="background"]) { color: #67e8f9 !important; }
-        html.dark .main-content-panel :is([style*="color: #0369a1" i], [style*="color:#0369a1" i]):not([style*="background"]) { color: #7dd3fc !important; }
-        html.dark .main-content-panel :is([style*="color: #4338ca" i], [style*="color:#4338ca" i]):not([style*="background"]) { color: #a5b4fc !important; }
-        html.dark .main-content-panel :is([style*="color: #6b21a8" i], [style*="color:#6b21a8" i], [style*="color: #7e22ce" i], [style*="color:#7e22ce" i], [style*="color: #6d28d9" i], [style*="color:#6d28d9" i]):not([style*="background"]) { color: #d8b4fe !important; }
-        html.dark .main-content-panel :is([style*="color: #c2410c" i], [style*="color:#c2410c" i]):not([style*="background"]) { color: #fdba74 !important; }
-        html.dark .main-content-panel :is([style*="color: #115e59" i], [style*="color:#115e59" i]):not([style*="background"]) { color: #5eead4 !important; }
-        html.dark .main-content-panel :is([style*="color: #b91c1c" i], [style*="color:#b91c1c" i]):not([style*="background"]) { color: #fca5a5 !important; }
-        html.dark .main-content-panel label.text-\[\#1e3a8a\] { color: #93c5fd !important; }
-        html.dark .main-content-panel h1.text-\[\#1e3a8a\] { color: #ffffff !important; }
         /* ===== END DARK MODE ===== */
-
-        /* ===== TARGET SENTUH 44px (MOBILE) =====
-           Tombol pilihan (tema/pose/rasio/opsi) di HP wajib minimal 44px tinggi.
-           Dibungkus :is() supaya satu selector salah tidak menggugurkan rule.
-           Blok ini paling akhir agar menang dari rule per-fitur yang lebih kecil. */
-        @media (max-width: 640px) {
-            :is(.pose-quick-btn, .theme-btn-broll, .theme-btn, .option-btn, .option-btn-sketsa,
-                .option-btn-timelapse, .option-btn-fotogenic, .option-btn-tattoo, .option-btn-desain,
-                .fotogenic-cat-btn, .category-filter-btn, .checkbox-btn-abtest, .vo-template-btn,
-                .hair-ratio-btn, .gender-btn, .gender-btn-model, .ratio-btn-model,
-                .ratio-btn-mockup, .ratio-btn-mini) {
-                min-height: 44px;
-            }
-            :is(.pose-quick-btn, .theme-btn, .option-btn-timelapse, .option-btn-tattoo,
-                .fotogenic-cat-btn, .checkbox-btn-abtest, .vo-template-btn,
-                .hair-ratio-btn, .gender-btn) {
-                padding-top: 0.8rem;
-                padding-bottom: 0.8rem;
-            }
-        }
-        /* ===== END TARGET SENTUH 44px ===== */
 
     
