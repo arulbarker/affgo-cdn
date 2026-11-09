@@ -10,7 +10,7 @@
         <!-- Floating badge top-right -->
         <div style="position:absolute;top:16px;right:16px;background:linear-gradient(135deg,#ea580c,#c2410c);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(234,88,12,0.4);z-index:1;" data-i18n="login.badge-features">90+ FITUR &#x26A1;</div>
         <!-- Floating version badge top-left (auto-sync dari UPDATE_VERSION via JS) -->
-        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V89</div>
+        <div id="login-version-badge" style="position:absolute;top:16px;left:16px;background:linear-gradient(135deg,#16a34a,#15803d);color:white;font-size:0.75rem;font-weight:700;padding:5px 12px;border-radius:14px;box-shadow:0 4px 12px rgba(22,163,74,0.4);z-index:1;">V90</div>
         <div class="login-box">
             <!-- AG Logo badge -->
             <div style="background:linear-gradient(135deg,#16a34a,#15803d);width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:1.35rem;font-weight:900;color:white;box-shadow:0 6px 18px rgba(22,163,74,0.4);">AG</div>
@@ -55,7 +55,7 @@
         <button type="button" id="mobile-drawer-toggle" aria-label="Buka menu" aria-expanded="false">
             <i class="fas fa-bars"></i>
         </button>
-        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V89</span></h1>
+        <h1><i class="fas fa-magic"></i> Affiliate Go Foto Studio <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-2 py-1 rounded-full">V90</span></h1>
     </div>
     <div id="a2hs-banner" class="a2hs-banner" role="region" aria-label="Pasang di layar utama">
         <i class="fas fa-mobile-screen-button a2hs-icon"></i>
@@ -76,7 +76,7 @@
                 </h1>
                 <p class="text-xs text-gray-500 mt-1">by Arul CG</p>
                 <div class="mt-2">
-                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V89</span>
+                    <span class="text-xs bg-gradient-to-r from-green-600 to-emerald-700 text-white px-3 py-1 rounded-full font-semibold shadow-lg">V90</span>
                 </div>
                 <div class="lang-dropdown mt-2" id="lang-dropdown-desktop">
                     <button type="button" class="lang-dd-btn" aria-haspopup="listbox" aria-expanded="false">
@@ -1454,7 +1454,7 @@
                                 </button>
                                 <button type="button" data-style="crayon-anak" class="option-btn-karikatur">
                                     <i class="fas fa-marker mr-2"></i>
-                                    <span>Krayon Anak</span>
+                                    <span data-i18n="kk.crayon-kids">Krayon Anak</span>
                                 </button>
 
                                 <!-- Digital Styles -->
@@ -3247,65 +3247,65 @@
                             <button type="button" id="pose-random-btn" class="pose-quick-btn w-full mb-2 font-semibold" style="padding-top:0.75rem;padding-bottom:0.75rem;"><i class="fas fa-dice mr-1"></i><span data-i18n="pf.random-btn">Random — pose acak otomatis</span></button>
                             <div class="flex flex-wrap gap-1.5 max-h-64 overflow-y-auto pr-1">
                                 <!-- Standing -->
-                                <button type="button" class="pose-quick-btn" data-pose="confident standing pose, both hands on hips, smiling at camera, full body">Hands on hips</button>
-                                <button type="button" class="pose-quick-btn" data-pose="arms crossed at chest, powerful confident stance, direct eye contact, full body">Tangan silang</button>
-                                <button type="button" class="pose-quick-btn" data-pose="standing with both hands in pockets, relaxed casual smile, full body">Tangan di saku</button>
-                                <button type="button" class="pose-quick-btn" data-pose="straight upright standing, arms at sides, neutral strong expression, full body">Berdiri tegak</button>
-                                <button type="button" class="pose-quick-btn" data-pose="contrapposto pose, weight on one leg, hip slightly tilted, natural S-curve silhouette, full body">Contrapposto</button>
-                                <button type="button" class="pose-quick-btn" data-pose="wide-legged power stance, feet shoulder-width apart, dominant confident expression, full body">Power stance</button>
-                                <button type="button" class="pose-quick-btn" data-pose="one arm raised up, other hand on hip, dynamic energetic fashion pose, full body">Tangan ke atas</button>
-                                <button type="button" class="pose-quick-btn" data-pose="one hand touching collar or necklace, sophisticated elegant fashion pose, full body">Pegang kerah</button>
-                                <button type="button" class="pose-quick-btn" data-pose="asymmetric pose, one shoulder higher than other, artistic high-fashion editorial, full body">Asimetris</button>
-                                <button type="button" class="pose-quick-btn" data-pose="standing on tiptoes, arms slightly out, playful light feminine pose, full body">Jinjit</button>
+                                <button type="button" class="pose-quick-btn" data-pose="confident standing pose, both hands on hips, smiling at camera, full body" data-i18n="pf.pose-hands-hips">Hands on hips</button>
+                                <button type="button" class="pose-quick-btn" data-pose="arms crossed at chest, powerful confident stance, direct eye contact, full body" data-i18n="pf.pose-arms-crossed">Tangan silang</button>
+                                <button type="button" class="pose-quick-btn" data-pose="standing with both hands in pockets, relaxed casual smile, full body" data-i18n="pf.pose-hands-pockets">Tangan di saku</button>
+                                <button type="button" class="pose-quick-btn" data-pose="straight upright standing, arms at sides, neutral strong expression, full body" data-i18n="pf.pose-standing-tall">Berdiri tegak</button>
+                                <button type="button" class="pose-quick-btn" data-pose="contrapposto pose, weight on one leg, hip slightly tilted, natural S-curve silhouette, full body" data-i18n="pf.pose-contrapposto">Contrapposto</button>
+                                <button type="button" class="pose-quick-btn" data-pose="wide-legged power stance, feet shoulder-width apart, dominant confident expression, full body" data-i18n="pf.pose-power-stance">Power stance</button>
+                                <button type="button" class="pose-quick-btn" data-pose="one arm raised up, other hand on hip, dynamic energetic fashion pose, full body" data-i18n="pf.pose-arm-raised">Tangan ke atas</button>
+                                <button type="button" class="pose-quick-btn" data-pose="one hand touching collar or necklace, sophisticated elegant fashion pose, full body" data-i18n="pf.pose-touch-collar">Pegang kerah</button>
+                                <button type="button" class="pose-quick-btn" data-pose="asymmetric pose, one shoulder higher than other, artistic high-fashion editorial, full body" data-i18n="pf.pose-asymmetric">Asimetris</button>
+                                <button type="button" class="pose-quick-btn" data-pose="standing on tiptoes, arms slightly out, playful light feminine pose, full body" data-i18n="pf.pose-tiptoes">Jinjit</button>
                                 <!-- Walking/Dynamic -->
-                                <button type="button" class="pose-quick-btn" data-pose="dynamic walking pose mid-stride, natural movement, looking forward, full body">Berjalan</button>
-                                <button type="button" class="pose-quick-btn" data-pose="stylish running pose, hair flowing, candid action editorial shot, full body">Berlari gaya</button>
-                                <button type="button" class="pose-quick-btn" data-pose="spinning pose, fabric in motion, joyful carefree expression, full body">Berputar</button>
-                                <button type="button" class="pose-quick-btn" data-pose="small playful jump, happy joyful expression, feet slightly off ground, full body">Melompat</button>
-                                <button type="button" class="pose-quick-btn" data-pose="full body S-curve silhouette pose, fashion editorial style, full body">Pose S-curve</button>
-                                <button type="button" class="pose-quick-btn" data-pose="catwalk runway model pose, confident mid-stride walk, professional fashion model, full body">Catwalk</button>
+                                <button type="button" class="pose-quick-btn" data-pose="dynamic walking pose mid-stride, natural movement, looking forward, full body" data-i18n="pf.pose-walking">Berjalan</button>
+                                <button type="button" class="pose-quick-btn" data-pose="stylish running pose, hair flowing, candid action editorial shot, full body" data-i18n="pf.pose-stylish-run">Berlari gaya</button>
+                                <button type="button" class="pose-quick-btn" data-pose="spinning pose, fabric in motion, joyful carefree expression, full body" data-i18n="pf.pose-spinning">Berputar</button>
+                                <button type="button" class="pose-quick-btn" data-pose="small playful jump, happy joyful expression, feet slightly off ground, full body" data-i18n="pf.pose-jumping">Melompat</button>
+                                <button type="button" class="pose-quick-btn" data-pose="full body S-curve silhouette pose, fashion editorial style, full body" data-i18n="pf.pose-s-curve">Pose S-curve</button>
+                                <button type="button" class="pose-quick-btn" data-pose="catwalk runway model pose, confident mid-stride walk, professional fashion model, full body" data-i18n="pf.pose-catwalk">Catwalk</button>
                                 <!-- Sitting -->
-                                <button type="button" class="pose-quick-btn" data-pose="elegant sitting pose, legs crossed, one hand resting on knee, poised, 3/4 body">Duduk elegan</button>
-                                <button type="button" class="pose-quick-btn" data-pose="sitting on floor casually, knees bent up, relaxed natural expression, 3/4 body">Duduk di lantai</button>
-                                <button type="button" class="pose-quick-btn" data-pose="sitting on steps or ledge, looking to the side, candid lifestyle pose, 3/4 body">Duduk di tangga</button>
-                                <button type="button" class="pose-quick-btn" data-pose="casual relaxed sitting, leaning slightly back, easygoing natural smile, 3/4 body">Duduk santai</button>
-                                <button type="button" class="pose-quick-btn" data-pose="sitting with legs extended straight forward, showcasing shoes and outfit, 3/4 body">Kaki lurus</button>
-                                <button type="button" class="pose-quick-btn" data-pose="sitting cross-legged on floor, hands resting on knees, calm serene expression">Duduk bersila</button>
+                                <button type="button" class="pose-quick-btn" data-pose="elegant sitting pose, legs crossed, one hand resting on knee, poised, 3/4 body" data-i18n="pf.pose-sit-elegant">Duduk elegan</button>
+                                <button type="button" class="pose-quick-btn" data-pose="sitting on floor casually, knees bent up, relaxed natural expression, 3/4 body" data-i18n="pf.pose-sit-floor">Duduk di lantai</button>
+                                <button type="button" class="pose-quick-btn" data-pose="sitting on steps or ledge, looking to the side, candid lifestyle pose, 3/4 body" data-i18n="pf.pose-sit-steps">Duduk di tangga</button>
+                                <button type="button" class="pose-quick-btn" data-pose="casual relaxed sitting, leaning slightly back, easygoing natural smile, 3/4 body" data-i18n="pf.pose-sit-relaxed">Duduk santai</button>
+                                <button type="button" class="pose-quick-btn" data-pose="sitting with legs extended straight forward, showcasing shoes and outfit, 3/4 body" data-i18n="pf.pose-legs-extended">Kaki lurus</button>
+                                <button type="button" class="pose-quick-btn" data-pose="sitting cross-legged on floor, hands resting on knees, calm serene expression" data-i18n="pf.pose-cross-legged">Duduk bersila</button>
                                 <!-- Leaning -->
-                                <button type="button" class="pose-quick-btn" data-pose="leaning against wall casually, one leg bent against wall, cool relaxed vibe, full body">Sandaran dinding</button>
-                                <button type="button" class="pose-quick-btn" data-pose="leaning in doorway with arms resting on doorframe, confident stylish look, full body">Sandaran pintu</button>
-                                <button type="button" class="pose-quick-btn" data-pose="leaning forward on chair back with elbows resting, intense editorial look, 3/4 body">Bersandar kursi</button>
-                                <button type="button" class="pose-quick-btn" data-pose="sitting with elbows on knees, leaning forward, thoughtful introspective pose">Siku di lutut</button>
+                                <button type="button" class="pose-quick-btn" data-pose="leaning against wall casually, one leg bent against wall, cool relaxed vibe, full body" data-i18n="pf.pose-lean-wall">Sandaran dinding</button>
+                                <button type="button" class="pose-quick-btn" data-pose="leaning in doorway with arms resting on doorframe, confident stylish look, full body" data-i18n="pf.pose-lean-door">Sandaran pintu</button>
+                                <button type="button" class="pose-quick-btn" data-pose="leaning forward on chair back with elbows resting, intense editorial look, 3/4 body" data-i18n="pf.pose-lean-chair">Bersandar kursi</button>
+                                <button type="button" class="pose-quick-btn" data-pose="sitting with elbows on knees, leaning forward, thoughtful introspective pose" data-i18n="pf.pose-elbows-knees">Siku di lutut</button>
                                 <!-- Directional -->
-                                <button type="button" class="pose-quick-btn" data-pose="over-the-shoulder look, body turned away from camera, face looking back at camera, full body">Over shoulder</button>
-                                <button type="button" class="pose-quick-btn" data-pose="side profile view, looking straight ahead, elegant pose showing jawline, full body">Side profile</button>
-                                <button type="button" class="pose-quick-btn" data-pose="back pose facing away from camera, looking over shoulder slightly, mysterious fashion editorial">Dari belakang</button>
+                                <button type="button" class="pose-quick-btn" data-pose="over-the-shoulder look, body turned away from camera, face looking back at camera, full body" data-i18n="pf.pose-over-shoulder">Over shoulder</button>
+                                <button type="button" class="pose-quick-btn" data-pose="side profile view, looking straight ahead, elegant pose showing jawline, full body" data-i18n="pf.pose-side-profile">Side profile</button>
+                                <button type="button" class="pose-quick-btn" data-pose="back pose facing away from camera, looking over shoulder slightly, mysterious fashion editorial" data-i18n="pf.pose-from-behind">Dari belakang</button>
                                 <!-- Expression/Close-up -->
-                                <button type="button" class="pose-quick-btn" data-pose="fierce direct gaze at camera, serious powerful high-fashion expression, portrait">Tatapan fierce</button>
-                                <button type="button" class="pose-quick-btn" data-pose="candid laughing pose, genuine joy, head slightly tilted back, natural expression, portrait">Tertawa lepas</button>
-                                <button type="button" class="pose-quick-btn" data-pose="soft gentle smile, relaxed pleasant expression, approachable warm look, portrait">Senyum lembut</button>
-                                <button type="button" class="pose-quick-btn" data-pose="both hands gently framing face, close-up beauty editorial pose, portrait">Bingkai wajah</button>
-                                <button type="button" class="pose-quick-btn" data-pose="one hand touching chin thoughtfully, intellectual elegant beauty pose, portrait">Pegang dagu</button>
-                                <button type="button" class="pose-quick-btn" data-pose="hand gently running through hair, natural casual beauty pose, portrait">Sentuh rambut</button>
-                                <button type="button" class="pose-quick-btn" data-pose="one hand resting softly on cheek, dreamy romantic expression, beauty portrait">Tangan di pipi</button>
+                                <button type="button" class="pose-quick-btn" data-pose="fierce direct gaze at camera, serious powerful high-fashion expression, portrait" data-i18n="pf.pose-fierce-gaze">Tatapan fierce</button>
+                                <button type="button" class="pose-quick-btn" data-pose="candid laughing pose, genuine joy, head slightly tilted back, natural expression, portrait" data-i18n="pf.pose-laughing">Tertawa lepas</button>
+                                <button type="button" class="pose-quick-btn" data-pose="soft gentle smile, relaxed pleasant expression, approachable warm look, portrait" data-i18n="pf.pose-soft-smile">Senyum lembut</button>
+                                <button type="button" class="pose-quick-btn" data-pose="both hands gently framing face, close-up beauty editorial pose, portrait" data-i18n="pf.pose-frame-face">Bingkai wajah</button>
+                                <button type="button" class="pose-quick-btn" data-pose="one hand touching chin thoughtfully, intellectual elegant beauty pose, portrait" data-i18n="pf.pose-hand-chin">Pegang dagu</button>
+                                <button type="button" class="pose-quick-btn" data-pose="hand gently running through hair, natural casual beauty pose, portrait" data-i18n="pf.pose-touch-hair">Sentuh rambut</button>
+                                <button type="button" class="pose-quick-btn" data-pose="one hand resting softly on cheek, dreamy romantic expression, beauty portrait" data-i18n="pf.pose-hand-cheek">Tangan di pipi</button>
                                 <!-- Fashion Editorial -->
-                                <button type="button" class="pose-quick-btn" data-pose="high fashion editorial pose, dramatic and artistic, Vogue magazine worthy, full body">High fashion</button>
-                                <button type="button" class="pose-quick-btn" data-pose="classic magazine cover pose, confident and polished, head-on professional look, portrait">Cover majalah</button>
-                                <button type="button" class="pose-quick-btn" data-pose="avant-garde artistic fashion pose, bold unconventional editorial style, full body">Avant-garde</button>
-                                <button type="button" class="pose-quick-btn" data-pose="relaxed lounging pose on sofa or surface, casual comfortable lifestyle aesthetic, 3/4 body">Santai di sofa</button>
-                                <button type="button" class="pose-quick-btn" data-pose="lying down pose, high fashion editorial style, on floor or surface, full body">Berbaring</button>
+                                <button type="button" class="pose-quick-btn" data-pose="high fashion editorial pose, dramatic and artistic, Vogue magazine worthy, full body" data-i18n="pf.pose-high-fashion">High fashion</button>
+                                <button type="button" class="pose-quick-btn" data-pose="classic magazine cover pose, confident and polished, head-on professional look, portrait" data-i18n="pf.pose-magazine-cover">Cover majalah</button>
+                                <button type="button" class="pose-quick-btn" data-pose="avant-garde artistic fashion pose, bold unconventional editorial style, full body" data-i18n="pf.pose-avant-garde">Avant-garde</button>
+                                <button type="button" class="pose-quick-btn" data-pose="relaxed lounging pose on sofa or surface, casual comfortable lifestyle aesthetic, 3/4 body" data-i18n="pf.pose-sofa-relax">Santai di sofa</button>
+                                <button type="button" class="pose-quick-btn" data-pose="lying down pose, high fashion editorial style, on floor or surface, full body" data-i18n="pf.pose-lying-down">Berbaring</button>
                                 <!-- With Props -->
-                                <button type="button" class="pose-quick-btn" data-pose="holding fashion handbag stylishly, showcasing the bag, confident pose, full body">Pegang tas</button>
-                                <button type="button" class="pose-quick-btn" data-pose="holding or adjusting sunglasses with one hand, stylish accessory fashion pose, portrait">Pegang kacamata</button>
-                                <button type="button" class="pose-quick-btn" data-pose="holding hat with one hand, playful sophisticated hat gesture, full body">Pegang topi</button>
-                                <button type="button" class="pose-quick-btn" data-pose="holding bouquet of flowers, romantic feminine elegant pose, full body">Pegang bunga</button>
-                                <button type="button" class="pose-quick-btn" data-pose="holding coffee cup casually, lifestyle blogger aesthetic, relaxed natural pose, 3/4 body">Pegang kopi</button>
+                                <button type="button" class="pose-quick-btn" data-pose="holding fashion handbag stylishly, showcasing the bag, confident pose, full body" data-i18n="pf.pose-hold-bag">Pegang tas</button>
+                                <button type="button" class="pose-quick-btn" data-pose="holding or adjusting sunglasses with one hand, stylish accessory fashion pose, portrait" data-i18n="pf.pose-hold-glasses">Pegang kacamata</button>
+                                <button type="button" class="pose-quick-btn" data-pose="holding hat with one hand, playful sophisticated hat gesture, full body" data-i18n="pf.pose-hold-hat">Pegang topi</button>
+                                <button type="button" class="pose-quick-btn" data-pose="holding bouquet of flowers, romantic feminine elegant pose, full body" data-i18n="pf.pose-hold-flowers">Pegang bunga</button>
+                                <button type="button" class="pose-quick-btn" data-pose="holding coffee cup casually, lifestyle blogger aesthetic, relaxed natural pose, 3/4 body" data-i18n="pf.pose-hold-coffee">Pegang kopi</button>
                                 <!-- Lifestyle/Candid -->
-                                <button type="button" class="pose-quick-btn" data-pose="candid natural lifestyle pose, genuine authentic moment, relaxed expression, full body">Candid natural</button>
-                                <button type="button" class="pose-quick-btn" data-pose="outdoor lifestyle pose, natural and authentic, fresh casual expression, full body">Outdoor natural</button>
-                                <button type="button" class="pose-quick-btn" data-pose="expressive dramatic pose, showing strong personality and character, full body">Pose ekspresif</button>
-                                <button type="button" class="pose-quick-btn" data-pose="playful fun pose, hands making heart or peace sign, bright cheerful expression, portrait">Pose lucu</button>
-                                <button type="button" class="pose-quick-btn" data-pose="one hand raised showing palm toward camera, other hand on hip, bold strong statement pose, full body">Stop hand</button>
+                                <button type="button" class="pose-quick-btn" data-pose="candid natural lifestyle pose, genuine authentic moment, relaxed expression, full body" data-i18n="pf.pose-candid-natural">Candid natural</button>
+                                <button type="button" class="pose-quick-btn" data-pose="outdoor lifestyle pose, natural and authentic, fresh casual expression, full body" data-i18n="pf.pose-outdoor-natural">Outdoor natural</button>
+                                <button type="button" class="pose-quick-btn" data-pose="expressive dramatic pose, showing strong personality and character, full body" data-i18n="pf.pose-expressive">Pose ekspresif</button>
+                                <button type="button" class="pose-quick-btn" data-pose="playful fun pose, hands making heart or peace sign, bright cheerful expression, portrait" data-i18n="pf.pose-playful">Pose lucu</button>
+                                <button type="button" class="pose-quick-btn" data-pose="one hand raised showing palm toward camera, other hand on hip, bold strong statement pose, full body" data-i18n="pf.pose-stop-hand">Stop hand</button>
                             </div>
                         </div>
 
@@ -3681,7 +3681,7 @@
                                     <span>Generate Foto Islami</span>
                                 </button>
 
-                                <div class="text-center text-xs text-gray-500 mt-2">
+                                <div class="text-center text-xs text-gray-500 mt-2" data-i18n="isl.process-time">
                                     ⚡ Proses memerlukan waktu 20-40 detik per foto
                                 </div>
                             </div>
@@ -3947,7 +3947,7 @@
                                     <span data-i18n="bn.generate-btn">Generate Banner Profesional</span>
                                 </button>
 
-                                <div class="text-center text-xs text-gray-500 mt-2">
+                                <div class="text-center text-xs text-gray-500 mt-2" data-i18n="bn.process-time">
                                     ⚡ Proses memerlukan waktu 20-40 detik per banner
                                 </div>
                             </div>
@@ -4500,10 +4500,10 @@
                                         <button class="theme-btn-food" data-theme="underwater-inspired aquatic styling, deep blue tones with light caustics ripple patterns, fresh splash energy, creative conceptual photography">
                                             <i class="fas fa-fish mr-2"></i>Underwater
                                         </button>
-                                        <button class="theme-btn-food" data-theme="POV one hand holding food naturally, personal perspective angle">
+                                        <button class="theme-btn-food" data-theme="POV one hand holding food naturally, personal perspective angle" data-i18n="fs.theme-pov-one-hand">
                                             <i class="fas fa-hand-paper mr-2"></i>POV Satu Tangan
                                         </button>
-                                        <button class="theme-btn-food" data-theme="POV two hands holding food from personal perspective, both hands visible">
+                                        <button class="theme-btn-food" data-theme="POV two hands holding food from personal perspective, both hands visible" data-i18n="fs.theme-pov-two-hands">
                                             <i class="fas fa-hands mr-2"></i>POV 2 Tangan
                                         </button>
                                         <button class="theme-btn-food" data-theme="custom">
@@ -4544,7 +4544,7 @@
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                                 </svg>
                                             </button>
-                                            <p class="text-xs text-green-600 mt-1 text-center">
+                                            <p class="text-xs text-green-600 mt-1 text-center" data-i18n-html="wis.bg-used">
                                                 <i class="fas fa-check-circle mr-1"></i> Background custom akan digunakan
                                             </p>
                                         </div>
@@ -4789,7 +4789,7 @@
                                             <i class="fas fa-star-and-crescent text-xs" style="color: #16a34a;"></i>
                                             <span class="text-xs font-bold" style="color: #15803d;" data-i18n="fsr.cat-ramadan">Suasana Ramadan</span>
                                         </div>
-                                        <button class="theme-btn-food selected" data-theme="Indonesian iftar buka puasa table setting, traditional foods - dates kurma on small plate, kolak pisang in bowl, es buah colorful, warm amber candlelight, traditional wooden table with batik cloth, glowing lantern in soft background bokeh, warm cozy Ramadan iftar atmosphere, golden warm tones">
+                                        <button class="theme-btn-food selected" data-i18n="fsr.theme-iftar" data-theme="Indonesian iftar buka puasa table setting, traditional foods - dates kurma on small plate, kolak pisang in bowl, es buah colorful, warm amber candlelight, traditional wooden table with batik cloth, glowing lantern in soft background bokeh, warm cozy Ramadan iftar atmosphere, golden warm tones">
                                             <i class="fas fa-moon mr-2"></i>Buka Puasa
                                         </button>
                                         <button class="theme-btn-food" data-theme="colorful Indonesian takjil spread overhead flat lay composition - kolak pisang, es buah segar dengan potongan buah warna-warni, bubur kacang hijau, kurma medjool, klepon hijau, berbagai jajanan pasar tradisional Ramadan tersusun rapi di atas meja kayu dengan dekorasi Ramadan, vibrant warm colors">
@@ -4804,7 +4804,7 @@
                                         <button class="theme-btn-food" data-theme="cozy late night Indonesian sahur meal setting, warm dim ambient home lighting, simple nourishing home-cooked food - nasi putih steaming, ayam goreng crispy, sayur bayam, tahu tempe goreng, sambal, glass of water, intimate domestic kitchen table atmosphere, soft warm candlelight, clock in background showing pre-dawn time">
                                             <i class="fas fa-cloud-moon mr-2"></i>Sahur Subuh
                                         </button>
-                                        <button class="theme-btn-food" data-theme="sop buah es campur Indonesian Ramadan drink photography, colorful mixed fruit in sweet coconut milk or syrup, ice shavings, nata de coco, cendol hijau, cincau hitam, kolang kaling, vibrant tropical fruit colors, refreshing cold drink perfect for iftar, bright and cheerful food styling with tropical vibes">
+                                        <button class="theme-btn-food" data-i18n="fsr.theme-iftar-drinks" data-theme="sop buah es campur Indonesian Ramadan drink photography, colorful mixed fruit in sweet coconut milk or syrup, ice shavings, nata de coco, cendol hijau, cincau hitam, kolang kaling, vibrant tropical fruit colors, refreshing cold drink perfect for iftar, bright and cheerful food styling with tropical vibes">
                                             <i class="fas fa-glass-cheers mr-2"></i>Es &amp; Minuman Buka
                                         </button>
                                         <button class="theme-btn-food" data-theme="lively Indonesian bukber buka puasa bersama restaurant scene, long table filled with shared traditional dishes, warm restaurant ambient lighting, happy diners softly blurred in background, glowing lantern decorations, festive togetherness atmosphere, food as hero on the table">
@@ -4821,7 +4821,7 @@
                                         <button class="theme-btn-food" data-theme="traditional Indonesian Lebaran feast food photography - ketupat diamond-shaped rice cakes, opor ayam coconut milk chicken, rendang beef Padang style, sambal goreng ati, arranged beautifully on traditional batik tablecloth with flower garnish, warm family Lebaran atmosphere, Indonesian culinary heritage food styling">
                                             <i class="fas fa-utensils mr-2"></i>Ketupat &amp; Opor
                                         </button>
-                                        <button class="theme-btn-food" data-theme="beautiful Indonesian Lebaran kue kering cookies photography - nastar pineapple jam tarts, kastengel cheese cookies, putri salju powdered snowball cookies, lidah kucing crisp wafer cookies, arranged elegantly in glass cookie jars and white ceramic plates, white marble background, soft natural window lighting, premium artisan bakery food photography">
+                                        <button class="theme-btn-food" data-i18n="fsr.theme-eid-cookies" data-theme="beautiful Indonesian Lebaran kue kering cookies photography - nastar pineapple jam tarts, kastengel cheese cookies, putri salju powdered snowball cookies, lidah kucing crisp wafer cookies, arranged elegantly in glass cookie jars and white ceramic plates, white marble background, soft natural window lighting, premium artisan bakery food photography">
                                             <i class="fas fa-cookie mr-2"></i>Kue Lebaran
                                         </button>
                                         <button class="theme-btn-food" data-theme="elegant Lebaran hampers gift box photography, beautifully arranged Eid gift basket with glass jars of kue kering, premium dates, syrup bottles wrapped in ribbon, ketupat ornament decoration, gold and green festive wrapping, soft studio lighting, premium Eid gift catalog style">
@@ -4865,7 +4865,7 @@
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                                 </svg>
                                             </button>
-                                            <p class="text-xs text-green-600 mt-1 text-center">
+                                            <p class="text-xs text-green-600 mt-1 text-center" data-i18n-html="wis.bg-used">
                                                 <i class="fas fa-check-circle mr-1"></i> Background custom akan digunakan
                                             </p>
                                         </div>
@@ -5416,7 +5416,7 @@
                             <div id="food-theme-presets" class="flex flex-wrap gap-2 mb-3">
                                 <button type="button" class="food-theme-preset" data-preset="warung sederhana lokal, meja kayu, suasana hangat autentik Indonesia">Warung Lokal</button>
                                 <button type="button" class="food-theme-preset" data-preset="cafe aesthetic modern, natural window light, interior scandinavian">Cafe Aesthetic</button>
-                                <button type="button" class="food-theme-preset" data-preset="street food malam hari, lampu kaki lima hangat, suasana ramai autentik">Street Food Malam</button>
+                                <button type="button" class="food-theme-preset" data-preset="street food malam hari, lampu kaki lima hangat, suasana ramai autentik" data-i18n="fr.preset-night-street">Street Food Malam</button>
                                 <button type="button" class="food-theme-preset" data-preset="fine dining elegant, plating mewah, lighting dramatis restoran premium">Fine Dining</button>
                                 <button type="button" class="food-theme-preset" data-preset="rooftop dinner, city lights bokeh, golden hour romantis">Rooftop Dinner</button>
                                 <button type="button" class="food-theme-preset" data-preset="studio food vlogger profesional, ring light, background rapi content creator">Studio Vlogger</button>
@@ -6502,7 +6502,7 @@
                                         <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-white shadow-md" style="background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);">4</div>
                                         <h3 class="text-lg font-bold text-gray-800">
                                             <span data-i18n="pp.custom-prompt-label">Custom Prompt</span>
-                                            <span class="text-sm text-gray-400">(opsional)</span>
+                                            <span class="text-sm text-gray-400" data-i18n="common.optional">(opsional)</span>
                                         </h3>
                                     </div>
                                     <textarea id="pp-custom-prompt" rows="3" class="w-full p-3 border-2 rounded-xl text-sm transition-all focus:outline-none resize-none" style="border-color: #f5d0fe; background: #fdf4ff;" data-i18n-placeholder="pp.custom-prompt-placeholder" placeholder="Tulis arahan tambahan untuk AI..."></textarea>
@@ -7705,7 +7705,7 @@
                             </div>
                             <h4 class="font-bold text-gray-800">Color Matching</h4>
                         </div>
-                        <p class="text-sm text-gray-600">AI matches color grading, tones, and saturation dari foto referensi</p>
+                        <p class="text-sm text-gray-600" data-i18n="sm.match-desc">AI matches color grading, tones, and saturation dari foto referensi</p>
                     </div>
                     <div class="bg-gradient-to-br from-green-100 to-emerald-50 rounded-xl p-6 border-2 border-green-200">
                         <div class="flex items-center gap-3 mb-3">
@@ -7988,7 +7988,7 @@
                             </div>
                             <h4 class="font-bold text-gray-800">Mobile-Friendly</h4>
                         </div>
-                        <p class="text-sm text-gray-600">Pastikan text terbaca jelas di layar kecil, hindari terlalu banyak detail</p>
+                        <p class="text-sm text-gray-600" data-i18n="tg.tip-readable">Pastikan text terbaca jelas di layar kecil, hindari terlalu banyak detail</p>
                     </div>
                 </div>
             </div>
@@ -8096,8 +8096,8 @@
                                 <option value="">Select Preset Theme...</option>
                                 <option value="business">Business Professional (Formal, Corporate)</option>
                                 <option value="creative">Creative & Colorful (Kreatif, Warna-warni)</option>
-                                <option value="minimalist">Minimalist Clean (Simpel, Bersih)</option>
-                                <option value="dark">Dark & Moody (Gelap, Dramatic)</option>
+                                <option value="minimalist" data-i18n="cpg.style-minimalist">Minimalist Clean (Simpel, Bersih)</option>
+                                <option value="dark" data-i18n="cpg.style-dark">Dark & Moody (Gelap, Dramatic)</option>
                                 <option value="gradient">Gradient Modern (Gradien Trendy)</option>
                                 <option value="nature">Nature & Fresh (Alam, Segar)</option>
                             </select>
@@ -9933,7 +9933,7 @@
                                     <p class="text-xs text-gray-500 mb-2">💡 Analisis meliputi:</p>
                                     <ul class="text-xs text-gray-500 space-y-1">
                                         <li>• ROI % dan Break-Even Point</li>
-                                        <li>• Profit Projections (3/6/12 bulan)</li>
+                                        <li data-i18n="roi.feat-projections">• Profit Projections (3/6/12 bulan)</li>
                                         <li>• Growth Rate Analysis</li>
                                         <li>• Cost Optimization Tips</li>
                                         <li>• Risk Assessment</li>
@@ -20332,7 +20332,7 @@
     <button id="update-info-btn" class="text-white rounded-full w-16 h-16 flex items-center justify-center shadow-xl relative" style="background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);">
         <div class="flex flex-col items-center leading-none pointer-events-none">
             <i class="fas fa-bolt text-sm"></i>
-            <span class="text-xs font-bold mt-0.5">V89</span>
+            <span class="text-xs font-bold mt-0.5">V90</span>
         </div>
         <span class="update-notif-dot"></span>
     </button>

@@ -705,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- UPDATE INFO BUTTON LOGIC ---
     (function() {
-        const UPDATE_VERSION = '89';
+        const UPDATE_VERSION = '90';
         // Badge versi di halaman login — auto-sync, tidak perlu bump manual
         (function() {
             var lvb = document.getElementById('login-version-badge');
@@ -718,6 +718,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Releases history — newest first. Max 3 displayed in modal.
         // Saat user bilang "rilis" untuk versi baru: prepend entry baru di sini, geser yang lain ke bawah, drop entry ke-4.
         const RELEASES = [
+            {
+                version: '90',
+                dateId: 'November 2026',
+                dateEn: 'November 2026',
+                badgeKey: 'modal.fix-v90-badge',
+                badgeText: 'Update v90',
+                gradient: 'linear-gradient(135deg,#06b6d4,#0e7490)',
+                borderColor: '#06b6d4',
+                icon: 'fa-language',
+                iconColor: '#06b6d4',
+                items: [
+                    {
+                        titleKey: 'modal.fix-v90-title-lang',
+                        titleText: 'Mode English & Melayu Lebih Rapi',
+                        bodyKey: 'modal.fix-v90-body-lang',
+                        bodyText: 'Tombol pose di Pose Fashion dan sisa teks di 10 tab lain kini ikut bahasa yang dipilih. Sebelumnya sebagian label masih Bahasa Indonesia walau aplikasi disetel ke English.'
+                    }
+                ]
+            },
             {
                 version: '89',
                 dateId: 'November 2026',
@@ -18692,7 +18711,7 @@ PENTING:
                     console.error('Product upload error:', err);
                 }
             }
-            if (productCountText) productCountText.textContent = productImagesData.length + '/5 foto';
+            if (productCountText) productCountText.textContent = productImagesData.length + '/5 ' + window.tr3('foto', 'photos', 'foto');
             if (removeProductBtn) removeProductBtn.classList.remove('hidden');
             updateGenerateBtn();
         }
@@ -18734,7 +18753,7 @@ PENTING:
                 if (productInput) productInput.value = '';
                 if (productPreviewContainer) { productPreviewContainer.innerHTML = ''; productPreviewContainer.classList.add('hidden'); }
                 if (productPlaceholder) productPlaceholder.classList.remove('hidden');
-                if (productCountText) productCountText.textContent = '0/5 foto';
+                if (productCountText) productCountText.textContent = '0/5 ' + window.tr3('foto', 'photos', 'foto');
                 removeProductBtn.classList.add('hidden');
                 updateGenerateBtn();
             });
@@ -20399,7 +20418,7 @@ Pastikan semua elemen dekorasi terintegrasi dengan sempurna, lighting dramatis n
 
             // Update photo count
             if (photoCountText) {
-                photoCountText.textContent = `${birthdayImages.length}/5 foto`;
+                photoCountText.textContent = `${birthdayImages.length}/5 ${window.tr3('foto', 'photos', 'foto')}`;
             }
 
             // Show/hide container
@@ -20652,7 +20671,7 @@ Style: ultra realistic, 8K, cinematic lighting, sharp focus on cake topper detai
                     previewContainer.classList.add('hidden');
                     previewContainer.innerHTML = '';
                 }
-                if (photoCountText) photoCountText.textContent = '0/5 foto';
+                if (photoCountText) photoCountText.textContent = '0/5 ' + window.tr3('foto', 'photos', 'foto');
 
                 // Update generate button state
                 if (typeof checkReadyToGenerate === 'function') checkReadyToGenerate();
@@ -21228,7 +21247,7 @@ Style: ultra-realistic candid stadium photography, smartphone snapshot quality, 
             wtFacesPreview.innerHTML = '';
             if (wtFaceImages.length === 0) {
                 wtFacesPreview.classList.add('hidden');
-                if (wtFacesCount) wtFacesCount.textContent = '0/5 foto';
+                if (wtFacesCount) wtFacesCount.textContent = '0/5 ' + window.tr3('foto', 'photos', 'foto');
                 return;
             }
             wtFacesPreview.classList.remove('hidden');
@@ -21243,7 +21262,7 @@ Style: ultra-realistic candid stadium photography, smartphone snapshot quality, 
                 `;
                 wtFacesPreview.appendChild(card);
             });
-            if (wtFacesCount) wtFacesCount.textContent = `${wtFaceImages.length}/5 foto`;
+            if (wtFacesCount) wtFacesCount.textContent = `${wtFaceImages.length}/5 ${window.tr3('foto', 'photos', 'foto')}`;
         }
 
         function handleWTFaceUpload() {
@@ -22114,7 +22133,7 @@ Style: ultra-realistic, 8K, cinematic lighting, sharp focus. ${WC_NEGATIVE_PROMP
             wcFacesPreview.innerHTML = '';
             if (wcFaceImages.length === 0) {
                 wcFacesPreview.classList.add('hidden');
-                if (wcFacesCount) wcFacesCount.textContent = '0/5 foto';
+                if (wcFacesCount) wcFacesCount.textContent = '0/5 ' + window.tr3('foto', 'photos', 'foto');
                 return;
             }
             wcFacesPreview.classList.remove('hidden');
@@ -22129,7 +22148,7 @@ Style: ultra-realistic, 8K, cinematic lighting, sharp focus. ${WC_NEGATIVE_PROMP
                 `;
                 wcFacesPreview.appendChild(card);
             });
-            if (wcFacesCount) wcFacesCount.textContent = `${wcFaceImages.length}/5 foto`;
+            if (wcFacesCount) wcFacesCount.textContent = `${wcFaceImages.length}/5 ${window.tr3('foto', 'photos', 'foto')}`;
         }
 
         if (wcFacesInput) {
@@ -22964,7 +22983,7 @@ Style: ultra-realistic, 8K, fitness lifestyle photography, dramatic gym lighting
                             img.className = 'w-full h-20 object-cover rounded-lg';
                             previewContainer.appendChild(img);
                         }
-                        if (photoCountText) photoCountText.textContent = `${uploadedImages.length}/5 foto`;
+                        if (photoCountText) photoCountText.textContent = `${uploadedImages.length}/5 ${window.tr3('foto', 'photos', 'foto')}`;
                         if (removePhotoBtn) removePhotoBtn.classList.remove('hidden');
                     };
                     reader.readAsDataURL(processedFile);
@@ -22977,7 +22996,7 @@ Style: ultra-realistic, 8K, fitness lifestyle photography, dramatic gym lighting
                 uploadedImages = [];
                 if (previewContainer) { previewContainer.innerHTML = ''; previewContainer.classList.add('hidden'); }
                 if (imageInput) imageInput.value = '';
-                if (photoCountText) photoCountText.textContent = '0/5 foto';
+                if (photoCountText) photoCountText.textContent = '0/5 ' + window.tr3('foto', 'photos', 'foto');
                 removePhotoBtn.classList.add('hidden');
             });
         }
